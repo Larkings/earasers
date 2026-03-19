@@ -4,9 +4,9 @@ import { CheckIcon, CloseIcon, AwardIcon, ArrowRightIcon } from '../icons';
 
 const rows = [
   { label: 'Price',              earasers: '€49,95',    custom: '€199+',     cheap: '€5–15' },
-  { label: 'Specialist needed',  earasers: 'No',        custom: 'Yes',       cheap: 'No' },
-  { label: 'Delivery',           earasers: '2–3 days',  custom: '3–6 weeks', cheap: 'Direct' },
-  { label: 'Invisible',          earasers: true,        custom: true,        cheap: false },
+  { label: 'No specialist',      earasers: true,        custom: false,       cheap: true },
+  { label: 'Delivery time',      earasers: '2–3 days',  custom: '3–6 weeks', cheap: 'Direct' },
+  { label: 'Nearly invisible',   earasers: true,        custom: true,        cheap: false },
   { label: 'Clear sound',        earasers: true,        custom: false,       cheap: false },
   { label: 'Adjustable filter',  earasers: true,        custom: false,       cheap: false },
 ];
@@ -23,10 +23,10 @@ const Cell = ({ val }: { val: string | boolean }) => {
 export const CompareTable = () => (
   <section className={styles.section}>
     <div className="container">
-      <h2 className={styles.heading}>Earasers vs. The Alternatives</h2>
-      <p className={styles.sub}>Why Earasers wins on every count</p>
+      <h2 className={styles.heading} data-reveal>Earasers vs. the alternatives</h2>
+      <p className={styles.sub} data-reveal data-delay="1">Good hearing protection shouldn't cost a fortune or muffle everything.</p>
 
-      <div className={styles.tableWrap}>
+      <div className={styles.tableWrap} data-reveal data-delay="2">
         <table className={styles.table}>
           <thead>
             <tr>
@@ -53,8 +53,8 @@ export const CompareTable = () => (
         </table>
       </div>
 
-      <div className={styles.cta}>
-        <a href="/collections/musician-s-hifi-earplugs" className={styles.ctaBtn}>
+      <div className={styles.cta} data-reveal data-delay="3">
+        <a href="/collection" className={styles.ctaBtn}>
           Shop Earasers from €49,95 <ArrowRightIcon size={15} />
         </a>
       </div>

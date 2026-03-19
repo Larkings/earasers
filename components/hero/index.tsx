@@ -9,19 +9,19 @@ export const Hero = () => (
     <div className={`container ${styles.content}`}>
       <div className={styles.badge}>
         <TrophyIcon size={14} className={styles.badgeIcon} />
-        5× Best Music Earplugs — MusicRadar.com
+        5× Best Music Earplugs · MusicRadar.com
       </div>
 
       <h1 className={styles.headline}>
-        Award-Winning<br />Earplugs
+        Hear everything.<br />Damage nothing.
       </h1>
 
       <p className={styles.sub}>
-        Protect your hearing. Keep the music clear.
+        Award-winning HiFi earplugs worn by musicians, DJs and dentists across Europe. Protection that doesn't kill the vibe.
       </p>
 
       <div className={styles.ctas}>
-        <a href="/collections/musician-s-hifi-earplugs" className={styles.ctaPrimary}>
+        <a href="/collection" className={styles.ctaPrimary}>
           Shop Music Earplugs <ArrowRightIcon size={15} />
         </a>
         <a href="#size-quiz" className={styles.ctaSecondary}>

@@ -1,4 +1,8 @@
-.page { padding: 56px 0 80px; background: var(--color-bg); }
+.page { padding: 32px 0 48px; background: var(--color-bg); }
+
+@media (min-width: 768px) {
+  .page { padding: 56px 0 80px; }
+}
 
 .grid {
   display: grid;

@@ -1,7 +1,11 @@
 .page {
-  padding: 40px 0 80px;
+  padding: 20px 0 48px;
   background: var(--color-bg);
   min-height: 60vh;
+}
+
+@media (min-width: 768px) {
+  .page { padding: 40px 0 80px; }
 }
 
 /* Breadcrumb */
@@ -283,16 +287,26 @@
   display: flex;
   border-bottom: 1px solid var(--color-border);
   gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
 
+.tabBar::-webkit-scrollbar { display: none; }
+
 .tabBtn {
-  padding: 14px 24px;
-  font-size: 14px;
+  padding: 12px 14px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--color-text-muted);
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
   transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+@media (min-width: 480px) {
+  .tabBtn { padding: 14px 24px; font-size: 14px; }
 }
 
 .tabBtn:hover { color: var(--color-text); }

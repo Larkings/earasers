@@ -8,13 +8,15 @@ export const AwardSection = () => (
   <section className={styles.section}>
     <div className="container">
       <div className={styles.inner}>
-        <span className={styles.pill}>Award Winning</span>
-        <h2 className={styles.heading}>5× Best Music Earplugs<br />in a Row</h2>
-        <p className={styles.sub}>
-          Awarded by MusicRadar.com — the world's largest music technology platform
+        <span className={styles.pill} data-reveal>MusicRadar Approved</span>
+        <h2 className={styles.heading} data-reveal data-delay="1">
+          Five years at the top
+        </h2>
+        <p className={styles.sub} data-reveal data-delay="2">
+          Independently tested and awarded by MusicRadar.com every year since 2020.
         </p>
 
-        <div className={styles.trophies}>
+        <div className={styles.trophies} data-reveal data-delay="3">
           {years.map(y => (
             <div key={y} className={styles.trophy}>
               <TrophyIcon size={48} className={styles.trophyIcon} />
@@ -28,8 +30,10 @@ export const AwardSection = () => (
           target="_blank"
           rel="noopener noreferrer"
           className={styles.link}
+          data-reveal
+          data-delay="4"
         >
-          Read the review on MusicRadar
+          See the full review on MusicRadar
           <ExternalLinkIcon size={13} />
         </a>
       </div>

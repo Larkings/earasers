@@ -42,7 +42,7 @@ const Contact: NextPage = () => {
             <div className={styles.info}>
               <h1 className={styles.heading}>Get in touch</h1>
               <p className={styles.sub}>
-                Our team is available 7 days a week. We typically respond within a few hours during business hours.
+                Questions? We're here seven days a week. Most emails get a reply within a few hours.
               </p>
 
               <div className={styles.cards}>
@@ -80,7 +80,7 @@ const Contact: NextPage = () => {
                   </span>
                   <div>
                     <p className={styles.infoLabel}>Availability</p>
-                    <p className={styles.infoValue}>Mon – Sun · 24/7 online support</p>
+                    <p className={styles.infoValue}>Mon to Sun · 24/7 online</p>
                   </div>
                 </div>
               </div>

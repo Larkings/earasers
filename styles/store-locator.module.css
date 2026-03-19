@@ -1,10 +1,18 @@
-.page { padding: 0 0 80px; background: var(--color-bg); }
+.page { padding: 0 0 48px; background: var(--color-bg); }
+
+@media (min-width: 768px) {
+  .page { padding: 0 0 80px; }
+}
 
 /* ── Page header ─────────────────────────── */
 .pageHeader {
-  padding: 56px 0 40px;
+  padding: 32px 0 24px;
   border-bottom: 1px solid var(--color-border);
-  margin-bottom: 40px;
+  margin-bottom: 28px;
+}
+
+@media (min-width: 768px) {
+  .pageHeader { padding: 56px 0 40px; margin-bottom: 40px; }
 }
 
 .heading {
@@ -29,8 +37,9 @@
 /* ── Search row ─────────────────────────── */
 .searchRow {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .searchWrap {
@@ -81,8 +90,17 @@
 .tabs {
   display: flex;
   gap: 6px;
-  flex-wrap: wrap;
-  margin-bottom: 28px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin-bottom: 20px;
+  padding-bottom: 4px;
+}
+
+.tabs::-webkit-scrollbar { display: none; }
+
+@media (min-width: 640px) {
+  .tabs { flex-wrap: wrap; overflow-x: visible; margin-bottom: 28px; }
 }
 
 .tab {
@@ -125,9 +143,13 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: 600px;
-  overflow-y: auto;
-  padding-right: 4px;
+  max-height: none;
+  overflow-y: visible;
+  padding-right: 0;
+}
+
+@media (min-width: 768px) {
+  .listCol { max-height: 600px; overflow-y: auto; padding-right: 4px; }
 }
 
 .noResults {
@@ -240,17 +262,28 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--color-border);
-  min-height: 420px;
-  position: sticky;
-  top: calc(var(--nav-height) + var(--bar-height) + 16px);
+  min-height: 260px;
+  position: static;
+}
+
+@media (min-width: 768px) {
+  .mapCol {
+    min-height: 420px;
+    position: sticky;
+    top: calc(var(--nav-height) + var(--bar-height) + 16px);
+  }
 }
 
 .map {
   width: 100%;
   height: 100%;
-  min-height: 420px;
+  min-height: 260px;
   border: none;
   display: block;
+}
+
+@media (min-width: 768px) {
+  .map { min-height: 420px; }
 }
 
 /* ── Can't find a store ─────────────────────── */

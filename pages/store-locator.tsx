@@ -125,7 +125,7 @@ const StoreLocator: NextPage = () => {
           <div className="container">
             <h1 className={styles.heading}>Store Locator</h1>
             <p className={styles.sub}>
-              Find Earasers near you — or{' '}
+              Find a store near you, or{' '}
               <a href="/collection" className={styles.subLink}>order online</a>{' '}
               with free shipping from €39.
             </p>
@@ -240,8 +240,8 @@ const StoreLocator: NextPage = () => {
             <div className={styles.notFoundText}>
               <h2 className={styles.notFoundHeading}>Can't find a store near you?</h2>
               <p className={styles.notFoundSub}>
-                Order online — free shipping on orders from €39.<br />
-                Delivered in 2–5 days across Europe.
+                Order online with free shipping from €39.<br />
+                Delivered within 2 to 5 days across Europe.
               </p>
             </div>
             <div className={styles.notFoundActions}>
@@ -255,13 +255,13 @@ const StoreLocator: NextPage = () => {
             <div className={styles.retailerInner}>
               <h2 className={styles.retailerHeading}>Become an official Earasers retailer</h2>
               <p className={styles.retailerSub}>
-                Are you a music store, pharmacy or specialist shop? Offer your customers Europe's best-selling HiFi earplugs — and join our growing network of official stockists.
+                Run a music store, pharmacy or specialist shop? Stock Europe's most awarded HiFi earplugs and give your customers the hearing protection they actually want to wear.
               </p>
               <a
                 href="mailto:info@earasers.shop?subject=Retailer%20Inquiry"
                 className={styles.retailerLink}
               >
-                Contact us about becoming a retailer →
+                Get in touch about stocking Earasers →
               </a>
             </div>
           </div>

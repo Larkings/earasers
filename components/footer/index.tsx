@@ -36,7 +36,7 @@ export const Footer = () => (
           <a href="/" className={styles.logo}>EARASERS</a>
           <p className={styles.tagline}>BE EARRESPONSIBLE</p>
           <p className={styles.desc}>
-            Award-winning HiFi earplugs that protect your hearing without compromising on sound quality.
+            Hearing protection that actually sounds good. Made by musicians, for musicians.
           </p>
           <div className={styles.socials}>
             <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className={styles.social}>
