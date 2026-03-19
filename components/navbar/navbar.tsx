@@ -96,6 +96,7 @@ export const Navbar = () => {
                 )}
               </li>
 
+              <li className={styles.navItem}><a href="/size-finder"   className={styles.navLink}>Size Finder</a></li>
               <li className={styles.navItem}><a href="/store-locator" className={styles.navLink}>Store Locator</a></li>
               <li className={styles.navItem}><a href="/about"         className={styles.navLink}>About</a></li>
               <li className={styles.navItem}><a href="/contact"       className={styles.navLink}>Contact</a></li>
@@ -135,6 +136,7 @@ export const Navbar = () => {
               ))}
             </div>
             <div className={styles.mobileGroup}>
+              <a href="/size-finder"   className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Size Finder</a>
               <a href="/store-locator" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Store Locator</a>
               <a href="/about"         className={styles.mobileLink} onClick={() => setMobileOpen(false)}>About</a>
               <a href="/contact"       className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Contact</a>

@@ -9,10 +9,10 @@ const steps = [
     question: 'What do you need earplugs for?',
     key: 'use' as const,
     options: [
-      { label: 'Music / Concerts', value: 'music',  icon: <MusicIcon size={16} /> },
-      { label: 'DJing',            value: 'dj',     icon: <HeadphonesIcon size={16} /> },
-      { label: 'Sleeping',         value: 'sleep',  icon: <MoonIcon size={16} /> },
-      { label: 'Other',            value: 'other',  icon: <EarIcon size={16} /> },
+      { label: 'Music / Concerts', value: 'music',  icon: <MusicIcon size={20} /> },
+      { label: 'DJing',            value: 'dj',     icon: <HeadphonesIcon size={20} /> },
+      { label: 'Sleeping',         value: 'sleep',  icon: <MoonIcon size={20} /> },
+      { label: 'Other',            value: 'other',  icon: <EarIcon size={20} /> },
     ],
   },
   {
@@ -73,7 +73,7 @@ function getResult(a: Answers): Result {
   };
 }
 
-export const SizeQuiz = () => {
+export const SizeQuiz = ({ minimal }: { minimal?: boolean }) => {
   const [step, setStep]       = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [result, setResult]   = useState<Result | null>(null);
@@ -94,23 +94,31 @@ export const SizeQuiz = () => {
     setResult(null);
   };
 
+  const progressPct = result ? 100 : Math.round(((step) / steps.length) * 100);
+
   return (
     <section className={styles.section} id="size-quiz">
       <div className="container">
         <div className={styles.card}>
-          <div className={styles.top}>
-            <span className={styles.pill}>Size Finder</span>
-            <h2 className={styles.heading}>Not sure which size?</h2>
-            <p className={styles.sub}>Answer 3 quick questions and we'll recommend the right fit.</p>
-          </div>
+          {!minimal && (
+            <div className={styles.top}>
+              <span className={styles.pill}>Size Finder</span>
+              <h2 className={styles.heading}>Not sure which size?</h2>
+              <p className={styles.sub}>Answer 3 quick questions and we&#39;ll recommend the right fit.</p>
+            </div>
+          )}
 
           {!result ? (
             <>
-              {/* Progress */}
-              <div className={styles.progress}>
-                {steps.map((_, i) => (
-                  <div key={i} className={`${styles.dot} ${i <= step ? styles.dotActive : ''}`} />
-                ))}
+              {/* Progress bar */}
+              <div className={styles.progressWrap}>
+                <div className={styles.progressBar}>
+                  <div
+                    className={styles.progressFill}
+                    style={{ width: `${Math.round(((step + 1) / steps.length) * 100)}%` }}
+                  />
+                </div>
+                <p className={styles.stepCount}>Step {step + 1} of {steps.length}</p>
               </div>
 
               <p className={styles.question}>{steps[step].question}</p>
@@ -127,20 +135,21 @@ export const SizeQuiz = () => {
                   </button>
                 ))}
               </div>
-
-              <p className={styles.stepCount}>Step {step + 1} of {steps.length}</p>
             </>
           ) : (
             <div className={styles.result}>
               <div className={styles.resultIcon}><CheckIcon size={22} /></div>
-              <h3 className={styles.resultTitle}>We recommend</h3>
+              <h3 className={styles.resultTitle}>Your perfect fit</h3>
               <p className={styles.resultSize}>{result.size}</p>
               <p className={styles.resultFilter}>{result.filter}</p>
               <p className={styles.resultNote}>{result.note}</p>
               <div className={styles.resultActions}>
-                <a href={result.href} className={styles.resultCta}>Shop Now <ArrowRightIcon size={14} /></a>
+                <a href={result.href} className={styles.resultCta}>
+                  Shop My Size <ArrowRightIcon size={14} />
+                </a>
                 <button className={styles.restart} onClick={reset}>Start over</button>
               </div>
+              <p className={styles.trustLine}>Free shipping from €39 · Free returns · Expert-recommended</p>
             </div>
           )}
         </div>
