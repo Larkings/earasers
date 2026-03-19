@@ -1,0 +1,230 @@
+.page { background: var(--color-bg); }
+
+/* Hero */
+.hero {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 80px 0 72px;
+  text-align: center;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-accent-light);
+  border: 1px solid rgba(240,120,120,0.3);
+  color: var(--color-accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 24px;
+}
+
+.heroHeading {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 7vw, 80px);
+  letter-spacing: 0.03em;
+  color: var(--color-text);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.heroSub {
+  font-size: 17px;
+  color: var(--color-text-muted);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+/* Sections */
+.section { padding: 80px 0; }
+
+.sectionHeading {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 44px);
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.sectionSub {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  margin-bottom: 40px;
+}
+
+/* Story */
+.storyGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .storyGrid { grid-template-columns: 1fr 1fr; }
+}
+
+.storyImg {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.storyImg img { width: 100%; display: block; }
+
+.storyText {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.storyText p {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+/* Values */
+.valuesSection {
+  padding: 80px 0;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .valuesGrid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.valueCard {
+  padding: 28px 24px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color 0.25s, transform 0.25s;
+}
+
+.valueCard:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-3px);
+}
+
+.valueTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 10px;
+}
+
+.valueBody {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 640px;
+}
+
+.timelineItem {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.timelineLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 56px;
+  padding-top: 2px;
+}
+
+.timelineYear {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+}
+
+.timelineLine {
+  display: block;
+  width: 2px;
+  flex: 1;
+  min-height: 40px;
+  background: var(--color-border);
+  margin: 6px 0;
+}
+
+.timelineContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 2px 0 32px;
+}
+
+.timelineTrophy { color: var(--color-accent); margin-top: 2px; flex-shrink: 0; }
+
+.timelineText {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+/* CTA section */
+.ctaSection {
+  padding: 80px 0;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.ctaBox {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.ctaHeading {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 52px);
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+}
+
+.ctaSub { font-size: 16px; color: var(--color-text-muted); }
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s, transform 0.2s;
+}
+
+.ctaBtn:hover { background: var(--color-accent-hover); transform: translateY(-2px); }

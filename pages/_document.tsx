@@ -1,43 +1,29 @@
 import React from 'react';
-import Document, {
-   Html,
-   Head,
-   Main,
-   NextScript,
-   DocumentContext,
-   DocumentInitialProps,
-} from 'next/document';
-import {CssBaseline} from '@nextui-org/react';
-import {globalStyles} from '../styles/global.stitches';
+import Document, { Html, Head, Main, NextScript, DocumentContext, DocumentInitialProps } from 'next/document';
 
 class MyDocument extends Document {
-   static async getInitialProps(
-      ctx: DocumentContext
-   ): Promise<DocumentInitialProps> {
-      const initialProps = await Document.getInitialProps(ctx);
-      return {
-         ...initialProps,
-         styles: React.Children.toArray([initialProps.styles]),
-      };
-   }
+  static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
+    return Document.getInitialProps(ctx);
+  }
 
-   render() {
-      return (
-         <Html lang="en">
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link
-               href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-               rel="stylesheet"
-            />
-            <Head>{CssBaseline.flush()}</Head>
-
-            <body>
-               <Main />
-               <NextScript />
-            </body>
-         </Html>
-      );
-   }
+  render() {
+    return (
+      <Html lang="en">
+        <Head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap"
+            rel="stylesheet"
+          />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
 }
 
 export default MyDocument;

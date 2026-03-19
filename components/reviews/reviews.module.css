@@ -1,0 +1,93 @@
+.section {
+  padding: 80px 0;
+  background: var(--color-bg);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 48px);
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.starFull  { color: var(--color-accent); }
+.starEmpty { color: var(--color-surface-2); stroke: var(--color-border); }
+
+.scoreText {
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.trustpilot {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--color-accent-2);
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.trustpilot:hover { border-bottom-color: var(--color-accent-2); }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+.card {
+  padding: 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.25s, transform 0.25s;
+}
+
+.card:hover {
+  border-color: rgba(240,120,120,0.35);
+  transform: translateY(-3px);
+}
+
+/* card stars inherited from shared .stars rule above */
+
+.text {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.reviewer {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  opacity: 0.7;
+}

@@ -1,0 +1,146 @@
+.footer {
+  background: var(--color-accent);
+  padding: 64px 0 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 768px) {
+  .grid { grid-template-columns: 2fr 1fr 1fr 1fr; }
+}
+
+/* Brand col */
+.brand { display: flex; flex-direction: column; gap: 12px; }
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 0.08em;
+  color: #fff;
+  display: inline-block;
+  transition: opacity 0.2s;
+}
+
+.logo:hover { opacity: 0.75; }
+
+.tagline {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+}
+
+.desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.65;
+  max-width: 260px;
+}
+
+.socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.social {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.8);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.social:hover {
+  border-color: #fff;
+  color: #fff;
+  background: rgba(255,255,255,0.15);
+}
+
+/* Cols */
+.colTitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.link {
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  transition: color 0.2s;
+}
+
+.link:hover { color: #fff; }
+
+/* Payments */
+.payments {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.payIcon {
+  padding: 4px 8px;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 0.06em;
+  background: rgba(255,255,255,0.1);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.payIcon:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: #fff;
+}
+
+/* Bottom bar */
+.bottom {
+  margin-top: 48px;
+  border-top: 1px solid rgba(255,255,255,0.25);
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.copy {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+
+.legal {
+  display: flex;
+  gap: 20px;
+}
+
+.legalLink {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  transition: color 0.2s;
+}
+
+.legalLink:hover { color: #fff; }

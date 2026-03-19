@@ -1,0 +1,126 @@
+.section {
+  padding: 80px 0;
+  background: var(--color-bg);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 52px);
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.sub {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 16px;
+  margin-bottom: 48px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+}
+
+.thEmpty { width: 36%; }
+
+.thEarasers,
+.th {
+  padding: 16px 20px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.th {
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+}
+
+.thEarasers {
+  background: rgba(240,120,120,0.08);
+  border-left: 2px solid var(--color-accent);
+  border-right: 2px solid var(--color-accent);
+}
+
+.thBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-accent);
+  font-size: 15px;
+}
+
+.row { transition: background 0.15s; }
+.row:hover { background: var(--color-surface-2); }
+
+.tdLabel {
+  padding: 14px 20px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.row:last-child .tdLabel,
+.row:last-child .td,
+.row:last-child .tdEarasers {
+  border-bottom: none;
+}
+
+.td {
+  padding: 14px 20px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.tdEarasers {
+  composes: td;
+  background: rgba(240,120,120,0.05);
+  border-left: 2px solid var(--color-accent);
+  border-right: 2px solid var(--color-accent);
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.yes { color: var(--color-success); display: flex; justify-content: center; align-items: center; }
+.no  { color: var(--color-danger);  display: flex; justify-content: center; align-items: center; }
+
+.cta {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.ctaBtn:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}
