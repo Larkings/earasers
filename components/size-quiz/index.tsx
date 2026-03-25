@@ -164,7 +164,7 @@ export const SizeQuiz = ({ minimal, inline, onSelect }: Props) => {
                 className={styles.resultCta}
                 onClick={() => onSelect(result.sizeIdx, result.filterDb)}
               >
-                <CheckIcon size={14} /> Selecteer aanbevolen maat
+                <CheckIcon size={14} /> Select recommended size
               </button>
             ) : (
               <a href={result.href} className={styles.resultCta}>

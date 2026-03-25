@@ -44,23 +44,23 @@ const Cart: NextPage = () => {
         <div className="container">
 
           <nav className={styles.breadcrumb}>
-            <Link href="/">Home</Link><span>/</span><span>Winkelwagen</span>
+            <Link href="/">Home</Link><span>/</span><span>Cart</span>
           </nav>
 
           <h1 className={styles.heading}>
-            Winkelwagen {totalCount > 0 && `(${totalCount})`}
+            Cart {totalCount > 0 && `(${totalCount})`}
           </h1>
 
           {items.length === 0 ? (
             /* ── Empty state ── */
             <div className={styles.empty}>
               <CartIcon />
-              <p className={styles.emptyTitle}>Je winkelwagen is leeg</p>
+              <p className={styles.emptyTitle}>Your cart is empty</p>
               <p className={styles.emptySub}>
-                Voeg een product toe vanuit onze collectie om te beginnen.
+                Add a product from our collection to get started.
               </p>
               <Link href="/collection" className={styles.emptyBtn}>
-                Bekijk onze collectie <ArrowRightIcon size={15} />
+                Browse our collection <ArrowRightIcon size={15} />
               </Link>
             </div>
           ) : (
@@ -78,7 +78,7 @@ const Cart: NextPage = () => {
                         {item.name}
                       </Link>
                       <div className={styles.itemMeta}>
-                        <span className={styles.itemPill}>Maat {item.size}</span>
+                        <span className={styles.itemPill}>Size {item.size}</span>
                         <span className={styles.itemPill}>{item.filter}</span>
                       </div>
                       <div className={styles.itemFooter}>
@@ -86,7 +86,7 @@ const Cart: NextPage = () => {
                           {fmt(item.price * item.qty)}
                           {item.qty > 1 && (
                             <> <small style={{ fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 400, color: 'var(--color-text-muted)' }}>
-                              ({fmt(item.price)} / st.)
+                              ({fmt(item.price)} each)
                             </small></>
                           )}
                         </span>
@@ -95,20 +95,20 @@ const Cart: NextPage = () => {
                             <button
                               className={styles.qtyBtn}
                               onClick={() => setQty(item.id, item.qty - 1)}
-                              aria-label="Minder"
+                              aria-label="Decrease"
                             >−</button>
                             <span className={styles.qtyCount}>{item.qty}</span>
                             <button
                               className={styles.qtyBtn}
                               onClick={() => setQty(item.id, item.qty + 1)}
-                              aria-label="Meer"
+                              aria-label="Increase"
                             >+</button>
                           </div>
                           <button
                             className={styles.removeBtn}
                             onClick={() => removeItem(item.id)}
                           >
-                            Verwijder
+                            Remove
                           </button>
                         </div>
                       </div>
@@ -119,17 +119,17 @@ const Cart: NextPage = () => {
 
               {/* ── Summary ── */}
               <div className={styles.summary}>
-                <p className={styles.summaryTitle}>Besteloverzicht</p>
+                <p className={styles.summaryTitle}>Order summary</p>
 
                 {/* Free shipping bar */}
                 <div className={styles.shippingBar}>
                   {remaining > 0 ? (
                     <p className={styles.shippingMsg}>
-                      Nog <strong>{fmt(remaining)}</strong> voor gratis verzending
+                      Only <strong>{fmt(remaining)}</strong> away from free shipping
                     </p>
                   ) : (
                     <p className={styles.shippingMsgFree}>
-                      <CheckIcon size={14} /> Gratis verzending!
+                      <CheckIcon size={14} /> Free shipping!
                     </p>
                   )}
                   <div className={styles.progressTrack}>
@@ -140,36 +140,36 @@ const Cart: NextPage = () => {
                 {/* Lines */}
                 <div className={styles.summaryLines}>
                   <div className={styles.summaryLine}>
-                    <span>Subtotaal</span>
+                    <span>Subtotal</span>
                     <span>{fmt(subtotal)}</span>
                   </div>
                   <div className={styles.summaryLine}>
-                    <span>Verzending</span>
+                    <span>Shipping</span>
                     {shipping === 0
-                      ? <span className={styles.summaryLineGreen}>Gratis</span>
+                      ? <span className={styles.summaryLineGreen}>Free</span>
                       : <span>{fmt(SHIPPING_COST)}</span>
                     }
                   </div>
                 </div>
 
                 <div className={styles.summaryTotal}>
-                  <span className={styles.summaryTotalLabel}>Totaal</span>
+                  <span className={styles.summaryTotalLabel}>Total</span>
                   <span className={styles.summaryTotalPrice}>{fmt(total)}</span>
                 </div>
 
                 <button className={styles.checkoutBtn}>
-                  Afrekenen <ArrowRightIcon size={15} />
+                  Checkout <ArrowRightIcon size={15} />
                 </button>
 
                 <Link href="/collection" className={styles.continueBtn}>
-                  Verder winkelen
+                  Continue shopping
                 </Link>
 
                 {/* Trust */}
                 <div className={styles.trustRow}>
-                  <span className={styles.trustItem}><ShieldIcon size={13} /> Veilig betalen</span>
-                  <span className={styles.trustItem}><CheckIcon size={13} /> 30 dagen retourrecht</span>
-                  <span className={styles.trustItem}><CheckIcon size={13} /> Gratis verzending v.a. €39</span>
+                  <span className={styles.trustItem}><ShieldIcon size={13} /> Secure payment</span>
+                  <span className={styles.trustItem}><CheckIcon size={13} /> 30-day return policy</span>
+                  <span className={styles.trustItem}><CheckIcon size={13} /> Free shipping from €39</span>
                 </div>
               </div>
 
@@ -180,7 +180,7 @@ const Cart: NextPage = () => {
           {crossSell.length > 0 && (
             <div className={styles.crossSell}>
               <h2 className={styles.crossSellHeading}>
-                {items.length === 0 ? 'Ontdek onze collectie' : 'Misschien ook interessant'}
+                {items.length === 0 ? 'Discover our collection' : 'You might also like'}
               </h2>
               <div className={styles.crossGrid}>
                 {crossSell.map(p => (

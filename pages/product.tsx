@@ -154,14 +154,14 @@ const Product: NextPage = () => {
               <div className={styles.ratingRow}>
                 <Stars count={product.rating} />
                 <a href="#reviews" className={styles.ratingLink}>
-                  {product.rating} · {product.reviews.toLocaleString('nl-NL')} reviews
+                  {product.rating} · {product.reviews.toLocaleString('en-GB')} reviews
                 </a>
               </div>
 
               <div className={styles.priceRow}>
                 <span className={styles.price}>{fmt(price)}</span>
                 <span className={styles.original}>{fmt(original)}</span>
-                <span className={styles.badge}>Bespaar {fmtSave(price, original)}</span>
+                <span className={styles.badge}>Save {fmtSave(price, original)}</span>
               </div>
 
               <p className={styles.desc}>{product.description}</p>
@@ -169,12 +169,12 @@ const Product: NextPage = () => {
               {/* Size selector */}
               <div className={styles.selectorBlock}>
                 <div className={styles.selectorLabel}>
-                  <span>Maat</span>
+                  <span>Size</span>
                   <button
                     className={styles.sizeGuide}
                     onClick={() => setQuizOpen(o => !o)}
                   >
-                    {quizOpen ? 'Quiz sluiten ×' : 'Weet je je maat niet? →'}
+                    {quizOpen ? 'Close quiz ×' : "Don't know your size? →"}
                   </button>
                 </div>
                 <div className={styles.sizeGrid}>
@@ -197,7 +197,7 @@ const Product: NextPage = () => {
 
                 {quizApplied && (
                   <div className={styles.quizApplied}>
-                    <CheckIcon size={14} /> Maat ingesteld op basis van jouw antwoorden
+                    <CheckIcon size={14} /> Size set based on your answers
                   </div>
                 )}
 
@@ -210,7 +210,7 @@ const Product: NextPage = () => {
 
               {/* Filter selector */}
               <div className={styles.selectorBlock}>
-                <span className={styles.selectorLabel}>Filterniveau</span>
+                <span className={styles.selectorLabel}>Filter level</span>
                 <div className={styles.filterList}>
                   {product.filters.map((f, i) => (
                     <button
@@ -228,12 +228,12 @@ const Product: NextPage = () => {
 
               {/* Quantity */}
               <div className={styles.qtyRow}>
-                <span className={styles.qtyLabel}>Aantal</span>
+                <span className={styles.qtyLabel}>Quantity</span>
                 <div className={styles.qtyControl}>
                   <button
                     className={styles.qtyBtn}
                     onClick={() => setQty(q => Math.max(1, q - 1))}
-                    aria-label="Minder"
+                    aria-label="Decrease"
                   >
                     −
                   </button>
@@ -241,7 +241,7 @@ const Product: NextPage = () => {
                   <button
                     className={styles.qtyBtn}
                     onClick={() => setQty(q => q + 1)}
-                    aria-label="Meer"
+                    aria-label="Increase"
                   >
                     +
                   </button>
@@ -254,16 +254,16 @@ const Product: NextPage = () => {
                 onClick={handleAddToCart}
               >
                 {added
-                  ? <><CheckIcon size={16} /> Toegevoegd aan winkelwagen</>
-                  : `Voeg ${qty > 1 ? `${qty}× ` : ''}toe aan winkelwagen — ${fmt(price * qty)}`
+                  ? <><CheckIcon size={16} /> Added to cart</>
+                  : `Add ${qty > 1 ? `${qty}× ` : ''}to cart — ${fmt(price * qty)}`
                 }
               </button>
 
               {/* Trust */}
               <div className={styles.trust}>
-                <span className={styles.trustItem}><ShieldIcon size={15} /> Veilig betalen</span>
-                <span className={styles.trustItem}>Gratis verzending v.a. €39</span>
-                <span className={styles.trustItem}>30 dagen retour</span>
+                <span className={styles.trustItem}><ShieldIcon size={15} /> Secure payment</span>
+                <span className={styles.trustItem}>Free shipping from €39</span>
+                <span className={styles.trustItem}>30-day returns</span>
               </div>
             </div>
           </div>
@@ -284,8 +284,8 @@ const Product: NextPage = () => {
 
             {activeTab === 0 && (
               <div className={styles.tabContent}>
-                <h3>Wat maakt Earasers anders?</h3>
-                <p>Earasers gebruiken een gepatenteerd open-canal ontwerp gecombineerd met een V-Filter om schadelijke geluidsniveaus te reduceren, terwijl de natuurlijke rijkheid van muziek behouden blijft.</p>
+                <h3>What makes Earasers different?</h3>
+                <p>Earasers use a patented open-canal design combined with a V-Filter to reduce harmful sound levels while preserving the natural richness of music.</p>
                 <ul className={styles.featureList}>
                   {product.features.map(f => (
                     <li key={f}><CheckIcon size={15} className={styles.featureCheck} /> {f}</li>
@@ -296,8 +296,8 @@ const Product: NextPage = () => {
 
             {activeTab === 1 && (
               <div className={styles.tabContent}>
-                <h3>Dempingswaarden</h3>
-                <p>Gemeten conform ISO 11904-1. Waarden zijn gemiddelde demping per testfrequentie.</p>
+                <h3>Attenuation values</h3>
+                <p>Measured according to ISO 11904-1. Values are average attenuation per test frequency.</p>
                 <Image
                   src="https://www.earasers.shop/cdn/shop/files/EARASERS_attenuation_tables.png"
                   alt="Earasers attenuation chart"
@@ -312,12 +312,12 @@ const Product: NextPage = () => {
               <div className={styles.tabContent}>
                 <div className={styles.reviewsHeader}>
                   <Stars count={product.rating} />
-                  <span>{product.rating} van 5 — gebaseerd op {product.reviews.toLocaleString('nl-NL')} reviews</span>
+                  <span>{product.rating} out of 5 — based on {product.reviews.toLocaleString('en-GB')} reviews</span>
                 </div>
                 <div className={styles.reviewGrid}>
                   {[
                     { name: 'Michael T.', rating: 5, text: 'These Earasers are perfect. They fit in very nicely, are barely visible, and balance the sound perfectly.' },
-                    { name: 'Saskia H.',  rating: 5, text: 'Veel beter en goedkoper dan alle op maat gemaakte oortjes van gevestigde merken die ik gehad heb!' },
+                    { name: 'Saskia H.',  rating: 5, text: 'Much better and cheaper than all the custom-fitted earplugs from established brands that I have had!' },
                     { name: 'Joanne C.', rating: 5, text: 'Great customer service — they sent me the mediums plus the filter removal tool free of charge!' },
                   ].map(r => (
                     <div key={r.name} className={styles.reviewCard}>
@@ -334,7 +334,7 @@ const Product: NextPage = () => {
           {/* Recently Viewed */}
           {recentlyViewed.length > 0 && (
             <div className={styles.recentSection}>
-              <h3 className={styles.recentHeading}>Recent bekeken</h3>
+              <h3 className={styles.recentHeading}>Recently viewed</h3>
               <div className={styles.recentGrid}>
                 {recentlyViewed.map(slug => {
                   const p = getProduct(slug);

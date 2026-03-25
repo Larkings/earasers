@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styles from './navbar.module.css';
 import { MusicIcon, HeadphonesIcon, ToothIcon, MoonIcon, HelmetIcon, EarIcon, ChevronDownIcon, CloseIcon } from '../icons';
 import { useCart } from '../../context/cart';
+import { useAuth } from '../../context/auth';
 
 type Category = { label: string; href: string; icon: React.ReactNode };
 
@@ -25,6 +26,7 @@ const faqLinks = [
 
 export const Navbar = () => {
   const { totalCount, openCart } = useCart();
+  const { user } = useAuth();
   const [scrolled, setScrolled]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [shopOpen, setShopOpen]     = useState(false);
@@ -107,7 +109,15 @@ export const Navbar = () => {
           </nav>
 
           <div className={styles.actions}>
-            <button type="button" className={styles.cartBtn} onClick={openCart} aria-label="Open winkelwagen">
+            <Link
+              href={user ? '/account' : '/account/login'}
+              className={styles.accountBtn}
+              aria-label={user ? `Account: ${user.firstName}` : 'Sign in'}
+            >
+              <AccountIcon />
+              {user && <span className={styles.accountDot} />}
+            </Link>
+            <button type="button" className={styles.cartBtn} onClick={openCart} aria-label="Open cart">
               <CartIcon />
               {totalCount > 0 && (
                 <span className={styles.cartCount}>{totalCount > 99 ? '99+' : totalCount}</span>
@@ -154,6 +164,13 @@ export const Navbar = () => {
     </>
   );
 };
+
+const AccountIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+    <circle cx="12" cy="7" r="4"/>
+  </svg>
+);
 
 const CartIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">

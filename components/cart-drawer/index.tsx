@@ -29,19 +29,19 @@ const DrawerItem = ({ item }: { item: CartItem }) => {
           {item.name}
         </Link>
         <div className={styles.itemMeta}>
-          <span className={styles.itemPill}>Maat {item.size}</span>
+          <span className={styles.itemPill}>Size {item.size}</span>
           <span className={styles.itemPill}>{item.filter}</span>
         </div>
         <div className={styles.itemFooter}>
           <span className={styles.itemPrice}>{fmt(item.price * item.qty)}</span>
           <div className={styles.itemActions}>
             <div className={styles.qtyControl}>
-              <button className={styles.qtyBtn} onClick={() => setQty(item.id, item.qty - 1)} aria-label="Minder">−</button>
+              <button className={styles.qtyBtn} onClick={() => setQty(item.id, item.qty - 1)} aria-label="Decrease">−</button>
               <span className={styles.qtyCount}>{item.qty}</span>
-              <button className={styles.qtyBtn} onClick={() => setQty(item.id, item.qty + 1)} aria-label="Meer">+</button>
+              <button className={styles.qtyBtn} onClick={() => setQty(item.id, item.qty + 1)} aria-label="Increase">+</button>
             </div>
             <button className={styles.removeBtn} onClick={() => removeItem(item.id)}>
-              Verwijder
+              Remove
             </button>
           </div>
         </div>
@@ -74,15 +74,15 @@ const DrawerContent = () => {
     <>
       <div className={styles.backdrop} onClick={closeCart} aria-hidden="true" />
 
-      <div className={styles.drawer} role="dialog" aria-modal="true" aria-label="Winkelwagen">
+      <div className={styles.drawer} role="dialog" aria-modal="true" aria-label="Cart">
 
         {/* Header */}
         <div className={styles.header}>
           <p className={styles.title}>
-            Winkelwagen
+            Cart
             {totalCount > 0 && <span className={styles.count}>({totalCount})</span>}
           </p>
-          <button className={styles.closeBtn} onClick={closeCart} aria-label="Sluit winkelwagen">
+          <button className={styles.closeBtn} onClick={closeCart} aria-label="Close cart">
             <CloseIcon size={20} />
           </button>
         </div>
@@ -92,10 +92,10 @@ const DrawerContent = () => {
           {items.length === 0 ? (
             <div className={styles.empty}>
               <EmptyCartIcon />
-              <p className={styles.emptyTitle}>Je winkelwagen is leeg</p>
-              <p className={styles.emptySub}>Voeg een product toe om te beginnen.</p>
+              <p className={styles.emptyTitle}>Your cart is empty</p>
+              <p className={styles.emptySub}>Add a product to get started.</p>
               <Link href="/collection" className={styles.emptyLink} onClick={closeCart}>
-                Bekijk onze collectie <ArrowRightIcon size={13} />
+                Browse our collection <ArrowRightIcon size={13} />
               </Link>
             </div>
           ) : (
@@ -111,11 +111,11 @@ const DrawerContent = () => {
             <div className={styles.shippingBar}>
               {remaining > 0 ? (
                 <p className={styles.shippingMsg}>
-                  Nog <strong>{fmt(remaining)}</strong> voor gratis verzending
+                  Only <strong>{fmt(remaining)}</strong> away from free shipping
                 </p>
               ) : (
                 <p className={styles.shippingFree}>
-                  <CheckIcon size={13} /> Gratis verzending!
+                  <CheckIcon size={13} /> Free shipping!
                 </p>
               )}
               <div className={styles.progressTrack}>
@@ -125,17 +125,17 @@ const DrawerContent = () => {
 
             {/* Subtotal */}
             <div className={styles.totals}>
-              <span className={styles.totalsLabel}>Subtotaal</span>
+              <span className={styles.totalsLabel}>Subtotal</span>
               <span className={styles.totalsPrice}>{fmt(subtotal)}</span>
             </div>
 
             {/* CTA */}
             <Link href="/cart" className={styles.checkoutBtn} onClick={closeCart}>
-              Afrekenen <ArrowRightIcon size={15} />
+              Checkout <ArrowRightIcon size={15} />
             </Link>
 
             <Link href="/cart" className={styles.viewCartBtn} onClick={closeCart}>
-              Bekijk winkelwagen
+              View cart
             </Link>
 
           </div>

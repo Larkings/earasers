@@ -3,12 +3,12 @@ import Link from 'next/link';
 import styles from './footer.module.css';
 
 const shopLinks = [
-  { label: 'Music Earplugs',      href: '/collections/musician-s-hifi-earplugs' },
-  { label: "DJ's",                href: '/products/earasers-dj-earplugs-new' },
-  { label: 'Dentist & Hygienist', href: '/collections/earasers-dentists-hygienists' },
-  { label: 'Sleeping',            href: '/collections/peace-quiet-earplugs' },
-  { label: 'Motorsport',          href: '/collections/moto-hifi-earplugs' },
-  { label: 'Noise Sensitivity',   href: '/collections/noise-sensitivity' },
+  { label: 'Music Earplugs',      href: '/collection' },
+  { label: "DJ's",                href: '/collection' },
+  { label: 'Dentist & Hygienist', href: '/collection' },
+  { label: 'Sleeping',            href: '/collection' },
+  { label: 'Motorsport',          href: '/collection' },
+  { label: 'Noise Sensitivity',   href: '/collection' },
 ];
 
 const supportLinks = [
@@ -24,7 +24,7 @@ const companyLinks = [
   { label: 'About Us',      href: '/about' },
   { label: 'Store Locator', href: '/store-locator' },
   { label: 'Affiliates',    href: '/about' },
-  { label: 'Blog',          href: '/' },
+  { label: 'Blog',          href: '/blog' },
 ];
 
 export const Footer = () => (
@@ -57,7 +57,7 @@ export const Footer = () => (
           <p className={styles.colTitle}>Shop</p>
           <ul className={styles.links}>
             {shopLinks.map(l => (
-              <li key={l.href}><a href={l.href} className={styles.link}>{l.label}</a></li>
+              <li key={l.label}><Link href={l.href} className={styles.link}>{l.label}</Link></li>
             ))}
           </ul>
         </div>
@@ -67,7 +67,7 @@ export const Footer = () => (
           <p className={styles.colTitle}>Support</p>
           <ul className={styles.links}>
             {supportLinks.map(l => (
-              <li key={l.href}><a href={l.href} className={styles.link}>{l.label}</a></li>
+              <li key={l.label}><Link href={l.href} className={styles.link}>{l.label}</Link></li>
             ))}
           </ul>
         </div>
@@ -77,7 +77,7 @@ export const Footer = () => (
           <p className={styles.colTitle}>Company</p>
           <ul className={styles.links}>
             {companyLinks.map(l => (
-              <li key={l.href}><a href={l.href} className={styles.link}>{l.label}</a></li>
+              <li key={l.label}><Link href={l.href} className={styles.link}>{l.label}</Link></li>
             ))}
           </ul>
           <div className={styles.payments}>
@@ -91,8 +91,8 @@ export const Footer = () => (
       <div className={styles.bottom}>
         <p className={styles.copy}>© 2025 Earasers. All rights reserved.</p>
         <div className={styles.legal}>
-          <a href="/pages/privacy-policy"   className={styles.legalLink}>Privacy Policy</a>
-          <a href="/pages/terms-of-service" className={styles.legalLink}>Terms of Service</a>
+          <Link href="/privacy"       className={styles.legalLink}>Privacy Policy</Link>
+          <Link href="/terms"         className={styles.legalLink}>Terms of Service</Link>
         </div>
       </div>
     </div>

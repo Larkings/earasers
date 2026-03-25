@@ -3,6 +3,8 @@ import type { AppProps } from 'next/app';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { CartProvider } from '../context/cart';
+import { AuthProvider } from '../context/auth';
+import { CookieBanner } from '../components/cookie-banner';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -35,9 +37,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router]);
 
   return (
-    <CartProvider>
-      <Component {...pageProps} />
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <Component {...pageProps} />
+        <CookieBanner />
+      </CartProvider>
+    </AuthProvider>
   );
 }
 

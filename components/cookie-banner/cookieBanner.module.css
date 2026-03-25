@@ -1,0 +1,217 @@
+/* ── Cookie Banner ─────────────────────────────────────────────── */
+
+.banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 600;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px 24px;
+}
+
+/* ── Top row ────────────────────────────────────────────────────── */
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.text { flex: 1; min-width: 240px; }
+
+.title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.sub {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────── */
+
+.btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.btnAll {
+  height: 40px;
+  padding: 0 20px;
+  background: var(--color-accent);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.btnAll:hover { background: var(--color-accent-hover); }
+
+.btnNecessary {
+  height: 40px;
+  padding: 0 20px;
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.btnNecessary:hover { border-color: var(--color-text); }
+
+.btnCustomize {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+
+.btnCustomize:hover { color: var(--color-text); }
+
+/* ── Expanded settings ───────────────────────────────────────────── */
+
+.settings {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.settingsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.settingRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.settingName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.settingDesc {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* ── Toggle switch ───────────────────────────────────────────────── */
+
+.toggle {
+  flex-shrink: 0;
+  position: relative;
+  width: 40px;
+  height: 22px;
+  margin-top: 2px;
+}
+
+.toggle input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggleLabel {
+  position: absolute;
+  inset: 0;
+  background: var(--color-border);
+  border-radius: 22px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.toggleLabel::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.toggle input:checked + .toggleLabel {
+  background: var(--color-accent);
+}
+
+.toggle input:checked + .toggleLabel::after {
+  transform: translateX(18px);
+}
+
+.toggleDisabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Save button ─────────────────────────────────────────────────── */
+
+.btnSave {
+  height: 40px;
+  padding: 0 24px;
+  background: var(--color-accent);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s;
+}
+
+.btnSave:hover { background: var(--color-accent-hover); }
+
+/* ── Mobile ─────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .inner { padding: 16px; }
+  .top { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .btns { width: 100%; }
+  .btnAll, .btnNecessary { flex: 1; justify-content: center; }
+}
