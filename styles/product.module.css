@@ -38,11 +38,27 @@
 .gallery { display: flex; flex-direction: column; gap: 12px; }
 
 .mainImg {
+  position: relative;
   aspect-ratio: 1;
   border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--color-surface-2);
   border: 1px solid var(--color-border);
+}
+
+.galleryTag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  z-index: 2;
 }
 
 .mainImg img {
@@ -57,6 +73,7 @@
 .thumbs { display: flex; gap: 10px; }
 
 .thumb {
+  position: relative;
   width: 72px;
   height: 72px;
   border-radius: var(--radius-sm);
@@ -148,9 +165,40 @@
   font-weight: 400;
   color: var(--color-accent);
   transition: opacity 0.2s;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .sizeGuide:hover { opacity: 0.75; }
+
+.quizPanel {
+  margin-top: 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px 20px;
+  background: var(--color-surface);
+  animation: quizIn 0.2s ease;
+}
+
+@keyframes quizIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.quizApplied {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: #16a34a;
+  animation: quizIn 0.2s ease;
+}
 
 .sizeGrid { display: flex; flex-wrap: wrap; gap: 8px; }
 
@@ -243,6 +291,58 @@
   font-size: 12px;
   color: var(--color-text-muted);
   line-height: 1.4;
+}
+
+/* Quantity */
+.qtyRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.qtyLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.qtyControl {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.qtyBtn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.qtyBtn:hover {
+  background: var(--color-surface-2);
+  color: var(--color-accent);
+}
+
+.qtyCount {
+  min-width: 44px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  border-left: 1.5px solid var(--color-border);
+  border-right: 1.5px solid var(--color-border);
+  padding: 0 4px;
+  line-height: 40px;
 }
 
 /* CTA */
@@ -398,4 +498,79 @@
   font-weight: 600;
   color: var(--color-text);
   opacity: 0.7;
+}
+
+/* Recently Viewed */
+.recentSection {
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid var(--color-border);
+}
+
+.recentHeading {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 32px);
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+  margin-bottom: 24px;
+}
+
+.recentGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .recentGrid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+}
+
+.recentCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.2s;
+}
+
+.recentCard:hover { transform: translateY(-3px); }
+
+.recentImg {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+}
+
+.recentImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.recentCard:hover .recentImg img { transform: scale(1.04); }
+
+.recentCollection {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+}
+
+.recentName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.recentPrice {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text);
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
 }

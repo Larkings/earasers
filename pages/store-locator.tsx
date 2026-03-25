@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import React, { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { Layout } from '../components/layout';
 import styles from '../styles/store-locator.module.css';
 
@@ -126,7 +127,7 @@ const StoreLocator: NextPage = () => {
             <h1 className={styles.heading}>Store Locator</h1>
             <p className={styles.sub}>
               Find a store near you, or{' '}
-              <a href="/collection" className={styles.subLink}>order online</a>{' '}
+              <Link href="/collection" className={styles.subLink}>order online</Link>{' '}
               with free shipping from €39.
             </p>
           </div>
@@ -238,15 +239,15 @@ const StoreLocator: NextPage = () => {
           {/* ── 5. Can't find a store? ───────────────────── */}
           <div className={styles.notFound}>
             <div className={styles.notFoundText}>
-              <h2 className={styles.notFoundHeading}>Can't find a store near you?</h2>
+              <h2 className={styles.notFoundHeading}>Can&apos;t find a store near you?</h2>
               <p className={styles.notFoundSub}>
                 Order online with free shipping from €39.<br />
                 Delivered within 2 to 5 days across Europe.
               </p>
             </div>
             <div className={styles.notFoundActions}>
-              <a href="/collection" className={styles.btnShop}>Shop Online →</a>
-              <a href="/contact"    className={styles.btnContact}>Contact Us</a>
+              <Link href="/collection" className={styles.btnShop}>Shop Online →</Link>
+              <Link href="/contact"    className={styles.btnContact}>Contact Us</Link>
             </div>
           </div>
 
@@ -255,7 +256,7 @@ const StoreLocator: NextPage = () => {
             <div className={styles.retailerInner}>
               <h2 className={styles.retailerHeading}>Become an official Earasers retailer</h2>
               <p className={styles.retailerSub}>
-                Run a music store, pharmacy or specialist shop? Stock Europe's most awarded HiFi earplugs and give your customers the hearing protection they actually want to wear.
+                Run a music store, pharmacy or specialist shop? Stock Europe&apos;s most awarded HiFi earplugs and give your customers the hearing protection they actually want to wear.
               </p>
               <a
                 href="mailto:info@earasers.shop?subject=Retailer%20Inquiry"

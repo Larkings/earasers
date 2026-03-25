@@ -39,7 +39,7 @@ export const Reviews = () => (
         {reviews.map((r, i) => (
           <div key={r.name} className={styles.card} data-reveal data-delay={String((i % 3) + 1) as any}>
             <Stars count={r.rating} />
-            <p className={styles.text}>"{r.text}"</p>
+            <p className={styles.text}>&ldquo;{r.text}&rdquo;</p>
             <p className={styles.reviewer}>{r.country} · {r.name}</p>
           </div>
         ))}

@@ -67,6 +67,7 @@
 }
 
 .imgWrap {
+  position: relative;
   aspect-ratio: 16/9;
   overflow: hidden;
   background: var(--color-surface-2);

@@ -1,11 +1,13 @@
 import type { NextPage } from 'next';
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Layout } from '../components/layout';
 import styles from '../styles/faq.module.css';
 
 const categories = [
   {
     title: 'Product & Brand',
+    id: 'product',
     items: [
       {
         q: 'What makes Earasers different from regular earplugs?',
@@ -27,6 +29,7 @@ const categories = [
   },
   {
     title: 'Sizing',
+    id: 'sizing',
     items: [
       {
         q: 'How do I know which size I need?',
@@ -44,6 +47,7 @@ const categories = [
   },
   {
     title: 'Usage & Maintenance',
+    id: 'usage',
     items: [
       {
         q: 'How do I insert Earasers correctly?',
@@ -61,6 +65,7 @@ const categories = [
   },
   {
     title: 'Ordering & Delivery',
+    id: 'ordering',
     items: [
       {
         q: 'How long does delivery take?',
@@ -112,7 +117,7 @@ const Faq: NextPage = () => {
 
           <div className={styles.header}>
             <h1 className={styles.heading}>Frequently Asked Questions</h1>
-            <p className={styles.sub}>Can't find your answer? <a href="/contact" className={styles.link}>Contact our team</a></p>
+            <p className={styles.sub}>Can&apos;t find your answer? <Link href="/contact" className={styles.link}>Contact our team</Link></p>
             <input
               type="search"
               placeholder="Search questions…"
@@ -122,7 +127,7 @@ const Faq: NextPage = () => {
             />
           </div>
 
-          <div className={styles.videoWrap} data-reveal>
+          <div className={styles.videoWrap} data-reveal id="instruction-video">
             <h2 className={styles.videoTitle}>See how to fit them correctly</h2>
             <div className={styles.videoEmbed}>
               <iframe
@@ -136,10 +141,10 @@ const Faq: NextPage = () => {
 
           <div className={styles.content}>
             {filtered.length === 0 ? (
-              <p className={styles.noResults}>No results for "{search}"</p>
+              <p className={styles.noResults}>No results for &ldquo;{search}&rdquo;</p>
             ) : (
               filtered.map(c => (
-                <div key={c.title} className={styles.category} data-reveal>
+                <div key={c.title} id={c.id} className={styles.category} data-reveal>
                   <h2 className={styles.catTitle}>{c.title}</h2>
                   <div className={styles.list}>
                     {c.items.map(i => <AccordionItem key={i.q} q={i.q} a={i.a} />)}
@@ -151,8 +156,8 @@ const Faq: NextPage = () => {
 
           <div className={styles.cta}>
             <p>Still have a question?</p>
-            <a href="/contact" className={styles.ctaBtn}>Contact support</a>
-            <a href="/faq" className={styles.ctaLink}>View full specs →</a>
+            <Link href="/contact" className={styles.ctaBtn}>Contact support</Link>
+            <Link href="/faq" className={styles.ctaLink}>View full specs →</Link>
           </div>
         </div>
       </div>

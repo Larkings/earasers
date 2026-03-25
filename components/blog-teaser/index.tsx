@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import styles from './blog-teaser.module.css';
 
 const posts = [
@@ -37,7 +38,7 @@ export const BlogTeaser = () => (
         {posts.map(p => (
           <a key={p.href} href={p.href} className={styles.card}>
             <div className={styles.imgWrap}>
-              <img src={p.img} alt={p.title} className={styles.img} loading="lazy" />
+              <Image src={p.img} alt={p.title} fill style={{ objectFit: 'cover' }} />
             </div>
             <div className={styles.content}>
               <p className={styles.date}>{p.date}</p>

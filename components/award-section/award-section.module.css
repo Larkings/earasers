@@ -1,5 +1,5 @@
 .section {
-  padding: 64px 0;
+  padding: 40px 0;
   background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(240,120,120,0.07) 0%, transparent 70%),
               var(--color-surface);
   border-top: 1px solid var(--color-border);
@@ -7,7 +7,7 @@
 }
 
 @media (min-width: 768px) {
-  .section { padding: 100px 0; }
+  .section { padding: 60px 0; }
 }
 
 .inner {

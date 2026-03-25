@@ -1,5 +1,7 @@
 import type { NextPage } from 'next';
 import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { Layout } from '../components/layout';
 import { TrophyIcon, ArrowRightIcon } from '../components/icons';
 import styles from '../styles/about.module.css';
@@ -35,14 +37,16 @@ const About: NextPage = () => (
         <div className="container">
           <div className={styles.storyGrid}>
             <div className={styles.storyImg} data-reveal>
-              <img
+              <Image
                 src="https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png"
                 alt="Earasers product"
+                fill
+                style={{ objectFit: 'cover' }}
               />
             </div>
             <div className={styles.storyText} data-reveal data-delay="1">
               <h2 className={styles.sectionHeading}>Our story</h2>
-              <p>Every year, millions of people suffer permanent hearing damage at concerts, in clubs and during rehearsals. Not because they don't care, but because the existing options were never good enough. Foam earplugs killed the music. Custom molds cost hundreds and took weeks. There was no middle ground.</p>
+              <p>Every year, millions of people suffer permanent hearing damage at concerts, in clubs and during rehearsals. Not because they don&apos;t care, but because the existing options were never good enough. Foam earplugs killed the music. Custom molds cost hundreds and took weeks. There was no middle ground.</p>
               <p>We spent years developing a solution: an open-canal design combined with a precision acoustic filter that reduces volume without changing the character of the sound. The result is Earasers. Nearly invisible, self-fitting, medically certified and consistently voted the best music earplugs in the world.</p>
               <p>Today we protect the hearing of musicians, DJs, dentists, motorsport riders and people with noise sensitivity across Europe and beyond.</p>
             </div>
@@ -74,7 +78,7 @@ const About: NextPage = () => (
       <section className={styles.section}>
         <div className="container">
           <h2 className={styles.sectionHeading} data-reveal>Five years of recognition</h2>
-          <p className={styles.sectionSub} data-reveal data-delay="1">Awarded by MusicRadar.com, the world's largest music technology platform.</p>
+          <p className={styles.sectionSub} data-reveal data-delay="1">Awarded by MusicRadar.com, the world&apos;s largest music technology platform.</p>
           <div className={styles.timeline}>
             {timeline.map((t, i) => (
               <div key={t.year} className={styles.timelineItem} data-reveal data-delay={String((i % 3) + 1) as any}>
@@ -98,9 +102,9 @@ const About: NextPage = () => (
           <div className={styles.ctaBox}>
             <h2 className={styles.ctaHeading} data-reveal>Ready to protect your hearing?</h2>
             <p className={styles.ctaSub} data-reveal data-delay="1">Join 50,000+ customers across Europe who trust Earasers.</p>
-            <a href="/collection" className={styles.ctaBtn} data-reveal data-delay="2">
+            <Link href="/collection" className={styles.ctaBtn} data-reveal data-delay="2">
               Shop now <ArrowRightIcon size={15} />
-            </a>
+            </Link>
           </div>
         </div>
       </section>

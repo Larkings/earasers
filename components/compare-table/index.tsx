@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import styles from './compare-table.module.css';
 import { CheckIcon, CloseIcon, AwardIcon, ArrowRightIcon } from '../icons';
 
@@ -24,7 +25,7 @@ export const CompareTable = () => (
   <section className={styles.section}>
     <div className="container">
       <h2 className={styles.heading} data-reveal>Earasers vs. the alternatives</h2>
-      <p className={styles.sub} data-reveal data-delay="1">Good hearing protection shouldn't cost a fortune or muffle everything.</p>
+      <p className={styles.sub} data-reveal data-delay="1">Good hearing protection shouldn&apos;t cost a fortune or muffle everything.</p>
 
       <div className={styles.tableWrap} data-reveal data-delay="2">
         <table className={styles.table}>
@@ -54,9 +55,9 @@ export const CompareTable = () => (
       </div>
 
       <div className={styles.cta} data-reveal data-delay="3">
-        <a href="/collection" className={styles.ctaBtn}>
+        <Link href="/collection" className={styles.ctaBtn}>
           Shop Earasers from €49,95 <ArrowRightIcon size={15} />
-        </a>
+        </Link>
       </div>
     </div>
   </section>

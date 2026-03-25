@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import styles from './footer.module.css';
 
 const shopLinks = [
@@ -33,7 +34,7 @@ export const Footer = () => (
 
         {/* Brand */}
         <div className={styles.brand}>
-          <a href="/" className={styles.logo}>EARASERS</a>
+          <Link href="/" className={styles.logo}>EARASERS</Link>
           <p className={styles.tagline}>BE EARRESPONSIBLE</p>
           <p className={styles.desc}>
             Hearing protection that actually sounds good. Made by musicians, for musicians.

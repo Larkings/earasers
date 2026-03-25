@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import styles from './best-sellers.module.css';
 import { StarIcon, StarEmptyIcon, ArrowRightIcon } from '../icons';
 
@@ -70,7 +71,7 @@ export const BestSellers = () => (
         {products.map(p => (
           <a key={p.name} href={p.href} className={styles.card}>
             <div className={styles.imgWrap}>
-              <img src={p.img} alt={p.name} className={styles.img} loading="lazy" />
+              <Image src={p.img} alt={p.name} fill style={{ objectFit: 'cover' }} />
               {p.tag && <span className={styles.tag}>{p.tag}</span>}
             </div>
             <div className={styles.info}>

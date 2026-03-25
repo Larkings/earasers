@@ -1,53 +1,112 @@
 import type { NextPage } from 'next';
-import React, { useState } from 'react';
+import React, { useState, useEffect, startTransition } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Layout } from '../components/layout';
-import { StarIcon, StarEmptyIcon, CheckIcon, ArrowRightIcon, ShieldIcon } from '../components/icons';
+import { StarIcon, StarEmptyIcon, CheckIcon, ShieldIcon } from '../components/icons';
 import styles from '../styles/product.module.css';
-
-const images = [
-  'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',
-  'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
-  'https://www.earasers.shop/cdn/shop/files/Earasers_starter_combo_kit.png',
-];
+import { getProduct, PRODUCTS, fmt, fmtSave, type Product } from '../lib/products';
+import { useCart, type CartItem } from '../context/cart';
+import { SizeQuiz } from '../components/size-quiz';
 
 const sizes = [
-  { label: 'XS', tip: 'Extra Small — fits ~3% of users' },
-  { label: 'S',  tip: 'Small — most popular, ~40% of users' },
-  { label: 'M',  tip: 'Medium — most popular, ~40% of users' },
-  { label: 'L',  tip: 'Large — fits ~3% of users' },
+  { label: 'XS',     tip: 'Extra Small — fits ~3% of users' },
+  { label: 'S',      tip: 'Small — most popular, ~40% of users' },
+  { label: 'M',      tip: 'Medium — most popular, ~40% of users' },
+  { label: 'L',      tip: 'Large — fits ~3% of users' },
   { label: 'S & M Kit', tip: 'Best of both — recommended starter' },
 ];
 
-const filters = [
-  { db: '-19dB', label: 'Comfort', desc: 'Light protection, max clarity. Great for smaller venues.' },
-  { db: '-26dB', label: 'Standard', desc: 'European norm. Ideal for most live music situations.' },
-  { db: '-31dB', label: 'Max', desc: 'Highest protection. Recommended for DJs & heavy industry.' },
-];
+const tabs = ['Description', 'Specs', 'Reviews'];
 
 const Stars = ({ count }: { count: number }) => (
   <div className={styles.stars}>
     {Array.from({ length: 5 }, (_, i) =>
-      i < count
+      i < Math.floor(count)
         ? <StarIcon key={i} size={14} className={styles.starFull} />
         : <StarEmptyIcon key={i} size={14} className={styles.starEmpty} />
     )}
   </div>
 );
 
-const tabs = ['Description', 'Specs', 'Reviews'];
+function useRecentlyViewed(currentSlug: string) {
+  const [viewed, setViewed] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!currentSlug) return;
+    try {
+      const raw = localStorage.getItem('earasers-viewed');
+      const prev: string[] = raw ? JSON.parse(raw) : [];
+      const updated = [currentSlug, ...prev.filter(s => s !== currentSlug)].slice(0, 6);
+      localStorage.setItem('earasers-viewed', JSON.stringify(updated));
+      startTransition(() => setViewed(updated.filter(s => s !== currentSlug && PRODUCTS[s]).slice(0, 4)));
+    } catch {}
+  }, [currentSlug]);
+
+  return viewed;
+}
 
 const Product: NextPage = () => {
+  const router = useRouter();
+  const { addToCart, openCart } = useCart();
+
+  const [product, setProduct] = useState<Product>(getProduct('musician'));
+
   const [activeImg,    setActiveImg]    = useState(0);
   const [activeSize,   setActiveSize]   = useState(1);
-  const [activeFilter, setActiveFilter] = useState(1);
+  const [activeFilter, setActiveFilter] = useState(0);
   const [activeTab,    setActiveTab]    = useState(0);
   const [tooltip,      setTooltip]      = useState<number | null>(null);
+  const [qty,          setQty]          = useState(1);
   const [added,        setAdded]        = useState(false);
+  const [quizOpen,     setQuizOpen]     = useState(false);
+  const [quizApplied,  setQuizApplied]  = useState(false);
 
-  const price    = activeSize >= 4 ? '€54,95' : '€49,95';
-  const original = activeSize >= 4 ? '€69,00' : '€58,00';
+  const recentlyViewed = useRecentlyViewed(product.slug);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    const p = getProduct(router.query.slug as string);
+    startTransition(() => {
+      setProduct(p);
+      setActiveImg(0);
+      setActiveFilter(0);
+      setActiveSize(1);
+      setActiveTab(0);
+      setQty(1);
+      setAdded(false);
+      setQuizOpen(false);
+      setQuizApplied(false);
+    });
+  }, [router.isReady, router.query.slug]);
+
+  const handleQuizSelect = (sizeIdx: number, filterDb: string) => {
+    setActiveSize(sizeIdx);
+    const fIdx = product.filters.findIndex(f => f.db === filterDb);
+    setActiveFilter(fIdx >= 0 ? fIdx : 0);
+    setQuizOpen(false);
+    setQuizApplied(true);
+    setTimeout(() => setQuizApplied(false), 4000);
+  };
+
+  const isKit   = activeSize >= 4;
+  const price    = isKit ? product.kitPrice    : product.price;
+  const original = isKit ? product.kitOriginal : product.originalPrice;
 
   const handleAddToCart = () => {
+    const item: CartItem = {
+      id:     `${product.slug}-${sizes[activeSize].label}-${product.filters[activeFilter].db}`,
+      slug:   product.slug,
+      name:   product.name,
+      img:    product.images[0],
+      size:   sizes[activeSize].label,
+      filter: product.filters[activeFilter].db,
+      price,
+      qty,
+    };
+    addToCart(item);
+    openCart();
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
@@ -59,11 +118,11 @@ const Product: NextPage = () => {
 
           {/* Breadcrumb */}
           <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-            <a href="/">Home</a>
+            <Link href="/">Home</Link>
             <span>/</span>
-            <a href="/shop">Shop</a>
+            <Link href="/collection">Shop</Link>
             <span>/</span>
-            <span>Music Earplugs</span>
+            <span>{product.collection}</span>
           </nav>
 
           <div className={styles.grid}>
@@ -71,16 +130,17 @@ const Product: NextPage = () => {
             {/* Gallery */}
             <div className={styles.gallery}>
               <div className={styles.mainImg}>
-                <img src={images[activeImg]} alt="Earasers Music Earplugs" />
+                <Image src={product.images[activeImg]} alt={product.name} fill style={{ objectFit: 'cover' }} />
+                {product.tag && <span className={styles.galleryTag}>{product.tag}</span>}
               </div>
               <div className={styles.thumbs}>
-                {images.map((src, i) => (
+                {product.images.map((src, i) => (
                   <button
                     key={i}
                     className={`${styles.thumb} ${i === activeImg ? styles.thumbActive : ''}`}
                     onClick={() => setActiveImg(i)}
                   >
-                    <img src={src} alt={`View ${i + 1}`} />
+                    <Image src={src} alt={`View ${i + 1}`} fill style={{ objectFit: 'cover' }} />
                   </button>
                 ))}
               </div>
@@ -88,29 +148,34 @@ const Product: NextPage = () => {
 
             {/* Info */}
             <div className={styles.info}>
-              <p className={styles.collection}>Music Earplugs</p>
-              <h1 className={styles.title}>Earasers HiFi Earplugs</h1>
+              <p className={styles.collection}>{product.collection}</p>
+              <h1 className={styles.title}>{product.name}</h1>
 
               <div className={styles.ratingRow}>
-                <Stars count={5} />
-                <a href="#reviews" className={styles.ratingLink}>4.7 · 1024 reviews</a>
+                <Stars count={product.rating} />
+                <a href="#reviews" className={styles.ratingLink}>
+                  {product.rating} · {product.reviews.toLocaleString('nl-NL')} reviews
+                </a>
               </div>
 
               <div className={styles.priceRow}>
-                <span className={styles.price}>{price}</span>
-                <span className={styles.original}>{original}</span>
-                <span className={styles.badge}>Save {activeSize >= 4 ? '€14,05' : '€8,05'}</span>
+                <span className={styles.price}>{fmt(price)}</span>
+                <span className={styles.original}>{fmt(original)}</span>
+                <span className={styles.badge}>Bespaar {fmtSave(price, original)}</span>
               </div>
 
-              <p className={styles.desc}>
-                The world's only award-winning HiFi earplugs. Protect your hearing without muffling the music — thanks to our patented V-Filter technology and medical grade silicone fit.
-              </p>
+              <p className={styles.desc}>{product.description}</p>
 
               {/* Size selector */}
               <div className={styles.selectorBlock}>
                 <div className={styles.selectorLabel}>
-                  <span>Size</span>
-                  <a href="#size-quiz" className={styles.sizeGuide}>Not sure? Take the size quiz →</a>
+                  <span>Maat</span>
+                  <button
+                    className={styles.sizeGuide}
+                    onClick={() => setQuizOpen(o => !o)}
+                  >
+                    {quizOpen ? 'Quiz sluiten ×' : 'Weet je je maat niet? →'}
+                  </button>
                 </div>
                 <div className={styles.sizeGrid}>
                   {sizes.map((s, i) => (
@@ -129,13 +194,25 @@ const Product: NextPage = () => {
                     </div>
                   ))}
                 </div>
+
+                {quizApplied && (
+                  <div className={styles.quizApplied}>
+                    <CheckIcon size={14} /> Maat ingesteld op basis van jouw antwoorden
+                  </div>
+                )}
+
+                {quizOpen && (
+                  <div className={styles.quizPanel}>
+                    <SizeQuiz inline minimal onSelect={handleQuizSelect} />
+                  </div>
+                )}
               </div>
 
               {/* Filter selector */}
               <div className={styles.selectorBlock}>
-                <span className={styles.selectorLabel}>Filter level</span>
+                <span className={styles.selectorLabel}>Filterniveau</span>
                 <div className={styles.filterList}>
-                  {filters.map((f, i) => (
+                  {product.filters.map((f, i) => (
                     <button
                       key={i}
                       className={`${styles.filterBtn} ${i === activeFilter ? styles.filterBtnActive : ''}`}
@@ -149,19 +226,44 @@ const Product: NextPage = () => {
                 </div>
               </div>
 
+              {/* Quantity */}
+              <div className={styles.qtyRow}>
+                <span className={styles.qtyLabel}>Aantal</span>
+                <div className={styles.qtyControl}>
+                  <button
+                    className={styles.qtyBtn}
+                    onClick={() => setQty(q => Math.max(1, q - 1))}
+                    aria-label="Minder"
+                  >
+                    −
+                  </button>
+                  <span className={styles.qtyCount}>{qty}</span>
+                  <button
+                    className={styles.qtyBtn}
+                    onClick={() => setQty(q => q + 1)}
+                    aria-label="Meer"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
               {/* CTA */}
               <button
                 className={`${styles.addBtn} ${added ? styles.addBtnDone : ''}`}
                 onClick={handleAddToCart}
               >
-                {added ? <><CheckIcon size={16} /> Added to cart</> : 'Add to cart'}
+                {added
+                  ? <><CheckIcon size={16} /> Toegevoegd aan winkelwagen</>
+                  : `Voeg ${qty > 1 ? `${qty}× ` : ''}toe aan winkelwagen — ${fmt(price * qty)}`
+                }
               </button>
 
               {/* Trust */}
               <div className={styles.trust}>
-                <span className={styles.trustItem}><ShieldIcon size={15} /> Secure payment</span>
-                <span className={styles.trustItem}>Free shipping from €39</span>
-                <span className={styles.trustItem}>30-day returns</span>
+                <span className={styles.trustItem}><ShieldIcon size={15} /> Veilig betalen</span>
+                <span className={styles.trustItem}>Gratis verzending v.a. €39</span>
+                <span className={styles.trustItem}>30 dagen retour</span>
               </div>
             </div>
           </div>
@@ -182,10 +284,10 @@ const Product: NextPage = () => {
 
             {activeTab === 0 && (
               <div className={styles.tabContent}>
-                <h3>What makes Earasers different?</h3>
-                <p>Earasers use a patented open-canal design combined with a precision V-Filter to reduce harmful sound pressure levels while leaving the natural richness of music intact. Unlike foam earplugs that muffle everything, Earasers simply lower the volume.</p>
+                <h3>Wat maakt Earasers anders?</h3>
+                <p>Earasers gebruiken een gepatenteerd open-canal ontwerp gecombineerd met een V-Filter om schadelijke geluidsniveaus te reduceren, terwijl de natuurlijke rijkheid van muziek behouden blijft.</p>
                 <ul className={styles.featureList}>
-                  {['Patented V-Filter technology', 'Medical grade silicone — self-fitting', 'Nearly invisible in the ear', 'No specialist required', '5× MusicRadar Best Music Earplugs'].map(f => (
+                  {product.features.map(f => (
                     <li key={f}><CheckIcon size={15} className={styles.featureCheck} /> {f}</li>
                   ))}
                 </ul>
@@ -194,11 +296,13 @@ const Product: NextPage = () => {
 
             {activeTab === 1 && (
               <div className={styles.tabContent}>
-                <h3>Attenuation specs</h3>
-                <p>Measured according to ISO 11904-1. Values shown are mean attenuation at each test frequency.</p>
-                <img
+                <h3>Dempingswaarden</h3>
+                <p>Gemeten conform ISO 11904-1. Waarden zijn gemiddelde demping per testfrequentie.</p>
+                <Image
                   src="https://www.earasers.shop/cdn/shop/files/EARASERS_attenuation_tables.png"
                   alt="Earasers attenuation chart"
+                  width={1200}
+                  height={500}
                   className={styles.specImg}
                 />
               </div>
@@ -207,8 +311,8 @@ const Product: NextPage = () => {
             {activeTab === 2 && (
               <div className={styles.tabContent}>
                 <div className={styles.reviewsHeader}>
-                  <Stars count={5} />
-                  <span>4.7 out of 5 — based on 1024 reviews</span>
+                  <Stars count={product.rating} />
+                  <span>{product.rating} van 5 — gebaseerd op {product.reviews.toLocaleString('nl-NL')} reviews</span>
                 </div>
                 <div className={styles.reviewGrid}>
                   {[
@@ -218,7 +322,7 @@ const Product: NextPage = () => {
                   ].map(r => (
                     <div key={r.name} className={styles.reviewCard}>
                       <Stars count={r.rating} />
-                      <p className={styles.reviewText}>"{r.text}"</p>
+                      <p className={styles.reviewText}>&ldquo;{r.text}&rdquo;</p>
                       <p className={styles.reviewName}>{r.name}</p>
                     </div>
                   ))}
@@ -226,6 +330,29 @@ const Product: NextPage = () => {
               </div>
             )}
           </div>
+
+          {/* Recently Viewed */}
+          {recentlyViewed.length > 0 && (
+            <div className={styles.recentSection}>
+              <h3 className={styles.recentHeading}>Recent bekeken</h3>
+              <div className={styles.recentGrid}>
+                {recentlyViewed.map(slug => {
+                  const p = getProduct(slug);
+                  return (
+                    <Link key={slug} href={`/product?slug=${slug}`} className={styles.recentCard}>
+                      <div className={styles.recentImg}>
+                        <Image src={p.images[0]} alt={p.name} fill style={{ objectFit: 'cover' }} />
+                      </div>
+                      <p className={styles.recentCollection}>{p.collection}</p>
+                      <p className={styles.recentName}>{p.name}</p>
+                      <p className={styles.recentPrice}>{fmt(p.price)}</p>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
     </Layout>

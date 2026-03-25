@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import styles from './hero.module.css';
 import { TrophyIcon, ArrowRightIcon } from '../icons';
 
@@ -17,13 +18,13 @@ export const Hero = () => (
       </h1>
 
       <p className={styles.sub}>
-        Award-winning HiFi earplugs worn by musicians, DJs and dentists across Europe. Protection that doesn't kill the vibe.
+        Award-winning HiFi earplugs worn by musicians, DJs and dentists across Europe. Protection that doesn&apos;t kill the vibe.
       </p>
 
       <div className={styles.ctas}>
-        <a href="/collection" className={styles.ctaPrimary}>
+        <Link href="/collection" className={styles.ctaPrimary}>
           Shop Music Earplugs <ArrowRightIcon size={15} />
-        </a>
+        </Link>
         <a href="#size-quiz" className={styles.ctaSecondary}>
           Find My Size
         </a>

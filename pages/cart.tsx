@@ -1,0 +1,208 @@
+import type { NextPage } from 'next';
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Layout } from '../components/layout';
+import { CheckIcon, ArrowRightIcon, ShieldIcon } from '../components/icons';
+import { useCart } from '../context/cart';
+import { PRODUCTS, fmt } from '../lib/products';
+import styles from '../styles/cart.module.css';
+
+const FREE_SHIPPING_THRESHOLD = 39;
+const SHIPPING_COST = 3.95;
+
+// Cross-sell: show products not already in cart (max 4)
+function getCrossSell(cartSlugs: string[]) {
+  return Object.values(PRODUCTS)
+    .filter(p => !cartSlugs.includes(p.slug))
+    .slice(0, 4);
+}
+
+const CartIcon = () => (
+  <svg className={styles.emptyIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+    <line x1="3" y1="6" x2="21" y2="6"/>
+    <path d="M16 10a4 4 0 0 1-8 0"/>
+  </svg>
+);
+
+const Cart: NextPage = () => {
+  const { items, totalCount, setQty, removeItem } = useCart();
+
+  const subtotal  = items.reduce((s, i) => s + i.price * i.qty, 0);
+  const shipping  = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : SHIPPING_COST;
+  const total     = subtotal + shipping;
+  const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
+  const progress  = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
+
+  const cartSlugs   = [...new Set(items.map(i => i.slug))];
+  const crossSell   = getCrossSell(cartSlugs);
+
+  return (
+    <Layout>
+      <div className={styles.page}>
+        <div className="container">
+
+          <nav className={styles.breadcrumb}>
+            <Link href="/">Home</Link><span>/</span><span>Winkelwagen</span>
+          </nav>
+
+          <h1 className={styles.heading}>
+            Winkelwagen {totalCount > 0 && `(${totalCount})`}
+          </h1>
+
+          {items.length === 0 ? (
+            /* ── Empty state ── */
+            <div className={styles.empty}>
+              <CartIcon />
+              <p className={styles.emptyTitle}>Je winkelwagen is leeg</p>
+              <p className={styles.emptySub}>
+                Voeg een product toe vanuit onze collectie om te beginnen.
+              </p>
+              <Link href="/collection" className={styles.emptyBtn}>
+                Bekijk onze collectie <ArrowRightIcon size={15} />
+              </Link>
+            </div>
+          ) : (
+            <div className={styles.layout}>
+
+              {/* ── Items ── */}
+              <div className={styles.items}>
+                {items.map(item => (
+                  <div key={item.id} className={styles.item}>
+                    <Link href={`/product?slug=${item.slug}`} className={styles.itemImg}>
+                      <Image src={item.img} alt={item.name} fill style={{ objectFit: 'cover' }} />
+                    </Link>
+                    <div className={styles.itemBody}>
+                      <Link href={`/product?slug=${item.slug}`} className={styles.itemName}>
+                        {item.name}
+                      </Link>
+                      <div className={styles.itemMeta}>
+                        <span className={styles.itemPill}>Maat {item.size}</span>
+                        <span className={styles.itemPill}>{item.filter}</span>
+                      </div>
+                      <div className={styles.itemFooter}>
+                        <span className={styles.itemPrice}>
+                          {fmt(item.price * item.qty)}
+                          {item.qty > 1 && (
+                            <> <small style={{ fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 400, color: 'var(--color-text-muted)' }}>
+                              ({fmt(item.price)} / st.)
+                            </small></>
+                          )}
+                        </span>
+                        <div className={styles.itemActions}>
+                          <div className={styles.qtyControl}>
+                            <button
+                              className={styles.qtyBtn}
+                              onClick={() => setQty(item.id, item.qty - 1)}
+                              aria-label="Minder"
+                            >−</button>
+                            <span className={styles.qtyCount}>{item.qty}</span>
+                            <button
+                              className={styles.qtyBtn}
+                              onClick={() => setQty(item.id, item.qty + 1)}
+                              aria-label="Meer"
+                            >+</button>
+                          </div>
+                          <button
+                            className={styles.removeBtn}
+                            onClick={() => removeItem(item.id)}
+                          >
+                            Verwijder
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* ── Summary ── */}
+              <div className={styles.summary}>
+                <p className={styles.summaryTitle}>Besteloverzicht</p>
+
+                {/* Free shipping bar */}
+                <div className={styles.shippingBar}>
+                  {remaining > 0 ? (
+                    <p className={styles.shippingMsg}>
+                      Nog <strong>{fmt(remaining)}</strong> voor gratis verzending
+                    </p>
+                  ) : (
+                    <p className={styles.shippingMsgFree}>
+                      <CheckIcon size={14} /> Gratis verzending!
+                    </p>
+                  )}
+                  <div className={styles.progressTrack}>
+                    <div className={styles.progressFill} style={{ width: `${progress}%` }} />
+                  </div>
+                </div>
+
+                {/* Lines */}
+                <div className={styles.summaryLines}>
+                  <div className={styles.summaryLine}>
+                    <span>Subtotaal</span>
+                    <span>{fmt(subtotal)}</span>
+                  </div>
+                  <div className={styles.summaryLine}>
+                    <span>Verzending</span>
+                    {shipping === 0
+                      ? <span className={styles.summaryLineGreen}>Gratis</span>
+                      : <span>{fmt(SHIPPING_COST)}</span>
+                    }
+                  </div>
+                </div>
+
+                <div className={styles.summaryTotal}>
+                  <span className={styles.summaryTotalLabel}>Totaal</span>
+                  <span className={styles.summaryTotalPrice}>{fmt(total)}</span>
+                </div>
+
+                <button className={styles.checkoutBtn}>
+                  Afrekenen <ArrowRightIcon size={15} />
+                </button>
+
+                <Link href="/collection" className={styles.continueBtn}>
+                  Verder winkelen
+                </Link>
+
+                {/* Trust */}
+                <div className={styles.trustRow}>
+                  <span className={styles.trustItem}><ShieldIcon size={13} /> Veilig betalen</span>
+                  <span className={styles.trustItem}><CheckIcon size={13} /> 30 dagen retourrecht</span>
+                  <span className={styles.trustItem}><CheckIcon size={13} /> Gratis verzending v.a. €39</span>
+                </div>
+              </div>
+
+            </div>
+          )}
+
+          {/* ── Cross-sell ── */}
+          {crossSell.length > 0 && (
+            <div className={styles.crossSell}>
+              <h2 className={styles.crossSellHeading}>
+                {items.length === 0 ? 'Ontdek onze collectie' : 'Misschien ook interessant'}
+              </h2>
+              <div className={styles.crossGrid}>
+                {crossSell.map(p => (
+                  <Link key={p.slug} href={`/product?slug=${p.slug}`} className={styles.crossCard}>
+                    <div className={styles.crossImg}>
+                      <Image src={p.images[0]} alt={p.name} fill style={{ objectFit: 'cover' }} />
+                    </div>
+                    <div className={styles.crossInfo}>
+                      <p className={styles.crossCollection}>{p.collection}</p>
+                      <p className={styles.crossName}>{p.name}</p>
+                      <p className={styles.crossPrice}>{fmt(p.price)}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+        </div>
+      </div>
+    </Layout>
+  );
+};
+
+export default Cart;

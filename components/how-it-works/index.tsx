@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import styles from './how-it-works.module.css';
 import { CircleIcon, WaveIcon, LayersIcon } from '../icons';
 
@@ -40,11 +41,12 @@ export const HowItWorks = () => (
       </div>
 
       <div className={styles.spec} data-reveal data-delay="2">
-        <img
+        <Image
           src="https://www.earasers.shop/cdn/shop/files/EARASERS_attenuation_tables.png"
           alt="Earasers attenuation chart"
+          width={1200}
+          height={500}
           className={styles.specImg}
-          loading="lazy"
         />
       </div>
     </div>

@@ -1,27 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import styles from './navbar.module.css';
 import { MusicIcon, HeadphonesIcon, ToothIcon, MoonIcon, HelmetIcon, EarIcon, ChevronDownIcon, CloseIcon } from '../icons';
+import { useCart } from '../../context/cart';
 
 type Category = { label: string; href: string; icon: React.ReactNode };
 
 const shopCategories: Category[] = [
-  { label: 'Music Earplugs',      href: '/collections/musician-s-hifi-earplugs',    icon: <MusicIcon size={16} /> },
-  { label: "DJ's",                href: '/products/earasers-dj-earplugs-new',        icon: <HeadphonesIcon size={16} /> },
-  { label: 'Dentist & Hygienist', href: '/collections/earasers-dentists-hygienists', icon: <ToothIcon size={16} /> },
-  { label: 'Sleeping',            href: '/collections/peace-quiet-earplugs',          icon: <MoonIcon size={16} /> },
-  { label: 'Motorsport',          href: '/collections/moto-hifi-earplugs',            icon: <HelmetIcon size={16} /> },
-  { label: 'Noise Sensitivity',   href: '/collections/noise-sensitivity',              icon: <EarIcon size={16} /> },
+  { label: 'Music Earplugs',      href: '/collection/musician',    icon: <MusicIcon size={16} /> },
+  { label: "DJ's",                href: '/collection/dj',          icon: <HeadphonesIcon size={16} /> },
+  { label: 'Dentist & Hygienist', href: '/collection/dentist',     icon: <ToothIcon size={16} /> },
+  { label: 'Sleeping',            href: '/collection/sleeping',    icon: <MoonIcon size={16} /> },
+  { label: 'Motorsport',          href: '/collection/motorsport',  icon: <HelmetIcon size={16} /> },
+  { label: 'Noise Sensitivity',   href: '/collection/sensitivity', icon: <EarIcon size={16} /> },
 ];
 
 const faqLinks = [
-  { label: 'FAQ',                href: '/faq' },
-  { label: 'Specs',              href: '/faq' },
-  { label: 'Instruction Videos', href: '/faq' },
-  { label: 'Warranty',           href: '/faq' },
-  { label: 'Returns',            href: '/contact' },
+  { label: 'All Questions',       href: '/faq' },
+  { label: 'Sizing Guide',        href: '/faq#sizing' },
+  { label: 'Usage & Maintenance', href: '/faq#usage' },
+  { label: 'Instruction Video',   href: '/faq#instruction-video' },
+  { label: 'Returns',             href: '/contact' },
 ];
 
 export const Navbar = () => {
+  const { totalCount, openCart } = useCart();
   const [scrolled, setScrolled]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [shopOpen, setShopOpen]     = useState(false);
@@ -60,7 +63,7 @@ export const Navbar = () => {
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`} style={{ top: barVisible ? 'var(--bar-height)' : 0 }}>
         <div className={`container ${styles.inner}`}>
 
-          <a href="/" className={styles.logo}>EARASERS</a>
+          <Link href="/" className={styles.logo}>EARASERS</Link>
 
           <nav className={styles.nav}>
             <ul className={styles.navList}>
@@ -96,19 +99,21 @@ export const Navbar = () => {
                 )}
               </li>
 
-              <li className={styles.navItem}><a href="/size-finder"   className={styles.navLink}>Size Finder</a></li>
-              <li className={styles.navItem}><a href="/store-locator" className={styles.navLink}>Store Locator</a></li>
-              <li className={styles.navItem}><a href="/about"         className={styles.navLink}>About</a></li>
-              <li className={styles.navItem}><a href="/contact"       className={styles.navLink}>Contact</a></li>
+              <li className={styles.navItem}><Link href="/size-finder"   className={styles.navLink}>Size Finder</Link></li>
+              <li className={styles.navItem}><Link href="/store-locator" className={styles.navLink}>Store Locator</Link></li>
+              <li className={styles.navItem}><Link href="/about"         className={styles.navLink}>About</Link></li>
+              <li className={styles.navItem}><Link href="/contact"       className={styles.navLink}>Contact</Link></li>
             </ul>
           </nav>
 
           <div className={styles.actions}>
-            <a href="/cart" className={styles.cartBtn} aria-label="Cart">
+            <button type="button" className={styles.cartBtn} onClick={openCart} aria-label="Open winkelwagen">
               <CartIcon />
-              <span className={styles.cartCount}>0</span>
-            </a>
-            <a href="/collections/all" className={styles.ctaBtn}>Shop Now</a>
+              {totalCount > 0 && (
+                <span className={styles.cartCount}>{totalCount > 99 ? '99+' : totalCount}</span>
+              )}
+            </button>
+            <Link href="/collection" className={styles.ctaBtn}>Shop Now</Link>
 
             <button className={styles.burger} onClick={() => setMobileOpen(o => !o)} aria-label="Toggle menu" aria-expanded={mobileOpen}>
               {mobileOpen ? <CloseIcon size={22} /> : <HamburgerIcon />}
@@ -136,10 +141,10 @@ export const Navbar = () => {
               ))}
             </div>
             <div className={styles.mobileGroup}>
-              <a href="/size-finder"   className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Size Finder</a>
-              <a href="/store-locator" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Store Locator</a>
-              <a href="/about"         className={styles.mobileLink} onClick={() => setMobileOpen(false)}>About</a>
-              <a href="/contact"       className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Contact</a>
+              <Link href="/size-finder"   className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Size Finder</Link>
+              <Link href="/store-locator" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Store Locator</Link>
+              <Link href="/about"         className={styles.mobileLink} onClick={() => setMobileOpen(false)}>About</Link>
+              <Link href="/contact"       className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Contact</Link>
             </div>
           </nav>
         )}

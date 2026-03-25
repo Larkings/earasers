@@ -1,5 +1,7 @@
 import type { NextPage } from 'next';
 import React, { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { Layout } from '../components/layout';
 import { StarIcon, StarEmptyIcon, ArrowRightIcon } from '../components/icons';
 import styles from '../styles/collection.module.css';
@@ -43,7 +45,7 @@ const Collection: NextPage = () => {
         <div className={styles.hero}>
           <div className="container">
             <nav className={styles.breadcrumb}>
-              <a href="/">Home</a><span>/</span><span>Music Earplugs</span>
+              <Link href="/">Home</Link><span>/</span><span>Music Earplugs</span>
             </nav>
             <h1 className={styles.heading}>Music Earplugs</h1>
             <p className={styles.sub}>Award-winning HiFi earplugs for musicians, concert-goers and music lovers.</p>
@@ -70,9 +72,9 @@ const Collection: NextPage = () => {
           {/* Grid */}
           <div className={styles.grid}>
             {sorted.map(p => (
-              <a key={p.name} href="/product" className={styles.card}>
+              <Link key={p.name} href="/product" className={styles.card}>
                 <div className={styles.imgWrap}>
-                  <img src={p.img} alt={p.name} className={styles.img} loading="lazy" />
+                  <Image src={p.img} alt={p.name} fill style={{ objectFit: 'cover' }} />
                   {p.tag && <span className={styles.tag}>{p.tag}</span>}
                 </div>
                 <div className={styles.info}>
@@ -89,7 +91,7 @@ const Collection: NextPage = () => {
                     Choose options <ArrowRightIcon size={13} />
                   </span>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { CartProvider } from '../context/cart';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -33,7 +34,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     return () => { cleanup?.(); };
   }, [router]);
 
-  return <Component {...pageProps} />;
+  return (
+    <CartProvider>
+      <Component {...pageProps} />
+    </CartProvider>
+  );
 }
 
 export default MyApp;

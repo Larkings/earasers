@@ -1,49 +1,67 @@
-# NextJS and NextUI Landing Page Template
+# Earasers — Landing Page
 
-You can deploy here directly to vercel [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/Siumauricio/landing-template-nextui)
+Landingspagina voor **Earasers**, award-winning HiFi oordopjes voor muzikanten, DJ's en professionals.
 
-This is a template for NextJS and NextUI. 
+Gebouwd met [Next.js](https://nextjs.org/) en [NextUI](https://nextui.org/).
 
-[NextJS](https://nextjs.org/) 
-[NextUI](https://nextui.org/)
+---
 
-You can see the demo here: https://landing-template-nextui.vercel.app/
-For improve this template, you can create a pull request or open an issue here [Issues](https://github.com/Siumauricio/landing-template-nextui/issues) or [Pull Request](
-    https://github.com/Siumauricio/landing-template-nextui/pulls)
+## Pagina's
 
-### Dark Mode
-![Landing Page Dark Mode](./public/Screenshot_2.png)
+| Route | Beschrijving |
+|---|---|
+| `/` | Homepage met hero, use cases, bestsellers, vergelijkingstabel, reviews, e.d. |
+| `/collection` | Productoverzicht |
+| `/product` | Productdetailpagina |
+| `/about` | Over Earasers |
+| `/faq` | Veelgestelde vragen |
+| `/contact` | Contactformulier |
+| `/store-locator` | Winkelzoeker |
 
-### Light Mode
-![Landing Page Light Mode](./public/Screenshot_3.png)
+## Secties homepage
 
-- Hero Section
-- Features Section 1
-- Features Section 2
-- Features Section 3
-- Testimonials Section
-- CTA Section
-- Pricing Section
-- FAQ Section
-- Footer Section
-- Dark Mode Support
-- Full Responsive
+- Hero
+- Trust Band
+- Use Cases
+- Best Sellers
+- Size Quiz
+- Award Section
+- Vergelijkingstabel
+- How It Works
+- Reviews
+- Influencers
+- Blog Teaser
 
-## For Run
+---
 
-Install dependencies
+## Aan de slag
 
-    
+**Installeer dependencies**
+
 ```bash
 npm install
 ```
 
-Start the server
+**Start de development server**
 
-    
-        
 ```bash
 npm run dev
 ```
 
-Now you can visit https://localhost:3000 in your browser.
+Open [http://localhost:3000](http://localhost:3000) in je browser.
+
+**Build voor productie**
+
+```bash
+npm run build
+npm start
+```
+
+---
+
+## Technologieën
+
+- [Next.js](https://nextjs.org/) — React framework
+- [NextUI](https://nextui.org/) — UI component library
+- [next-themes](https://github.com/pacocoursey/next-themes) — Dark mode support
+- TypeScript

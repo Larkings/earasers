@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Layout } from '../components/layout';
 import { CheckIcon, ShieldIcon } from '../components/icons';
 import styles from '../styles/contact.module.css';
@@ -42,7 +43,7 @@ const Contact: NextPage = () => {
             <div className={styles.info}>
               <h1 className={styles.heading}>Get in touch</h1>
               <p className={styles.sub}>
-                Questions? We're here seven days a week. Most emails get a reply within a few hours.
+                Questions? We&apos;re here seven days a week. Most emails get a reply within a few hours.
               </p>
 
               <div className={styles.cards}>
@@ -87,7 +88,7 @@ const Contact: NextPage = () => {
 
               <div className={styles.faqTeaser}>
                 <ShieldIcon size={16} className={styles.faqIcon} />
-                <p>Before writing, check our <a href="/faq" className={styles.faqLink}>FAQ</a> — your question may already be answered there.</p>
+                <p>Before writing, check our <Link href="/faq" className={styles.faqLink}>FAQ</Link> — your question may already be answered there.</p>
               </div>
             </div>
 
@@ -97,7 +98,7 @@ const Contact: NextPage = () => {
                 <div className={styles.success}>
                   <div className={styles.successIcon}><CheckIcon size={28} /></div>
                   <h2 className={styles.successTitle}>Message sent!</h2>
-                  <p className={styles.successSub}>Thank you for reaching out. We'll get back to you within a few hours.</p>
+                  <p className={styles.successSub}>Thank you for reaching out. We&apos;ll get back to you within a few hours.</p>
                   <button className={styles.successBtn} onClick={() => setSent(false)}>Send another message</button>
                 </div>
               ) : (
