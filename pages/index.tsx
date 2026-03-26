@@ -18,12 +18,12 @@ const Home: NextPage = () => (
     <TrustBand />
     <UseCases />
     <BestSellers />
+    <Influencers />
     <SizeQuiz />
     <AwardSection />
     <CompareTable />
     <HowItWorks />
     <Reviews />
-    <Influencers />
     <BlogTeaser />
   </Layout>
 );
