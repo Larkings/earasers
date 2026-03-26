@@ -16,7 +16,7 @@ const supportLinks = [
   { label: 'Specs',              href: '/faq' },
   { label: 'Instruction Videos', href: '/faq' },
   { label: 'Warranty',           href: '/faq' },
-  { label: 'Returns',            href: '/contact' },
+  { label: 'Returns',            href: '/returns' },
   { label: 'Contact',            href: '/contact' },
 ];
 

@@ -21,7 +21,7 @@ const faqLinks = [
   { label: 'Sizing Guide',        href: '/faq#sizing' },
   { label: 'Usage & Maintenance', href: '/faq#usage' },
   { label: 'Instruction Video',   href: '/faq#instruction-video' },
-  { label: 'Returns',             href: '/contact' },
+  { label: 'Returns',             href: '/returns' },
 ];
 
 export const Navbar = () => {
@@ -77,10 +77,10 @@ export const Navbar = () => {
                 {shopOpen && (
                   <div className={styles.dropdown}>
                     {shopCategories.map(c => (
-                      <a key={c.href} href={c.href} className={styles.dropItem} onClick={() => setShopOpen(false)}>
+                      <Link key={c.href} href={c.href} className={styles.dropItem} onClick={() => setShopOpen(false)}>
                         <span className={styles.dropIcon}>{c.icon}</span>
                         {c.label}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -93,9 +93,9 @@ export const Navbar = () => {
                 {faqOpen && (
                   <div className={styles.dropdown}>
                     {faqLinks.map(l => (
-                      <a key={l.href} href={l.href} className={styles.dropItem} onClick={() => setFaqOpen(false)}>
+                      <Link key={l.href} href={l.href} className={styles.dropItem} onClick={() => setFaqOpen(false)}>
                         {l.label}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -136,18 +136,18 @@ export const Navbar = () => {
             <div className={styles.mobileGroup}>
               <p className={styles.mobileLabel}>Shop</p>
               {shopCategories.map(c => (
-                <a key={c.href} href={c.href} className={styles.mobileLink} onClick={() => setMobileOpen(false)}>
+                <Link key={c.href} href={c.href} className={styles.mobileLink} onClick={() => setMobileOpen(false)}>
                   <span className={styles.mobileLinkIcon}>{c.icon}</span>
                   {c.label}
-                </a>
+                </Link>
               ))}
             </div>
             <div className={styles.mobileGroup}>
               <p className={styles.mobileLabel}>Support</p>
               {faqLinks.map(l => (
-                <a key={l.href} href={l.href} className={styles.mobileLink} onClick={() => setMobileOpen(false)}>
+                <Link key={l.href} href={l.href} className={styles.mobileLink} onClick={() => setMobileOpen(false)}>
                   {l.label}
-                </a>
+                </Link>
               ))}
             </div>
             <div className={styles.mobileGroup}>

@@ -168,7 +168,7 @@ const Cart: NextPage = () => {
                 {/* Trust */}
                 <div className={styles.trustRow}>
                   <span className={styles.trustItem}><ShieldIcon size={13} /> Secure payment</span>
-                  <span className={styles.trustItem}><CheckIcon size={13} /> 30-day return policy</span>
+                  <Link href="/returns" className={styles.trustItem}><CheckIcon size={13} /> 30-day return policy</Link>
                   <span className={styles.trustItem}><CheckIcon size={13} /> Free shipping from €39</span>
                 </div>
               </div>
