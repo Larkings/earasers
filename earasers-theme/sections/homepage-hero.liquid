@@ -1,0 +1,53 @@
+<section class="hero{% if section.settings.dark %} hero--dark{% endif %}" style="{% if section.settings.bg_image %}background-image:url('{{ section.settings.bg_image | img_url: '2000x' }}');{% endif %}{% if section.settings.bg_color != blank %}background-color:{{ section.settings.bg_color }};{% endif %}">
+  <div class="container hero__inner">
+    <div class="hero__text" data-reveal>
+      {% if section.settings.eyebrow != blank %}
+        <p class="hero__badge">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h1 class="hero__heading">{{ section.settings.heading }}</h1>
+      {% if section.settings.subtext != blank %}
+        <p class="hero__sub">{{ section.settings.subtext }}</p>
+      {% endif %}
+      <div class="hero__actions">
+        {% if section.settings.button_primary_label != blank %}
+          <a href="{{ section.settings.button_primary_url }}" class="btn btn--primary">{{ section.settings.button_primary_label }}</a>
+        {% endif %}
+        {% if section.settings.button_secondary_label != blank %}
+          <a href="{{ section.settings.button_secondary_url }}" class="btn btn--outline">{{ section.settings.button_secondary_label }}</a>
+        {% endif %}
+      </div>
+      {% if section.settings.award_badge != blank %}
+        <p class="hero__rating">
+          <span class="stars-inline">★★★★★</span>
+          {{ section.settings.award_badge }}
+        </p>
+      {% endif %}
+    </div>
+    {% if section.settings.hero_image %}
+      <div class="hero__media" data-reveal data-delay="1">
+        <img src="{{ section.settings.hero_image | img_url: '600x' }}" alt="{{ section.settings.heading }}" class="hero__img">
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "hero_image", "label": "Achtergrondafbeelding" },
+    { "type": "text", "id": "eyebrow", "label": "Kleine tekst boven de kop", "default": "Award-winning earplugs" },
+    { "type": "text", "id": "heading", "label": "Hoofdkop (groot)", "default": "Protect your hearing. Keep the music clear." },
+    { "type": "textarea", "id": "subtext", "label": "Ondertitel", "default": "The world's clearest HiFi earplugs. Virtually invisible. 5× award-winning." },
+    { "type": "text", "id": "button_primary_label", "label": "Primaire knoptekst", "default": "Shop Music Earplugs" },
+    { "type": "url", "id": "button_primary_url", "label": "Primaire knoplink" },
+    { "type": "text", "id": "button_secondary_label", "label": "Secundaire knoptekst", "default": "Find My Size" },
+    { "type": "url", "id": "button_secondary_url", "label": "Secundaire knoplink" },
+    { "type": "text", "id": "award_badge", "label": "Award-badge tekst", "default": "5× Best Music Earplugs — MusicRadar.com" },
+    { "type": "color", "id": "bg_color", "label": "Achtergrondkleur", "default": "#FDF8F4" },
+    { "type": "checkbox", "id": "dark", "label": "Donkere achtergrond", "default": false }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

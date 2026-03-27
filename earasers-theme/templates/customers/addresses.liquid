@@ -1,0 +1,54 @@
+<div class="customer-account">
+  <div class="container">
+    <p><a href="{{ routes.account_url }}">&larr; Back to account</a></p>
+    <h1>My addresses</h1>
+
+    {% form 'customer_address', customer.new_address %}
+      <h2>Add new address</h2>
+      {{ form.errors | default_errors }}
+      <div class="form-field">
+        <label>First name</label>
+        <input type="text" name="address[first_name]" class="input" value="{{ form.first_name }}">
+      </div>
+      <div class="form-field">
+        <label>Last name</label>
+        <input type="text" name="address[last_name]" class="input" value="{{ form.last_name }}">
+      </div>
+      <div class="form-field">
+        <label>Address</label>
+        <input type="text" name="address[address1]" class="input" value="{{ form.address1 }}">
+      </div>
+      <div class="form-field">
+        <label>City</label>
+        <input type="text" name="address[city]" class="input" value="{{ form.city }}">
+      </div>
+      <div class="form-field">
+        <label>Postal code</label>
+        <input type="text" name="address[zip]" class="input" value="{{ form.zip }}">
+      </div>
+      <div class="form-field">
+        <label>Country</label>
+        <select name="address[country]" class="input">
+          {{ all_country_option_tags }}
+        </select>
+      </div>
+      <button type="submit" class="btn btn--primary">Save address</button>
+    {% endform %}
+
+    {% if customer.addresses_count > 0 %}
+      <h2>Saved addresses</h2>
+      {% for address in customer.addresses %}
+        <div class="address-card" style="border:1px solid var(--color-border);border-radius:var(--radius-md);padding:16px;margin-bottom:16px;">
+          {% if address == customer.default_address %}
+            <span style="font-size:12px;font-weight:700;color:var(--color-accent)">Default</span>
+          {% endif %}
+          <p>{{ address.name }}<br>{{ address.street }}<br>{{ address.city }}, {{ address.zip }}<br>{{ address.country }}</p>
+          {% form 'customer_address', address %}
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit" class="btn btn--outline btn--sm">Delete</button>
+          {% endform %}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>

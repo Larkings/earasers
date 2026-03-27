@@ -1,0 +1,179 @@
+{% assign main_product = all_products[section.settings.product] %}
+
+<section class="product-content product-content--dj">
+  <div class="product-content__hero product-content__hero--dark">
+    <div class="container product-content__hero-inner">
+      <div class="product-content__hero-text" data-reveal>
+        {% if section.settings.badge != blank %}
+          <p class="product-content__badge">{{ section.settings.badge }}</p>
+        {% endif %}
+        <h1 class="product-content__heading">{{ section.settings.heading }}</h1>
+        <p class="product-content__sub">{{ section.settings.subheading }}</p>
+        {% if section.settings.cta_label != blank %}
+          <a href="{{ section.settings.cta_url }}" class="btn btn--primary">{{ section.settings.cta_label }}</a>
+        {% endif %}
+      </div>
+      {% if section.settings.hero_image %}
+        <div class="product-content__hero-img" data-reveal data-delay="1">
+          <img src="{{ section.settings.hero_image | img_url: '500x' }}" alt="{{ section.settings.heading }}" loading="lazy">
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="container">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'feature_row' %}
+          <div class="product-content__feature-row" {{ block.shopify_attributes }} data-reveal>
+            {% if block.settings.image %}
+              <div class="product-content__feature-img">
+                <img src="{{ block.settings.image | img_url: '500x' }}" alt="{{ block.settings.heading }}" loading="lazy">
+              </div>
+            {% endif %}
+            <div class="product-content__feature-text">
+              <h2>{{ block.settings.heading }}</h2>
+              <p>{{ block.settings.body }}</p>
+            </div>
+          </div>
+        {% when 'stat_row' %}
+          <div class="product-content__stats" {{ block.shopify_attributes }}>
+            {% if block.settings.stat_1_value != blank %}
+              <div class="stat-item">
+                <p class="stat-item__value">{{ block.settings.stat_1_value }}</p>
+                <p class="stat-item__label">{{ block.settings.stat_1_label }}</p>
+              </div>
+            {% endif %}
+            {% if block.settings.stat_2_value != blank %}
+              <div class="stat-item">
+                <p class="stat-item__value">{{ block.settings.stat_2_value }}</p>
+                <p class="stat-item__label">{{ block.settings.stat_2_label }}</p>
+              </div>
+            {% endif %}
+            {% if block.settings.stat_3_value != blank %}
+              <div class="stat-item">
+                <p class="stat-item__value">{{ block.settings.stat_3_value }}</p>
+                <p class="stat-item__label">{{ block.settings.stat_3_label }}</p>
+              </div>
+            {% endif %}
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product content – DJ",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Main product"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Hero badge",
+      "default": "For DJs & Club Professionals"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Hero heading",
+      "default": "Protect your hearing. Keep your edge."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Hero subheading"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA button label",
+      "default": "Shop DJ Earasers"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA button URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature_row",
+      "name": "Feature row",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body text"
+        }
+      ]
+    },
+    {
+      "type": "stat_row",
+      "name": "Stats row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "stat_1_value",
+          "label": "Stat 1 value",
+          "default": "-19dB"
+        },
+        {
+          "type": "text",
+          "id": "stat_1_label",
+          "label": "Stat 1 label",
+          "default": "Average attenuation"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_value",
+          "label": "Stat 2 value",
+          "default": "Flat"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_label",
+          "label": "Stat 2 label",
+          "default": "Response curve"
+        },
+        {
+          "type": "text",
+          "id": "stat_3_value",
+          "label": "Stat 3 value",
+          "default": "3–6 mo."
+        },
+        {
+          "type": "text",
+          "id": "stat_3_label",
+          "label": "Stat 3 label",
+          "default": "Filter lifespan"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product content – DJ"
+    }
+  ]
+}
+{% endschema %}

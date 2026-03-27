@@ -1,0 +1,118 @@
+{% comment %}
+  Layer 2 content for the Music Earplugs product page.
+  Hardcoded attenuation chart, comparison table, size guide, musician quotes and FAQ.
+  Referenced by templates/product.music.json
+{% endcomment %}
+
+<!-- ── 1. Attenuation chart + filter explanation ── -->
+<div class="product-content__chart-section">
+  <div class="container">
+    <div class="product-content__chart-grid">
+      <div data-reveal>
+        <p style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--color-accent);margin-bottom:12px;">Patented Filter Technology</p>
+        <h2 style="font-family:var(--font-display);font-size:clamp(24px,3.5vw,44px);letter-spacing:.04em;margin-bottom:16px;">How the filter works</h2>
+        <p style="font-size:15px;line-height:1.7;color:var(--color-text-muted);margin-bottom:20px;">The V-filter reduces the most damaging frequencies (around 3,150 Hz) while leaving the natural musical range intact. Unlike flat-attenuating earplugs, Earasers sound clear — not "underwater". You'll hear every note, just safer.</p>
+        <ul class="product-content__chart-points">
+          <li>Open canal design → no plugged-up feeling</li>
+          <li>Medical-grade silicone → custom fit to your ear</li>
+          <li>Virtually invisible → no one knows they're in</li>
+          <li>Replaceable filter → extend life by swapping just the filter</li>
+        </ul>
+      </div>
+      <div class="product-content__chart-img" data-reveal data-delay="1">
+        <img src="{{ section.settings.chart_image | default: 'https://www.earasers.shop/cdn/shop/files/EARASERS_attenuation_tables.png' }}" alt="Earasers attenuation chart" loading="lazy">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 2. Comparison table ── -->
+<div class="container" style="padding:64px 0;">
+  <div style="text-align:center;max-width:600px;margin:0 auto 40px;" data-reveal>
+    <h2 style="font-family:var(--font-display);font-size:clamp(24px,3.5vw,44px);letter-spacing:.04em;margin-bottom:12px;">Earasers vs the alternatives</h2>
+    <p style="color:var(--color-text-muted);">Custom moulded earplugs cost €200–400 and take weeks. Earasers give you the same flat-response HiFi protection for €49,95.</p>
+  </div>
+  <div class="compare-table-wrap" data-reveal>
+    <table class="compare-table-full">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="col-earasers">Earasers</th>
+          <th>Custom Molds</th>
+          <th>Budget Plugs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Price</td><td class="col-earasers">€49,95</td><td>€199+</td><td>€5–15</td></tr>
+        <tr><td>Audiologist visit required</td><td class="col-earasers"><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td></tr>
+        <tr><td>Delivery</td><td class="col-earasers">2–3 days</td><td>3–6 weeks</td><td>Next day</td></tr>
+        <tr><td>Virtually invisible</td><td class="col-earasers"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td></tr>
+        <tr><td>Clear, natural sound</td><td class="col-earasers"><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td></tr>
+        <tr><td>Replaceable filter</td><td class="col-earasers"><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td></tr>
+        <tr><td>Award-winning</td><td class="col-earasers"><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── 3. Size guide + YouTube embed ── -->
+<div class="product-content__size-guide">
+  <div class="container">
+    <div class="product-content__size-guide-inner" data-reveal>
+      <p style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--color-accent);margin-bottom:12px;">Find Your Fit</p>
+      <h2>Not sure which size?</h2>
+      <p>Ear canal size doesn't correlate with height, weight or gender. Watch this short video to find your perfect fit:</p>
+      <div class="product-content__embed-wrap">
+        <iframe src="https://www.youtube.com/embed/Zmj-jJi93q0" title="How to find your Earasers size" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="product-content__size-note">Still unsure? Order the <strong>Small & Medium combo</strong> — the most popular choice for first-time buyers. 30-day size exchange guaranteed.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── 4. Musician split: WADE ── -->
+{% render 'testimonial-split',
+   name: 'WADE',
+   label: 'Trusted by musicians worldwide',
+   quote: "For comfortable earplugs to play with, I would choose Earasers for sure! Their perfect fit and superior noise reduction make them my top pick for any performance.",
+   button_label: 'INSTAGRAM: WADE',
+   button_url: 'https://instagram.com/wadedj',
+   image_url: 'https://www.earasers.shop/cdn/shop/files/WADE_earasers.webp',
+   reversed: false %}
+
+<!-- ── 5. Musician split: MASON COLLECTIVE ── -->
+{% render 'testimonial-split',
+   name: 'MASON COLLECTIVE',
+   label: '',
+   quote: "Earasers are the only earplugs we trust on stage and in the studio. Crystal clear sound, all night long.",
+   button_label: 'INSTAGRAM: MASON COLLECTIVE',
+   button_url: 'https://instagram.com/masoncollectiveofficial',
+   image_url: 'https://www.earasers.shop/cdn/shop/files/Masoncollective.png',
+   reversed: true %}
+
+<!-- ── 6. FAQ ── -->
+<div class="container">
+  <div class="faq-section" data-reveal>
+    <h2 class="faq-section__heading">Frequently Asked Questions</h2>
+    {% render 'faq-accordion', question: 'Will I still hear the full mix on stage?', answer: 'Yes. The V-filter preserves the natural frequency balance while reducing harmful peaks. Most musicians say Earasers sound more natural than wearing nothing at all.' %}
+    {% render 'faq-accordion', question: 'Which filter level should I use for live concerts?', answer: 'The −19 dB Comfort filter works well for most concerts and rehearsals. For loud festivals or front-of-stage positions, choose the −26 dB Standard filter.' %}
+    {% render 'faq-accordion', question: 'How do I choose my size?', answer: 'Use your earbud experience as a reference. If earbuds fall out easily, try XS or S. If they feel too tight, try M. When unsure, order the Small & Medium combo — you get both sizes and can keep the best fit.' %}
+    {% render 'faq-accordion', question: 'Can I talk to bandmates without removing them?', answer: 'Yes — the open canal design lets speech through naturally. No need to remove them between songs or during soundcheck conversations.' %}
+    {% render 'faq-accordion', question: 'How do I clean them?', answer: 'Rinse with warm water and mild soap. Dry completely before storing. Avoid alcohol or harsh solvents — these degrade the medical-grade silicone over time.' %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Muzikant — Pagina-inhoud",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "chart_image",
+      "label": "Attenuatiegrafiek afbeelding",
+      "info": "Standaard: CDN versie van earasers.shop. Upload hier een vervangende versie."
+    }
+  ],
+  "presets": [{ "name": "Muzikant — Pagina-inhoud" }]
+}
+{% endschema %}

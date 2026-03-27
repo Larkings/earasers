@@ -1,0 +1,123 @@
+{
+  "sections": {
+    "hero": {
+      "type": "homepage-hero",
+      "settings": {
+        "eyebrow": "Award-winning earplugs",
+        "heading": "Hear the music. Protect your hearing.",
+        "subtext": "Earasers are flat-response earplugs — they reduce volume without killing the sound. Designed for musicians, DJs, and anyone who loves live music.",
+        "button_primary_label": "Shop Earasers",
+        "button_primary_url": "/collections/all",
+        "button_secondary_label": "Find My Size",
+        "award_badge": "5× Best Music Earplugs — MusicRadar.com",
+        "bg_color": "#FDF8F4"
+      }
+    },
+    "trust-band": {
+      "type": "homepage-trust-band",
+      "settings": {
+        "scroll_speed": 28,
+        "bg_color": "#F9F9F9"
+      },
+      "block_order": ["item1","item2","item3","item4","item5"],
+      "blocks": {
+        "item1": { "type": "item", "settings": { "icon": "trophy", "text": "5× MusicRadar Award Winner" }},
+        "item2": { "type": "item", "settings": { "icon": "star",   "text": "Rated 4.7 / 5 stars" }},
+        "item3": { "type": "item", "settings": { "icon": "shield", "text": "Patented V-Filter Technology" }},
+        "item4": { "type": "item", "settings": { "icon": "truck",  "text": "Free shipping from €39" }},
+        "item5": { "type": "item", "settings": { "icon": "lock",   "text": "100% Secure Payments" }}
+      }
+    },
+    "use-cases": {
+      "type": "homepage-usecases",
+      "settings": {
+        "heading": "Find your Earasers"
+      },
+      "block_order": ["uc1","uc2","uc3","uc4","uc5","uc6"],
+      "blocks": {
+        "uc1": { "type": "use_case", "settings": { "label": "Musician",          "emoji": "🎸" }},
+        "uc2": { "type": "use_case", "settings": { "label": "DJ",                "emoji": "🎧" }},
+        "uc3": { "type": "use_case", "settings": { "label": "Dentist",           "emoji": "🦷" }},
+        "uc4": { "type": "use_case", "settings": { "label": "Sleeping",          "emoji": "😴" }},
+        "uc5": { "type": "use_case", "settings": { "label": "Motorsport",        "emoji": "🏍️" }},
+        "uc6": { "type": "use_case", "settings": { "label": "Noise Sensitivity", "emoji": "🔊" }}
+      }
+    },
+    "bestsellers": {
+      "type": "homepage-bestsellers",
+      "settings": {
+        "heading": "Our Best Sellers",
+        "products_to_show": 4
+      }
+    },
+    "scrolling_images": {
+      "type": "homepage-scrolling-images",
+      "settings": {
+        "scroll_speed": 30,
+        "image_size": 200,
+        "show_label": false,
+        "label": "Trusted by professionals worldwide"
+      },
+      "block_order": [],
+      "blocks": {}
+    },
+    "compare": {
+      "type": "homepage-compare",
+      "settings": {
+        "heading": "Earasers vs Custom Earplugs",
+        "intro": "Custom moulded earplugs cost €200–400 and require an audiologist visit. Earasers give you the same flat-response HiFi protection for €49,95.",
+        "col1_label": "Earasers",
+        "col2_label": "Custom Earplugs",
+        "col3_label": "Budget Plugs",
+        "button_label": "Shop Earasers Music Earplugs",
+        "button_url": "/collections/all"
+      }
+    },
+    "award-section": {
+      "type": "homepage-award",
+      "settings": {
+        "heading": "Five years at the top",
+        "subtext": "Independently tested and awarded by MusicRadar.com every year since 2020.",
+        "years": "2020, 2021, 2022, 2023, 2024",
+        "button_label": "See the full review on MusicRadar",
+        "button_url": "https://www.musicradar.com"
+      }
+    },
+    "reviews": {
+      "type": "homepage-reviews",
+      "settings": {
+        "heading": "Real people. Real opinions.",
+        "score": "4.7",
+        "review_count": "1,000+",
+        "show_trustpilot": true
+      },
+      "block_order": ["r1","r2","r3","r4","r5","r6"],
+      "blocks": {
+        "r1": { "type": "review", "settings": { "reviewer_name": "Saskia H.",     "country": "NL", "stars": 5, "review_text": "Veel beter en goedkoper dan alle op maat gemaakte oortjes van gevestigde merken die ik gehad heb!", "reviewer_image": "https://www.earasers.shop/cdn/shop/files/Schermafbeelding_2026-01-29_om_13.14.46.png" }},
+        "r2": { "type": "review", "settings": { "reviewer_name": "Michael T.",    "country": "GB", "stars": 5, "review_text": "These are perfect. They fit in very nicely, are barely visible, and balance the sound beautifully.", "reviewer_image": "https://www.earasers.shop/cdn/shop/files/Schermafbeelding_2026-02-20_om_12.00.56.png" }},
+        "r3": { "type": "review", "settings": { "reviewer_name": "Joanne C.",     "country": "GB", "stars": 5, "review_text": "Great customer service. They sent me the mediums plus the filter removal tool free of charge!", "reviewer_image": "https://www.earasers.shop/cdn/shop/files/Schermafbeelding_2026-02-20_om_12.05.33.png" }},
+        "r4": { "type": "review", "settings": { "reviewer_name": "Patrick T.",    "country": "DE", "stars": 5, "review_text": "Happy with my Earasers. I found it a bit hard to choose the size but eventually went with their advice and it was spot on.", "reviewer_image": "https://www.earasers.shop/cdn/shop/files/Schermafbeelding_2026-02-20_om_12.01.45.png" }},
+        "r5": { "type": "review", "settings": { "reviewer_name": "Suzanne K.",    "country": "NL", "stars": 5, "review_text": "The soft material and anatomical shape made this a perfect fit. Extremely comfortable and surprisingly effective.", "reviewer_image": "https://www.earasers.shop/cdn/shop/files/Schermafbeelding_2026-02-20_om_12.06.34.png" }},
+        "r6": { "type": "review", "settings": { "reviewer_name": "Dr. Marian L.", "country": "US", "stars": 4, "review_text": "They do a good job at blocking out scaler noise while still letting me hear my patients clearly. Worth every cent.", "reviewer_image": "https://www.earasers.shop/cdn/shop/files/Schermafbeelding_2026-02-20_om_12.08.39.png" }}
+      }
+    },
+    "blog-posts": {
+      "type": "homepage-blog",
+      "settings": {
+        "heading": "From the blog",
+        "posts_to_show": 3
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "trust-band",
+    "use-cases",
+    "bestsellers",
+    "scrolling_images",
+    "compare",
+    "award-section",
+    "reviews",
+    "blog-posts"
+  ]
+}

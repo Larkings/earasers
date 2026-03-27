@@ -1,0 +1,58 @@
+<section class="size-quiz" id="size-quiz">
+  <div class="container">
+    <div class="size-quiz__inner" data-reveal>
+      <div class="size-quiz__text">
+        <p class="size-quiz__label">{{ section.settings.eyebrow }}</p>
+        <h2 class="size-quiz__heading">{{ section.settings.heading }}</h2>
+        <p class="size-quiz__sub">{{ section.settings.subtext }}</p>
+      </div>
+
+      <div class="size-quiz__steps" id="quiz-steps">
+        <!-- Step 1: Gender -->
+        <div class="quiz-step is-active" data-step="1">
+          <p class="quiz-step__q">Are you shopping for a man or a woman?</p>
+          <div class="quiz-step__options">
+            <button class="quiz-option" data-next="2" data-value="male">Man</button>
+            <button class="quiz-option" data-next="2" data-value="female">Woman / Child</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Usage -->
+        <div class="quiz-step" data-step="2">
+          <p class="quiz-step__q">What will you use Earasers for?</p>
+          <div class="quiz-step__options quiz-step__options--grid">
+            <button class="quiz-option" data-next="result" data-category="musician">🎸 Music / Concerts</button>
+            <button class="quiz-option" data-next="result" data-category="dj">🎧 DJing / Clubs</button>
+            <button class="quiz-option" data-next="result" data-category="dentist">🦷 Dentistry</button>
+            <button class="quiz-option" data-next="result" data-category="sleeping">😴 Sleeping</button>
+            <button class="quiz-option" data-next="result" data-category="motorsport">🏍️ Motorsport</button>
+            <button class="quiz-option" data-next="result" data-category="sensitivity">🧠 Noise Sensitivity</button>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="quiz-step" data-step="result">
+          <p class="quiz-step__q">Your recommended Earasers:</p>
+          <div class="quiz-result">
+            <p class="quiz-result__size" id="quiz-result-size">Size M — Music Earplugs</p>
+            <p class="quiz-result__note">Not sure? Our S+M Starter Kit includes two sizes with a 30-day exchange guarantee.</p>
+            <a href="/collections/all" class="btn btn--primary" id="quiz-result-link">Shop now →</a>
+          </div>
+          <button class="quiz-restart" onclick="quizRestart()">← Start over</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Maatadvies-quiz",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Label boven kop", "default": "Find Your Perfect Fit" },
+    { "type": "text", "id": "heading", "label": "Koptekst", "default": "Which Earasers are right for you?" },
+    { "type": "textarea", "id": "subtext", "label": "Ondertitel", "default": "Answer two quick questions and we'll find your recommended size and model." }
+  ],
+  "presets": [{ "name": "Maatadvies-quiz" }]
+}
+{% endschema %}

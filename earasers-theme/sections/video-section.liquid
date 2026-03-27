@@ -1,0 +1,105 @@
+<section class="video-section">
+  <div class="container">
+    <div class="video-section__inner">
+      <div class="video-section__text" data-reveal>
+        {% if section.settings.label != blank %}
+          <p class="video-section__label">{{ section.settings.label }}</p>
+        {% endif %}
+        <h2 class="video-section__heading">{{ section.settings.heading }}</h2>
+        <p class="video-section__body">{{ section.settings.body }}</p>
+        {% if section.settings.cta_label != blank %}
+          <a href="{{ section.settings.cta_url }}" class="btn btn--primary">{{ section.settings.cta_label }}</a>
+        {% endif %}
+      </div>
+      <div class="video-section__embed" data-reveal data-delay="1">
+        {% if section.settings.video_type == 'hosted' and section.settings.video_file != blank %}
+          <video
+            src="{{ section.settings.video_file }}"
+            controls
+            playsinline
+            preload="metadata"
+            class="video-section__video"
+          ></video>
+        {% elsif section.settings.video_type == 'youtube' and section.settings.youtube_id != blank %}
+          <iframe
+            src="https://www.youtube.com/embed/{{ section.settings.youtube_id }}?rel=0&modestbranding=1"
+            title="{{ section.settings.heading }}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            class="video-section__video"
+            loading="lazy"
+          ></iframe>
+        {% else %}
+          <div class="video-section__placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            <p>Upload de video via Shopify Admin → Inhoud → Bestanden en plak de URL in de theme-editor bij "Video file URL".</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Video section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "See it for yourself"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Hear the difference."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body text",
+      "default": "Watch how Earasers protect your hearing while keeping every frequency of music intact."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "select",
+      "id": "video_type",
+      "label": "Video type",
+      "options": [
+        { "value": "hosted", "label": "Hosted file (URL)" },
+        { "value": "youtube", "label": "YouTube" }
+      ],
+      "default": "hosted"
+    },
+    {
+      "type": "text",
+      "id": "video_file",
+      "label": "Video file URL (when type = hosted)",
+      "info": "Upload the video to Shopify Files and paste the URL here."
+    },
+    {
+      "type": "text",
+      "id": "youtube_id",
+      "label": "YouTube video ID (when type = YouTube)",
+      "info": "e.g. dQw4w9WgXcQ"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video section"
+    }
+  ]
+}
+{% endschema %}

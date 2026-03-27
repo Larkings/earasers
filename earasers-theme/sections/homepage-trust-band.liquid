@@ -1,0 +1,88 @@
+<div class="trust-band" style="background: {{ section.settings.bg_color }}; --scroll-speed: {{ section.settings.scroll_speed }}s">
+  <div class="trust-band__track">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'item' -%}
+          <div class="trust-item trust-item--default" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon == 'trophy' -%}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+            {%- elsif block.settings.icon == 'star' -%}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            {%- elsif block.settings.icon == 'shield' -%}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            {%- elsif block.settings.icon == 'truck' -%}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            {%- elsif block.settings.icon == 'lock' -%}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            {%- else -%}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            {%- endif -%}
+            <span class="trust-item__text">{{ block.settings.text }}</span>
+          </div>
+          <span class="trust-band__sep"></span>
+      {%- endcase -%}
+    {%- endfor -%}
+    {%- comment -%}Duplicate for seamless loop{%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'item' -%}
+          <div class="trust-item trust-item--default" aria-hidden="true">
+            {%- if block.settings.icon == 'trophy' -%}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+            {%- elsif block.settings.icon == 'star' -%}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            {%- elsif block.settings.icon == 'shield' -%}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            {%- elsif block.settings.icon == 'truck' -%}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            {%- elsif block.settings.icon == 'lock' -%}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            {%- else -%}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            {%- endif -%}
+            <span class="trust-item__text">{{ block.settings.text }}</span>
+          </div>
+          <span class="trust-band__sep" aria-hidden="true"></span>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Trust-band (scrollende balk)",
+  "settings": [
+    { "type": "range", "id": "scroll_speed", "label": "Scrollsnelheid (seconden)", "min": 10, "max": 60, "step": 5, "default": 30 },
+    { "type": "color", "id": "bg_color", "label": "Achtergrondkleur", "default": "#F9F9F9" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust-item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Tekst", "default": "5× MusicRadar Award Winner" },
+        {
+          "type": "select", "id": "icon", "label": "Icoon", "default": "trophy",
+          "options": [
+            { "value": "trophy", "label": "🏆 Trofee" },
+            { "value": "star",   "label": "★ Ster" },
+            { "value": "shield", "label": "🛡 Schild" },
+            { "value": "truck",  "label": "🚚 Vrachtwagen" },
+            { "value": "lock",   "label": "🔒 Slot" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Trust-band",
+    "blocks": [
+      { "type": "item", "settings": { "text": "5× MusicRadar Award Winner", "icon": "trophy" }},
+      { "type": "item", "settings": { "text": "4.7/5 based on 1000+ reviews", "icon": "star" }},
+      { "type": "item", "settings": { "text": "Patented V-Filter Technology", "icon": "shield" }},
+      { "type": "item", "settings": { "text": "Free Shipping from €39", "icon": "truck" }},
+      { "type": "item", "settings": { "text": "100% Secure Payments", "icon": "lock" }}
+    ]
+  }]
+}
+{% endschema %}

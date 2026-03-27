@@ -1,6 +1,8 @@
 .section {
   padding: 48px 0;
-  background: var(--color-bg);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
 }
 
 @media (min-width: 768px) {
@@ -97,9 +99,17 @@
 .icon {
   display: flex;
   align-items: center;
-  color: var(--color-accent-2);
+  color: var(--color-accent);
   margin-bottom: 4px;
 }
+
+/* Per-card icon kleuren */
+.card:nth-child(1) .icon { color: var(--color-accent); }
+.card:nth-child(2) .icon { color: var(--color-indigo); }
+.card:nth-child(3) .icon { color: var(--color-teal); }
+.card:nth-child(4) .icon { color: var(--color-indigo); }
+.card:nth-child(5) .icon { color: var(--color-amber); }
+.card:nth-child(6) .icon { color: var(--color-teal); }
 
 .label {
   font-family: var(--font-display);

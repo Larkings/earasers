@@ -9,6 +9,7 @@ import { AwardSection } from '../components/award-section';
 import { CompareTable } from '../components/compare-table';
 import { HowItWorks }   from '../components/how-it-works';
 import { Reviews }      from '../components/reviews';
+import { VideoSection } from '../components/video-section';
 import { Influencers }  from '../components/influencers';
 import { BlogTeaser }   from '../components/blog-teaser';
 
@@ -18,6 +19,7 @@ const Home: NextPage = () => (
     <TrustBand />
     <UseCases />
     <BestSellers />
+    <VideoSection />
     <Influencers />
     <SizeQuiz />
     <AwardSection />

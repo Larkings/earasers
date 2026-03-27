@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "dj_content": {
+      "type": "product-dj-content",
+      "settings": {
+        "intro_text": "Renowned artists such as Franky Rizardo, Paco Osuna, Danny Avila, ANOTR, Stephan Bodzin, Luuk van Dijk, Mason Collective, Toman, Wade, Joey Daniel and many more have enthusiastically embraced these innovative earplugs."
+      },
+      "block_order": ["faq1", "faq2", "faq3"],
+      "blocks": {
+        "faq1": { "type": "faq_item", "settings": { "question": "Will I still hear my mix clearly with Earasers in?", "answer": "Yes. Unlike foam earplugs that kill high-end detail, Earasers use a flat V-filter that reduces all frequencies equally. You lose volume, not clarity. You can still cue, blend and mix accurately." }},
+        "faq2": { "type": "faq_item", "settings": { "question": "Which filter do I need for club/festival DJing?", "answer": "We recommend the SNR 20 (−26 dB peak) for most DJ environments. If you have existing tinnitus or play extremely loud stages, choose SNR 22 (−31 dB). The SNR 14 is lighter and better for monitoring situations." }},
+        "faq3": { "type": "faq_item", "settings": { "question": "Do Earasers fit under DJ headphones?", "answer": "Yes. The slim, low-profile design sits flush in the canal and doesn't interfere with standard DJ cans or headphone cups." }}
+      }
+    }
+  },
+  "order": ["main", "dj_content"]
+}

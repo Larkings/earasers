@@ -28,6 +28,18 @@
 
 .itemGold {
   composes: item;
+  color: var(--color-amber);
+  font-weight: 600;
+}
+
+.itemTeal {
+  composes: item;
+  color: var(--color-teal);
+  font-weight: 600;
+}
+
+.itemAccent {
+  composes: item;
   color: var(--color-accent);
   font-weight: 600;
 }

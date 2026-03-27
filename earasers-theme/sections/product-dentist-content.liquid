@@ -1,0 +1,130 @@
+{% comment %}
+  Layer 2 content for the Dentist & Hygienist product page.
+  Hardcoded review cards, testimonials, research links and FAQ.
+  Referenced by templates/product.dentist.json
+{% endcomment %}
+
+<!-- ── 1. Horizontally scrolling review cards ── -->
+<div class="review-cards-scroll" data-reveal>
+  <div class="review-cards-scroll__track">
+    {% render 'review-cards-scroll',
+       image_url: 'https://www.earasers.shop/cdn/shop/files/Matis_Mink_Dentist_2.png',
+       quote: 'I depend on clear speech understanding. These earplugs reduce only the damaging frequencies, so I can still hear my assistant and patients perfectly. Our full team uses them now.',
+       name: 'Dr. M. Richards',
+       year: 2025,
+       stars: 5 %}
+    {% render 'review-cards-scroll',
+       image_url: 'https://www.earasers.shop/cdn/shop/files/Close_Up_Pic_Dentist_74afcccd-2f3c-4178-a73f-b2bf59418973.png',
+       quote: 'Very happy with the earplugs. Very comfortable and it made my workday so much more relaxed.',
+       name: 'Brummans & Fa Dentists',
+       year: 2025,
+       stars: 5 %}
+    {% render 'review-cards-scroll',
+       image_url: 'https://www.earasers.shop/cdn/shop/files/IMG_4654.jpg',
+       quote: 'Clear sound, less fatigue. These earplugs take the edge off the high-pitched noise without isolating me from patients.',
+       name: 'Dr. A. Vermeer',
+       year: 2025,
+       stars: 5 %}
+    {% render 'review-cards-scroll',
+       image_url: 'https://www.earasers.shop/cdn/shop/files/3_05f550b8-2ff8-4b8a-8a28-1ebbbe40fdf4.png',
+       quote: 'Lightweight, effective, and easy to wear all day. These earplugs have become part of my daily routine.',
+       name: 'Dr. K. Maktur',
+       year: 2025,
+       stars: 5 %}
+    {% render 'review-cards-scroll',
+       image_url: 'https://www.earasers.shop/cdn/shop/files/1_9fb6a91f-53c3-40d4-a55d-0a36242d8c78.png',
+       quote: 'I never expected earplugs to make such a big difference. I still hear everything clear, but by the end of the day, I feel noticeably more energy.',
+       name: 'Dr. Shad Faraj',
+       year: 2026,
+       stars: 5 %}
+  </div>
+</div>
+
+<!-- ── 2. Testimonial split: Brummans & Fa ── -->
+{% render 'testimonial-split',
+   name: 'Brummans & Fa Dentists',
+   label: 'Testimonials',
+   quote: "I'm very happy to be able to work with these earplugs. They make my workday much more comfortable and relaxing.",
+   attribution: 'Britt, 2025',
+   image_url: 'https://www.earasers.shop/cdn/shop/files/Close_Up_Pic_Dentist_74afcccd-2f3c-4178-a73f-b2bf59418973.png',
+   reversed: false %}
+
+<!-- ── 3. Testimonial split: Resmile Dentistry ── -->
+{% render 'testimonial-split',
+   name: 'Resmile Dentistry',
+   label: '',
+   quote: "I never expected earplugs to make such a big difference. I still hear everything clear, but by the end of the day, I feel noticeably more energy.",
+   attribution: 'Dr. Shad Faraj, 2026',
+   image_url: 'https://www.earasers.shop/cdn/shop/files/IMG_4654.jpg',
+   reversed: true %}
+
+<!-- ── 4. Research / credibility ── -->
+<div class="product-content__research-block">
+  <div class="container">
+    <div class="product-content__research-inner" data-reveal>
+      <h2>Research on Hearing Damage in Dentistry</h2>
+      <p>Independent studies show that dental professionals face consistent high-frequency noise levels that can lead to long-term hearing loss. These reports outline the data:</p>
+      <div class="product-content__research-links">
+        {% if section.settings.research_url_dutch != blank %}
+          <a href="{{ section.settings.research_url_dutch }}" target="_blank" rel="noopener noreferrer" class="product-content__research-link">→ Dutch Research Publication</a>
+        {% else %}
+          <span class="product-content__research-link" style="opacity:.4;">→ Dutch Research Publication — URL instellen in editor</span>
+        {% endif %}
+        {% if section.settings.research_url_english != blank %}
+          <a href="{{ section.settings.research_url_english }}" target="_blank" rel="noopener noreferrer" class="product-content__research-link">→ English Research Publication</a>
+        {% else %}
+          <span class="product-content__research-link" style="opacity:.4;">→ English Research Publication — URL instellen in editor</span>
+        {% endif %}
+        {% if section.settings.research_url_article != blank %}
+          <a href="{{ section.settings.research_url_article }}" target="_blank" rel="noopener noreferrer" class="product-content__research-link">→ The Overlooked Risk of Hearing Loss in Dental Practice</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 5. Scrolling clinic logos ── -->
+<div class="logo-marquee">
+  <p class="logo-marquee__label">Trusted by dental professionals across Europe</p>
+  <div class="logo-marquee__track">
+    <div class="logo-marquee__item logo-marquee__item--text">Vidveer</div>
+    <div class="logo-marquee__item logo-marquee__item--text">Lassus Tandartsen</div>
+    <div class="logo-marquee__item logo-marquee__item--text">DC Clinics</div>
+    <div class="logo-marquee__item logo-marquee__item--text">Mondarts Alkmaar</div>
+    <div class="logo-marquee__item logo-marquee__item--text">Resmile Dentistry</div>
+    <div class="logo-marquee__item logo-marquee__item--text">Mondzorg</div>
+    <div class="logo-marquee__item logo-marquee__item--text">TOED</div>
+    <!-- Duplicate for seamless loop -->
+    <div class="logo-marquee__item logo-marquee__item--text" aria-hidden="true">Vidveer</div>
+    <div class="logo-marquee__item logo-marquee__item--text" aria-hidden="true">Lassus Tandartsen</div>
+    <div class="logo-marquee__item logo-marquee__item--text" aria-hidden="true">DC Clinics</div>
+    <div class="logo-marquee__item logo-marquee__item--text" aria-hidden="true">Mondarts Alkmaar</div>
+    <div class="logo-marquee__item logo-marquee__item--text" aria-hidden="true">Resmile Dentistry</div>
+    <div class="logo-marquee__item logo-marquee__item--text" aria-hidden="true">Mondzorg</div>
+    <div class="logo-marquee__item logo-marquee__item--text" aria-hidden="true">TOED</div>
+  </div>
+</div>
+
+<!-- ── 6. FAQ ── -->
+<div class="container">
+  <div class="faq-section" data-reveal>
+    <h2 class="faq-section__heading">Frequently Asked Questions</h2>
+    {% render 'faq-accordion', question: 'Will I still be able to hear my patients clearly?', answer: 'Yes. The V-filter reduces harmful high-frequency noise (like the handpiece drill) while preserving speech frequencies (250–300 Hz). You can hold a normal conversation without removing them.' %}
+    {% render 'faq-accordion', question: 'Are these suitable for hygienists using ultrasonic scalers?', answer: 'Absolutely. The −19 dB Comfort filter is ideal for hygienists — it reduces scaler noise without muffling patient communication. The −26 dB Standard is available for the noisiest procedures.' %}
+    {% render 'faq-accordion', question: 'Which filter level do you recommend for dentists?', answer: 'Most dentists use the −19 dB Comfort filter for a full workday. The −26 dB Standard suits the loudest procedures (high-speed handpieces, turbines).' %}
+    {% render 'faq-accordion', question: 'Can I wear them all day without discomfort?', answer: 'Yes — medical-grade silicone conforms to your canal shape via body heat. Many dental professionals wear them for full 8-hour workdays without removing them between patients.' %}
+    {% render 'faq-accordion', question: 'Is there scientific evidence for hearing damage in dentistry?', answer: 'Yes — multiple independent studies show dental professionals face consistent exposure to noise at damaging levels, primarily from scalers and high-speed handpieces. See the research links on this page.' %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Tandarts — Pagina-inhoud",
+  "settings": [
+    { "type": "url", "id": "research_url_dutch",   "label": "Link: Nederlandstalig onderzoek" },
+    { "type": "url", "id": "research_url_english", "label": "Link: Engelstalig onderzoek" },
+    { "type": "url", "id": "research_url_article", "label": "Link: artikel over gehoorschade" }
+  ],
+  "presets": [{ "name": "Tandarts — Pagina-inhoud" }]
+}
+{% endschema %}

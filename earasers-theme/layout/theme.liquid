@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    {{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}
+    {% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}
+    {% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {% if settings.favicon %}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">
+  {% endif %}
+
+  {{ content_for_header }}
+
+  <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-accent:        {{ settings.color_accent }};
+      --color-accent-hover:  {{ settings.color_accent_hover }};
+      --color-accent-2:      {{ settings.color_accent_2 }};
+      --color-amber:         {{ settings.color_amber }};
+      --color-amber-light:   {{ settings.color_amber_light }};
+      --color-teal:          {{ settings.color_teal }};
+      --color-teal-light:    {{ settings.color_teal_light }};
+      --color-indigo:        {{ settings.color_indigo }};
+      --color-indigo-light:  {{ settings.color_indigo_light }};
+      --color-text:          {{ settings.color_text }};
+      --color-text-muted:    {{ settings.color_text_muted }};
+      --color-bg:            {{ settings.color_bg }};
+      --color-bg-warm:       {{ settings.color_bg_warm }};
+      --color-surface:       {{ settings.color_surface }};
+      --color-surface-2:     {{ settings.color_surface_2 }};
+      --color-border:        {{ settings.color_border }};
+      --font-display:        '{{ settings.font_display }}', Georgia, serif;
+      --font-body:           '{{ settings.font_body }}', system-ui, sans-serif;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 16px;
+    }
+  </style>
+</head>
+<body>
+  {% section 'announcement-bar' %}
+  {% section 'header' %}
+
+  <main id="main-content">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  {% render 'cart-drawer' %}
+
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  <script src="{{ 'earasers-cart.js' | asset_url }}" defer></script>
+  <script src="{{ 'earasers-faq.js' | asset_url }}" defer></script>
+  <script src="{{ 'earasers-quiz.js' | asset_url }}" defer></script>
+</body>
+</html>

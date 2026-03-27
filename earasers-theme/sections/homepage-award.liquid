@@ -1,0 +1,57 @@
+<section class="award-section">
+  <div class="container award-section__inner" data-reveal>
+    <div class="award-section__icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+        <path d="M4 22h16"/>
+        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+        <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+      </svg>
+    </div>
+
+    <h2 class="award-section__heading">{{ section.settings.heading }}</h2>
+    <p class="award-section__body">{{ section.settings.subtext }}</p>
+
+    {% assign years_list = section.settings.years | split: ',' %}
+    {% if years_list.size > 0 %}
+      <div class="award-section__trophies">
+        {% for year in years_list %}
+          <div class="award-section__trophy">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+              <path d="M4 22h16"/>
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+            </svg>
+            <span class="award-section__year">{{ year | strip }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.button_label != blank %}
+      <a href="{{ section.settings.button_url }}" target="_blank" rel="noopener noreferrer" class="award-section__link">
+        {{ section.settings.button_label }}
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Award-sectie",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Koptekst", "default": "5× Best Music Earplugs in a Row" },
+    { "type": "textarea", "id": "subtext", "label": "Ondertitel", "default": "Awarded by MusicRadar.com — the world's largest music technology platform" },
+    { "type": "text", "id": "years", "label": "Jaren (kommagescheiden)", "default": "2020, 2021, 2022, 2023, 2024" },
+    { "type": "text", "id": "button_label", "label": "Knoptekst", "default": "Read the review →" },
+    { "type": "url", "id": "button_url", "label": "Knoplink" }
+  ],
+  "presets": [{ "name": "Award-sectie" }]
+}
+{% endschema %}

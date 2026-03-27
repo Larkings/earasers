@@ -1,0 +1,102 @@
+{% comment %}
+  Layer 2 content for the DJ earplugs product page.
+  Hardcoded influencer quotes, photos and FAQ.
+  Referenced by templates/product.dj.json
+{% endcomment %}
+
+<!-- ── Intro: artist names + hero image ── -->
+<div class="product-content__intro">
+  <div class="container">
+    <div class="product-content__intro-grid">
+      <div class="product-content__intro-text" data-reveal>
+        <h2 style="font-family:var(--font-display);font-size:clamp(28px,3.5vw,48px);letter-spacing:.04em;margin-bottom:20px;">DJ Earplugs</h2>
+        <p>Renowned artists such as <em>Franky Rizardo</em>, <em>Paco Osuna</em>, <em>Danny Avila</em>, <em>ANOTR</em>, <em>Stephan Bodzin</em>, <em>Luuk van Dijk</em>, <em>Mason Collective</em>, <em>Toman</em>, <em>Wade</em>, <em>Joey Daniel</em> and many more have enthusiastically embraced these innovative earplugs and are reaping the benefits.</p>
+        <p style="margin-top:20px;font-style:italic;color:var(--color-text-muted);">&ldquo;I've found Earasers to be the most comfortable and clear-sounding ear protection I've used.&rdquo; — Franky Rizardo</p>
+        <p style="margin-top:12px;font-style:italic;color:var(--color-text-muted);">&ldquo;Their perfect fit and superior noise reduction make them my top pick for any performance.&rdquo; — WADE</p>
+        <p style="margin-top:12px;font-style:italic;color:var(--color-text-muted);">&ldquo;Earasers deliver crystal clear sound while keeping my ears safe.&rdquo; — Joey Daniel</p>
+      </div>
+      <div class="product-content__intro-img" data-reveal data-delay="1">
+        <img src="https://www.earasers.shop/cdn/shop/files/WADE_earasers.webp" alt="DJ wearing Earasers" loading="lazy" style="width:100%;border-radius:var(--radius-md);">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Influencer 1: FRANKY RIZARDO (image left, text right) ── -->
+{% render 'testimonial-split',
+   name: 'FRANKY RIZARDO',
+   label: 'Testimonials',
+   quote: "I've found Earasers to be the most comfortable and clear-sounding ear protection I've used, and throughout my tours, I keep coming back to them.",
+   button_label: 'INSTAGRAM: FRANKY RIZARDO',
+   button_url: 'https://instagram.com/frankyr',
+   image_url: 'https://www.earasers.shop/cdn/shop/files/Earasersmodelsinear.png',
+   reversed: false %}
+
+<!-- ── Influencer 2: WADE (image right, text left) ── -->
+{% render 'testimonial-split',
+   name: 'WADE',
+   label: '',
+   quote: "For comfortable earplugs to play with, I would choose Earasers for sure! Their perfect fit and superior noise reduction make them my top pick for any performance.",
+   button_label: 'INSTAGRAM: WADE',
+   button_url: 'https://instagram.com/wadedj',
+   image_url: 'https://www.earasers.shop/cdn/shop/files/WADE_earasers.webp',
+   reversed: true %}
+
+<!-- ── Influencer 3: STEPHAN BODZIN (image left, text right) ── -->
+{% render 'testimonial-split',
+   name: 'STEPHAN BODZIN',
+   label: '',
+   quote: 'This is definitely a game-changer.',
+   button_label: 'INSTAGRAM: STEPHAN BODZIN',
+   button_url: 'https://instagram.com/stephanbodzin',
+   image_url: 'https://www.earasers.shop/cdn/shop/files/Img_Earasers_Invictim_799be337-dc9f-4fb1-af41-87ad6b0ad933.jpg',
+   reversed: false %}
+
+<!-- ── Influencer 4: JOEY DANIEL (image right, text left) ── -->
+{% render 'testimonial-split',
+   name: 'JOEY DANIEL',
+   label: '',
+   quote: "As a DJ, clarity is everything. Earasers deliver crystal clear sound while keeping my ears safe – I wouldn't use anything else.",
+   button_label: 'INSTAGRAM: JOEY DANIEL',
+   button_url: 'https://instagram.com/joeydaniel_ofc',
+   image_url: 'https://www.earasers.shop/cdn/shop/files/EARASERS_2024_1.webp',
+   reversed: true %}
+
+<!-- ── FAQ ── -->
+<div class="container">
+  <div class="faq-section" data-reveal>
+    <h2 class="faq-section__heading">Frequently Asked Questions</h2>
+    {% render 'faq-accordion', question: 'How do I insert my Earasers Earplugs?', answer: 'Insert the earplug with the stem pointing down. Pull your ear up and back to open the canal, then gently twist and push until it seats properly.' %}
+    {% render 'faq-accordion', question: 'Will they fit?', answer: 'Earasers come in 4 sizes (XS, S, M, L) and 3 combo packs. Most DJs use Small or Medium. When unsure, order the Small & Medium combo so you can find your perfect fit.' %}
+    {% render 'faq-accordion', question: 'Can I wear them during a full DJ set?', answer: 'Yes — the open canal design means you won't feel "plugged up". Many DJs wear them for 6+ hour sets comfortably.' %}
+    {% render 'faq-accordion', question: 'Which filter level is right for a DJ booth?', answer: 'The −31 dB Max filter is designed for DJ booths and club volumes. The −26 dB Standard filter works well for smaller venues. The −19 dB Light is best for monitoring situations.' %}
+    {% render 'faq-accordion', question: 'How long do Earasers last?', answer: 'With normal use and proper care, filters last 3–6 months. Replacement filters are available separately — no need to buy a whole new pair.' %}
+  </div>
+</div>
+
+{% if section.settings.show_extra_content %}
+  <div class="container" style="padding-bottom:48px;">
+    <p class="product-content__intro-text">{{ section.settings.extra_text }}</p>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "DJ — Pagina-inhoud",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_extra_content",
+      "label": "Extra tekst onderaan tonen",
+      "default": false
+    },
+    {
+      "type": "textarea",
+      "id": "extra_text",
+      "label": "Extra tekst",
+      "default": ""
+    }
+  ],
+  "presets": [{ "name": "DJ — Pagina-inhoud" }]
+}
+{% endschema %}

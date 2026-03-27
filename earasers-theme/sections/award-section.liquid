@@ -1,0 +1,111 @@
+<section class="award-section">
+  <div class="container award-section__inner" data-reveal>
+    <div class="award-section__icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+        <path d="M4 22h16"/>
+        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+        <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+      </svg>
+    </div>
+
+    {% if section.settings.pill != blank %}
+      <p class="award-section__pill">{{ section.settings.pill }}</p>
+    {% endif %}
+
+    <h2 class="award-section__heading">{{ section.settings.heading }}</h2>
+    <p class="award-section__body">{{ section.settings.body }}</p>
+
+    {% if section.settings.show_trophies %}
+      <div class="award-section__trophies">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'year' %}
+              <div class="award-section__trophy" {{ block.shopify_attributes }}>
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--color-amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                  <path d="M4 22h16"/>
+                  <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                  <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                  <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+                </svg>
+                <span class="award-section__year">{{ block.settings.year }}</span>
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.cta_label != blank %}
+      <a href="{{ section.settings.cta_url }}" target="_blank" rel="noopener noreferrer" class="award-section__link">
+        {{ section.settings.cta_label }}
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Award section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "pill",
+      "label": "Badge text",
+      "default": "MusicRadar Approved"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Five years at the top"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body text",
+      "default": "Independently tested and awarded by MusicRadar.com every year since 2020."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trophies",
+      "label": "Show trophy icons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Link label",
+      "default": "See the full review on MusicRadar"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Link URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "year",
+      "name": "Award year",
+      "settings": [
+        {
+          "type": "text",
+          "id": "year",
+          "label": "Year",
+          "default": "2024"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Award section"
+    }
+  ]
+}
+{% endschema %}

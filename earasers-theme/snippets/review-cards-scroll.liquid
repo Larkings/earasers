@@ -1,0 +1,27 @@
+{% comment %}
+  Horizontally scrolling review card.
+  Call once per card inside a .review-cards-scroll > .review-cards-scroll__track wrapper.
+  Parameters: image_url, quote, name, year, stars (default 5)
+  Usage — wrap in your section:
+    <div class="review-cards-scroll">
+      <div class="review-cards-scroll__track">
+        {% render 'review-cards-scroll', image_url: '...', quote: '...', name: 'Dr. X', year: 2025 %}
+        ...
+      </div>
+    </div>
+{% endcomment %}
+<div class="review-card review-card--scroll">
+  {% if image_url != blank %}
+    <div class="review-card__photo">
+      <img src="{{ image_url }}" alt="{{ name }}" loading="lazy">
+    </div>
+  {% endif %}
+  <div class="review-card__body-scroll">
+    <div class="review-card__stars-scroll">
+      {%- assign s = stars | default: 5 -%}
+      {%- for i in (1..s) -%}★{%- endfor -%}
+    </div>
+    <p class="review-card__quote-scroll">&ldquo;{{ quote }}&rdquo;</p>
+    <p class="review-card__attribution-scroll">— {{ name }}{% if year != blank %}, {{ year }}{% endif %}</p>
+  </div>
+</div>

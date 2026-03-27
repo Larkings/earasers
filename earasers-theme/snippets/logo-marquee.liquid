@@ -1,0 +1,16 @@
+{% comment %}
+  Scrolling logo/text marquee strip.
+  Parameters: label (optional heading above bar)
+  Call individual items by rendering this snippet multiple times, OR use the
+  section-level logo-marquee HTML directly for static hardcoded logos.
+  This snippet renders the outer wrapper; inner content is passed via capture.
+  Usage (static):
+    <div class="logo-marquee">
+      {% if label != blank %}<p class="logo-marquee__label">{{ label }}</p>{% endif %}
+      <div class="logo-marquee__track">
+        <div class="logo-marquee__item logo-marquee__item--text">Vidveer</div>
+        <div class="logo-marquee__item logo-marquee__item--text">Lassus Tandartsen</div>
+        ... (duplicated for loop)
+      </div>
+    </div>
+{% endcomment %}

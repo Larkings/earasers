@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "rating_text": "4.7 / 5 · 1,000+ reviews",
+        "trust_text": "🔒 Secure checkout · 30-day returns · Free shipping €50+"
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {
+        "heading": "What customers say",
+        "score_text": "Rated 4.7 out of 5 by over 1,000 customers"
+      },
+      "block_order": [],
+      "blocks": {}
+    }
+  },
+  "order": ["main", "reviews"]
+}

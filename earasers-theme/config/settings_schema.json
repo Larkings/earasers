@@ -1,0 +1,182 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Earasers",
+    "theme_version": "1.0.0",
+    "theme_author": "Earasers",
+    "theme_documentation_url": "https://www.earasers.shop",
+    "theme_support_url": "https://www.earasers.shop"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent (coral)",
+        "default": "#E05A4E"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_hover",
+        "label": "Accent hover",
+        "default": "#C94840"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_2",
+        "label": "Accent 2 (green)",
+        "default": "#2D9B8F"
+      },
+      {
+        "type": "color",
+        "id": "color_amber",
+        "label": "Amber",
+        "default": "#E8A030"
+      },
+      {
+        "type": "color",
+        "id": "color_amber_light",
+        "label": "Amber light",
+        "default": "#FEF5E4"
+      },
+      {
+        "type": "color",
+        "id": "color_teal",
+        "label": "Teal",
+        "default": "#2D9B8F"
+      },
+      {
+        "type": "color",
+        "id": "color_teal_light",
+        "label": "Teal light",
+        "default": "#E4F5F3"
+      },
+      {
+        "type": "color",
+        "id": "color_indigo",
+        "label": "Indigo",
+        "default": "#5468E8"
+      },
+      {
+        "type": "color",
+        "id": "color_indigo_light",
+        "label": "Indigo light",
+        "default": "#EDEFFE"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "color_text_muted",
+        "label": "Text muted",
+        "default": "#6B6B6B"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_bg_warm",
+        "label": "Background warm",
+        "default": "#FDF8F4"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Surface",
+        "default": "#F8F7F5"
+      },
+      {
+        "type": "color",
+        "id": "color_surface_2",
+        "label": "Surface 2",
+        "default": "#EEECE9"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Border",
+        "default": "#E5E2DD"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "select",
+        "id": "font_display",
+        "label": "Display font",
+        "options": [
+          { "value": "Playfair Display", "label": "Playfair Display" },
+          { "value": "Georgia", "label": "Georgia" },
+          { "value": "Times New Roman", "label": "Times New Roman" }
+        ],
+        "default": "Playfair Display"
+      },
+      {
+        "type": "select",
+        "id": "font_body",
+        "label": "Body font",
+        "options": [
+          { "value": "Inter", "label": "Inter" },
+          { "value": "system-ui", "label": "System UI" }
+        ],
+        "default": "Inter"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart type",
+        "options": [
+          { "value": "drawer", "label": "Drawer" },
+          { "value": "page", "label": "Page" }
+        ],
+        "default": "drawer"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube",
+        "label": "YouTube URL"
+      }
+    ]
+  }
+]

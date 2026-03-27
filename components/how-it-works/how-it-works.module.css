@@ -1,6 +1,6 @@
 .section {
   padding: 48px 0;
-  background: var(--color-surface);
+  background: var(--color-bg-warm);
   border-top: 1px solid var(--color-border);
 }
 
@@ -71,16 +71,30 @@
 .icon {
   display: flex;
   align-items: center;
-  color: var(--color-accent-2);
+  color: var(--color-accent);
 }
+
+/* Per-stap kleuren */
+.card:nth-child(1) { border-top: 3px solid var(--color-accent); }
+.card:nth-child(2) { border-top: 3px solid var(--color-amber); }
+.card:nth-child(3) { border-top: 3px solid var(--color-teal); }
+
+.card:nth-child(1) .icon { color: var(--color-accent); }
+.card:nth-child(2) .icon { color: var(--color-amber); }
+.card:nth-child(3) .icon { color: var(--color-teal); }
 
 .num {
   font-family: var(--font-display);
   font-size: 48px;
-  color: var(--color-border);
+  color: var(--color-accent);
+  opacity: 0.2;
   line-height: 1;
   letter-spacing: 0.02em;
 }
+
+.card:nth-child(1) .num { color: var(--color-accent); }
+.card:nth-child(2) .num { color: var(--color-amber); }
+.card:nth-child(3) .num { color: var(--color-teal); }
 
 .title {
   font-size: 18px;
@@ -97,13 +111,82 @@
 
 .spec {
   margin-top: 56px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.specBtn {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   overflow: hidden;
-  border: 1px solid var(--color-border);
+  cursor: zoom-in;
+  background: none;
+}
+
+.specBtn:hover .specHint {
+  opacity: 1;
 }
 
 .specImg {
   width: 100%;
   height: auto;
   display: block;
+  transition: transform 0.3s;
+}
+
+.specBtn:hover .specImg {
+  transform: scale(1.02);
+}
+
+.specHint {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  cursor: zoom-out;
+}
+
+.lightboxClose {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  color: #fff;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.lightboxImg {
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: var(--radius-md);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+  cursor: default;
 }

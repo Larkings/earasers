@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "music_content": {
+      "type": "product-music-content",
+      "settings": {
+        "intro_text": "Used by professional musicians on stages worldwide. Earasers are the only earplugs to have won the MusicRadar Best Music Earplug award five years in a row — 2020, 2021, 2022, 2023 and 2024."
+      },
+      "block_order": ["award1", "award2", "award3", "award4", "award5", "faq1", "faq2"],
+      "blocks": {
+        "award1": { "type": "award_feature", "settings": { "year": "2024", "source": "MusicRadar.com", "label": "Best Music Earplugs" }},
+        "award2": { "type": "award_feature", "settings": { "year": "2023", "source": "MusicRadar.com", "label": "Best Music Earplugs" }},
+        "award3": { "type": "award_feature", "settings": { "year": "2022", "source": "MusicRadar.com", "label": "Best Music Earplugs" }},
+        "award4": { "type": "award_feature", "settings": { "year": "2021", "source": "MusicRadar.com", "label": "Best Music Earplugs" }},
+        "award5": { "type": "award_feature", "settings": { "year": "2020", "source": "MusicRadar.com", "label": "Best Music Earplugs" }},
+        "faq1": { "type": "faq_item", "settings": { "question": "Will music still sound clear with Earasers in?", "answer": "Yes — Earasers use a flat V-filter that reduces all frequencies equally. The music sounds exactly the same, just at a safer volume. No muffling, no bass-heavy sound." }},
+        "faq2": { "type": "faq_item", "settings": { "question": "How long do the filters last?", "answer": "Filters last 3–6 months with regular use. When they wear out, you can replace just the filter — no need to buy a whole new pair. Replacement filters are available in our shop." }}
+      }
+    }
+  },
+  "order": ["main", "music_content"]
+}

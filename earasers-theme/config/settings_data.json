@@ -1,0 +1,23 @@
+{
+  "current": {
+    "color_accent": "#E05A4E",
+    "color_accent_hover": "#C94840",
+    "color_accent_2": "#2D9B8F",
+    "color_amber": "#E8A030",
+    "color_amber_light": "#FEF5E4",
+    "color_teal": "#2D9B8F",
+    "color_teal_light": "#E4F5F3",
+    "color_indigo": "#5468E8",
+    "color_indigo_light": "#EDEFFE",
+    "color_text": "#1A1A1A",
+    "color_text_muted": "#6B6B6B",
+    "color_bg": "#FFFFFF",
+    "color_bg_warm": "#FDF8F4",
+    "color_surface": "#F8F7F5",
+    "color_surface_2": "#EEECE9",
+    "color_border": "#E5E2DD",
+    "font_display": "Playfair Display",
+    "font_body": "Inter",
+    "cart_type": "drawer"
+  }
+}

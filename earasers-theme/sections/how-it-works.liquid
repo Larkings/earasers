@@ -1,0 +1,94 @@
+<section class="how-it-works" id="how-it-works">
+  <div class="container">
+    <h2 class="how-it-works__heading" data-reveal>{{ section.settings.heading }}</h2>
+    {% if section.settings.subheading != blank %}
+      <p class="how-it-works__sub" data-reveal data-delay="1">{{ section.settings.subheading }}</p>
+    {% endif %}
+    <div class="how-it-works__grid">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'step' %}
+            <div class="how-it-works__card how-it-works__card--{{ forloop.index }}" {{ block.shopify_attributes }} data-reveal data-delay="{{ forloop.index }}">
+              <div class="how-it-works__icon-wrap">
+                <span class="how-it-works__num">0{{ forloop.index }}</span>
+              </div>
+              <h3 class="how-it-works__title">{{ block.settings.title }}</h3>
+              <p class="how-it-works__body">{{ block.settings.body }}</p>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+    {% if section.settings.chart_image_url != blank %}
+      <div class="how-it-works__spec" data-reveal data-delay="2">
+        <img
+          src="{{ section.settings.chart_image_url }}"
+          alt="{{ section.settings.chart_alt }}"
+          class="how-it-works__spec-img"
+          loading="lazy"
+        >
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "How it works",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How It Works"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Three smart ideas. One very small earplug."
+    },
+    {
+      "type": "text",
+      "id": "chart_image_url",
+      "label": "Attenuation chart image URL",
+      "default": "https://www.earasers.shop/cdn/shop/files/EARASERS_attenuation_tables.png"
+    },
+    {
+      "type": "text",
+      "id": "chart_alt",
+      "label": "Chart image alt text",
+      "default": "Earasers attenuation chart"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step title",
+          "default": "Open Canal Design"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Step description",
+          "default": "Sound enters your ear naturally before any filtering happens."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How it works",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Open Canal Design", "body": "Sound enters your ear naturally before any filtering happens. That's what keeps music sounding like music, and not like you're listening through a wall." } },
+        { "type": "step", "settings": { "title": "V-Filter Technology", "body": "The patented V-Filter targets the frequencies that damage your hearing and lets the rest through unchanged." } },
+        { "type": "step", "settings": { "title": "Medical Grade Silicone", "body": "The silicone tip adapts to the shape of your ear canal. No audiologist visit, no waiting weeks. Just put them in and they fit." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

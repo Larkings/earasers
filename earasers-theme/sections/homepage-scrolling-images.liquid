@@ -1,0 +1,51 @@
+{% if section.settings.show_label and section.settings.label != blank %}
+  <p class="scrolling-images__label">{{ section.settings.label }}</p>
+{% endif %}
+<div class="scrolling-logos" style="--scroll-speed: {{ section.settings.scroll_speed }}s">
+  <div class="scrolling-logos__track">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'image' -%}
+          <div class="scrolling-logos__item" {{ block.shopify_attributes }}>
+            {% if block.settings.image %}
+              <img src="{{ block.settings.image | img_url: '{{ section.settings.image_size }}x' }}" alt="{{ block.settings.alt }}" class="scrolling-logos__img" loading="lazy" style="max-width: {{ section.settings.image_size }}px">
+            {% endif %}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+    {%- comment -%}Duplicate for seamless loop{%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'image' -%}
+          <div class="scrolling-logos__item" aria-hidden="true">
+            {% if block.settings.image %}
+              <img src="{{ block.settings.image | img_url: '{{ section.settings.image_size }}x' }}" alt="" class="scrolling-logos__img" loading="lazy" style="max-width: {{ section.settings.image_size }}px">
+            {% endif %}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Scrollende afbeeldingen",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label boven de balk (optioneel)", "default": "Trusted by professionals worldwide" },
+    { "type": "checkbox", "id": "show_label", "label": "Label tonen", "default": false },
+    { "type": "range", "id": "scroll_speed", "label": "Scrollsnelheid (seconden)", "min": 10, "max": 60, "step": 5, "default": 30 },
+    { "type": "range", "id": "image_size", "label": "Afbeeldingsgrootte", "min": 120, "max": 300, "step": 10, "default": 200, "unit": "px" }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Afbeelding",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Afbeelding" },
+        { "type": "text", "id": "alt", "label": "Alt-tekst", "default": "Customer using Earasers" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Scrollende afbeeldingen" }]
+}
+{% endschema %}

@@ -1,0 +1,69 @@
+<section class="compare-section">
+  <div class="container">
+    <div class="compare-section__intro" data-reveal>
+      <h2 class="compare-section__heading">{{ section.settings.heading }}</h2>
+      {% if section.settings.intro != blank %}
+        <p class="compare-section__sub">{{ section.settings.intro }}</p>
+      {% endif %}
+    </div>
+
+    <div class="compare-section__wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="compare-table__feature-col"></th>
+            <th class="compare-table__col compare-table__col--earasers">
+              <span class="compare-table__brand">{{ section.settings.col1_label }}</span>
+            </th>
+            <th class="compare-table__col">
+              <span>{{ section.settings.col2_label }}</span>
+            </th>
+            {% if section.settings.col3_label != blank %}
+              <th class="compare-table__col">
+                <span>{{ section.settings.col3_label }}</span>
+              </th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% assign features = "Flat frequency response,HiFi sound quality,No audiologist visit,Replaceable filters,Ready to use instantly,All-day comfort,Virtually invisible,Proven award winner" | split: "," %}
+          {% assign earasers  = "✓,✓,✓,✓,✓,✓,✓,✓" | split: "," %}
+          {% assign custom    = "✓,✓,✗,✗,✗,✓,✓,✗" | split: "," %}
+          {% assign budget    = "✗,✗,✓,✗,✓,✗,✗,✗" | split: "," %}
+          {% for feature in features %}
+            <tr class="compare-table__row">
+              <td class="compare-table__feature">{{ feature }}</td>
+              <td class="compare-table__val compare-table__val--earasers">{{ earasers[forloop.index0] }}</td>
+              <td class="compare-table__val">{{ custom[forloop.index0] }}</td>
+              {% if section.settings.col3_label != blank %}
+                <td class="compare-table__val">{{ budget[forloop.index0] }}</td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% if section.settings.button_label != blank %}
+      <div class="compare-section__cta" data-reveal>
+        <a href="{{ section.settings.button_url }}" class="btn btn--primary">{{ section.settings.button_label }}</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Vergelijkingstabel",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Koptekst", "default": "Earasers vs Custom Earplug" },
+    { "type": "textarea", "id": "intro", "label": "Inleidende tekst", "default": "What's the difference with custom moulded earplugs?" },
+    { "type": "text", "id": "col1_label", "label": "Kolom 1 naam", "default": "Earasers" },
+    { "type": "text", "id": "col2_label", "label": "Kolom 2 naam", "default": "Custom Earplugs" },
+    { "type": "text", "id": "col3_label", "label": "Kolom 3 naam (optioneel)", "default": "Budget Plugs" },
+    { "type": "text", "id": "button_label", "label": "Knoptekst", "default": "Shop Earasers Music Earplugs" },
+    { "type": "url", "id": "button_url", "label": "Knoplink" }
+  ],
+  "presets": [{ "name": "Vergelijkingstabel" }]
+}
+{% endschema %}

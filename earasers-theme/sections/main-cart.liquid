@@ -1,0 +1,56 @@
+<section class="main-cart">
+  <div class="container">
+    <h1 class="main-cart__heading">{{ 'cart.general.title' | t }}</h1>
+
+    {% if cart.item_count > 0 %}
+      <div class="main-cart__inner">
+        <div class="main-cart__items">
+          {% for item in cart.items %}
+            <div class="cart-item">
+              <a href="{{ item.url }}" class="cart-item__img-wrap">
+                {% if item.image %}
+                  <img src="{{ item.image | img_url: '100x100', crop: 'center' }}" alt="{{ item.title }}" width="100" height="100">
+                {% endif %}
+              </a>
+              <div class="cart-item__info">
+                <a href="{{ item.url }}" class="cart-item__title">{{ item.title }}</a>
+                {% if item.variant.title != 'Default Title' %}
+                  <p class="cart-item__variant">{{ item.variant.title }}</p>
+                {% endif %}
+                <p class="cart-item__price">{{ item.line_price | money }}</p>
+                <div class="cart-item__qty">
+                  <button onclick="updateCart('{{ item.key }}', {{ item.quantity | minus: 1 }})">−</button>
+                  <span>{{ item.quantity }}</span>
+                  <button onclick="updateCart('{{ item.key }}', {{ item.quantity | plus: 1 }})">+</button>
+                </div>
+                <button class="cart-item__remove" onclick="updateCart('{{ item.key }}', 0)">
+                  {{ 'cart.general.remove' | t }}
+                </button>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="main-cart__summary">
+          <div class="cart-summary">
+            <div class="cart-summary__row">
+              <span>{{ 'cart.general.subtotal' | t }}</span>
+              <span>{{ cart.total_price | money }}</span>
+            </div>
+            <a href="/checkout" class="btn btn--primary btn--full">{{ 'cart.general.checkout' | t }}</a>
+            <a href="/collections/all" class="btn btn--outline btn--full" style="margin-top:8px">Continue shopping</a>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <p class="main-cart__empty">{{ 'cart.general.empty' | t }}</p>
+      <a href="/collections/all" class="btn btn--primary">Continue shopping</a>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart"
+}
+{% endschema %}

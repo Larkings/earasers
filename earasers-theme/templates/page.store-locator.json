@@ -1,0 +1,32 @@
+{
+  "sections": {
+    "store_locator": {
+      "type": "store-locator",
+      "settings": {
+        "heading": "Store Locator",
+        "subheading": "Find Earasers near you — or order online with free shipping from €39."
+      },
+      "block_order": ["store1"],
+      "blocks": {
+        "store1": {
+          "type": "store",
+          "settings": {
+            "name": "Dijkman Music",
+            "address": "Rozengracht 115",
+            "postcode": "1016 LV",
+            "city": "Amsterdam",
+            "country": "NL",
+            "phone": "+31 20 626 5611",
+            "hours": "Mon–Sat: 10:00–18:00",
+            "website": "https://www.dijkmanmuziek.nl",
+            "maps_url": "https://maps.google.com/?q=Rozengracht+115,+1016+LV+Amsterdam",
+            "badge": "Official Retailer",
+            "lat": "52.3728",
+            "lng": "4.8847"
+          }
+        }
+      }
+    }
+  },
+  "order": ["store_locator"]
+}

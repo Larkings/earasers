@@ -1,0 +1,26 @@
+{% comment %}
+  Reusable product card.
+  Usage: {% render 'product-card', product: product, badge: 'Best Seller' %}
+{% endcomment %}
+<div class="product-card" data-reveal>
+  <a href="{{ product.url }}" class="product-card__img-wrap">
+    {% if product.featured_image %}
+      <img src="{{ product.featured_image | img_url: '400x' }}" alt="{{ product.title }}" class="product-card__img" width="400" height="400" loading="lazy">
+    {% endif %}
+    {% if badge != blank %}
+      <span class="product-card__badge">{{ badge }}</span>
+    {% endif %}
+  </a>
+  <div class="product-card__info">
+    <h3 class="product-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    <div class="product-card__price-row">
+      <span class="product-card__price">{{ product.price | money }}</span>
+      {% if product.compare_at_price > product.price %}
+        <span class="product-card__compare">{{ product.compare_at_price | money }}</span>
+      {% endif %}
+    </div>
+    <button class="btn btn--primary btn--sm" onclick="addToCart('{{ product.first_available_variant.id }}')">
+      {{ 'products.product.add_to_cart' | t }}
+    </button>
+  </div>
+</div>

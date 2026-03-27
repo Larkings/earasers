@@ -1,0 +1,116 @@
+<section class="hero{% if section.settings.dark %} hero--dark{% endif %}" style="{% if section.settings.bg_image %}background-image:url('{{ section.settings.bg_image | img_url: '2000x' }}');{% endif %}{% if section.settings.bg_color != blank %}background-color:{{ section.settings.bg_color }};{% endif %}">
+  <div class="container hero__inner">
+    <div class="hero__text" data-reveal>
+      {% if section.settings.badge != blank %}
+        <p class="hero__badge">{{ section.settings.badge }}</p>
+      {% endif %}
+      <h1 class="hero__heading">{{ section.settings.heading }}</h1>
+      {% if section.settings.subheading != blank %}
+        <p class="hero__sub">{{ section.settings.subheading }}</p>
+      {% endif %}
+      <div class="hero__actions">
+        {% if section.settings.cta_1_label != blank %}
+          <a href="{{ section.settings.cta_1_url }}" class="btn btn--primary">{{ section.settings.cta_1_label }}</a>
+        {% endif %}
+        {% if section.settings.cta_2_label != blank %}
+          <a href="{{ section.settings.cta_2_url }}" class="btn btn--outline">{{ section.settings.cta_2_label }}</a>
+        {% endif %}
+      </div>
+      {% if section.settings.rating_text != blank %}
+        <p class="hero__rating">
+          <span class="stars-inline">★★★★★</span>
+          {{ section.settings.rating_text }}
+        </p>
+      {% endif %}
+    </div>
+    {% if section.settings.image %}
+      <div class="hero__media" data-reveal data-delay="1">
+        <img src="{{ section.settings.image | img_url: '600x' }}" alt="{{ section.settings.heading }}" class="hero__img">
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "dark",
+      "label": "Dark background",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FDF8F4"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (optional)"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge text",
+      "default": "Premium Hearing Protection"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Hear the music. Protect your hearing."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Earasers are flat-response earplugs — they reduce volume without killing the sound. Designed for musicians, DJs, and anyone who loves live music."
+    },
+    {
+      "type": "text",
+      "id": "cta_1_label",
+      "label": "Primary button label",
+      "default": "Shop Earasers"
+    },
+    {
+      "type": "url",
+      "id": "cta_1_url",
+      "label": "Primary button URL",
+      "default": "/collections/all"
+    },
+    {
+      "type": "text",
+      "id": "cta_2_label",
+      "label": "Secondary button label",
+      "default": "How it works"
+    },
+    {
+      "type": "url",
+      "id": "cta_2_url",
+      "label": "Secondary button URL",
+      "default": "#how-it-works"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "Rated 4.7/5 by 1,000+ customers"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

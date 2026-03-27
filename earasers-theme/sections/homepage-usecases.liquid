@@ -1,0 +1,52 @@
+<section class="use-cases">
+  <div class="container">
+    <h2 class="use-cases__heading" data-reveal>{{ section.settings.heading }}</h2>
+    <div class="use-cases__grid">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'use_case' %}
+            <a href="{{ block.settings.link }}" class="use-case-card" {{ block.shopify_attributes }} data-reveal>
+              <div class="use-case-card__inner">
+                {% if block.settings.emoji != blank %}
+                  <span class="use-case-card__emoji">{{ block.settings.emoji }}</span>
+                {% endif %}
+                <h3 class="use-case-card__title">{{ block.settings.label }}</h3>
+                <span class="use-case-card__cta">Shop now →</span>
+              </div>
+            </a>
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Use-case grid (Wie ben jij?)",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Sectiekop", "default": "Find your Earasers" }
+  ],
+  "blocks": [
+    {
+      "type": "use_case",
+      "name": "Gebruiksscenario",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label (bv. Muzikant)", "default": "Musician" },
+        { "type": "text", "id": "emoji", "label": "Emoji icoon", "default": "🎸" },
+        { "type": "url",  "id": "link",  "label": "Link naar collectie/product" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Use-case grid",
+    "blocks": [
+      { "type": "use_case", "settings": { "label": "Musician",          "emoji": "🎸" }},
+      { "type": "use_case", "settings": { "label": "DJ",                "emoji": "🎧" }},
+      { "type": "use_case", "settings": { "label": "Dentist",           "emoji": "🦷" }},
+      { "type": "use_case", "settings": { "label": "Sleeping",          "emoji": "😴" }},
+      { "type": "use_case", "settings": { "label": "Motorsport",        "emoji": "🏍️" }},
+      { "type": "use_case", "settings": { "label": "Noise Sensitivity", "emoji": "🔊" }}
+    ]
+  }]
+}
+{% endschema %}

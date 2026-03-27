@@ -1,0 +1,75 @@
+<div class="scrolling-logos" style="--scroll-speed: {{ section.settings.speed }}s">
+  <div class="scrolling-logos__track">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'logo' %}
+          <div class="scrolling-logos__item" {{ block.shopify_attributes }}>
+            {% if block.settings.image %}
+              <img src="{{ block.settings.image | img_url: '160x60' }}" alt="{{ block.settings.alt }}" class="scrolling-logos__img" loading="lazy">
+            {% elsif block.settings.text != blank %}
+              <span class="scrolling-logos__text">{{ block.settings.text }}</span>
+            {% endif %}
+          </div>
+      {% endcase %}
+    {% endfor %}
+    {%- comment -%}Duplicate items for seamless loop{%- endcomment -%}
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'logo' %}
+          <div class="scrolling-logos__item" aria-hidden="true">
+            {% if block.settings.image %}
+              <img src="{{ block.settings.image | img_url: '160x60' }}" alt="" class="scrolling-logos__img" loading="lazy">
+            {% elsif block.settings.text != blank %}
+              <span class="scrolling-logos__text">{{ block.settings.text }}</span>
+            {% endif %}
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Scrolling logos",
+  "settings": [
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "label": "Scroll speed",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo image"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text fallback"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Alt text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrolling logos"
+    }
+  ]
+}
+{% endschema %}

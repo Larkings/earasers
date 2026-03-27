@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from './how-it-works.module.css';
 import { CircleIcon, WaveIcon, LayersIcon } from '../icons';
+
+const CHART = 'https://www.earasers.shop/cdn/shop/files/EARASERS_attenuation_tables.png';
 
 const steps = [
   {
@@ -21,34 +23,53 @@ const steps = [
   },
 ];
 
-export const HowItWorks = () => (
-  <section className={styles.section}>
-    <div className="container">
-      <h2 className={styles.heading} data-reveal>How It Works</h2>
-      <p className={styles.sub} data-reveal data-delay="1">Three smart ideas. One very small earplug.</p>
+export const HowItWorks = () => {
+  const [open, setOpen] = useState(false);
 
-      <div className={styles.grid}>
-        {steps.map((s, i) => (
-          <div key={s.title} className={styles.card} data-reveal data-delay={String(i + 1) as any}>
-            <div className={styles.iconWrap}>
-              <span className={styles.icon}>{s.icon}</span>
-              <span className={styles.num}>0{i + 1}</span>
+  return (
+    <section className={styles.section}>
+      <div className="container">
+        <h2 className={styles.heading} data-reveal>How It Works</h2>
+        <p className={styles.sub} data-reveal data-delay="1">Three smart ideas. One very small earplug.</p>
+
+        <div className={styles.grid}>
+          {steps.map((s, i) => (
+            <div key={s.title} className={styles.card} data-reveal data-delay={String(i + 1) as any}>
+              <div className={styles.iconWrap}>
+                <span className={styles.icon}>{s.icon}</span>
+                <span className={styles.num}>0{i + 1}</span>
+              </div>
+              <h3 className={styles.title}>{s.title}</h3>
+              <p className={styles.body}>{s.body}</p>
             </div>
-            <h3 className={styles.title}>{s.title}</h3>
-            <p className={styles.body}>{s.body}</p>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        <div className={styles.spec} data-reveal data-delay="2">
+          <button className={styles.specBtn} onClick={() => setOpen(true)} aria-label="Vergroot grafiek">
+            <Image
+              src={CHART}
+              alt="Earasers attenuation chart"
+              width={1200}
+              height={500}
+              className={styles.specImg}
+            />
+            <span className={styles.specHint}>🔍 Klik om te vergroten</span>
+          </button>
+        </div>
       </div>
 
-      <div className={styles.spec} data-reveal data-delay="2">
-        <Image
-          src="https://www.earasers.shop/cdn/shop/files/EARASERS_attenuation_tables.png"
-          alt="Earasers attenuation chart"
-          width={1200}
-          height={500}
-          className={styles.specImg}
-        />
-      </div>
-    </div>
-  </section>
-);
+      {open && (
+        <div className={styles.lightbox} onClick={() => setOpen(false)} role="dialog" aria-modal="true">
+          <button className={styles.lightboxClose} onClick={() => setOpen(false)} aria-label="Sluiten">✕</button>
+          <img
+            src={CHART}
+            alt="Earasers attenuation chart"
+            className={styles.lightboxImg}
+            onClick={e => e.stopPropagation()}
+          />
+        </div>
+      )}
+    </section>
+  );
+};

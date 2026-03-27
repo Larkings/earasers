@@ -1,0 +1,64 @@
+<div class="customer-account">
+  <div class="container">
+    <p><a href="{{ routes.account_url }}">&larr; Back to account</a></p>
+    <h1>Order {{ order.name }}</h1>
+    <p>Placed on {{ order.created_at | date: "%B %d, %Y" }}</p>
+    <p>Status: <strong>{{ order.fulfillment_status_label }}</strong></p>
+
+    <table class="order-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for line_item in order.line_items %}
+          <tr>
+            <td>
+              {{ line_item.title }}
+              {% if line_item.variant.title != 'Default Title' %}
+                <br><small>{{ line_item.variant.title }}</small>
+              {% endif %}
+            </td>
+            <td>{{ line_item.quantity }}</td>
+            <td>{{ line_item.final_line_price | money }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2">Subtotal</td>
+          <td>{{ order.subtotal_price | money }}</td>
+        </tr>
+        {% for shipping_method in order.shipping_methods %}
+          <tr>
+            <td colspan="2">Shipping ({{ shipping_method.title }})</td>
+            <td>{{ shipping_method.price | money }}</td>
+          </tr>
+        {% endfor %}
+        {% for discount in order.discounts %}
+          <tr>
+            <td colspan="2">Discount ({{ discount.code }})</td>
+            <td>&minus;{{ discount.savings | money }}</td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td colspan="2"><strong>Total</strong></td>
+          <td><strong>{{ order.total_price | money }}</strong></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    {% if order.shipping_address %}
+      <h2>Shipping address</h2>
+      <p>
+        {{ order.shipping_address.name }}<br>
+        {{ order.shipping_address.street }}<br>
+        {{ order.shipping_address.city }}, {{ order.shipping_address.province_code }} {{ order.shipping_address.zip }}<br>
+        {{ order.shipping_address.country }}
+      </p>
+    {% endif %}
+  </div>
+</div>

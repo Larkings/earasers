@@ -1,0 +1,63 @@
+<section class="bestsellers">
+  <div class="container">
+    <div class="bestsellers__header" data-reveal>
+      <h2 class="bestsellers__heading">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="bestsellers__grid">
+      {% if section.settings.collection != blank %}
+        {% assign col = collections[section.settings.collection] %}
+        {% for product in col.products limit: section.settings.products_to_show %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      {% else %}
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'product' %}
+              {% assign product = all_products[block.settings.product] %}
+              {% if product != blank %}
+                <div class="product-card" {{ block.shopify_attributes }} data-reveal>
+                  <a href="{{ product.url }}" class="product-card__img-wrap">
+                    {% if product.featured_image %}
+                      <img src="{{ product.featured_image | img_url: '400x' }}" alt="{{ product.title }}" class="product-card__img" width="400" height="400" loading="lazy">
+                    {% endif %}
+                    {% if block.settings.badge != blank %}
+                      <span class="product-card__badge">{{ block.settings.badge }}</span>
+                    {% endif %}
+                  </a>
+                  <div class="product-card__info">
+                    <h3 class="product-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+                    <p class="product-card__price">{{ product.price | money }}</p>
+                    <button class="btn btn--primary btn--sm" onclick="addToCart('{{ product.first_available_variant.id }}')">
+                      {{ 'products.product.add_to_cart' | t }}
+                    </button>
+                  </div>
+                </div>
+              {% endif %}
+          {% endcase %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Best Sellers",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Sectiekop", "default": "Our Best Sellers" },
+    { "type": "collection", "id": "collection", "label": "Collectie om te tonen" },
+    { "type": "range", "id": "products_to_show", "label": "Aantal producten", "min": 2, "max": 8, "step": 1, "default": 4 }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product (handmatig)",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "badge", "label": "Badge tekst (optioneel)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Best Sellers" }]
+}
+{% endschema %}

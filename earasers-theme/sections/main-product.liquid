@@ -1,0 +1,143 @@
+{% assign product = product %}
+
+<section class="main-product">
+  <div class="container">
+    <div class="main-product__inner">
+      <!-- Gallery -->
+      <div class="main-product__gallery">
+        <div class="main-product__main-img">
+          {% if product.featured_image %}
+            <img
+              id="main-product-img"
+              src="{{ product.featured_image | img_url: '700x' }}"
+              alt="{{ product.featured_image.alt | escape }}"
+              class="main-product__img"
+              width="700"
+              height="700"
+            >
+          {% endif %}
+        </div>
+        {% if product.images.size > 1 %}
+          <div class="main-product__thumbs">
+            {% for image in product.images %}
+              <button class="main-product__thumb{% if forloop.first %} active{% endif %}" onclick="swapImg('{{ image | img_url: '700x' }}', this)">
+                <img src="{{ image | img_url: '100x' }}" alt="{{ image.alt | escape }}" width="100" height="100" loading="lazy">
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Info -->
+      <div class="main-product__info">
+        {% if section.settings.show_breadcrumb %}
+          <p class="main-product__breadcrumb">
+            <a href="/collections/all">All products</a> /
+            <span>{{ product.title }}</span>
+          </p>
+        {% endif %}
+
+        <h1 class="main-product__title">{{ product.title }}</h1>
+
+        {% if section.settings.show_rating %}
+          <div class="main-product__rating">
+            <span class="stars-amber">★★★★★</span>
+            <span class="main-product__rating-text">{{ section.settings.rating_text }}</span>
+          </div>
+        {% endif %}
+
+        <p class="main-product__price" id="product-price">
+          {{ product.price | money }}
+          {% if product.compare_at_price > product.price %}
+            <span class="main-product__compare-price">{{ product.compare_at_price | money }}</span>
+          {% endif %}
+        </p>
+
+        {% if product.description != blank %}
+          <div class="main-product__desc">{{ product.description }}</div>
+        {% endif %}
+
+        {% form 'product', product, id: 'product-form' %}
+          {% if product.has_only_default_variant == false %}
+            {% for option in product.options_with_values %}
+              <div class="main-product__option">
+                <label class="main-product__option-label">{{ option.name }}</label>
+                <div class="main-product__option-values">
+                  {% for value in option.values %}
+                    <label class="option-btn">
+                      <input
+                        type="radio"
+                        name="{{ option.name }}"
+                        value="{{ value }}"
+                        {% if option.selected_value == value %}checked{% endif %}
+                        onchange="updateVariant()"
+                      >
+                      {{ value }}
+                    </label>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <input type="hidden" name="id" id="variant-id" value="{{ product.selected_or_first_available_variant.id }}">
+
+          <div class="main-product__qty-row">
+            <div class="qty-picker">
+              <button type="button" onclick="adjustQty(-1)">−</button>
+              <input type="number" name="quantity" id="qty" value="1" min="1">
+              <button type="button" onclick="adjustQty(1)">+</button>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full" id="add-to-cart-btn">
+              {% if product.selected_or_first_available_variant.available %}
+                {{ 'products.product.add_to_cart' | t }}
+              {% else %}
+                {{ 'products.product.sold_out' | t }}
+              {% endif %}
+            </button>
+          </div>
+        {% endform %}
+
+        {% if section.settings.trust_text != blank %}
+          <p class="main-product__trust">{{ section.settings.trust_text }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" id="product-variants-json">
+  {{ product.variants | json }}
+</script>
+
+{% schema %}
+{
+  "name": "Main product",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show breadcrumb",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "4.7 / 5 · 1,000+ reviews"
+    },
+    {
+      "type": "text",
+      "id": "trust_text",
+      "label": "Trust text below button",
+      "default": "🔒 Secure checkout · 30-day returns · Free shipping €50+"
+    }
+  ]
+}
+{% endschema %}

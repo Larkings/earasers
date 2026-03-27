@@ -1,0 +1,15 @@
+{% comment %}
+  Renders one FAQ accordion item.
+  Parameters: question, answer
+  Usage:
+    {% render 'faq-accordion', question: 'How do I insert them?', answer: 'Pull your ear up...' %}
+{% endcomment %}
+<div class="faq-item">
+  <button class="faq-item__q" aria-expanded="false">
+    {{ question }}
+    <svg class="faq-item__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="faq-item__a" hidden>
+    <p>{{ answer }}</p>
+  </div>
+</div>

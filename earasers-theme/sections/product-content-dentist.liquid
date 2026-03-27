@@ -1,0 +1,143 @@
+<section class="product-content product-content--dentist">
+  <div class="product-content__hero">
+    <div class="container product-content__hero-inner">
+      <div class="product-content__hero-text" data-reveal>
+        {% if section.settings.badge != blank %}
+          <p class="product-content__badge product-content__badge--teal">{{ section.settings.badge }}</p>
+        {% endif %}
+        <h1 class="product-content__heading">{{ section.settings.heading }}</h1>
+        <p class="product-content__sub">{{ section.settings.subheading }}</p>
+        {% if section.settings.cta_label != blank %}
+          <a href="{{ section.settings.cta_url }}" class="btn btn--primary">{{ section.settings.cta_label }}</a>
+        {% endif %}
+      </div>
+      {% if section.settings.hero_image %}
+        <div class="product-content__hero-img" data-reveal data-delay="1">
+          <img src="{{ section.settings.hero_image | img_url: '500x' }}" alt="{{ section.settings.heading }}" loading="lazy">
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="container">
+    {% if section.settings.research_heading != blank %}
+      <div class="product-content__research" data-reveal>
+        <h2>{{ section.settings.research_heading }}</h2>
+        <p>{{ section.settings.research_body }}</p>
+        {% if section.settings.research_link_label != blank %}
+          <a href="{{ section.settings.research_link_url }}" target="_blank" rel="noopener noreferrer" class="product-content__research-link">
+            {{ section.settings.research_link_label }} →
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'feature_row' %}
+          <div class="product-content__feature-row" {{ block.shopify_attributes }} data-reveal>
+            {% if block.settings.image %}
+              <div class="product-content__feature-img">
+                <img src="{{ block.settings.image | img_url: '500x' }}" alt="{{ block.settings.heading }}" loading="lazy">
+              </div>
+            {% endif %}
+            <div class="product-content__feature-text">
+              <h2>{{ block.settings.heading }}</h2>
+              <p>{{ block.settings.body }}</p>
+            </div>
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product content – Dentist",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Hero badge",
+      "default": "For Dental Professionals"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Hero heading",
+      "default": "Precision hearing protection for the dental practice."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Hero subheading"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA button label",
+      "default": "Shop for Dentists"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA button URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "research_heading",
+      "label": "Research section heading",
+      "default": "Backed by science"
+    },
+    {
+      "type": "textarea",
+      "id": "research_body",
+      "label": "Research section body"
+    },
+    {
+      "type": "text",
+      "id": "research_link_label",
+      "label": "Research link label",
+      "default": "Read the study"
+    },
+    {
+      "type": "url",
+      "id": "research_link_url",
+      "label": "Research link URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature_row",
+      "name": "Feature row",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product content – Dentist"
+    }
+  ]
+}
+{% endschema %}

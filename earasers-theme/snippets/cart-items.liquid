@@ -1,0 +1,24 @@
+{% if cart.item_count == 0 %}
+  <p class="cart-drawer__empty">{{ 'cart.general.empty' | t }}</p>
+{% else %}
+  {% for item in cart.items %}
+    <div class="cart-drawer__item">
+      {% if item.image %}
+        <img src="{{ item.image | img_url: '80x80', crop: 'center' }}" alt="{{ item.title }}" width="80" height="80">
+      {% endif %}
+      <div class="cart-drawer__item-info">
+        <p class="cart-drawer__item-title">{{ item.title }}</p>
+        {% if item.variant.title != 'Default Title' %}
+          <p class="cart-drawer__item-variant">{{ item.variant.title }}</p>
+        {% endif %}
+        <p class="cart-drawer__item-price">{{ item.line_price | money }}</p>
+        <div class="cart-drawer__item-qty">
+          <button onclick="updateCart('{{ item.key }}', {{ item.quantity | minus: 1 }})">−</button>
+          <span>{{ item.quantity }}</span>
+          <button onclick="updateCart('{{ item.key }}', {{ item.quantity | plus: 1 }})">+</button>
+        </div>
+      </div>
+      <button class="cart-drawer__item-remove" onclick="updateCart('{{ item.key }}', 0)">✕</button>
+    </div>
+  {% endfor %}
+{% endif %}

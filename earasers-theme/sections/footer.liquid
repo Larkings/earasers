@@ -1,0 +1,167 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+
+      <div class="site-footer__brand">
+        {% if section.settings.logo != blank %}
+          <img src="{{ section.settings.logo | img_url: '120x' }}" alt="{{ shop.name }}" class="site-footer__logo">
+        {% else %}
+          <span class="site-footer__logo-text">{{ shop.name }}</span>
+        {% endif %}
+        {% if section.settings.tagline != blank %}
+          <p class="site-footer__tagline">{{ section.settings.tagline }}</p>
+        {% endif %}
+        <div class="site-footer__social">
+          {% if settings.social_instagram != blank %}
+            <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            </a>
+          {% endif %}
+          {% if settings.social_facebook != blank %}
+            <a href="{{ settings.social_facebook }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+          {% endif %}
+          {% if settings.social_youtube != blank %}
+            <a href="{{ settings.social_youtube }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>
+              </svg>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'menu_column' %}
+            <div class="site-footer__col" {{ block.shopify_attributes }}>
+              {% if block.settings.title != blank %}
+                <h4 class="site-footer__col-title">{{ block.settings.title }}</h4>
+              {% endif %}
+              {% assign footer_menu = linklists[block.settings.menu] %}
+              {% if footer_menu != blank %}
+                <ul class="site-footer__links">
+                  {% for link in footer_menu.links %}
+                    <li><a href="{{ link.url }}" class="site-footer__link">{{ link.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          {% when 'newsletter' %}
+            <div class="site-footer__col" {{ block.shopify_attributes }}>
+              {% if block.settings.title != blank %}
+                <h4 class="site-footer__col-title">{{ block.settings.title }}</h4>
+              {% endif %}
+              {% if block.settings.body != blank %}
+                <p class="site-footer__newsletter-text">{{ block.settings.body }}</p>
+              {% endif %}
+              {% form 'customer', class: 'site-footer__newsletter-form' %}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <div class="site-footer__newsletter-row">
+                  <input type="email" name="contact[email]" placeholder="{{ block.settings.placeholder }}" class="input" required aria-label="Email">
+                  <button type="submit" class="btn btn--primary btn--sm">{{ block.settings.submit_label }}</button>
+                </div>
+                {% if form.posted_successfully? %}
+                  <p class="site-footer__newsletter-success">Thank you for subscribing!</p>
+                {% endif %}
+              {% endform %}
+            </div>
+        {% endcase %}
+      {% endfor %}
+
+    </div>
+
+    <div class="site-footer__bottom">
+      <p class="site-footer__copy">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+      {% if section.settings.show_payment_icons %}
+        <div class="site-footer__payment">
+          {{ shop.enabled_payment_types | payment_type_svg_tag: class: 'payment-icon' }}
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer logo"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Premium hearing protection for music lovers."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_column",
+      "name": "Menu column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Column title",
+          "default": "Shop"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Stay in the loop"
+        },
+        {
+          "type": "text",
+          "id": "body",
+          "label": "Body text",
+          "default": "Tips on hearing health and exclusive offers."
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Email placeholder",
+          "default": "Your email address"
+        },
+        {
+          "type": "text",
+          "id": "submit_label",
+          "label": "Submit label",
+          "default": "Subscribe"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

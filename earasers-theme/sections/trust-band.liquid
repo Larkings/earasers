@@ -1,0 +1,84 @@
+<div class="trust-band">
+  <div class="container trust-band__inner">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'item' %}
+          <div class="trust-item trust-item--{{ block.settings.variant }}" {{ block.shopify_attributes }}>
+            {% if block.settings.icon == 'trophy' %}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+            {% elsif block.settings.icon == 'star' %}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            {% elsif block.settings.icon == 'shield' %}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            {% elsif block.settings.icon == 'truck' %}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            {% elsif block.settings.icon == 'filter' %}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            {% else %}
+              <svg class="trust-item__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            {% endif %}
+            <span class="trust-item__text">{{ block.settings.text }}</span>
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Trust band",
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "trophy",  "label": "Trophy" },
+            { "value": "star",    "label": "Star" },
+            { "value": "shield",  "label": "Shield" },
+            { "value": "truck",   "label": "Truck" },
+            { "value": "filter",  "label": "Filter" },
+            { "value": "check",   "label": "Check" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Trust item"
+        },
+        {
+          "type": "select",
+          "id": "variant",
+          "label": "Color variant",
+          "options": [
+            { "value": "default", "label": "Default" },
+            { "value": "gold",    "label": "Gold / Amber" },
+            { "value": "teal",    "label": "Teal" },
+            { "value": "accent",  "label": "Coral" }
+          ],
+          "default": "default"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust band",
+      "blocks": [
+        { "type": "item", "settings": { "icon": "trophy", "text": "#1 Musician Earplug", "variant": "gold" } },
+        { "type": "item", "settings": { "icon": "star",   "text": "Rated 4.7 / 5 stars",  "variant": "accent" } },
+        { "type": "item", "settings": { "icon": "filter", "text": "Replaceable filters",   "variant": "default" } },
+        { "type": "item", "settings": { "icon": "shield", "text": "30-day guarantee",       "variant": "teal" } },
+        { "type": "item", "settings": { "icon": "truck",  "text": "Free shipping €50+",    "variant": "default" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

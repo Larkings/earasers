@@ -1,0 +1,39 @@
+{% comment %}
+  Renders one split-layout testimonial block.
+  Parameters:
+    name         — person or company name (uppercase heading)
+    label        — small label above the name (optional)
+    quote        — the testimonial text
+    attribution  — subtitle under the quote (optional, e.g. "Britt, 2025")
+    button_label — CTA button text (optional)
+    button_url   — CTA button href (optional)
+    image_url    — full-width image URL
+    reversed     — true/false, flips image & content sides
+  Usage:
+    {% render 'testimonial-split',
+       name: 'WADE',
+       label: 'Testimonials',
+       quote: 'Great earplugs.',
+       button_label: 'INSTAGRAM: WADE',
+       button_url: 'https://instagram.com/wadedj',
+       image_url: 'https://...',
+       reversed: false %}
+{% endcomment %}
+<div class="testimonial-split{% if reversed %} testimonial-split--reversed{% endif %}">
+  <div class="testimonial-split__image">
+    <img src="{{ image_url }}" alt="{{ name }}" loading="lazy">
+  </div>
+  <div class="testimonial-split__content">
+    {% if label != blank %}
+      <p class="testimonial-split__label">{{ label }}</p>
+    {% endif %}
+    <h2 class="testimonial-split__name">{{ name }}</h2>
+    <p class="testimonial-split__quote">&ldquo;{{ quote }}&rdquo;</p>
+    {% if attribution != blank %}
+      <p class="testimonial-split__attribution">— {{ attribution }}</p>
+    {% endif %}
+    {% if button_label != blank and button_url != blank %}
+      <a href="{{ button_url }}" class="testimonial-split__btn" target="_blank" rel="noopener noreferrer">{{ button_label }}</a>
+    {% endif %}
+  </div>
+</div>

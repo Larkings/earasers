@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "dentist_content": {
+      "type": "product-dentist-content",
+      "settings": {
+        "research_heading": "Research on Hearing Damage in Dentistry",
+        "research_intro": "Independent studies show that dental professionals face consistent high-frequency noise levels from scalers and handpieces that can lead to long-term hearing loss after just 5 years in practice.",
+        "logos_heading": "Trusted by dental professionals across Europe"
+      },
+      "block_order": ["faq1", "faq2", "faq3"],
+      "blocks": {
+        "faq1": { "type": "faq_item", "settings": { "question": "Can I wear Earasers during patient treatment?", "answer": "Yes. The Smart Seal design keeps the earplug secure during normal head and jaw movement. Many hygienists wear them for their entire shift without removing them between patients." }},
+        "faq2": { "type": "faq_item", "settings": { "question": "Will I still be able to hear my patients clearly?", "answer": "Yes. The V-filter preserves the 250–300 Hz frequency range where human speech sits. You remain fully protected from drill and scaler noise while clearly hearing patient instructions and responses." }},
+        "faq3": { "type": "faq_item", "settings": { "question": "Which filter is recommended for dental work?", "answer": "We recommend the SNR 20 (Clinical Balance, −26 dB peak) for most dental environments. The SNR 14 (Gentle Standard) is a lighter option if you work in quieter practices." }}
+      }
+    }
+  },
+  "order": ["main", "dentist_content"]
+}

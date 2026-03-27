@@ -1,0 +1,54 @@
+<article class="main-article">
+  <div class="container">
+    <header class="main-article__header">
+      <p class="main-article__date">{{ article.published_at | date: "%B %d, %Y" }}</p>
+      <h1 class="main-article__heading">{{ article.title }}</h1>
+      {% if article.author != blank %}
+        <p class="main-article__author">By {{ article.author }}</p>
+      {% endif %}
+    </header>
+
+    {% if article.image %}
+      <div class="main-article__hero-img">
+        <img
+          src="{{ article.image | img_url: '1200x500', crop: 'center' }}"
+          alt="{{ article.image.alt | escape }}"
+          class="main-article__img"
+          width="1200"
+          height="500"
+          loading="eager"
+        >
+      </div>
+    {% endif %}
+
+    <div class="main-article__content rte">
+      {{ article.content }}
+    </div>
+
+    {% if section.settings.show_tags and article.tags.size > 0 %}
+      <div class="main-article__tags">
+        {% for tag in article.tags %}
+          <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article-tag">{{ tag }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="main-article__back">
+      <a href="{{ blog.url }}" class="btn btn--outline">← Back to {{ blog.title }}</a>
+    </div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show tags",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
