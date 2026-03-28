@@ -34,3 +34,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# large raw video files (use compressed versions only)
+public/Earasers - with logo.mp4

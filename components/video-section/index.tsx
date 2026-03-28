@@ -21,7 +21,7 @@ export const VideoSection = () => (
 
         <div className={styles.embedWrap} data-reveal data-delay="1">
           <video
-            src="/Earasers - with logo.mp4"
+            src="/earasers-video.mp4"
             controls
             playsInline
             preload="metadata"
