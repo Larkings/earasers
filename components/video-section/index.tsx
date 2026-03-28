@@ -21,7 +21,7 @@ export const VideoSection = () => (
 
         <div className={styles.embedWrap} data-reveal data-delay="1">
           <video
-            src="/earasers-video.mp4"
+            src="https://www.earasers.shop/cdn/shop/videos/c/vp/4bb8851a65cc46aa983fe2a5ea8e5561/4bb8851a65cc46aa983fe2a5ea8e5561.HD-1080p-7.2Mbps-15810489.mp4"
             controls
             playsInline
             preload="metadata"

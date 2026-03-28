@@ -45,7 +45,7 @@
 
 .card {
   position: relative;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   padding: 20px 16px;
   border: 1px solid var(--color-border);
   display: flex;
