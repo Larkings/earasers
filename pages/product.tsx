@@ -1,4 +1,6 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
+import { serverSideTranslations } from '../lib/i18n';
+import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect, startTransition } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,16 +11,12 @@ import styles from '../styles/product.module.css';
 import { getProduct, PRODUCTS, fmt, fmtSave, type Product } from '../lib/products';
 import { useCart, type CartItem } from '../context/cart';
 import { SizeQuiz } from '../components/size-quiz';
+import { VideoSection } from '../components/video-section';
+import { Reviews } from '../components/reviews';
+import { AwardSection } from '../components/award-section';
+import { CompareTable } from '../components/compare-table';
 
-const sizes = [
-  { label: 'XS',     tip: 'Extra Small — fits ~3% of users' },
-  { label: 'S',      tip: 'Small — most popular, ~40% of users' },
-  { label: 'M',      tip: 'Medium — most popular, ~40% of users' },
-  { label: 'L',      tip: 'Large — fits ~3% of users' },
-  { label: 'S & M Kit', tip: 'Best of both — recommended starter' },
-];
-
-const tabs = ['Description', 'Specs', 'Reviews'];
+// sizes and tabs are now driven by translations — see inside component
 
 const Stars = ({ count }: { count: number }) => (
   <div className={styles.stars}>
@@ -49,7 +47,15 @@ function useRecentlyViewed(currentSlug: string) {
 
 const Product: NextPage = () => {
   const router = useRouter();
+  const { t } = useTranslation('product');
   const { addToCart, openCart } = useCart();
+
+  const _sizes       = t('sizes',   { returnObjects: true });
+  const _tabs        = t('tabs',    { returnObjects: true });
+  const _reviewsList = t('reviews', { returnObjects: true });
+  const sizes       = Array.isArray(_sizes)       ? (_sizes       as Array<{ label: string; tip: string; kit?: boolean }>) : [];
+  const tabs        = Array.isArray(_tabs)        ? (_tabs        as string[])                                   : [];
+  const reviewsList = Array.isArray(_reviewsList) ? (_reviewsList as Array<{ name: string; text: string }>)      : [];
 
   const [product, setProduct] = useState<Product>(getProduct('musician'));
 
@@ -90,7 +96,7 @@ const Product: NextPage = () => {
     setTimeout(() => setQuizApplied(false), 4000);
   };
 
-  const isKit   = activeSize >= 4;
+  const isKit  = sizes[activeSize]?.kit ?? activeSize >= 4;
   const price    = isKit ? product.kitPrice    : product.price;
   const original = isKit ? product.kitOriginal : product.originalPrice;
 
@@ -118,9 +124,9 @@ const Product: NextPage = () => {
 
           {/* Breadcrumb */}
           <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-            <Link href="/">Home</Link>
+            <Link href="/">{t('breadcrumb.home')}</Link>
             <span>/</span>
-            <Link href="/collection">Shop</Link>
+            <Link href="/collection">{t('breadcrumb.shop')}</Link>
             <span>/</span>
             <span>{product.collection}</span>
           </nav>
@@ -154,14 +160,14 @@ const Product: NextPage = () => {
               <div className={styles.ratingRow}>
                 <Stars count={product.rating} />
                 <a href="#reviews" className={styles.ratingLink}>
-                  {product.rating} · {product.reviews.toLocaleString('en-GB')} reviews
+                  {product.rating} · {t('reviewsCount', { count: product.reviews.toLocaleString('en-GB') })}
                 </a>
               </div>
 
               <div className={styles.priceRow}>
                 <span className={styles.price}>{fmt(price)}</span>
                 <span className={styles.original}>{fmt(original)}</span>
-                <span className={styles.badge}>Save {fmtSave(price, original)}</span>
+                <span className={styles.badge}>{t('save', { amount: fmtSave(price, original) })}</span>
               </div>
 
               <p className={styles.desc}>{product.description}</p>
@@ -169,35 +175,66 @@ const Product: NextPage = () => {
               {/* Size selector */}
               <div className={styles.selectorBlock}>
                 <div className={styles.selectorLabel}>
-                  <span>Size</span>
+                  <span>{t('size')}</span>
                   <button
                     className={styles.sizeGuide}
                     onClick={() => setQuizOpen(o => !o)}
                   >
-                    {quizOpen ? 'Close quiz ×' : "Don't know your size? →"}
+                    {quizOpen ? t('closeQuiz') : t('dontKnowSize')}
                   </button>
                 </div>
+
+                {/* Individual sizes */}
                 <div className={styles.sizeGrid}>
-                  {sizes.map((s, i) => (
-                    <div key={i} className={styles.sizeWrap}>
-                      <button
-                        className={`${styles.sizeBtn} ${i === activeSize ? styles.sizeBtnActive : ''}`}
-                        onClick={() => setActiveSize(i)}
-                        onMouseEnter={() => setTooltip(i)}
-                        onMouseLeave={() => setTooltip(null)}
-                      >
-                        {s.label}
-                      </button>
-                      {tooltip === i && (
-                        <div className={styles.tooltip}>{s.tip}</div>
-                      )}
-                    </div>
-                  ))}
+                  {sizes.filter(s => !s.kit).map((s, _, arr) => {
+                    const i = sizes.indexOf(s);
+                    return (
+                      <div key={i} className={styles.sizeWrap}>
+                        <button
+                          className={`${styles.sizeBtn} ${i === activeSize ? styles.sizeBtnActive : ''}`}
+                          onClick={() => setActiveSize(i)}
+                          onMouseEnter={() => setTooltip(i)}
+                          onMouseLeave={() => setTooltip(null)}
+                        >
+                          {s.label}
+                        </button>
+                        {tooltip === i && <div className={styles.tooltip}>{s.tip}</div>}
+                      </div>
+                    );
+                  })}
                 </div>
+
+                {/* Combo kits */}
+                {sizes.some(s => s.kit) && (
+                  <div className={styles.kitSection}>
+                    <div className={styles.kitDivider}>
+                      <span>{t('orComboKit')}</span>
+                    </div>
+                    <div className={styles.kitGrid}>
+                      {sizes.filter(s => s.kit).map((s) => {
+                        const i = sizes.indexOf(s);
+                        return (
+                          <div key={i} className={styles.sizeWrap}>
+                            <button
+                              className={`${styles.kitBtn} ${i === activeSize ? styles.kitBtnActive : ''}`}
+                              onClick={() => setActiveSize(i)}
+                              onMouseEnter={() => setTooltip(i)}
+                              onMouseLeave={() => setTooltip(null)}
+                            >
+                              <span className={styles.kitBtnLabel}>{s.label}</span>
+                              <span className={styles.kitBtnTip}>{s.tip}</span>
+                            </button>
+                            {tooltip === i && <div className={styles.tooltip}>{s.tip}</div>}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
 
                 {quizApplied && (
                   <div className={styles.quizApplied}>
-                    <CheckIcon size={14} /> Size set based on your answers
+                    <CheckIcon size={14} /> {t('sizeSetFromQuiz')}
                   </div>
                 )}
 
@@ -210,7 +247,7 @@ const Product: NextPage = () => {
 
               {/* Filter selector */}
               <div className={styles.selectorBlock}>
-                <span className={styles.selectorLabel}>Filter level</span>
+                <span className={styles.selectorLabel}>{t('filterLevel')}</span>
                 <div className={styles.filterList}>
                   {product.filters.map((f, i) => (
                     <button
@@ -228,12 +265,12 @@ const Product: NextPage = () => {
 
               {/* Quantity */}
               <div className={styles.qtyRow}>
-                <span className={styles.qtyLabel}>Quantity</span>
+                <span className={styles.qtyLabel}>{t('quantity')}</span>
                 <div className={styles.qtyControl}>
                   <button
                     className={styles.qtyBtn}
                     onClick={() => setQty(q => Math.max(1, q - 1))}
-                    aria-label="Decrease"
+                    aria-label={t('decreaseQty')}
                   >
                     −
                   </button>
@@ -241,7 +278,7 @@ const Product: NextPage = () => {
                   <button
                     className={styles.qtyBtn}
                     onClick={() => setQty(q => q + 1)}
-                    aria-label="Increase"
+                    aria-label={t('increaseQty')}
                   >
                     +
                   </button>
@@ -254,16 +291,18 @@ const Product: NextPage = () => {
                 onClick={handleAddToCart}
               >
                 {added
-                  ? <><CheckIcon size={16} /> Added to cart</>
-                  : `Add ${qty > 1 ? `${qty}× ` : ''}to cart — ${fmt(price * qty)}`
+                  ? <><CheckIcon size={16} /> {t('addedToCart')}</>
+                  : qty > 1
+                    ? t('addToCart', { qty: String(qty), price: fmt(price * qty) })
+                    : t('addToCartSingle', { price: fmt(price) })
                 }
               </button>
 
               {/* Trust */}
               <div className={styles.trust}>
-                <span className={styles.trustItem}><ShieldIcon size={15} /> Secure payment</span>
-                <span className={styles.trustItem}>Free shipping from €39</span>
-                <span className={styles.trustItem}>30-day returns</span>
+                <span className={styles.trustItem}><ShieldIcon size={15} /> {t('securePayment')}</span>
+                <span className={styles.trustItem}>{t('freeShipping')}</span>
+                <span className={styles.trustItem}>{t('returns')}</span>
               </div>
             </div>
           </div>
@@ -271,21 +310,21 @@ const Product: NextPage = () => {
           {/* Tabs */}
           <div className={styles.tabs} id="reviews">
             <div className={styles.tabBar}>
-              {tabs.map((t, i) => (
+              {tabs.map((tab, i) => (
                 <button
-                  key={t}
+                  key={tab}
                   className={`${styles.tabBtn} ${i === activeTab ? styles.tabBtnActive : ''}`}
                   onClick={() => setActiveTab(i)}
                 >
-                  {t}
+                  {tab}
                 </button>
               ))}
             </div>
 
             {activeTab === 0 && (
               <div className={styles.tabContent}>
-                <h3>What makes Earasers different?</h3>
-                <p>Earasers use a patented open-canal design combined with a V-Filter to reduce harmful sound levels while preserving the natural richness of music.</p>
+                <h3>{t('descriptionHeading')}</h3>
+                <p>{t('descriptionBody')}</p>
                 <ul className={styles.featureList}>
                   {product.features.map(f => (
                     <li key={f}><CheckIcon size={15} className={styles.featureCheck} /> {f}</li>
@@ -296,11 +335,11 @@ const Product: NextPage = () => {
 
             {activeTab === 1 && (
               <div className={styles.tabContent}>
-                <h3>Attenuation values</h3>
-                <p>Measured according to ISO 11904-1. Values are average attenuation per test frequency.</p>
+                <h3>{t('specsHeading')}</h3>
+                <p>{t('specsBody')}</p>
                 <Image
                   src="https://www.earasers.shop/cdn/shop/files/EARASERS_attenuation_tables.png"
-                  alt="Earasers attenuation chart"
+                  alt={t('specsImgAlt')}
                   width={1200}
                   height={500}
                   className={styles.specImg}
@@ -312,16 +351,12 @@ const Product: NextPage = () => {
               <div className={styles.tabContent}>
                 <div className={styles.reviewsHeader}>
                   <Stars count={product.rating} />
-                  <span>{product.rating} out of 5 — based on {product.reviews.toLocaleString('en-GB')} reviews</span>
+                  <span>{t('reviewsRating', { rating: product.rating, count: product.reviews.toLocaleString('en-GB') })}</span>
                 </div>
                 <div className={styles.reviewGrid}>
-                  {[
-                    { name: 'Michael T.', rating: 5, text: 'These Earasers are perfect. They fit in very nicely, are barely visible, and balance the sound perfectly.' },
-                    { name: 'Saskia H.',  rating: 5, text: 'Much better and cheaper than all the custom-fitted earplugs from established brands that I have had!' },
-                    { name: 'Joanne C.', rating: 5, text: 'Great customer service — they sent me the mediums plus the filter removal tool free of charge!' },
-                  ].map(r => (
+                  {reviewsList.map(r => (
                     <div key={r.name} className={styles.reviewCard}>
-                      <Stars count={r.rating} />
+                      <Stars count={5} />
                       <p className={styles.reviewText}>&ldquo;{r.text}&rdquo;</p>
                       <p className={styles.reviewName}>{r.name}</p>
                     </div>
@@ -331,10 +366,22 @@ const Product: NextPage = () => {
             )}
           </div>
 
+        </div>{/* /container */}
+      </div>{/* /page */}
+
+      {/* ── Social proof sections ── */}
+      <VideoSection />
+      <Reviews />
+      <AwardSection />
+      <CompareTable />
+
+      <div className={styles.page}>
+        <div className="container">
+
           {/* Recently Viewed */}
           {recentlyViewed.length > 0 && (
             <div className={styles.recentSection}>
-              <h3 className={styles.recentHeading}>Recently viewed</h3>
+              <h3 className={styles.recentHeading}>{t('recentlyViewed')}</h3>
               <div className={styles.recentGrid}>
                 {recentlyViewed.map(slug => {
                   const p = getProduct(slug);
@@ -358,5 +405,11 @@ const Product: NextPage = () => {
     </Layout>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'product', 'home'])),
+  },
+});
 
 export default Product;

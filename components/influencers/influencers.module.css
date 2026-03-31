@@ -3,7 +3,6 @@
   overflow: hidden;
   position: relative;
   padding: 40px 0;
-  background: var(--color-surface);
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
 }
@@ -14,7 +13,7 @@
   content: '';
   position: absolute;
   top: 0;
-  width: 120px;
+  width: 80px;
   height: 100%;
   z-index: 2;
   pointer-events: none;
@@ -22,12 +21,12 @@
 
 .section::before {
   left: 0;
-  background: linear-gradient(to right, var(--color-surface), transparent);
+  background: linear-gradient(to right, var(--color-bg), transparent);
 }
 
 .section::after {
   right: 0;
-  background: linear-gradient(to left, var(--color-surface), transparent);
+  background: linear-gradient(to left, var(--color-bg), transparent);
 }
 
 .trackWrapper {
@@ -37,17 +36,15 @@
 
 .track {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   width: max-content;
   animation: scrollLeft 30s linear infinite;
 }
 
-/* Pause on hover */
 .section:hover .track {
   animation-play-state: paused;
 }
 
-/* Reduced-motion: show as a wrapped grid instead */
 @media (prefers-reduced-motion: reduce) {
   .track {
     animation: none;
@@ -66,29 +63,44 @@
 .item {
   position: relative;
   flex-shrink: 0;
-  width: 320px;
-  height: 320px;
-  border-radius: var(--radius-lg);
+  width: 240px;
+  height: 310px;
+  border-radius: 10px;
   overflow: hidden;
-  background: var(--color-surface-2);
-}
-
-.item img {
-  transition: transform 0.3s ease;
 }
 
 .item:hover img {
-  transform: scale(1.05);
+  transform: scale(1.04);
+  transition: transform 0.35s ease;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 10px 24px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 100%);
+  display: flex;
+  align-items: flex-start;
+}
+
+.handle {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
 @media (max-width: 768px) {
   .item {
-    width: 240px;
-    height: 240px;
+    width: 190px;
+    height: 245px;
   }
 
   .section::before,
   .section::after {
-    width: 60px;
+    width: 40px;
   }
 }

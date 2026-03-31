@@ -1,7 +1,9 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
+import { serverSideTranslations } from '../lib/i18n';
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { Layout } from '../components/layout';
 import { CheckIcon, ArrowRightIcon, ShieldIcon } from '../components/icons';
 import { useCart } from '../context/cart';
@@ -27,6 +29,7 @@ const CartIcon = () => (
 );
 
 const Cart: NextPage = () => {
+  const { t } = useTranslation('common');
   const { items, totalCount, setQty, removeItem } = useCart();
 
   const subtotal  = items.reduce((s, i) => s + i.price * i.qty, 0);
@@ -44,23 +47,23 @@ const Cart: NextPage = () => {
         <div className="container">
 
           <nav className={styles.breadcrumb}>
-            <Link href="/">Home</Link><span>/</span><span>Cart</span>
+            <Link href="/">{t('cart.home')}</Link><span>/</span><span>{t('cart.heading')}</span>
           </nav>
 
           <h1 className={styles.heading}>
-            Cart {totalCount > 0 && `(${totalCount})`}
+            {t('cart.heading')} {totalCount > 0 && `(${totalCount})`}
           </h1>
 
           {items.length === 0 ? (
             /* ── Empty state ── */
             <div className={styles.empty}>
               <CartIcon />
-              <p className={styles.emptyTitle}>Your cart is empty</p>
+              <p className={styles.emptyTitle}>{t('cart.empty')}</p>
               <p className={styles.emptySub}>
-                Add a product from our collection to get started.
+                {t('cart.emptySub')}
               </p>
               <Link href="/collection" className={styles.emptyBtn}>
-                Browse our collection <ArrowRightIcon size={15} />
+                {t('cart.browseCollection')} <ArrowRightIcon size={15} />
               </Link>
             </div>
           ) : (
@@ -78,7 +81,7 @@ const Cart: NextPage = () => {
                         {item.name}
                       </Link>
                       <div className={styles.itemMeta}>
-                        <span className={styles.itemPill}>Size {item.size}</span>
+                        <span className={styles.itemPill}>{t('cart.size')} {item.size}</span>
                         <span className={styles.itemPill}>{item.filter}</span>
                       </div>
                       <div className={styles.itemFooter}>
@@ -95,20 +98,20 @@ const Cart: NextPage = () => {
                             <button
                               className={styles.qtyBtn}
                               onClick={() => setQty(item.id, item.qty - 1)}
-                              aria-label="Decrease"
+                              aria-label={t('cart.decrease')}
                             >−</button>
                             <span className={styles.qtyCount}>{item.qty}</span>
                             <button
                               className={styles.qtyBtn}
                               onClick={() => setQty(item.id, item.qty + 1)}
-                              aria-label="Increase"
+                              aria-label={t('cart.increase')}
                             >+</button>
                           </div>
                           <button
                             className={styles.removeBtn}
                             onClick={() => removeItem(item.id)}
                           >
-                            Remove
+                            {t('cart.remove')}
                           </button>
                         </div>
                       </div>
@@ -119,17 +122,17 @@ const Cart: NextPage = () => {
 
               {/* ── Summary ── */}
               <div className={styles.summary}>
-                <p className={styles.summaryTitle}>Order summary</p>
+                <p className={styles.summaryTitle}>{t('cart.orderSummary')}</p>
 
                 {/* Free shipping bar */}
                 <div className={styles.shippingBar}>
                   {remaining > 0 ? (
                     <p className={styles.shippingMsg}>
-                      Only <strong>{fmt(remaining)}</strong> away from free shipping
+                      {t('cart.onlyAway', { amount: fmt(remaining) })}
                     </p>
                   ) : (
                     <p className={styles.shippingMsgFree}>
-                      <CheckIcon size={14} /> Free shipping!
+                      <CheckIcon size={14} /> {t('cart.shippingFree')}
                     </p>
                   )}
                   <div className={styles.progressTrack}>
@@ -140,36 +143,36 @@ const Cart: NextPage = () => {
                 {/* Lines */}
                 <div className={styles.summaryLines}>
                   <div className={styles.summaryLine}>
-                    <span>Subtotal</span>
+                    <span>{t('cart.subtotal')}</span>
                     <span>{fmt(subtotal)}</span>
                   </div>
                   <div className={styles.summaryLine}>
-                    <span>Shipping</span>
+                    <span>{t('cart.shipping')}</span>
                     {shipping === 0
-                      ? <span className={styles.summaryLineGreen}>Free</span>
+                      ? <span className={styles.summaryLineGreen}>{t('cart.shippingFreeLabel')}</span>
                       : <span>{fmt(SHIPPING_COST)}</span>
                     }
                   </div>
                 </div>
 
                 <div className={styles.summaryTotal}>
-                  <span className={styles.summaryTotalLabel}>Total</span>
+                  <span className={styles.summaryTotalLabel}>{t('cart.totalLabel')}</span>
                   <span className={styles.summaryTotalPrice}>{fmt(total)}</span>
                 </div>
 
                 <button className={styles.checkoutBtn}>
-                  Checkout <ArrowRightIcon size={15} />
+                  {t('cart.checkout')} <ArrowRightIcon size={15} />
                 </button>
 
                 <Link href="/collection" className={styles.continueBtn}>
-                  Continue shopping
+                  {t('cart.continueShopping')}
                 </Link>
 
                 {/* Trust */}
                 <div className={styles.trustRow}>
-                  <span className={styles.trustItem}><ShieldIcon size={13} /> Secure payment</span>
-                  <Link href="/returns" className={styles.trustItem}><CheckIcon size={13} /> 30-day return policy</Link>
-                  <span className={styles.trustItem}><CheckIcon size={13} /> Free shipping from €39</span>
+                  <span className={styles.trustItem}><ShieldIcon size={13} /> {t('cart.securePayment')}</span>
+                  <Link href="/returns" className={styles.trustItem}><CheckIcon size={13} /> {t('cart.returnPolicy')}</Link>
+                  <span className={styles.trustItem}><CheckIcon size={13} /> {t('cart.freeShippingFrom')}</span>
                 </div>
               </div>
 
@@ -180,7 +183,7 @@ const Cart: NextPage = () => {
           {crossSell.length > 0 && (
             <div className={styles.crossSell}>
               <h2 className={styles.crossSellHeading}>
-                {items.length === 0 ? 'Discover our collection' : 'You might also like'}
+                {items.length === 0 ? t('cart.discoverCollection') : t('cart.youMightAlsoLike')}
               </h2>
               <div className={styles.crossGrid}>
                 {crossSell.map(p => (
@@ -204,5 +207,11 @@ const Cart: NextPage = () => {
     </Layout>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+  },
+});
 
 export default Cart;

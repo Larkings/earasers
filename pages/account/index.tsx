@@ -1,7 +1,9 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
+import { serverSideTranslations } from '../../lib/i18n';
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
 import { Layout } from '../../components/layout';
 import { useAuth } from '../../context/auth';
 import { ArrowRightIcon } from '../../components/icons';
@@ -19,6 +21,7 @@ const PackageIcon = () => (
 const Account: NextPage = () => {
   const router = useRouter();
   const { user, loading, logout } = useAuth();
+  const { t } = useTranslation('account');
 
   // Redirect to login if not authenticated
   useEffect(() => {
@@ -44,6 +47,13 @@ const Account: NextPage = () => {
     router.push('/');
   };
 
+  const quickLinks = [
+    { label: t('account.viewCart'),   href: '/cart' },
+    { label: t('account.findSize'),   href: '/size-finder' },
+    { label: t('account.contactUs'),  href: '/contact' },
+    { label: t('account.faq'),        href: '/faq' },
+  ];
+
   return (
     <Layout>
       <div className={styles.page}>
@@ -57,7 +67,7 @@ const Account: NextPage = () => {
                 <p className={styles.dashSub}>{user.email}</p>
               </div>
               <button className={styles.logoutBtn} onClick={handleLogout}>
-                Sign out
+                {t('account.signOut')}
               </button>
             </div>
 
@@ -65,27 +75,27 @@ const Account: NextPage = () => {
 
               {/* Account info */}
               <div className={styles.dashCard}>
-                <p className={styles.dashCardTitle}>Account details</p>
+                <p className={styles.dashCardTitle}>{t('account.accountDetails')}</p>
                 <div className={styles.infoRow}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Name</span>
+                    <span className={styles.infoLabel}>{t('account.name')}</span>
                     <span className={styles.infoValue}>{user.firstName} {user.lastName}</span>
                   </div>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Email</span>
+                    <span className={styles.infoLabel}>{t('account.email')}</span>
                     <span className={styles.infoValue}>{user.email}</span>
                   </div>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Newsletter</span>
-                    <span className={styles.infoValue}>{user.acceptsMarketing ? 'Yes' : 'No'}</span>
+                    <span className={styles.infoLabel}>{t('account.newsletter')}</span>
+                    <span className={styles.infoValue}>{user.acceptsMarketing ? t('account.yes') : t('account.no')}</span>
                   </div>
                 </div>
-                <button className={styles.editBtn}>Edit details</button>
+                <button className={styles.editBtn}>{t('account.editDetails')}</button>
               </div>
 
               {/* Orders */}
               <div className={styles.dashCard}>
-                <p className={styles.dashCardTitle}>Orders</p>
+                <p className={styles.dashCardTitle}>{t('account.orders')}</p>
                 {/*
                   ── SHOPIFY INTEGRATION POINT ──────────────────────────────
                   Replace with real order data fetched via:
@@ -94,9 +104,9 @@ const Account: NextPage = () => {
                 */}
                 <div className={styles.emptyOrders}>
                   <PackageIcon />
-                  <p>You haven&apos;t placed any orders yet.</p>
+                  <p>{t('account.noOrders')}</p>
                   <Link href="/collection" className={styles.shopLink}>
-                    Discover our collection <ArrowRightIcon size={13} />
+                    {t('account.discoverCollection')} <ArrowRightIcon size={13} />
                   </Link>
                 </div>
               </div>
@@ -105,12 +115,7 @@ const Account: NextPage = () => {
 
             {/* Quick links */}
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-              {[
-                { label: 'View cart',       href: '/cart' },
-                { label: 'Find my size',   href: '/size-finder' },
-                { label: 'Contact us',     href: '/contact' },
-                { label: 'FAQ',            href: '/faq' },
-              ].map(l => (
+              {quickLinks.map(l => (
                 <Link key={l.href} href={l.href} style={{
                   fontSize: 13, fontWeight: 500,
                   padding: '8px 16px',
@@ -133,5 +138,11 @@ const Account: NextPage = () => {
     </Layout>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'account'])),
+  },
+});
 
 export default Account;

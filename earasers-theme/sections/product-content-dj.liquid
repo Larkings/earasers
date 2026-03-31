@@ -1,4 +1,18 @@
+{% comment %}
+  Section order note: In the DJ template, sections should be ordered:
+  1. Products (collection grid)
+  2. Slideshow / scrolling artist images
+  3. 3-column feature blocks (this section's stat_row blocks)
+{% endcomment %}
 {% assign main_product = all_products[section.settings.product] %}
+
+<style>
+  /* DJ feature section — colored top borders */
+  .product-content--dj .feature-col:nth-child(1) { border-top: 3px solid #F07878; }
+  .product-content--dj .feature-col:nth-child(2) { border-top: 3px solid #4ECDC4; }
+  .product-content--dj .feature-col:nth-child(3) { border-top: 3px solid #F5A623; }
+  .product-content--dj .feature-col:nth-child(4) { border-top: 3px solid #5CB85C; }
+</style>
 
 <section class="product-content product-content--dj">
   <div class="product-content__hero product-content__hero--dark">
@@ -135,7 +149,7 @@
           "type": "text",
           "id": "stat_1_value",
           "label": "Stat 1 value",
-          "default": "-19dB"
+          "default": "-36dB Noise Reduction"
         },
         {
           "type": "text",
@@ -147,7 +161,7 @@
           "type": "text",
           "id": "stat_2_value",
           "label": "Stat 2 value",
-          "default": "Flat"
+          "default": "Personal Fit"
         },
         {
           "type": "text",
@@ -159,7 +173,7 @@
           "type": "text",
           "id": "stat_3_value",
           "label": "Stat 3 value",
-          "default": "3–6 mo."
+          "default": "1–3 Year Lifespan"
         },
         {
           "type": "text",

@@ -1,7 +1,9 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
+import { serverSideTranslations } from '../../lib/i18n';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
 import { Layout } from '../../components/layout';
 import { useAuth } from '../../context/auth';
 import styles from '../../styles/account.module.css';
@@ -20,6 +22,7 @@ const EyeIcon = ({ open }: { open: boolean }) => open ? (
 const Login: NextPage = () => {
   const router = useRouter();
   const { login, loading } = useAuth();
+  const { t } = useTranslation('account');
 
   const [email,    setEmail]    = useState('');
   const [password, setPassword] = useState('');
@@ -31,7 +34,7 @@ const Login: NextPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (!email || !password) { setError('Please fill in all fields.'); return; }
+    if (!email || !password) { setError(t('login.fillAllFields')); return; }
     const err = await login(email, password);
     if (err) { setError(err); return; }
     router.push(redirect);
@@ -43,15 +46,15 @@ const Login: NextPage = () => {
         <div className="container">
           <div className={styles.authWrap}>
             <div className={styles.card}>
-              <h1 className={styles.cardHeading}>Sign in</h1>
-              <p className={styles.cardSub}>Welcome back. Sign in to view your orders.</p>
+              <h1 className={styles.cardHeading}>{t('login.heading')}</h1>
+              <p className={styles.cardSub}>{t('login.sub')}</p>
 
               {error && <div className={styles.errorBanner} style={{ marginBottom: 20 }}>{error}</div>}
 
               <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
 
                 <div className={styles.field}>
-                  <label className={styles.label} htmlFor="email">Email address</label>
+                  <label className={styles.label} htmlFor="email">{t('login.email')}</label>
                   <input
                     id="email"
                     type="email"
@@ -65,8 +68,8 @@ const Login: NextPage = () => {
 
                 <div className={styles.field}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <label className={styles.label} htmlFor="password">Password</label>
-                    <Link href="/account/forgot-password" className={styles.forgotLink}>Forgot?</Link>
+                    <label className={styles.label} htmlFor="password">{t('login.password')}</label>
+                    <Link href="/account/forgot-password" className={styles.forgotLink}>{t('login.forgot')}</Link>
                   </div>
                   <div className={styles.passwordWrap}>
                     <input
@@ -78,22 +81,22 @@ const Login: NextPage = () => {
                       onChange={e => setPassword(e.target.value)}
                       placeholder="••••••••"
                     />
-                    <button type="button" className={styles.togglePw} onClick={() => setShowPw(v => !v)} aria-label="Show password">
+                    <button type="button" className={styles.togglePw} onClick={() => setShowPw(v => !v)} aria-label={t('login.showPassword')}>
                       <EyeIcon open={showPw} />
                     </button>
                   </div>
                 </div>
 
                 <button type="submit" className={styles.submitBtn} disabled={loading}>
-                  {loading ? <span className={styles.spinner} /> : 'Sign in'}
+                  {loading ? <span className={styles.spinner} /> : t('login.submitBtn')}
                 </button>
               </form>
 
-              <div className={styles.divider} style={{ marginTop: 24 }}>or</div>
+              <div className={styles.divider} style={{ marginTop: 24 }}>{t('login.or')}</div>
 
               <p className={styles.bottomLink} style={{ marginTop: 16 }}>
-                Don&apos;t have an account?{' '}
-                <Link href="/account/register">Register here</Link>
+                {t('login.noAccount')}{' '}
+                <Link href="/account/register">{t('login.registerLink')}</Link>
               </p>
             </div>
           </div>
@@ -102,5 +105,11 @@ const Login: NextPage = () => {
     </Layout>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'account'])),
+  },
+});
 
 export default Login;

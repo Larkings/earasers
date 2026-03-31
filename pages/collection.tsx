@@ -1,21 +1,21 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
+import { serverSideTranslations } from '../lib/i18n';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { Layout } from '../components/layout';
 import { StarIcon, StarEmptyIcon, ArrowRightIcon } from '../components/icons';
 import styles from '../styles/collection.module.css';
 
 const products = [
-  { name: 'Music Earplugs — Small',     price: '€49,95', original: '€58,00', rating: 4.7, reviews: 1024, img: 'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',           tag: 'Best Seller' },
-  { name: 'Music Earplugs — Medium',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 876,  img: 'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',    tag: null },
-  { name: 'Music Earplugs — Large',     price: '€49,95', original: '€58,00', rating: 4.6, reviews: 213,  img: 'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',           tag: null },
-  { name: 'S & M Starter Kit',          price: '€54,95', original: '€69,00', rating: 4.8, reviews: 542,  img: 'https://www.earasers.shop/cdn/shop/files/Earasers_starter_combo_kit.png',   tag: 'Recommended' },
-  { name: 'Perfect Size Kit',           price: '€54,95', original: '€69,00', rating: 4.6, reviews: 198,  img: 'https://www.earasers.shop/cdn/shop/files/Earasers_starter_combo_kit.png',   tag: null },
-  { name: 'Pro-Kit',                    price: '€79,00', original: '€99,00', rating: 4.9, reviews: 87,   img: 'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',    tag: 'Premium' },
+  { name: 'Music Earplugs — Small',     price: '€49,95', original: '€58,00', rating: 4.7, reviews: 1024, img: 'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',           tagKey: 'ui.bestSeller' },
+  { name: 'Music Earplugs — Medium',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 876,  img: 'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',    tagKey: null },
+  { name: 'Music Earplugs — Large',     price: '€49,95', original: '€58,00', rating: 4.6, reviews: 213,  img: 'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',           tagKey: null },
+  { name: 'S & M Starter Kit',          price: '€54,95', original: '€69,00', rating: 4.8, reviews: 542,  img: 'https://www.earasers.shop/cdn/shop/files/Earasers_starter_combo_kit.png',   tagKey: 'ui.recommended' },
+  { name: 'Perfect Size Kit',           price: '€54,95', original: '€69,00', rating: 4.6, reviews: 198,  img: 'https://www.earasers.shop/cdn/shop/files/Earasers_starter_combo_kit.png',   tagKey: null },
+  { name: 'Pro-Kit',                    price: '€79,00', original: '€99,00', rating: 4.9, reviews: 87,   img: 'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',    tagKey: 'ui.premium' },
 ];
-
-const sortOptions = ['Featured', 'Price: low to high', 'Price: high to low', 'Newest', 'Best rated'];
 
 const Stars = ({ rating }: { rating: number }) => {
   const full = Math.floor(rating);
@@ -28,7 +28,16 @@ const Stars = ({ rating }: { rating: number }) => {
 };
 
 const Collection: NextPage = () => {
+  const { t } = useTranslation('collection');
   const [sort, setSort] = useState(0);
+
+  const sortOptions = [
+    t('ui.featured'),
+    t('ui.priceLow'),
+    t('ui.priceHigh'),
+    t('ui.newest'),
+    t('ui.bestRated'),
+  ];
 
   const sorted = [...products].sort((a, b) => {
     if (sort === 1) return parseFloat(a.price.replace('€', '').replace(',', '.')) - parseFloat(b.price.replace('€', '').replace(',', '.'));
@@ -45,19 +54,19 @@ const Collection: NextPage = () => {
         <div className={styles.hero}>
           <div className="container">
             <nav className={styles.breadcrumb}>
-              <Link href="/">Home</Link><span>/</span><span>Music Earplugs</span>
+              <Link href="/">{t('ui.home')}</Link><span>/</span><span>{t('ui.collectionHeading')}</span>
             </nav>
-            <h1 className={styles.heading}>Music Earplugs</h1>
-            <p className={styles.sub}>Award-winning HiFi earplugs for musicians, concert-goers and music lovers.</p>
+            <h1 className={styles.heading}>{t('ui.collectionHeading')}</h1>
+            <p className={styles.sub}>{t('ui.collectionSub')}</p>
           </div>
         </div>
 
         <div className="container">
           {/* Toolbar */}
           <div className={styles.toolbar}>
-            <p className={styles.count}>{products.length} products</p>
+            <p className={styles.count}>{t('ui.productsCount', { count: products.length })}</p>
             <div className={styles.sortWrap}>
-              <label htmlFor="sort" className={styles.sortLabel}>Sort by</label>
+              <label htmlFor="sort" className={styles.sortLabel}>{t('ui.sortBy')}</label>
               <select
                 id="sort"
                 className={styles.sortSelect}
@@ -75,7 +84,7 @@ const Collection: NextPage = () => {
               <Link key={p.name} href="/product" className={styles.card}>
                 <div className={styles.imgWrap}>
                   <Image src={p.img} alt={p.name} fill style={{ objectFit: 'cover' }} />
-                  {p.tag && <span className={styles.tag}>{p.tag}</span>}
+                  {p.tagKey && <span className={styles.tag}>{t(p.tagKey)}</span>}
                 </div>
                 <div className={styles.info}>
                   <p className={styles.name}>{p.name}</p>
@@ -88,7 +97,7 @@ const Collection: NextPage = () => {
                     <span className={styles.priceCrossed}>{p.original}</span>
                   </div>
                   <span className={styles.cta}>
-                    Choose options <ArrowRightIcon size={13} />
+                    {t('ui.chooseOptions')} <ArrowRightIcon size={13} />
                   </span>
                 </div>
               </Link>
@@ -99,5 +108,11 @@ const Collection: NextPage = () => {
     </Layout>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'collection'])),
+  },
+});
 
 export default Collection;

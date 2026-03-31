@@ -2,6 +2,7 @@ import React, { useEffect, useState, startTransition } from 'react';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import styles from './cartDrawer.module.css';
 import { useCart, type CartItem } from '../../context/cart';
 import { fmt } from '../../lib/products';
@@ -19,6 +20,7 @@ const EmptyCartIcon = () => (
 
 const DrawerItem = ({ item }: { item: CartItem }) => {
   const { setQty, removeItem, closeCart } = useCart();
+  const { t } = useTranslation('common');
   return (
     <div className={styles.item}>
       <Link href={`/product?slug=${item.slug}`} className={styles.itemImg} onClick={closeCart}>
@@ -36,12 +38,12 @@ const DrawerItem = ({ item }: { item: CartItem }) => {
           <span className={styles.itemPrice}>{fmt(item.price * item.qty)}</span>
           <div className={styles.itemActions}>
             <div className={styles.qtyControl}>
-              <button className={styles.qtyBtn} onClick={() => setQty(item.id, item.qty - 1)} aria-label="Decrease">−</button>
+              <button className={styles.qtyBtn} onClick={() => setQty(item.id, item.qty - 1)} aria-label={t('cart.decrease')}>−</button>
               <span className={styles.qtyCount}>{item.qty}</span>
-              <button className={styles.qtyBtn} onClick={() => setQty(item.id, item.qty + 1)} aria-label="Increase">+</button>
+              <button className={styles.qtyBtn} onClick={() => setQty(item.id, item.qty + 1)} aria-label={t('cart.increase')}>+</button>
             </div>
             <button className={styles.removeBtn} onClick={() => removeItem(item.id)}>
-              Remove
+              {t('cart.remove')}
             </button>
           </div>
         </div>
@@ -51,20 +53,19 @@ const DrawerItem = ({ item }: { item: CartItem }) => {
 };
 
 const DrawerContent = () => {
-  const { items, totalCount, isCartOpen, closeCart } = useCart();
+  const { items, totalCount, closeCart } = useCart();
+  const { t } = useTranslation('common');
 
   const subtotal  = items.reduce((s, i) => s + i.price * i.qty, 0);
   const remaining = Math.max(0, FREE_SHIPPING - subtotal);
   const progress  = Math.min(100, (subtotal / FREE_SHIPPING) * 100);
 
-  // Escape key
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') closeCart(); };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
   }, [closeCart]);
 
-  // Body scroll lock
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
@@ -74,28 +75,26 @@ const DrawerContent = () => {
     <>
       <div className={styles.backdrop} onClick={closeCart} aria-hidden="true" />
 
-      <div className={styles.drawer} role="dialog" aria-modal="true" aria-label="Cart">
+      <div className={styles.drawer} role="dialog" aria-modal="true" aria-label={t('cart.ariaLabel')}>
 
-        {/* Header */}
         <div className={styles.header}>
           <p className={styles.title}>
-            Cart
+            {t('cart.title')}
             {totalCount > 0 && <span className={styles.count}>({totalCount})</span>}
           </p>
-          <button className={styles.closeBtn} onClick={closeCart} aria-label="Close cart">
+          <button className={styles.closeBtn} onClick={closeCart} aria-label={t('cart.closeCart')}>
             <CloseIcon size={20} />
           </button>
         </div>
 
-        {/* Body */}
         <div className={styles.body}>
           {items.length === 0 ? (
             <div className={styles.empty}>
               <EmptyCartIcon />
-              <p className={styles.emptyTitle}>Your cart is empty</p>
-              <p className={styles.emptySub}>Add a product to get started.</p>
+              <p className={styles.emptyTitle}>{t('cart.empty')}</p>
+              <p className={styles.emptySub}>{t('cart.emptySub')}</p>
               <Link href="/collection" className={styles.emptyLink} onClick={closeCart}>
-                Browse our collection <ArrowRightIcon size={13} />
+                {t('cart.browseCollection')} <ArrowRightIcon size={13} />
               </Link>
             </div>
           ) : (
@@ -103,19 +102,21 @@ const DrawerContent = () => {
           )}
         </div>
 
-        {/* Footer — only when items exist */}
         {items.length > 0 && (
           <div className={styles.footer}>
-
-            {/* Free shipping bar */}
             <div className={styles.shippingBar}>
               {remaining > 0 ? (
                 <p className={styles.shippingMsg}>
-                  Only <strong>{fmt(remaining)}</strong> away from free shipping
+                  {t('cart.shippingMsg', { amount: fmt(remaining) }).split('<1>').map((part, i) =>
+                    i === 0 ? part : <>
+                      <strong>{part.split('</1>')[0]}</strong>
+                      {part.split('</1>')[1]}
+                    </>
+                  )}
                 </p>
               ) : (
                 <p className={styles.shippingFree}>
-                  <CheckIcon size={13} /> Free shipping!
+                  <CheckIcon size={13} /> {t('cart.shippingFree')}
                 </p>
               )}
               <div className={styles.progressTrack}>
@@ -123,21 +124,18 @@ const DrawerContent = () => {
               </div>
             </div>
 
-            {/* Subtotal */}
             <div className={styles.totals}>
-              <span className={styles.totalsLabel}>Subtotal</span>
+              <span className={styles.totalsLabel}>{t('cart.subtotal')}</span>
               <span className={styles.totalsPrice}>{fmt(subtotal)}</span>
             </div>
 
-            {/* CTA */}
             <Link href="/cart" className={styles.checkoutBtn} onClick={closeCart}>
-              Checkout <ArrowRightIcon size={15} />
+              {t('cart.checkout')} <ArrowRightIcon size={15} />
             </Link>
 
             <Link href="/cart" className={styles.viewCartBtn} onClick={closeCart}>
-              View cart
+              {t('cart.viewCart')}
             </Link>
-
           </div>
         )}
       </div>

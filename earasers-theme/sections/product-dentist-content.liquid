@@ -4,6 +4,15 @@
   Referenced by templates/product.dentist.json
 {% endcomment %}
 
+<style>
+  /* Dentist page testimonial images — consistent sizing */
+  .product-content--dentist .testimonial-split__image img,
+  .product-dentist-content .testimonial-split__image img {
+    max-height: 350px;
+    object-fit: cover;
+  }
+</style>
+
 <!-- ── 1. Horizontally scrolling review cards ── -->
 <div class="review-cards-scroll" data-reveal>
   <div class="review-cards-scroll__track">
@@ -35,6 +44,13 @@
        image_url: 'https://www.earasers.shop/cdn/shop/files/1_9fb6a91f-53c3-40d4-a55d-0a36242d8c78.png',
        quote: 'I never expected earplugs to make such a big difference. I still hear everything clear, but by the end of the day, I feel noticeably more energy.',
        name: 'Dr. Shad Faraj',
+       year: 2026,
+       stars: 5 %}
+    {% comment %} TODO: klant levert foto aan voor Anis Lobiyed {% endcomment %}
+    {% render 'review-cards-scroll',
+       image_url: '',
+       quote: 'Ik kan niet meer zonder! Tijdens operaties zorgen oordoppen ervoor dat ik minder last krijg van mijn gehoor. Aan het einde van mijn werkdag merk ik duidelijk verschil.',
+       name: 'Anis Lobiyed',
        year: 2026,
        stars: 5 %}
   </div>
@@ -109,6 +125,9 @@
 <div class="container">
   <div class="faq-section" data-reveal>
     <h2 class="faq-section__heading">Frequently Asked Questions</h2>
+    {% render 'faq-accordion', question: 'Why do Earasers sound so clear and not muffled?', answer: 'EARasers use an innovative "V" (variable) filter. EARasers focus on the most damaging range of the ear\'s natural resonance (around 3150 Hz) and filter approx. 19dB. They are the World\'s First "FLAT FREQUENCY" Response earplug — filtering different attenuations in different frequencies.' %}
+    {% render 'faq-accordion', question: 'Why does Earasers claim to be better than Custom Molds?', answer: 'Most earplugs place the filter outside the canal. EARasers\' patented open design lets sound travel further naturally before reaching the filter at the tip, nearer the eardrum. This creates a clearer, more natural sound instead of an "underwater" or "muffled" feeling.' %}
+    {% render 'faq-accordion', question: 'What size do I need?', answer: 'Ear canal size varies by individual and isn\'t tied to height or weight. Use past experience with earplugs or earbuds as your reference. Watch the sizing video: https://www.youtube.com/watch?v=Zmj-jJi93q0' %}
     {% render 'faq-accordion', question: 'Will I still be able to hear my patients clearly?', answer: 'Yes. The V-filter reduces harmful high-frequency noise (like the handpiece drill) while preserving speech frequencies (250–300 Hz). You can hold a normal conversation without removing them.' %}
     {% render 'faq-accordion', question: 'Are these suitable for hygienists using ultrasonic scalers?', answer: 'Absolutely. The −19 dB Comfort filter is ideal for hygienists — it reduces scaler noise without muffling patient communication. The −26 dB Standard is available for the noisiest procedures.' %}
     {% render 'faq-accordion', question: 'Which filter level do you recommend for dentists?', answer: 'Most dentists use the −19 dB Comfort filter for a full workday. The −26 dB Standard suits the loudest procedures (high-speed handpieces, turbines).' %}

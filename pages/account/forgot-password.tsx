@@ -1,12 +1,15 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
+import { serverSideTranslations } from '../../lib/i18n';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { Layout } from '../../components/layout';
 import { useAuth } from '../../context/auth';
 import styles from '../../styles/account.module.css';
 
 const ForgotPassword: NextPage = () => {
   const { forgotPassword, loading } = useAuth();
+  const { t } = useTranslation('account');
   const [email,   setEmail]   = useState('');
   const [error,   setError]   = useState('');
   const [success, setSuccess] = useState(false);
@@ -14,7 +17,7 @@ const ForgotPassword: NextPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (!email) { setError('Please enter your email address.'); return; }
+    if (!email) { setError(t('forgot.errorEmail')); return; }
     const err = await forgotPassword(email);
     if (err) { setError(err); return; }
     setSuccess(true);
@@ -26,9 +29,9 @@ const ForgotPassword: NextPage = () => {
         <div className="container">
           <div className={styles.authWrap}>
             <div className={styles.card}>
-              <h1 className={styles.cardHeading}>Forgot password</h1>
+              <h1 className={styles.cardHeading}>{t('forgot.heading')}</h1>
               <p className={styles.cardSub}>
-                Enter your email address and we will send you a reset link.
+                {t('forgot.sub')}
               </p>
 
               {success ? (
@@ -36,7 +39,7 @@ const ForgotPassword: NextPage = () => {
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="20 6 9 17 4 12"/>
                   </svg>
-                  Check your inbox — we have sent a reset email to <strong>{email}</strong>.
+                  {t('forgot.checkInbox')} <strong>{email}</strong>.
                 </div>
               ) : (
                 <>
@@ -44,7 +47,7 @@ const ForgotPassword: NextPage = () => {
 
                   <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 8 }}>
                     <div className={styles.field}>
-                      <label className={styles.label} htmlFor="email">Email address</label>
+                      <label className={styles.label} htmlFor="email">{t('forgot.email')}</label>
                       <input
                         id="email"
                         type="email"
@@ -57,14 +60,14 @@ const ForgotPassword: NextPage = () => {
                     </div>
 
                     <button type="submit" className={styles.submitBtn} disabled={loading}>
-                      {loading ? <span className={styles.spinner} /> : 'Send reset email'}
+                      {loading ? <span className={styles.spinner} /> : t('forgot.submitBtn')}
                     </button>
                   </form>
                 </>
               )}
 
               <p className={styles.bottomLink} style={{ marginTop: 24 }}>
-                <Link href="/account/login">← Back to sign in</Link>
+                <Link href="/account/login">{t('forgot.backToSignIn')}</Link>
               </p>
             </div>
           </div>
@@ -73,5 +76,11 @@ const ForgotPassword: NextPage = () => {
     </Layout>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'account'])),
+  },
+});
 
 export default ForgotPassword;

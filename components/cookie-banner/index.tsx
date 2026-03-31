@@ -1,5 +1,6 @@
 import React, { useEffect, useState, startTransition } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import styles from './cookieBanner.module.css';
 
 type Consent = 'all' | 'necessary' | null;
@@ -7,6 +8,7 @@ type Consent = 'all' | 'necessary' | null;
 const STORAGE_KEY = 'earasers-cookie-consent';
 
 export const CookieBanner = () => {
+  const { t } = useTranslation('common');
   const [visible,   setVisible]   = useState(false);
   const [expanded,  setExpanded]  = useState(false);
   const [analytics, setAnalytics] = useState(true);
@@ -24,13 +26,6 @@ export const CookieBanner = () => {
   const accept = (type: Consent) => {
     try { localStorage.setItem(STORAGE_KEY, type ?? 'necessary'); } catch {}
     setVisible(false);
-    // ── INTEGRATION POINT ──────────────────────────────────────────────────
-    // When type === 'all' (or custom with analytics/marketing checked):
-    //   → initialise Google Analytics: gtag('consent', 'update', { analytics_storage: 'granted' })
-    //   → initialise Facebook Pixel: fbq('consent', 'grant')
-    // When type === 'necessary':
-    //   → keep analytics/marketing blocked
-    // ────────────────────────────────────────────────────────────────────────
   };
 
   const acceptCustom = () => {
@@ -41,32 +36,31 @@ export const CookieBanner = () => {
   if (!visible) return null;
 
   return (
-    <div className={styles.banner} role="dialog" aria-label="Cookie preferences" aria-modal="false">
+    <div className={styles.banner} role="dialog" aria-label={t('cookie.ariaLabel')} aria-modal="false">
       <div className={styles.inner}>
 
         <div className={styles.top}>
           <div className={styles.text}>
-            <p className={styles.title}>We use cookies</p>
+            <p className={styles.title}>{t('cookie.title')}</p>
             <p className={styles.sub}>
-              We use cookies for an optimal experience, analytics and personalised advertisements.
-              Read more in our{' '}
-              <Link href="/privacy" className={styles.link}>privacy policy</Link>.
+              {t('cookie.description')}{' '}
+              <Link href="/privacy" className={styles.link}>{t('cookie.privacyPolicy')}</Link>.
             </p>
           </div>
 
           <div className={styles.btns}>
             <button className={styles.btnAll} onClick={() => accept('all')}>
-              Accept all
+              {t('cookie.acceptAll')}
             </button>
             <button className={styles.btnNecessary} onClick={() => accept('necessary')}>
-              Necessary only
+              {t('cookie.necessaryOnly')}
             </button>
             <button
               className={styles.btnCustomize}
               onClick={() => setExpanded(v => !v)}
               aria-expanded={expanded}
             >
-              {expanded ? 'Close ×' : 'Customize'}
+              {expanded ? t('cookie.closeLabel') : t('cookie.customize')}
             </button>
           </div>
         </div>
@@ -77,8 +71,8 @@ export const CookieBanner = () => {
 
               <div className={styles.settingRow}>
                 <div>
-                  <p className={styles.settingName}>Necessary</p>
-                  <p className={styles.settingDesc}>Required for the website to function. Cannot be disabled.</p>
+                  <p className={styles.settingName}>{t('cookie.necessary')}</p>
+                  <p className={styles.settingDesc}>{t('cookie.necessaryDesc')}</p>
                 </div>
                 <div className={styles.toggle}>
                   <input type="checkbox" checked readOnly disabled id="c-necessary" />
@@ -88,8 +82,8 @@ export const CookieBanner = () => {
 
               <div className={styles.settingRow}>
                 <div>
-                  <p className={styles.settingName}>Analytics</p>
-                  <p className={styles.settingDesc}>Helps us understand how visitors use the site (e.g. Google Analytics).</p>
+                  <p className={styles.settingName}>{t('cookie.analytics')}</p>
+                  <p className={styles.settingDesc}>{t('cookie.analyticsDesc')}</p>
                 </div>
                 <div className={styles.toggle}>
                   <input type="checkbox" id="c-analytics" checked={analytics} onChange={e => setAnalytics(e.target.checked)} />
@@ -99,8 +93,8 @@ export const CookieBanner = () => {
 
               <div className={styles.settingRow}>
                 <div>
-                  <p className={styles.settingName}>Marketing</p>
-                  <p className={styles.settingDesc}>Used for personalised advertisements (e.g. Facebook Pixel, Google Ads).</p>
+                  <p className={styles.settingName}>{t('cookie.marketing')}</p>
+                  <p className={styles.settingDesc}>{t('cookie.marketingDesc')}</p>
                 </div>
                 <div className={styles.toggle}>
                   <input type="checkbox" id="c-marketing" checked={marketing} onChange={e => setMarketing(e.target.checked)} />
@@ -111,7 +105,7 @@ export const CookieBanner = () => {
             </div>
 
             <button className={styles.btnSave} onClick={acceptCustom}>
-              Save preferences
+              {t('cookie.savePreferences')}
             </button>
           </div>
         )}

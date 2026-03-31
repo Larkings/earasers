@@ -1,35 +1,42 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
+import { serverSideTranslations } from '../lib/i18n';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Layout }   from '../components/layout';
 import { SizeQuiz } from '../components/size-quiz';
 import styles       from './size-finder.module.css';
 
-const SizeFinder: NextPage = () => (
-  <Layout>
-    <div className={styles.hero}>
-      <span className={styles.pill}>30 seconds</span>
-      <h1 className={styles.heading}>Find Your Perfect Fit</h1>
-      <p className={styles.sub}>
-        Answer 3 questions and get a personalized earplug recommendation — no guessing, no returns.
-      </p>
-      <div className={styles.trust}>
-        <span className={styles.trustItem}><span className={styles.trustCheck}>✓</span> Personalized to you</span>
-        <span className={styles.trustItem}><span className={styles.trustCheck}>✓</span> Expert-recommended</span>
-        <span className={styles.trustItem}><span className={styles.trustCheck}>✓</span> Free returns</span>
+const SizeFinder: NextPage = () => {
+  const { t } = useTranslation('home');
+
+  return (
+    <Layout>
+      <div className={styles.hero}>
+        <span className={styles.pill}>{t('sizeFinder.pill')}</span>
+        <h1 className={styles.heading}>{t('sizeFinder.heading')}</h1>
+        <p className={styles.sub}>{t('sizeFinder.sub')}</p>
+        <div className={styles.trust}>
+          <span className={styles.trustItem}><span className={styles.trustCheck}>✓</span> {t('sizeFinder.trust1')}</span>
+          <span className={styles.trustItem}><span className={styles.trustCheck}>✓</span> {t('sizeFinder.trust2')}</span>
+          <span className={styles.trustItem}><span className={styles.trustCheck}>✓</span> {t('sizeFinder.trust3')}</span>
+        </div>
       </div>
-    </div>
 
-    <SizeQuiz minimal />
+      <SizeQuiz minimal />
 
-    <div className={styles.social}>
-      <span className={styles.stars}>★★★★★</span>
-      <span className={styles.dot}>·</span>
-      <span>4.9/5 · 2,000+ customers</span>
-      <span className={styles.dot}>·</span>
-      <span>Free shipping from €39</span>
-      <span className={styles.dot}>·</span>
-      <span>Free returns</span>
-    </div>
-  </Layout>
-);
+      <div className={styles.social}>
+        <span className={styles.stars}>★★★★★</span>
+        <span className={styles.dot}>·</span>
+        <span>{t('sizeFinder.socialFull')}</span>
+      </div>
+    </Layout>
+  );
+};
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'home'])),
+  },
+});
 
 export default SizeFinder;

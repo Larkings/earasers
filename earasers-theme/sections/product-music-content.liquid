@@ -4,7 +4,24 @@
   Referenced by templates/product.music.json
 {% endcomment %}
 
-<!-- ── 1. Attenuation chart + filter explanation ── -->
+<!-- ── 1. Hero image + intro text ── -->
+<div class="product-content__hero-section">
+  <div class="container" style="padding:64px 0 48px;">
+    <div style="text-align:center;max-width:760px;margin:0 auto 40px;" data-reveal>
+      <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,52px);letter-spacing:.04em;margin-bottom:24px;">Protect your ears, keep your sound</h1>
+      <p style="font-size:16px;line-height:1.7;color:var(--color-text-muted);margin-bottom:20px;">Renowned artists such as Franky Rizardo, Paco Osuna, Danny Avila, ANOTR, Stephan Bodzin, Luuk van Dijk, Mason Collective, Toman, Wade, Joey Daniel and many more have enthusiastically embraced these innovative earplugs and are reaping the benefits.</p>
+      <p style="font-size:15px;line-height:1.7;font-style:italic;color:var(--color-text-muted);margin-bottom:12px;">&ldquo;I&rsquo;ve found Earasers to be the most comfortable and clear-sounding ear protection I&rsquo;ve used, and throughout my tours, I keep coming back to them.&rdquo; (Franky Rizardo)</p>
+      <p style="font-size:15px;line-height:1.7;font-style:italic;color:var(--color-text-muted);margin-bottom:12px;">&ldquo;For comfortable earplugs to play with, I would choose Earasers for sure! Their perfect fit and superior noise reduction make them my top pick for any performance.&rdquo; (WADE)</p>
+      <p style="font-size:15px;line-height:1.7;font-style:italic;color:var(--color-text-muted);">&ldquo;As a DJ, clarity is everything. Earasers deliver crystal clear sound while keeping my ears safe - I wouldn&rsquo;t use anything else.&rdquo; (Joey Daniel)</p>
+    </div>
+    <div class="product-content__hero-img" data-reveal data-delay="1" style="max-width:900px;margin:0 auto;">
+      <!-- TODO: Vervang door 'Music Page afbeelding' uit WeTransfer -->
+      <img src="{{ section.settings.hero_image | img_url: '900x' | default: 'https://www.earasers.shop/cdn/shop/files/WADE_earasers.webp' }}" alt="Music Earasers" loading="lazy" style="width:100%;border-radius:var(--radius-lg);">
+    </div>
+  </div>
+</div>
+
+<!-- ── 2. Products (collection grid) ── -->
 <div class="product-content__chart-section">
   <div class="container">
     <div class="product-content__chart-grid">
@@ -26,7 +43,44 @@
   </div>
 </div>
 
-<!-- ── 2. Comparison table ── -->
+<!-- ── Feature blocks (4 columns) ── -->
+<div class="container" style="padding:48px 0;">
+  <div class="product-content__feature-cols" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;" data-reveal>
+    <div class="feature-col" style="padding:24px;border:1px solid var(--color-border);border-radius:var(--radius-md);">
+      <p style="font-size:28px;font-weight:700;color:var(--color-accent);margin-bottom:8px;">100–110dB</p>
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-muted);">Typical booth volume</p>
+    </div>
+    <div class="feature-col" style="padding:24px;border:1px solid var(--color-border);border-radius:var(--radius-md);">
+      <p style="font-size:28px;font-weight:700;color:var(--color-accent);margin-bottom:8px;">-36dB Noise Reduction</p>
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-muted);">Hear your mix</p>
+    </div>
+    <div class="feature-col" style="padding:24px;border:1px solid var(--color-border);border-radius:var(--radius-md);">
+      <p style="font-size:28px;font-weight:700;color:var(--color-accent);margin-bottom:8px;">Personal Fit</p>
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-muted);">4 sizes available</p>
+    </div>
+    <div class="feature-col" style="padding:24px;border:1px solid var(--color-border);border-radius:var(--radius-md);">
+      <p style="font-size:28px;font-weight:700;color:var(--color-accent);margin-bottom:8px;">1–3 Year Lifespan</p>
+      <p style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-muted);">Washable &amp; reusable</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── 3. Slideshow / scrolling artist images ── -->
+<div class="product-content__artist-scroll" style="overflow:hidden;padding:32px 0;background:var(--color-surface);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);">
+  <div style="display:flex;gap:32px;animation:scroll-x 30s linear infinite;width:max-content;">
+    <img src="https://www.earasers.shop/cdn/shop/files/WADE_earasers.webp" alt="Wade" style="height:200px;width:auto;object-fit:cover;border-radius:var(--radius-md);">
+    <img src="https://www.earasers.shop/cdn/shop/files/Masoncollective.png" alt="Mason Collective" style="height:200px;width:auto;object-fit:cover;border-radius:var(--radius-md);">
+    <img src="https://www.earasers.shop/cdn/shop/files/Earasersmodelsinear.png" alt="Franky Rizardo" style="height:200px;width:auto;object-fit:cover;border-radius:var(--radius-md);">
+    <img src="https://www.earasers.shop/cdn/shop/files/EARASERS_2024_1.webp" alt="Joey Daniel" style="height:200px;width:auto;object-fit:cover;border-radius:var(--radius-md);">
+    <!-- Duplicate for seamless loop -->
+    <img src="https://www.earasers.shop/cdn/shop/files/WADE_earasers.webp" alt="Wade" style="height:200px;width:auto;object-fit:cover;border-radius:var(--radius-md);" aria-hidden="true">
+    <img src="https://www.earasers.shop/cdn/shop/files/Masoncollective.png" alt="Mason Collective" style="height:200px;width:auto;object-fit:cover;border-radius:var(--radius-md);" aria-hidden="true">
+    <img src="https://www.earasers.shop/cdn/shop/files/Earasersmodelsinear.png" alt="Franky Rizardo" style="height:200px;width:auto;object-fit:cover;border-radius:var(--radius-md);" aria-hidden="true">
+    <img src="https://www.earasers.shop/cdn/shop/files/EARASERS_2024_1.webp" alt="Joey Daniel" style="height:200px;width:auto;object-fit:cover;border-radius:var(--radius-md);" aria-hidden="true">
+  </div>
+</div>
+
+<!-- ── Comparison table ── -->
 <div class="container" style="padding:64px 0;">
   <div style="text-align:center;max-width:600px;margin:0 auto 40px;" data-reveal>
     <h2 style="font-family:var(--font-display);font-size:clamp(24px,3.5vw,44px);letter-spacing:.04em;margin-bottom:12px;">Earasers vs the alternatives</h2>
@@ -49,13 +103,14 @@
         <tr><td>Virtually invisible</td><td class="col-earasers"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td></tr>
         <tr><td>Clear, natural sound</td><td class="col-earasers"><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td></tr>
         <tr><td>Replaceable filter</td><td class="col-earasers"><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td></tr>
+        <tr><td>Noise reduction</td><td class="col-earasers">-36dB</td><td>-36dB</td><td>Unlike disposable foam, Earasers are washable and long-lasting. The reusable &amp; replaceable sleeves keep them hygienic for months of nightly use.</td></tr>
         <tr><td>Award-winning</td><td class="col-earasers"><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td></tr>
       </tbody>
     </table>
   </div>
 </div>
 
-<!-- ── 3. Size guide + YouTube embed ── -->
+<!-- ── Size guide + YouTube embed ── -->
 <div class="product-content__size-guide">
   <div class="container">
     <div class="product-content__size-guide-inner" data-reveal>
@@ -70,27 +125,28 @@
   </div>
 </div>
 
-<!-- ── 4. Musician split: WADE ── -->
+<!-- ── Testimonial: FRANKY RIZARDO (first) ── -->
+{% render 'testimonial-split',
+   name: 'FRANKY RIZARDO',
+   label: 'Trusted by musicians worldwide',
+   quote: "I've found Earasers to be the most comfortable and clear-sounding ear protection I've used, and throughout my tours, I keep coming back to them.",
+   button_label: 'INSTAGRAM: FRANKY RIZARDO',
+   button_url: 'https://instagram.com/frankyr',
+   image_url: '',
+   reversed: false %}
+<!-- TODO: Franky Rizardo photo for Music page (different from DJ page) -->
+
+<!-- ── Testimonial: WADE ── -->
 {% render 'testimonial-split',
    name: 'WADE',
-   label: 'Trusted by musicians worldwide',
+   label: '',
    quote: "For comfortable earplugs to play with, I would choose Earasers for sure! Their perfect fit and superior noise reduction make them my top pick for any performance.",
    button_label: 'INSTAGRAM: WADE',
    button_url: 'https://instagram.com/wadedj',
    image_url: 'https://www.earasers.shop/cdn/shop/files/WADE_earasers.webp',
-   reversed: false %}
-
-<!-- ── 5. Musician split: MASON COLLECTIVE ── -->
-{% render 'testimonial-split',
-   name: 'MASON COLLECTIVE',
-   label: '',
-   quote: "Earasers are the only earplugs we trust on stage and in the studio. Crystal clear sound, all night long.",
-   button_label: 'INSTAGRAM: MASON COLLECTIVE',
-   button_url: 'https://instagram.com/masoncollectiveofficial',
-   image_url: 'https://www.earasers.shop/cdn/shop/files/Masoncollective.png',
    reversed: true %}
 
-<!-- ── 6. FAQ ── -->
+<!-- ── FAQ ── -->
 <div class="container">
   <div class="faq-section" data-reveal>
     <h2 class="faq-section__heading">Frequently Asked Questions</h2>
@@ -99,6 +155,7 @@
     {% render 'faq-accordion', question: 'How do I choose my size?', answer: 'Use your earbud experience as a reference. If earbuds fall out easily, try XS or S. If they feel too tight, try M. When unsure, order the Small & Medium combo — you get both sizes and can keep the best fit.' %}
     {% render 'faq-accordion', question: 'Can I talk to bandmates without removing them?', answer: 'Yes — the open canal design lets speech through naturally. No need to remove them between songs or during soundcheck conversations.' %}
     {% render 'faq-accordion', question: 'How do I clean them?', answer: 'Rinse with warm water and mild soap. Dry completely before storing. Avoid alcohol or harsh solvents — these degrade the medical-grade silicone over time.' %}
+    {% render 'faq-accordion', question: 'How long do Earasers last?', answer: 'With proper care, Earasers last 1–3 years. The replaceable filters can be swapped independently, extending the life of the earplug body even further.' %}
   </div>
 </div>
 
@@ -106,6 +163,12 @@
 {
   "name": "Muzikant — Pagina-inhoud",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero afbeelding",
+      "info": "Music page hero. TODO: upload 'Music Page afbeelding' uit WeTransfer."
+    },
     {
       "type": "image_picker",
       "id": "chart_image",

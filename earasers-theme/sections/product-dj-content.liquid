@@ -2,7 +2,17 @@
   Layer 2 content for the DJ earplugs product page.
   Hardcoded influencer quotes, photos and FAQ.
   Referenced by templates/product.dj.json
+  Section order in template: 1. Products, 2. Slideshow (scrolling artist images), 3. 3-column feature blocks, 4. This file (testimonials + FAQ)
 {% endcomment %}
+
+<style>
+  /* DJ page testimonial images — consistent sizing */
+  .product-content--dj .testimonial-split__image img,
+  .product-dj-content .testimonial-split__image img {
+    max-height: 400px;
+    object-fit: cover;
+  }
+</style>
 
 <!-- ── Intro: artist names + hero image ── -->
 <div class="product-content__intro">
@@ -23,6 +33,7 @@
 </div>
 
 <!-- ── Influencer 1: FRANKY RIZARDO (image left, text right) ── -->
+<!-- TODO: andere Franky Rizardo foto dan Music pagina -->
 {% render 'testimonial-split',
    name: 'FRANKY RIZARDO',
    label: 'Testimonials',
@@ -61,6 +72,18 @@
    button_url: 'https://instagram.com/joeydaniel_ofc',
    image_url: 'https://www.earasers.shop/cdn/shop/files/EARASERS_2024_1.webp',
    reversed: true %}
+
+<!-- ── Influencer 5: MASON COLLECTIVE ── -->
+<div class="testimonial-split__image-wrap" style="max-height:400px;overflow:hidden;">
+{% render 'testimonial-split',
+   name: 'MASON COLLECTIVE',
+   label: 'DJ Duo',
+   quote: "Earasers are the only earplugs we trust on stage and in the studio.",
+   button_label: '',
+   button_url: '',
+   image_url: 'https://www.earasers.shop/cdn/shop/files/Masoncollective.png',
+   reversed: false %}
+</div>
 
 <!-- ── FAQ ── -->
 <div class="container">

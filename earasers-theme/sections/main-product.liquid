@@ -1,5 +1,17 @@
 {% assign product = product %}
 
+<style>
+  /* Recommended filter badge */
+  .filter-badge--recommended {
+    background: #F07878;
+    color: white;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+  }
+</style>
+
 <section class="main-product">
   <div class="container">
     <div class="main-product__inner">
@@ -57,6 +69,15 @@
           <div class="main-product__desc">{{ product.description }}</div>
         {% endif %}
 
+        {% comment %}
+          Size options: XS (Extra Small), S (Small), M (Medium), L (Large), XS & S Size Kit, M & L Size Kit
+          Filter options (in order):
+            1. -19dB 'Light' — Soft protection, max clarity. Great for small venues
+            2. -19dB Peak — existing
+            3. -26dB 'Medium' — Standard norm. Ideal for live music situations
+            4. -31dB 'Max' — Highest protection. Recommended for sensitive ears
+          The -19dB filter is marked as Recommended.
+        {% endcomment %}
         {% form 'product', product, id: 'product-form' %}
           {% if product.has_only_default_variant == false %}
             {% for option in product.options_with_values %}
@@ -73,6 +94,9 @@
                         onchange="updateVariant()"
                       >
                       {{ value }}
+                      {% if option.name == 'Filter' and value contains '-19dB' %}
+                        <span class="filter-badge filter-badge--recommended">Recommended</span>
+                      {% endif %}
                     </label>
                   {% endfor %}
                 </div>
@@ -137,6 +161,14 @@
       "id": "trust_text",
       "label": "Trust text below button",
       "default": "🔒 Secure checkout · 30-day returns · Free shipping €50+"
+    },
+    {
+      "type": "paragraph",
+      "content": "Size variants: XS (Extra Small), S (Small), M (Medium), L (Large), XS & S Size Kit, M & L Size Kit"
+    },
+    {
+      "type": "paragraph",
+      "content": "Filter options: -19dB 'Light' (Recommended), -19dB Peak, -26dB 'Medium', -31dB 'Max'"
     }
   ]
 }

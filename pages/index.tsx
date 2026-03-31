@@ -1,4 +1,5 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
+import { serverSideTranslations } from '../lib/i18n';
 import { Layout }       from '../components/layout';
 import { Hero }         from '../components/hero';
 import { TrustBand }    from '../components/trust-band';
@@ -29,5 +30,11 @@ const Home: NextPage = () => (
     <BlogTeaser />
   </Layout>
 );
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'home'])),
+  },
+});
 
 export default Home;

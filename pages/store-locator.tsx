@@ -1,6 +1,8 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
+import { serverSideTranslations } from '../lib/i18n';
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { Layout } from '../components/layout';
 import styles from '../styles/store-locator.module.css';
 
@@ -32,7 +34,7 @@ const stores: Store[] = [
     country: 'Netherlands',
     countryCode: 'NL',
     website: 'https://www.dijkmanmuziek.nl',
-    badge: 'Official Retailer',
+    badge: 'official',
     mapsUrl: 'https://www.google.com/maps?q=Dijkman+Music+Amsterdam&output=embed',
     directionsUrl: 'https://maps.google.com/?q=Dijkman+Music+Amsterdam',
   },
@@ -86,15 +88,22 @@ const stores: Store[] = [
   },
 ];
 
-// Ordered country tabs
-const countryTabs = ['All', 'Netherlands', 'Belgium', 'Germany', 'United Kingdom', 'Other'];
-
 const StoreLocator: NextPage = () => {
+  const { t } = useTranslation('common');
   const [search,    setSearch]    = useState('');
   const [country,   setCountry]   = useState('All');
   const [activeId,  setActiveId]  = useState<number>(stores[0].id);
 
   const activeStore = stores.find(s => s.id === activeId) ?? stores[0];
+
+  const countryTabs = [
+    { value: 'All',            label: t('storeLocator.tabAll') },
+    { value: 'Netherlands',    label: t('storeLocator.tabNetherlands') },
+    { value: 'Belgium',        label: t('storeLocator.tabBelgium') },
+    { value: 'Germany',        label: t('storeLocator.tabGermany') },
+    { value: 'United Kingdom', label: t('storeLocator.tabUK') },
+    { value: 'Other',          label: t('storeLocator.tabOther') },
+  ];
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase().trim();
@@ -124,11 +133,11 @@ const StoreLocator: NextPage = () => {
         {/* ── 1. Page header ─────────────────────────── */}
         <div className={styles.pageHeader}>
           <div className="container">
-            <h1 className={styles.heading}>Store Locator</h1>
+            <h1 className={styles.heading}>{t('storeLocator.heading')}</h1>
             <p className={styles.sub}>
-              Find a store near you, or{' '}
-              <Link href="/collection" className={styles.subLink}>order online</Link>{' '}
-              with free shipping from €39.
+              {t('storeLocator.sub')}{' '}
+              <Link href="/collection" className={styles.subLink}>{t('storeLocator.subLinkText')}</Link>{' '}
+              {t('storeLocator.subSuffix')}
             </p>
           </div>
         </div>
@@ -142,24 +151,24 @@ const StoreLocator: NextPage = () => {
               <input
                 type="search"
                 className={styles.searchInput}
-                placeholder="Search by city or postcode..."
+                placeholder={t('storeLocator.searchPlaceholder')}
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                aria-label="Search stores"
+                aria-label={t('storeLocator.searchLabel')}
               />
             </div>
-            <button className={styles.searchBtn} onClick={() => {}}>Search</button>
+            <button className={styles.searchBtn} onClick={() => {}}>{t('storeLocator.searchBtn')}</button>
           </div>
 
           {/* ── 3. Country filter tabs ───────────────────── */}
           <div className={styles.tabs}>
             {countryTabs.map(c => (
               <button
-                key={c}
-                className={`${styles.tab} ${country === c ? styles.tabActive : ''}`}
-                onClick={() => setCountry(c)}
+                key={c.value}
+                className={`${styles.tab} ${country === c.value ? styles.tabActive : ''}`}
+                onClick={() => setCountry(c.value)}
               >
-                {c}
+                {c.label}
               </button>
             ))}
           </div>
@@ -170,7 +179,7 @@ const StoreLocator: NextPage = () => {
             {/* Store list */}
             <div className={styles.listCol}>
               {filtered.length === 0 ? (
-                <p className={styles.noResults}>No stores found. Try a different search.</p>
+                <p className={styles.noResults}>{t('storeLocator.noResults')}</p>
               ) : (
                 filtered.map(store => (
                   <div
@@ -191,7 +200,7 @@ const StoreLocator: NextPage = () => {
                     <p className={styles.storeAddr}>{store.address}, {store.city}</p>
 
                     {store.badge && (
-                      <span className={styles.badge}>{store.badge}</span>
+                      <span className={styles.badge}>{t('storeLocator.officialRetailer')}</span>
                     )}
 
                     <div className={styles.cardActions}>
@@ -202,7 +211,7 @@ const StoreLocator: NextPage = () => {
                         className={styles.btnDirections}
                         onClick={e => e.stopPropagation()}
                       >
-                        Get Directions
+                        {t('storeLocator.getDirections')}
                       </a>
                       {store.website && (
                         <a
@@ -212,7 +221,7 @@ const StoreLocator: NextPage = () => {
                           className={styles.btnWebsite}
                           onClick={e => e.stopPropagation()}
                         >
-                          Website →
+                          {t('storeLocator.website')} →
                         </a>
                       )}
                     </div>
@@ -239,30 +248,25 @@ const StoreLocator: NextPage = () => {
           {/* ── 5. Can't find a store? ───────────────────── */}
           <div className={styles.notFound}>
             <div className={styles.notFoundText}>
-              <h2 className={styles.notFoundHeading}>Can&apos;t find a store near you?</h2>
-              <p className={styles.notFoundSub}>
-                Order online with free shipping from €39.<br />
-                Delivered within 2 to 5 days across Europe.
-              </p>
+              <h2 className={styles.notFoundHeading}>{t('storeLocator.cantFindHeading')}</h2>
+              <p className={styles.notFoundSub}>{t('storeLocator.cantFindSub')}</p>
             </div>
             <div className={styles.notFoundActions}>
-              <Link href="/collection" className={styles.btnShop}>Shop Online →</Link>
-              <Link href="/contact"    className={styles.btnContact}>Contact Us</Link>
+              <Link href="/collection" className={styles.btnShop}>{t('storeLocator.shopOnline')} →</Link>
+              <Link href="/contact"    className={styles.btnContact}>{t('storeLocator.contactUs')}</Link>
             </div>
           </div>
 
           {/* ── 6. Become a Retailer ────────────────────── */}
           <div className={styles.retailer}>
             <div className={styles.retailerInner}>
-              <h2 className={styles.retailerHeading}>Become an official Earasers retailer</h2>
-              <p className={styles.retailerSub}>
-                Run a music store, pharmacy or specialist shop? Stock Europe&apos;s most awarded HiFi earplugs and give your customers the hearing protection they actually want to wear.
-              </p>
+              <h2 className={styles.retailerHeading}>{t('storeLocator.retailerHeading')}</h2>
+              <p className={styles.retailerSub}>{t('storeLocator.retailerSub')}</p>
               <a
                 href="mailto:info@earasers.shop?subject=Retailer%20Inquiry"
                 className={styles.retailerLink}
               >
-                Get in touch about stocking Earasers →
+                {t('storeLocator.retailerLink')} →
               </a>
             </div>
           </div>
@@ -284,5 +288,11 @@ const SearchIcon = () => (
     <line x1="21" y1="21" x2="16.65" y2="16.65"/>
   </svg>
 );
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+  },
+});
 
 export default StoreLocator;

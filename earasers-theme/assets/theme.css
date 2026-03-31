@@ -1076,64 +1076,82 @@ ul, ol { list-style: none; }
 .testimonial-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 420px;
+  max-height: 360px;
   overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
 }
 .testimonial-split--reversed { direction: rtl; }
 .testimonial-split--reversed > * { direction: ltr; }
-.testimonial-split__image { overflow: hidden; }
-.testimonial-split__image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.testimonial-split__image { overflow: hidden; max-height: 360px; }
+.testimonial-split__image img { width: 100%; height: 100%; max-height: 360px; object-fit: cover; object-position: center top; display: block; }
 .testimonial-split__content {
-  padding: 60px 48px;
+  padding: 36px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
   background: var(--color-bg);
 }
 .testimonial-split__label {
-  font-size: 12px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-text-muted);
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+  margin: 0;
 }
 .testimonial-split__name {
   font-family: var(--font-display);
-  font-size: clamp(24px, 3vw, 40px);
-  letter-spacing: 0.05em;
+  font-size: clamp(18px, 2.2vw, 26px);
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   margin: 0;
   color: var(--color-text);
+  line-height: 1.1;
 }
 .testimonial-split__quote {
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: 14px;
+  line-height: 1.65;
   font-style: italic;
   color: var(--color-text-muted);
-  margin: 0;
+  border-left: 2px solid var(--color-accent);
+  padding-left: 12px;
+  margin: 4px 0;
 }
 .testimonial-split__btn {
   display: inline-block;
-  padding: 11px 22px;
-  background: var(--color-text);
-  color: #fff;
-  font-size: 12px;
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--color-accent);
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
-  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-accent);
+  border-radius: 4px;
   align-self: flex-start;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
+  margin-top: 4px;
 }
-.testimonial-split__btn:hover { background: var(--color-accent); }
-@media (max-width: 768px) {
+.testimonial-split__btn:hover { background: var(--color-accent); color: #fff; }
+@media (max-width: 1024px) {
+  .testimonial-split,
+  .testimonial-split__image,
+  .testimonial-split__image img { max-height: 300px; }
+  .testimonial-split__content { padding: 28px 32px; }
+  .testimonial-split__name { font-size: 22px; }
+}
+@media (max-width: 767px) {
   .testimonial-split, .testimonial-split--reversed {
     grid-template-columns: 1fr;
     direction: ltr;
+    max-height: none;
   }
-  .testimonial-split__image { min-height: 280px; }
-  .testimonial-split__content { padding: 32px 24px; }
+  .testimonial-split__image { height: 220px; max-height: 220px; }
+  .testimonial-split__image img { height: 220px; max-height: 220px; object-position: center 20%; }
+  .testimonial-split__content { padding: 24px 20px; }
+  .testimonial-split__name { font-size: 20px; }
+  .testimonial-split__quote { font-size: 13px; }
 }
 
 /* ============================================================
@@ -1500,3 +1518,24 @@ ul, ol { list-style: none; }
 .quiz-result__note { font-size: 13px; color: var(--color-text-muted); margin-bottom: 20px; }
 .quiz-restart { background: none; border: none; color: var(--color-text-muted); font-size: 13px; cursor: pointer; padding: 0; }
 .quiz-restart:hover { color: var(--color-text); }
+
+
+/* ============================================================
+   FEATURE COLUMN COLORED TOP BORDERS
+   ============================================================ */
+.feature-col:nth-child(1) { border-top: 3px solid #F07878; }
+.feature-col:nth-child(2) { border-top: 3px solid #4ECDC4; }
+.feature-col:nth-child(3) { border-top: 3px solid #F5A623; }
+.feature-col:nth-child(4) { border-top: 3px solid #5CB85C; }
+
+/* ============================================================
+   RECOMMENDED FILTER BADGE
+   ============================================================ */
+.filter-badge--recommended {
+  background: #F07878;
+  color: white;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}

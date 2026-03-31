@@ -1,103 +1,106 @@
 import React from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import styles from './footer.module.css';
 
-const shopLinks = [
-  { label: 'Music Earplugs',      href: '/collection' },
-  { label: "DJ's",                href: '/collection' },
-  { label: 'Dentist & Hygienist', href: '/collection' },
-  { label: 'Sleeping',            href: '/collection' },
-  { label: 'Motorsport',          href: '/collection' },
-  { label: 'Noise Sensitivity',   href: '/collection' },
-];
+export const Footer = () => {
+  const { t } = useTranslation('common');
 
-const supportLinks = [
-  { label: 'FAQ',                href: '/faq' },
-  { label: 'Specs',              href: '/faq' },
-  { label: 'Instruction Videos', href: '/faq' },
-  { label: 'Warranty',           href: '/faq' },
-  { label: 'Returns',            href: '/returns' },
-  { label: 'Contact',            href: '/contact' },
-];
+  const shopLinks = [
+    { label: t('shopCategories.music'),          href: '/collection' },
+    { label: t('shopCategories.dj'),             href: '/collection' },
+    { label: t('shopCategories.dentist'),        href: '/collection' },
+    { label: t('shopCategories.sleeping'),       href: '/collection' },
+    { label: t('shopCategories.motorsport'),     href: '/collection' },
+    { label: t('shopCategories.noiseSensitivity'), href: '/collection' },
+  ];
 
-const companyLinks = [
-  { label: 'About Us',      href: '/about' },
-  { label: 'Store Locator', href: '/store-locator' },
-  { label: 'Affiliates',    href: '/about' },
-  { label: 'Blog',          href: '/blog' },
-];
+  const supportLinks = [
+    { label: t('footer.faq'),              href: '/faq' },
+    { label: t('footer.specs'),            href: '/faq' },
+    { label: t('footer.instructionVideos'), href: '/faq' },
+    { label: t('footer.warranty'),         href: '/faq' },
+    { label: t('footer.returns'),          href: '/returns' },
+    { label: t('footer.contact'),          href: '/contact' },
+  ];
 
-export const Footer = () => (
-  <footer className={styles.footer}>
-    <div className="container">
-      <div className={styles.grid}>
+  const companyLinks = [
+    { label: t('footer.aboutUs'),      href: '/about' },
+    { label: t('footer.storeLocator'), href: '/store-locator' },
+    { label: t('footer.affiliates'),   href: '/affiliates' },
+    { label: t('footer.blog'),         href: '/blog' },
+  ];
 
-        {/* Brand */}
-        <div className={styles.brand}>
-          <Link href="/" className={styles.logo}>EARASERS</Link>
-          <p className={styles.tagline}>BE EARRESPONSIBLE</p>
-          <p className={styles.desc}>
-            Hearing protection that actually sounds good. Made by musicians, for musicians.
-          </p>
-          <div className={styles.socials}>
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className={styles.social}>
-              <FacebookIcon />
-            </a>
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className={styles.social}>
-              <InstagramIcon />
-            </a>
-            <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className={styles.social}>
-              <YouTubeIcon />
-            </a>
+  return (
+    <footer className={styles.footer}>
+      <div className="container">
+        <div className={styles.grid}>
+
+          {/* Brand */}
+          <div className={styles.brand}>
+            <Link href="/" className={styles.logo}>EARASERS</Link>
+            <p className={styles.tagline}>BE EARRESPONSIBLE</p>
+            <p className={styles.desc}>{t('footer.tagline')}</p>
+            <div className={styles.socials}>
+              <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className={styles.social}>
+                <FacebookIcon />
+              </a>
+              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className={styles.social}>
+                <InstagramIcon />
+              </a>
+              <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className={styles.social}>
+                <YouTubeIcon />
+              </a>
+            </div>
+          </div>
+
+          {/* Shop */}
+          <div>
+            <p className={styles.colTitle}>{t('footer.shopTitle')}</p>
+            <ul className={styles.links}>
+              {shopLinks.map(l => (
+                <li key={l.href + l.label}><Link href={l.href} className={styles.link}>{l.label}</Link></li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Support */}
+          <div>
+            <p className={styles.colTitle}>{t('footer.supportTitle')}</p>
+            <ul className={styles.links}>
+              {supportLinks.map(l => (
+                <li key={l.href + l.label}><Link href={l.href} className={styles.link}>{l.label}</Link></li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div>
+            <p className={styles.colTitle}>{t('footer.companyTitle')}</p>
+            <ul className={styles.links}>
+              {companyLinks.map(l => (
+                <li key={l.href + l.label}><Link href={l.href} className={styles.link}>{l.label}</Link></li>
+              ))}
+            </ul>
+            <div className={styles.payments}>
+              {['VISA', 'MC', 'AMEX', 'PayPal'].map(p => (
+                <span key={p} className={styles.payIcon}>{p}</span>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Shop */}
-        <div>
-          <p className={styles.colTitle}>Shop</p>
-          <ul className={styles.links}>
-            {shopLinks.map(l => (
-              <li key={l.label}><Link href={l.href} className={styles.link}>{l.label}</Link></li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Support */}
-        <div>
-          <p className={styles.colTitle}>Support</p>
-          <ul className={styles.links}>
-            {supportLinks.map(l => (
-              <li key={l.label}><Link href={l.href} className={styles.link}>{l.label}</Link></li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Company */}
-        <div>
-          <p className={styles.colTitle}>Company</p>
-          <ul className={styles.links}>
-            {companyLinks.map(l => (
-              <li key={l.label}><Link href={l.href} className={styles.link}>{l.label}</Link></li>
-            ))}
-          </ul>
-          <div className={styles.payments}>
-            {['VISA', 'MC', 'AMEX', 'PayPal'].map(p => (
-              <span key={p} className={styles.payIcon}>{p}</span>
-            ))}
+        <div className={styles.bottom}>
+          <p className={styles.copy}>{t('footer.copyright')}</p>
+          <div className={styles.legal}>
+            <Link href="/privacy" className={styles.legalLink}>{t('footer.privacy')}</Link>
+            <Link href="/terms"   className={styles.legalLink}>{t('footer.terms')}</Link>
           </div>
         </div>
       </div>
-
-      <div className={styles.bottom}>
-        <p className={styles.copy}>© 2025 Earasers. All rights reserved.</p>
-        <div className={styles.legal}>
-          <Link href="/privacy"       className={styles.legalLink}>Privacy Policy</Link>
-          <Link href="/terms"         className={styles.legalLink}>Terms of Service</Link>
-        </div>
-      </div>
-    </div>
-  </footer>
-);
+    </footer>
+  );
+};
 
 const FacebookIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">

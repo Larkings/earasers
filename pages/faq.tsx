@@ -1,87 +1,10 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+import { serverSideTranslations } from '../lib/i18n';
 import { Layout } from '../components/layout';
 import styles from '../styles/faq.module.css';
-
-const categories = [
-  {
-    title: 'Product & Brand',
-    id: 'product',
-    items: [
-      {
-        q: 'What makes Earasers different from regular earplugs?',
-        a: 'Earasers use a patented V-Filter and open-canal design to lower sound pressure levels while keeping the natural tone of music intact. Regular foam earplugs muffle everything equally. Earasers simply turn the volume down without changing the sound.',
-      },
-      {
-        q: 'Are Earasers better than custom moulded earplugs?',
-        a: 'Earasers perform comparably to custom molds at a fraction of the cost (€49,95 compared to €199+) and you don\'t need a specialist visit. They\'re made from medical grade silicone that self-adjusts to your ear canal.',
-      },
-      {
-        q: 'Why have Earasers won MusicRadar\'s Best Music Earplugs 5 years in a row?',
-        a: 'MusicRadar independently tests earplugs for sound quality, fit, comfort and value. Earasers have topped their rankings every year since 2020 for combining genuine HiFi sound quality with reliable hearing protection at an accessible price.',
-      },
-      {
-        q: 'What is the V-Filter technology?',
-        a: 'The V-Filter is a precision acoustic filter inside the earplug. It selectively attenuates harmful high-level frequencies while letting natural sound pass through. The result is a cleaner, more natural listening experience compared to uniform attenuation.',
-      },
-    ],
-  },
-  {
-    title: 'Sizing',
-    id: 'sizing',
-    items: [
-      {
-        q: 'How do I know which size I need?',
-        a: 'Most adults fit Small or Medium. If regular in-ear earbuds tend to fall out, try Extra Small. If they always feel too tight or let sound leak, try Large. When in doubt, start with the S & M Starter Kit.',
-      },
-      {
-        q: 'What if neither size fits perfectly?',
-        a: 'Ear canals vary a lot. If both S and M feel slightly off, you may be between sizes. The Perfect Size Kit (XS/S/M/L) lets you try all four. You can also contact our support team for a personal recommendation.',
-      },
-      {
-        q: 'Do Earasers come in children\'s sizes?',
-        a: 'Earasers are currently sized for adults. For children under 16, we recommend consulting a paediatric audiologist.',
-      },
-    ],
-  },
-  {
-    title: 'Usage & Maintenance',
-    id: 'usage',
-    items: [
-      {
-        q: 'How do I insert Earasers correctly?',
-        a: 'Gently compress the tip, reach over your head with the opposite hand, pull your outer ear up and back to open the canal, then insert. Watch the fitting video above for a step-by-step walkthrough.',
-      },
-      {
-        q: 'How do I clean Earasers?',
-        a: 'Rinse with warm water or use cleaning wipes. Avoid alcohol or solvents as they degrade the medical grade silicone. Let them air-dry completely before putting them back in the case.',
-      },
-      {
-        q: 'How long do Earasers last?',
-        a: 'With regular care, the silicone tips last 12 to 18 months. Filters are replaceable via the Renewal Kit (€20,00), so you don\'t need to replace the full product.',
-      },
-    ],
-  },
-  {
-    title: 'Ordering & Delivery',
-    id: 'ordering',
-    items: [
-      {
-        q: 'How long does delivery take?',
-        a: 'Orders ship within 1 business day. Delivery takes 2 to 3 working days in the Netherlands and Belgium, and 3 to 5 days for the rest of Europe.',
-      },
-      {
-        q: 'Is shipping free?',
-        a: 'Yes. Free shipping on all orders over €39. Below that, a flat €3,95 fee applies.',
-      },
-      {
-        q: 'Can I return Earasers if they don\'t fit?',
-        a: 'Yes. We offer a 30-day return policy. Products must come back in original packaging. Email support@earasers.shop to start a return.',
-      },
-    ],
-  },
-];
 
 const AccordionItem = ({ q, a }: { q: string; a: string }) => {
   const [open, setOpen] = useState(false);
@@ -101,7 +24,48 @@ const AccordionItem = ({ q, a }: { q: string; a: string }) => {
 };
 
 const Faq: NextPage = () => {
+  const { t } = useTranslation('faq');
   const [search, setSearch] = useState('');
+
+  const categories = [
+    {
+      title: t('categories.brand'),
+      id: 'product',
+      items: [
+        { q: t('questions.q1'), a: t('questions.a1') },
+        { q: t('questions.q2'), a: t('questions.a2') },
+        { q: t('questions.q3'), a: t('questions.a3') },
+        { q: t('questions.q4'), a: t('questions.a4') },
+      ],
+    },
+    {
+      title: t('categories.sizing'),
+      id: 'sizing',
+      items: [
+        { q: t('questions.q5'), a: t('questions.a5') },
+        { q: t('questions.q6'), a: t('questions.a6') },
+        { q: t('questions.q7'), a: t('questions.a7') },
+      ],
+    },
+    {
+      title: t('categories.usage'),
+      id: 'usage',
+      items: [
+        { q: t('questions.q8'), a: t('questions.a8') },
+        { q: t('questions.q9'), a: t('questions.a9') },
+        { q: t('questions.q10'), a: t('questions.a10') },
+      ],
+    },
+    {
+      title: t('categories.ordering'),
+      id: 'ordering',
+      items: [
+        { q: t('questions.q11'), a: t('questions.a11') },
+        { q: t('questions.q12'), a: t('questions.a12') },
+        { q: t('questions.q13'), a: t('questions.a13') },
+      ],
+    },
+  ];
 
   const filtered = categories.map(c => ({
     ...c,
@@ -116,11 +80,14 @@ const Faq: NextPage = () => {
         <div className="container">
 
           <div className={styles.header}>
-            <h1 className={styles.heading}>Frequently Asked Questions</h1>
-            <p className={styles.sub}>Can&apos;t find your answer? <Link href="/contact" className={styles.link}>Contact our team</Link></p>
+            <h1 className={styles.heading}>{t('heading')}</h1>
+            <p className={styles.sub}>
+              {t('cantFind')}{' '}
+              <Link href="/contact" className={styles.link}>{t('contactTeam')}</Link>
+            </p>
             <input
               type="search"
-              placeholder="Search questions…"
+              placeholder={t('searchPlaceholder')}
               className={styles.search}
               value={search}
               onChange={e => setSearch(e.target.value)}
@@ -128,11 +95,11 @@ const Faq: NextPage = () => {
           </div>
 
           <div className={styles.videoWrap} data-reveal id="instruction-video">
-            <h2 className={styles.videoTitle}>See how to fit them correctly</h2>
+            <h2 className={styles.videoTitle}>{t('instructionTitle')}</h2>
             <div className={styles.videoEmbed}>
               <iframe
                 src="https://www.youtube.com/embed/Zmj-jJi93q0"
-                title="Earasers fitting instruction video"
+                title={t('instructionAlt')}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
@@ -141,10 +108,10 @@ const Faq: NextPage = () => {
 
           <div className={styles.content}>
             {filtered.length === 0 ? (
-              <p className={styles.noResults}>No results for &ldquo;{search}&rdquo;</p>
+              <p className={styles.noResults}>{t('noResults', { search })}</p>
             ) : (
               filtered.map(c => (
-                <div key={c.title} id={c.id} className={styles.category} data-reveal>
+                <div key={c.id} id={c.id} className={styles.category} data-reveal>
                   <h2 className={styles.catTitle}>{c.title}</h2>
                   <div className={styles.list}>
                     {c.items.map(i => <AccordionItem key={i.q} q={i.q} a={i.a} />)}
@@ -155,14 +122,20 @@ const Faq: NextPage = () => {
           </div>
 
           <div className={styles.cta}>
-            <p>Still have a question?</p>
-            <Link href="/contact" className={styles.ctaBtn}>Contact support</Link>
-            <Link href="/faq" className={styles.ctaLink}>View full specs →</Link>
+            <p>{t('stillQuestion')}</p>
+            <Link href="/contact" className={styles.ctaBtn}>{t('contactSupport')}</Link>
+            <Link href="/faq" className={styles.ctaLink}>{t('viewSpecs')}</Link>
           </div>
         </div>
       </div>
     </Layout>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'faq'])),
+  },
+});
 
 export default Faq;

@@ -1,38 +1,43 @@
 import React from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import styles from './hero.module.css';
 import { TrophyIcon, ArrowRightIcon } from '../icons';
 
-export const Hero = () => (
-  <section className={styles.hero}>
-    <div className={styles.overlay} />
+export const Hero = () => {
+  const { t } = useTranslation('home');
 
-    <div className={`container ${styles.content}`}>
-      <div className={styles.badge}>
-        <TrophyIcon size={14} className={styles.badgeIcon} />
-        5× Best Music Earplugs · MusicRadar.com
+  return (
+    <section className={styles.hero}>
+      <div className={styles.overlay} />
+
+      <div className={`container ${styles.content}`}>
+        <div className={styles.badge}>
+          <TrophyIcon size={14} className={styles.badgeIcon} />
+          {t('hero.badge')}
+        </div>
+
+        <h1 className={styles.headline}>
+          {t('hero.headline').split('\n').map((line, i) => (
+            <React.Fragment key={i}>{line}{i === 0 && <br />}</React.Fragment>
+          ))}
+        </h1>
+
+        <p className={styles.sub}>{t('hero.sub')}</p>
+
+        <div className={styles.ctas}>
+          <Link href="/collection" className={styles.ctaPrimary}>
+            {t('hero.cta')} <ArrowRightIcon size={15} />
+          </Link>
+          <a href="#size-quiz" className={styles.ctaSecondary}>
+            {t('hero.sizeCta')}
+          </a>
+        </div>
       </div>
 
-      <h1 className={styles.headline}>
-        Hear everything.<br />Damage nothing.
-      </h1>
-
-      <p className={styles.sub}>
-        Award-winning HiFi earplugs worn by musicians, DJs and dentists across Europe. Protection that doesn&apos;t kill the vibe.
-      </p>
-
-      <div className={styles.ctas}>
-        <Link href="/collection" className={styles.ctaPrimary}>
-          Shop Music Earplugs <ArrowRightIcon size={15} />
-        </Link>
-        <a href="#size-quiz" className={styles.ctaSecondary}>
-          Find My Size
-        </a>
+      <div className={styles.scroll}>
+        <span className={styles.scrollLine} />
       </div>
-    </div>
-
-    <div className={styles.scroll}>
-      <span className={styles.scrollLine} />
-    </div>
-  </section>
-);
+    </section>
+  );
+};

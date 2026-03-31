@@ -10,7 +10,8 @@
           height="auto"
         >
       {% else %}
-        <span class="site-header__logo-text">{{ shop.name }}</span>
+        <!-- TODO: upload earasers-logo.png to theme assets via WeTransfer -->
+        <img src="{{ 'earasers-logo.png' | asset_url }}" alt="Earasers" width="140" height="auto" class="header__logo-img">
       {% endif %}
     </a>
 

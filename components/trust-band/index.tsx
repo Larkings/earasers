@@ -1,37 +1,41 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './trust-band.module.css';
 import { TrophyIcon, StarIcon, FilterIcon, ShieldIcon } from '../icons';
 
-const items = [
-  { icon: <TrophyIcon size={14} />, text: '5× MusicRadar Award Winner', variant: 'gold' },
-  { icon: <StarIcon   size={14} />, text: '4.7/5 based on 1000+ reviews', variant: 'accent' },
-  { icon: <FilterIcon size={14} />, text: 'Patented V-Filter Technology', variant: 'default' },
-  { icon: <ShieldIcon size={14} />, text: 'Medical Grade Silicone', variant: 'teal' },
-  { icon: null,                     text: 'Free Shipping from €39', variant: 'default' },
-];
+export const TrustBand = () => {
+  const { t } = useTranslation('common');
 
-const variantClass = (v: string, s: typeof styles) => ({
-  gold:    s.itemGold,
-  teal:    s.itemTeal,
-  accent:  s.itemAccent,
-  default: s.item,
-}[v] ?? s.item);
+  const items = [
+    { icon: <TrophyIcon size={14} />, text: t('trustBand.award'),       variant: 'gold' },
+    { icon: <StarIcon   size={14} />, text: t('trustBand.reviews'),     variant: 'accent' },
+    { icon: <FilterIcon size={14} />, text: t('trustBand.patented'),    variant: 'default' },
+    { icon: <ShieldIcon size={14} />, text: t('trustBand.medicalGrade'), variant: 'teal' },
+    { icon: null,                     text: t('trustBand.freeShipping'), variant: 'default' },
+  ];
 
-// Duplicate for seamless loop
-const allItems = [...items, ...items];
+  const variantClass = (v: string) => ({
+    gold:    styles.itemGold,
+    teal:    styles.itemTeal,
+    accent:  styles.itemAccent,
+    default: styles.item,
+  }[v] ?? styles.item);
 
-export const TrustBand = () => (
-  <div className={styles.band}>
-    <div className={styles.track}>
-      {allItems.map((item, i) => (
-        <React.Fragment key={i}>
-          <span className={variantClass(item.variant, styles)}>
-            {item.icon && <span className={styles.itemIcon}>{item.icon}</span>}
-            {item.text}
-          </span>
-          <span className={styles.sep} aria-hidden="true" />
-        </React.Fragment>
-      ))}
+  const allItems = [...items, ...items];
+
+  return (
+    <div className={styles.band}>
+      <div className={styles.track}>
+        {allItems.map((item, i) => (
+          <React.Fragment key={i}>
+            <span className={variantClass(item.variant)}>
+              {item.icon && <span className={styles.itemIcon}>{item.icon}</span>}
+              {item.text}
+            </span>
+            <span className={styles.sep} aria-hidden="true" />
+          </React.Fragment>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};

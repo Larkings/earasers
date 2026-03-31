@@ -722,6 +722,58 @@
   box-shadow: 0 2px 8px rgba(240,120,120,0.35);
 }
 
+/* ── Kit card variant ── */
+.kitCard {
+  border-color: var(--kit-color, #0d9488);
+  background: linear-gradient(160deg, var(--color-surface) 0%, color-mix(in srgb, var(--kit-color, #0d9488) 5%, transparent) 100%);
+}
+
+.kitCard:hover {
+  border-color: var(--kit-color, #0d9488);
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--kit-color, #0d9488) 18%, transparent);
+}
+
+.kitBadge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: var(--kit-color, #0d9488);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+/* ── Product group sections ── */
+.productGroup {
+  margin-bottom: 48px;
+}
+
+.productGroupHeader {
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.productGroupTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: 0.01em;
+}
+
+.productGroupSub {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
 .info {
   padding: 18px;
   display: flex;
@@ -1118,7 +1170,7 @@
 }
 
 @media (min-width: 768px) {
-  .influencerSplit { grid-template-columns: 1fr 1fr; min-height: 520px; }
+  .influencerSplit { grid-template-columns: 1fr 1fr; max-height: 320px; }
   .influencerSplitReversed { direction: rtl; }
   .influencerSplitReversed > * { direction: ltr; }
 }
@@ -1126,18 +1178,17 @@
 .influencerImg {
   position: relative;
   overflow: hidden;
-  min-height: 320px;
+  height: 220px;
   background: var(--color-surface-2, #f0ede8);
-  /* Border radius on mobile only — on desktop it's edge-to-edge */
-  border-radius: 20px;
-  margin: 20px;
+  border-radius: 12px;
+  margin: 12px;
 }
 
 @media (min-width: 768px) {
   .influencerImg {
     border-radius: 0;
     margin: 0;
-    min-height: unset;
+    height: 320px;
   }
 }
 
@@ -1176,26 +1227,21 @@
   object-fit: cover;
   object-position: center top;
   display: block;
-  min-height: 320px;
   transition: transform 0.6s ease;
 }
 
 .influencerSplit:hover .influencerImg img { transform: scale(1.03); }
 
-@media (min-width: 768px) {
-  .influencerImg img { min-height: 520px; }
-}
-
 .influencerContent {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 40px 28px;
+  padding: 28px 24px;
   background: var(--color-surface);
-  gap: 14px;
+  gap: 10px;
 }
 
-@media (min-width: 768px) { .influencerContent { padding: 72px 64px; } }
+@media (min-width: 768px) { .influencerContent { padding: 32px 48px; } }
 
 .influencerLabel {
   font-size: 11px;
@@ -1207,20 +1253,20 @@
 
 .influencerName {
   font-family: var(--font-display);
-  font-size: clamp(32px, 4vw, 52px);
+  font-size: clamp(22px, 2.5vw, 32px);
   letter-spacing: 0.04em;
   color: var(--color-text);
   line-height: 1.05;
 }
 
 .influencerQuote {
-  font-size: 16px;
-  line-height: 1.75;
+  font-size: 14px;
+  line-height: 1.6;
   color: var(--color-text-muted);
   font-style: italic;
   max-width: 440px;
-  border-left: 3px solid var(--color-accent);
-  padding-left: 18px;
+  border-left: 2px solid var(--color-accent);
+  padding-left: 14px;
 }
 
 .influencerBtn {

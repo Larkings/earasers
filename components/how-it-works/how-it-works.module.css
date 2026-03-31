@@ -75,13 +75,9 @@
 }
 
 /* Per-stap kleuren */
-.card:nth-child(1) { border-top: 3px solid var(--color-accent); }
-.card:nth-child(2) { border-top: 3px solid var(--color-amber); }
-.card:nth-child(3) { border-top: 3px solid var(--color-teal); }
+.card { border-top: 3px solid var(--color-accent); }
 
-.card:nth-child(1) .icon { color: var(--color-accent); }
-.card:nth-child(2) .icon { color: var(--color-amber); }
-.card:nth-child(3) .icon { color: var(--color-teal); }
+.icon { color: var(--color-accent); }
 
 .num {
   font-family: var(--font-display);
@@ -91,10 +87,6 @@
   line-height: 1;
   letter-spacing: 0.02em;
 }
-
-.card:nth-child(1) .num { color: var(--color-accent); }
-.card:nth-child(2) .num { color: var(--color-amber); }
-.card:nth-child(3) .num { color: var(--color-teal); }
 
 .title {
   font-size: 18px;

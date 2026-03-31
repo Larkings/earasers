@@ -1,7 +1,9 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
+import { serverSideTranslations } from '../../lib/i18n';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
 import { Layout } from '../../components/layout';
 import { useAuth } from '../../context/auth';
 import styles from '../../styles/account.module.css';
@@ -20,6 +22,7 @@ const EyeIcon = ({ open }: { open: boolean }) => open ? (
 const Register: NextPage = () => {
   const router = useRouter();
   const { register, loading } = useAuth();
+  const { t } = useTranslation('account');
 
   const [form, setForm] = useState({
     firstName: '', lastName: '', email: '',
@@ -36,12 +39,12 @@ const Register: NextPage = () => {
 
   const validate = () => {
     const e: Record<string, string> = {};
-    if (!form.firstName.trim()) e.firstName = 'First name is required';
-    if (!form.lastName.trim())  e.lastName  = 'Last name is required';
-    if (!form.email.includes('@')) e.email  = 'Please enter a valid email address';
-    if (form.password.length < 6) e.password = 'Minimum 6 characters';
-    if (form.password !== form.confirmPassword) e.confirmPassword = 'Passwords do not match';
-    if (!form.agreeTerms) e.agreeTerms = 'You must agree to the terms';
+    if (!form.firstName.trim()) e.firstName = t('register.errorFirstName');
+    if (!form.lastName.trim())  e.lastName  = t('register.errorLastName');
+    if (!form.email.includes('@')) e.email  = t('register.errorEmail');
+    if (form.password.length < 6) e.password = t('register.errorPassword');
+    if (form.password !== form.confirmPassword) e.confirmPassword = t('register.errorConfirmPassword');
+    if (!form.agreeTerms) e.agreeTerms = t('register.errorAgreeTerms');
     return e;
   };
 
@@ -69,8 +72,8 @@ const Register: NextPage = () => {
         <div className="container">
           <div className={styles.authWrap}>
             <div className={styles.card}>
-              <h1 className={styles.cardHeading}>Create account</h1>
-              <p className={styles.cardSub}>Create an account to track your orders.</p>
+              <h1 className={styles.cardHeading}>{t('register.heading')}</h1>
+              <p className={styles.cardSub}>{t('register.sub')}</p>
 
               {apiError && <div className={styles.errorBanner} style={{ marginBottom: 20 }}>{apiError}</div>}
 
@@ -78,7 +81,7 @@ const Register: NextPage = () => {
 
                 <div className={styles.formGrid}>
                   <div className={styles.field}>
-                    <label className={styles.label} htmlFor="firstName">First name</label>
+                    <label className={styles.label} htmlFor="firstName">{t('register.firstName')}</label>
                     <input
                       id="firstName"
                       type="text"
@@ -91,7 +94,7 @@ const Register: NextPage = () => {
                   </div>
 
                   <div className={styles.field}>
-                    <label className={styles.label} htmlFor="lastName">Last name</label>
+                    <label className={styles.label} htmlFor="lastName">{t('register.lastName')}</label>
                     <input
                       id="lastName"
                       type="text"
@@ -105,7 +108,7 @@ const Register: NextPage = () => {
                 </div>
 
                 <div className={styles.field}>
-                  <label className={styles.label} htmlFor="email">Email address</label>
+                  <label className={styles.label} htmlFor="email">{t('register.email')}</label>
                   <input
                     id="email"
                     type="email"
@@ -119,7 +122,7 @@ const Register: NextPage = () => {
                 </div>
 
                 <div className={styles.field}>
-                  <label className={styles.label} htmlFor="password">Password</label>
+                  <label className={styles.label} htmlFor="password">{t('register.password')}</label>
                   <div className={styles.passwordWrap}>
                     <input
                       id="password"
@@ -128,9 +131,9 @@ const Register: NextPage = () => {
                       className={`${styles.input} ${errors.password ? styles.inputError : ''}`}
                       value={form.password}
                       onChange={e => update('password', e.target.value)}
-                      placeholder="Minimum 6 characters"
+                      placeholder={t('register.passwordPlaceholder')}
                     />
-                    <button type="button" className={styles.togglePw} onClick={() => setShowPw(v => !v)} aria-label="Show password">
+                    <button type="button" className={styles.togglePw} onClick={() => setShowPw(v => !v)} aria-label={t('register.showPassword')}>
                       <EyeIcon open={showPw} />
                     </button>
                   </div>
@@ -138,7 +141,7 @@ const Register: NextPage = () => {
                 </div>
 
                 <div className={styles.field}>
-                  <label className={styles.label} htmlFor="confirmPassword">Confirm password</label>
+                  <label className={styles.label} htmlFor="confirmPassword">{t('register.confirmPassword')}</label>
                   <input
                     id="confirmPassword"
                     type={showPw ? 'text' : 'password'}
@@ -146,7 +149,7 @@ const Register: NextPage = () => {
                     className={`${styles.input} ${errors.confirmPassword ? styles.inputError : ''}`}
                     value={form.confirmPassword}
                     onChange={e => update('confirmPassword', e.target.value)}
-                    placeholder="Repeat password"
+                    placeholder={t('register.confirmPasswordPlaceholder')}
                   />
                   {errors.confirmPassword && <span className={styles.fieldError}>{errors.confirmPassword}</span>}
                 </div>
@@ -158,7 +161,7 @@ const Register: NextPage = () => {
                     onChange={e => update('acceptsMarketing', e.target.checked)}
                   />
                   <span className={styles.checkLabel}>
-                    Yes, I would like to receive offers and news from Earasers by email.
+                    {t('register.acceptsMarketing')}
                   </span>
                 </label>
 
@@ -170,25 +173,25 @@ const Register: NextPage = () => {
                       onChange={e => update('agreeTerms', e.target.checked)}
                     />
                     <span className={styles.checkLabel}>
-                      I agree to the{' '}
-                      <a href="/privacy" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>terms and conditions</a>{' '}
-                      and the{' '}
-                      <a href="/privacy" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>privacy policy</a>.
+                      {t('register.agreeTerms')}{' '}
+                      <a href="/privacy" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>{t('register.termsLink')}</a>{' '}
+                      {t('register.and')}{' '}
+                      <a href="/privacy" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>{t('register.privacyLink')}</a>.
                     </span>
                   </label>
                   {errors.agreeTerms && <span className={styles.fieldError} style={{ marginTop: 4, display: 'block' }}>{errors.agreeTerms}</span>}
                 </div>
 
                 <button type="submit" className={styles.submitBtn} disabled={loading} style={{ marginTop: 4 }}>
-                  {loading ? <span className={styles.spinner} /> : 'Create account'}
+                  {loading ? <span className={styles.spinner} /> : t('register.submitBtn')}
                 </button>
               </form>
 
-              <div className={styles.divider} style={{ marginTop: 24 }}>or</div>
+              <div className={styles.divider} style={{ marginTop: 24 }}>{t('register.or')}</div>
 
               <p className={styles.bottomLink} style={{ marginTop: 16 }}>
-                Already have an account?{' '}
-                <Link href="/account/login">Sign in</Link>
+                {t('register.alreadyAccount')}{' '}
+                <Link href="/account/login">{t('register.signInLink')}</Link>
               </p>
             </div>
           </div>
@@ -197,5 +200,11 @@ const Register: NextPage = () => {
     </Layout>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'account'])),
+  },
+});
 
 export default Register;

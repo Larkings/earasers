@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 import styles from './reviews.module.css';
 import { StarIcon, StarEmptyIcon, ExternalLinkIcon } from '../icons';
 
@@ -48,44 +49,48 @@ const Stars = ({ count }: { count: number }) => (
   </div>
 );
 
-export const Reviews = () => (
-  <section className={styles.section}>
-    <div className="container">
-      <div className={styles.header}>
-        <h2 className={styles.heading} data-reveal>Real people. Real opinions.</h2>
-        <div className={styles.score} data-reveal data-delay="1">
-          <Stars count={5} />
-          <span className={styles.scoreText}>Rated 4.7 out of 5 by over 1,000 customers</span>
-          <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" className={styles.trustpilot}>
-            View on Trustpilot <ExternalLinkIcon size={12} />
-          </a>
-        </div>
-      </div>
+export const Reviews = () => {
+  const { t } = useTranslation('home');
 
-      <div className={styles.grid}>
-        {reviews.map((r, i) => (
-          <div key={r.name} className={styles.card} data-reveal data-delay={String((i % 3) + 1) as any}>
-            <Stars count={r.rating} />
-            <p className={styles.text}>&ldquo;{r.text}&rdquo;</p>
-            <div className={styles.footer}>
-              <p className={styles.reviewer}>{r.country} · {r.name}</p>
-              <div className={styles.avatar}>
-                {r.photo ? (
-                  <Image
-                    src={r.photo}
-                    alt={r.name}
-                    width={48}
-                    height={48}
-                    className={styles.avatarImg}
-                  />
-                ) : (
-                  <span className={styles.avatarInitial}>{r.name[0]}</span>
-                )}
+  return (
+    <section className={styles.section}>
+      <div className="container">
+        <div className={styles.header}>
+          <h2 className={styles.heading} data-reveal>{t('reviews.heading')}</h2>
+          <div className={styles.score} data-reveal data-delay="1">
+            <Stars count={5} />
+            <span className={styles.scoreText}>{t('reviews.sub')}</span>
+            <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" className={styles.trustpilot}>
+              {t('reviews.trustpilot')} <ExternalLinkIcon size={12} />
+            </a>
+          </div>
+        </div>
+
+        <div className={styles.grid}>
+          {reviews.map((r, i) => (
+            <div key={r.name} className={styles.card} data-reveal data-delay={String((i % 3) + 1) as any}>
+              <Stars count={r.rating} />
+              <p className={styles.text}>&ldquo;{r.text}&rdquo;</p>
+              <div className={styles.footer}>
+                <p className={styles.reviewer}>{r.country} · {r.name}</p>
+                <div className={styles.avatar}>
+                  {r.photo ? (
+                    <Image
+                      src={r.photo}
+                      alt={r.name}
+                      width={48}
+                      height={48}
+                      className={styles.avatarImg}
+                    />
+                  ) : (
+                    <span className={styles.avatarInitial}>{r.name[0]}</span>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};

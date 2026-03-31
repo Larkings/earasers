@@ -1,14 +1,97 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import { useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import i18n, { type Resource } from 'i18next';
+import { initReactI18next, I18nextProvider } from 'react-i18next';
 import { CartProvider } from '../context/cart';
 import { AuthProvider } from '../context/auth';
 import { CookieBanner } from '../components/cookie-banner';
+import { CartDrawer } from '../components/cart-drawer';
+
+const LOCALE_KEY = 'earasers-locale';
+const SUPPORTED = ['en', 'nl', 'de', 'es'];
+
+function detectLocale(): string {
+  const langs = navigator.languages ?? [navigator.language];
+  for (const lang of langs) {
+    const code = lang.slice(0, 2).toLowerCase();
+    if (SUPPORTED.includes(code)) return code;
+  }
+  return 'en';
+}
+
+type I18nInstance = ReturnType<typeof i18n.createInstance>;
+
+function createI18nInstance(
+  locale: string,
+  resources: Resource,
+  ns: string[],
+): I18nInstance {
+  const instance = i18n.createInstance();
+  instance.use(initReactI18next).init({
+    lng: locale,
+    fallbackLng: 'en',
+    ns,
+    defaultNS: 'common',
+    resources,
+    interpolation: { escapeValue: false },
+    initImmediate: false,       // synchronous init — prevents SSR/client mismatch
+    react: { useSuspense: false },
+  });
+  return instance;
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
+  const { _nextI18Next } = pageProps || {};
+  const locale   = (_nextI18Next?.initialLocale  ?? 'en')       as string;
+  const resources = (_nextI18Next?.initialI18nStore ?? {})       as unknown as Resource;
+  const ns        = (_nextI18Next?.ns             ?? ['common']) as string[];
+
+  // instanceRef is null on every SSR render and on the very first client render,
+  // so both paths create the instance synchronously with the same data → no mismatch.
+  const instanceRef = useRef<I18nInstance | null>(null);
+  if (!instanceRef.current) {
+    instanceRef.current = createI18nInstance(locale, resources, ns);
+  }
+
+  // Keep translations up-to-date when navigating between pages
+  useEffect(() => {
+    const inst = instanceRef.current;
+    if (!inst) return;
+
+    // Add namespaces that are new for this page
+    const localeData = resources[locale] || {};
+    Object.entries(localeData).forEach(([nsKey, nsData]) => {
+      if (!inst.hasResourceBundle(locale, nsKey)) {
+        inst.addResourceBundle(locale, nsKey, nsData as Record<string, unknown>, true, true);
+      }
+    });
+
+    // Switch language when the locale changes
+    if (inst.language !== locale) {
+      inst.changeLanguage(locale);
+    }
+  }, [locale, resources]);
+
+  // Auto-detect locale on first visit
+  useEffect(() => {
+    const stored = localStorage.getItem(LOCALE_KEY);
+    if (!stored && router.locale === 'en') {
+      const detected = detectLocale();
+      if (detected !== 'en') {
+        localStorage.setItem(LOCALE_KEY, detected);
+        router.replace(router.asPath, router.asPath, { locale: detected, scroll: false });
+      } else {
+        localStorage.setItem(LOCALE_KEY, 'en');
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Scroll-reveal observer
   useEffect(() => {
     const init = () => {
       const els = document.querySelectorAll('[data-reveal]');
@@ -23,7 +106,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             }
           });
         },
-        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' },
       );
 
       els.forEach(el => obs.observe(el));
@@ -32,17 +115,19 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     const cleanup = init();
     router.events.on('routeChangeComplete', () => { cleanup?.(); init(); });
-
     return () => { cleanup?.(); };
   }, [router]);
 
   return (
-    <AuthProvider>
-      <CartProvider>
-        <Component {...pageProps} />
-        <CookieBanner />
-      </CartProvider>
-    </AuthProvider>
+    <I18nextProvider i18n={instanceRef.current}>
+      <AuthProvider>
+        <CartProvider>
+          <Component {...pageProps} />
+          <CartDrawer />
+          <CookieBanner />
+        </CartProvider>
+      </AuthProvider>
+    </I18nextProvider>
   );
 }
 

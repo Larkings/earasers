@@ -1,117 +1,95 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
 import React from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+import { serverSideTranslations } from '../lib/i18n';
 import { Layout } from '../components/layout';
 import styles from '../styles/returns.module.css';
 
-const steps = [
-  {
-    num: '01',
-    title: 'Contact us first',
-    body: 'Email or call us to let us know you\'d like to return your order. We\'ll send you an RMA (Return Merchandise Authorization) number.',
-  },
-  {
-    num: '02',
-    title: 'Pack your return',
-    body: 'Include the original product, your RMA number, and your original receipt or online invoice with the purchase date circled. Add a short note explaining the reason for the return.',
-  },
-  {
-    num: '03',
-    title: 'Send it back',
-    body: 'Ship the package to us. Once we receive and inspect it, we\'ll process your refund, exchange, or replacement — whichever you prefer.',
-  },
-];
+const Returns: NextPage = () => {
+  const { t } = useTranslation('returns');
 
-const Returns: NextPage = () => (
-  <Layout>
-    <div className={styles.page}>
-      <div className="container">
+  const steps = [
+    { num: '01', title: t('step1Title'), body: t('step1Desc') },
+    { num: '02', title: t('step2Title'), body: t('step2Desc') },
+    { num: '03', title: t('step3Title'), body: t('step3Desc') },
+  ];
 
-        <div className={styles.hero}>
-          <h1 className={styles.heading}>Return Policy</h1>
-          <p className={styles.sub}>
-            We know that finding the right size and filter strength takes some
-            trial. If it&apos;s not perfect, we&apos;ll make it right.
-          </p>
-        </div>
+  const includes = [
+    t('include1'),
+    t('include2'),
+    t('include3'),
+    t('include4'),
+  ];
 
-        {/* Key condition */}
-        <div className={styles.highlight}>
-          <span className={styles.highlightLabel}>Important</span>
-          <p className={styles.highlightText}>
-            Returns must be initiated <strong>within 30 days</strong> of your
-            original purchase date.
-          </p>
-        </div>
+  return (
+    <Layout>
+      <div className={styles.page}>
+        <div className="container">
 
-        {/* Steps */}
-        <div className={styles.stepsSection}>
-          <h2 className={styles.sectionHeading}>How to return</h2>
-          <div className={styles.steps}>
-            {steps.map(s => (
-              <div key={s.num} className={styles.step}>
-                <span className={styles.stepNum}>{s.num}</span>
-                <div>
-                  <p className={styles.stepTitle}>{s.title}</p>
-                  <p className={styles.stepBody}>{s.body}</p>
+          <div className={styles.hero}>
+            <h1 className={styles.heading}>{t('heading')}</h1>
+            <p className={styles.sub}>{t('sub')}</p>
+          </div>
+
+          <div className={styles.highlight}>
+            <span className={styles.highlightLabel}>{t('importantTitle')}</span>
+            <p className={styles.highlightText}>{t('importantText')}</p>
+          </div>
+
+          <div className={styles.stepsSection}>
+            <h2 className={styles.sectionHeading}>{t('howTitle')}</h2>
+            <div className={styles.steps}>
+              {steps.map(s => (
+                <div key={s.num} className={styles.step}>
+                  <span className={styles.stepNum}>{s.num}</span>
+                  <div>
+                    <p className={styles.stepTitle}>{s.title}</p>
+                    <p className={styles.stepBody}>{s.body}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* What to include */}
-        <div className={styles.checklist}>
-          <h2 className={styles.sectionHeading}>What to include in your package</h2>
-          <ul className={styles.list}>
-            <li>Original product</li>
-            <li>RMA number (provided by us after you make contact)</li>
-            <li>Original receipt or online invoice — circle the purchase date</li>
-            <li>Written explanation of your return reason</li>
-          </ul>
-          <p className={styles.note}>
-            Don&apos;t have your receipt? No problem — we can look up your purchase
-            details if needed.
-          </p>
-        </div>
-
-        {/* Contact */}
-        <div className={styles.contact}>
-          <h2 className={styles.sectionHeading}>Get in touch</h2>
-          <p className={styles.contactSub}>
-            Start your return or ask any question — we&apos;re here Monday to Friday,
-            9:00–17:00.
-          </p>
-          <div className={styles.contactCards}>
-            <a href="mailto:Info@earasers.shop" className={styles.contactCard}>
-              <span className={styles.contactIcon}>
-                <EmailIcon />
-              </span>
-              <div>
-                <p className={styles.contactLabel}>Email</p>
-                <p className={styles.contactValue}>Info@earasers.shop</p>
-              </div>
-            </a>
-            <a href="tel:+31850074002" className={styles.contactCard}>
-              <span className={styles.contactIcon}>
-                <PhoneIcon />
-              </span>
-              <div>
-                <p className={styles.contactLabel}>Phone</p>
-                <p className={styles.contactValue}>+31 85 007 4002</p>
-              </div>
-            </a>
+          <div className={styles.checklist}>
+            <h2 className={styles.sectionHeading}>{t('includeTitle')}</h2>
+            <ul className={styles.list}>
+              {includes.map((item, i) => <li key={i}>{item}</li>)}
+            </ul>
+            <p className={styles.note}>{t('noReceiptNote')}</p>
           </div>
-          <p className={styles.orContact}>
-            Or use our{' '}
-            <Link href="/contact" className={styles.link}>contact form</Link>.
-          </p>
-        </div>
 
+          <div className={styles.contact}>
+            <h2 className={styles.sectionHeading}>{t('ctaTitle')}</h2>
+            <p className={styles.contactSub}>{t('ctaSub')}</p>
+            <div className={styles.contactCards}>
+              <a href="mailto:Info@earasers.shop" className={styles.contactCard}>
+                <span className={styles.contactIcon}><EmailIcon /></span>
+                <div>
+                  <p className={styles.contactLabel}>{t('emailLabel')}</p>
+                  <p className={styles.contactValue}>Info@earasers.shop</p>
+                </div>
+              </a>
+              <a href="tel:+31850074002" className={styles.contactCard}>
+                <span className={styles.contactIcon}><PhoneIcon /></span>
+                <div>
+                  <p className={styles.contactLabel}>{t('phoneLabel')}</p>
+                  <p className={styles.contactValue}>+31 85 007 4002</p>
+                </div>
+              </a>
+            </div>
+            <p className={styles.orContact}>
+              {t('orUse')}{' '}
+              <Link href="/contact" className={styles.link}>{t('contactForm')}</Link>.
+            </p>
+          </div>
+
+        </div>
       </div>
-    </div>
-  </Layout>
-);
+    </Layout>
+  );
+};
 
 const EmailIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -125,5 +103,11 @@ const PhoneIcon = () => (
     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/>
   </svg>
 );
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'returns'])),
+  },
+});
 
 export default Returns;

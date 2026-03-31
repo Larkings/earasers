@@ -1,20 +1,24 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+import { serverSideTranslations } from '../lib/i18n';
 import { Layout } from '../components/layout';
 import { CheckIcon, ShieldIcon } from '../components/icons';
 import styles from '../styles/contact.module.css';
 
-const subjects = [
-  'Question about sizing',
-  'Order & delivery',
-  'Returns & warranty',
-  'Product question',
-  'Business / wholesale',
-  'Other',
-];
-
 const Contact: NextPage = () => {
+  const { t } = useTranslation('contact');
+
+  const subjects = [
+    t('subjects.sizing'),
+    t('subjects.order'),
+    t('subjects.returns'),
+    t('subjects.product'),
+    t('subjects.business'),
+    t('subjects.other'),
+  ];
+
   const [form, setForm] = useState({ name: '', email: '', subject: subjects[0], message: '' });
   const [sent, setSent] = useState(false);
   const [error, setError] = useState('');
@@ -26,7 +30,7 @@ const Contact: NextPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
-      setError('Please fill in all required fields.');
+      setError(t('validationError'));
       return;
     }
     setError('');
@@ -41,10 +45,8 @@ const Contact: NextPage = () => {
 
             {/* Left — info */}
             <div className={styles.info}>
-              <h1 className={styles.heading}>Get in touch</h1>
-              <p className={styles.sub}>
-                Questions? We&apos;re here seven days a week. Most emails get a reply within a few hours.
-              </p>
+              <h1 className={styles.heading}>{t('heading')}</h1>
+              <p className={styles.sub}>{t('sub')}</p>
 
               <div className={styles.cards}>
                 <div className={styles.infoCard}>
@@ -55,7 +57,7 @@ const Contact: NextPage = () => {
                     </svg>
                   </span>
                   <div>
-                    <p className={styles.infoLabel}>Email</p>
+                    <p className={styles.infoLabel}>{t('emailLabel')}</p>
                     <a href="mailto:support@earasers.shop" className={styles.infoValue}>support@earasers.shop</a>
                   </div>
                 </div>
@@ -67,7 +69,7 @@ const Contact: NextPage = () => {
                     </svg>
                   </span>
                   <div>
-                    <p className={styles.infoLabel}>Phone</p>
+                    <p className={styles.infoLabel}>{t('phoneLabel')}</p>
                     <a href="tel:+31201234567" className={styles.infoValue}>+31 20 123 4567</a>
                   </div>
                 </div>
@@ -80,15 +82,19 @@ const Contact: NextPage = () => {
                     </svg>
                   </span>
                   <div>
-                    <p className={styles.infoLabel}>Availability</p>
-                    <p className={styles.infoValue}>Mon to Sun · 24/7 online</p>
+                    <p className={styles.infoLabel}>{t('availLabel')}</p>
+                    <p className={styles.infoValue}>{t('availValue')}</p>
                   </div>
                 </div>
               </div>
 
               <div className={styles.faqTeaser}>
                 <ShieldIcon size={16} className={styles.faqIcon} />
-                <p>Before writing, check our <Link href="/faq" className={styles.faqLink}>FAQ</Link> — your question may already be answered there.</p>
+                <p>
+                  {t('faqNote')}{' '}
+                  <Link href="/faq" className={styles.faqLink}>{t('faqLink')}</Link>
+                  {' '}{t('faqNoteEnd')}
+                </p>
               </div>
             </div>
 
@@ -97,36 +103,40 @@ const Contact: NextPage = () => {
               {sent ? (
                 <div className={styles.success}>
                   <div className={styles.successIcon}><CheckIcon size={28} /></div>
-                  <h2 className={styles.successTitle}>Message sent!</h2>
-                  <p className={styles.successSub}>Thank you for reaching out. We&apos;ll get back to you within a few hours.</p>
-                  <button className={styles.successBtn} onClick={() => setSent(false)}>Send another message</button>
+                  <h2 className={styles.successTitle}>{t('successTitle')}</h2>
+                  <p className={styles.successSub}>{t('successSub')}</p>
+                  <button className={styles.successBtn} onClick={() => setSent(false)}>{t('sendAnother')}</button>
                 </div>
               ) : (
                 <form className={styles.form} onSubmit={handleSubmit} noValidate>
-                  <h2 className={styles.formTitle}>Send us a message</h2>
+                  <h2 className={styles.formTitle}>{t('formTitle')}</h2>
 
                   <div className={styles.row}>
                     <div className={styles.field}>
-                      <label className={styles.label} htmlFor="name">Name <span className={styles.req}>*</span></label>
+                      <label className={styles.label} htmlFor="name">
+                        {t('nameLabel')} <span className={styles.req}>{t('required')}</span>
+                      </label>
                       <input
                         id="name"
                         name="name"
                         type="text"
                         className={styles.input}
-                        placeholder="Your name"
+                        placeholder={t('namePlaceholder')}
                         value={form.name}
                         onChange={handleChange}
                         autoComplete="name"
                       />
                     </div>
                     <div className={styles.field}>
-                      <label className={styles.label} htmlFor="email">Email <span className={styles.req}>*</span></label>
+                      <label className={styles.label} htmlFor="email">
+                        {t('emailFieldLabel')} <span className={styles.req}>{t('required')}</span>
+                      </label>
                       <input
                         id="email"
                         name="email"
                         type="email"
                         className={styles.input}
-                        placeholder="your@email.com"
+                        placeholder={t('emailPlaceholder')}
                         value={form.email}
                         onChange={handleChange}
                         autoComplete="email"
@@ -135,7 +145,7 @@ const Contact: NextPage = () => {
                   </div>
 
                   <div className={styles.field}>
-                    <label className={styles.label} htmlFor="subject">Subject</label>
+                    <label className={styles.label} htmlFor="subject">{t('subjectLabel')}</label>
                     <select
                       id="subject"
                       name="subject"
@@ -148,12 +158,14 @@ const Contact: NextPage = () => {
                   </div>
 
                   <div className={styles.field}>
-                    <label className={styles.label} htmlFor="message">Message <span className={styles.req}>*</span></label>
+                    <label className={styles.label} htmlFor="message">
+                      {t('messageLabel')} <span className={styles.req}>{t('required')}</span>
+                    </label>
                     <textarea
                       id="message"
                       name="message"
                       className={`${styles.input} ${styles.textarea}`}
-                      placeholder="How can we help you?"
+                      placeholder={t('messagePlaceholder')}
                       rows={5}
                       value={form.message}
                       onChange={handleChange}
@@ -162,9 +174,7 @@ const Contact: NextPage = () => {
 
                   {error && <p className={styles.error}>{error}</p>}
 
-                  <button type="submit" className={styles.submit}>
-                    Send message
-                  </button>
+                  <button type="submit" className={styles.submit}>{t('send')}</button>
                 </form>
               )}
             </div>
@@ -174,5 +184,11 @@ const Contact: NextPage = () => {
     </Layout>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'contact'])),
+  },
+});
 
 export default Contact;

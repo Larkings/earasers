@@ -1,30 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import styles from './navbar.module.css';
 import { MusicIcon, HeadphonesIcon, ToothIcon, MoonIcon, HelmetIcon, EarIcon, ChevronDownIcon, CloseIcon } from '../icons';
 import { useCart } from '../../context/cart';
 import { useAuth } from '../../context/auth';
-
-type Category = { label: string; href: string; icon: React.ReactNode };
-
-const shopCategories: Category[] = [
-  { label: 'Music Earplugs',      href: '/collection/musician',    icon: <MusicIcon size={16} /> },
-  { label: "DJ's",                href: '/collection/dj',          icon: <HeadphonesIcon size={16} /> },
-  { label: 'Dentist & Hygienist', href: '/collection/dentist',     icon: <ToothIcon size={16} /> },
-  { label: 'Sleeping',            href: '/collection/sleeping',    icon: <MoonIcon size={16} /> },
-  { label: 'Motorsport',          href: '/collection/motorsport',  icon: <HelmetIcon size={16} /> },
-  { label: 'Noise Sensitivity',   href: '/collection/sensitivity', icon: <EarIcon size={16} /> },
-];
-
-const faqLinks = [
-  { label: 'All Questions',       href: '/faq' },
-  { label: 'Sizing Guide',        href: '/faq#sizing' },
-  { label: 'Usage & Maintenance', href: '/faq#usage' },
-  { label: 'Instruction Video',   href: '/faq#instruction-video' },
-  { label: 'Returns',             href: '/returns' },
-];
+import { LanguageSwitcher } from '../language-switcher';
 
 export const Navbar = () => {
+  const { t } = useTranslation('common');
   const { totalCount, openCart } = useCart();
   const { user } = useAuth();
   const [scrolled, setScrolled]     = useState(false);
@@ -35,6 +19,23 @@ export const Navbar = () => {
 
   const shopRef = useRef<HTMLLIElement>(null);
   const faqRef  = useRef<HTMLLIElement>(null);
+
+  const shopCategories = [
+    { label: t('shopCategories.music'),          href: '/collection/musician',    icon: <MusicIcon size={16} /> },
+    { label: t('shopCategories.dj'),             href: '/collection/dj',          icon: <HeadphonesIcon size={16} /> },
+    { label: t('shopCategories.dentist'),        href: '/collection/dentist',     icon: <ToothIcon size={16} /> },
+    { label: t('shopCategories.sleeping'),       href: '/collection/sleeping',    icon: <MoonIcon size={16} /> },
+    { label: t('shopCategories.motorsport'),     href: '/collection/motorsport',  icon: <HelmetIcon size={16} /> },
+    { label: t('shopCategories.noiseSensitivity'), href: '/collection/sensitivity', icon: <EarIcon size={16} /> },
+  ];
+
+  const faqLinks = [
+    { label: t('faqLinks.allQuestions'),       href: '/faq' },
+    { label: t('faqLinks.sizingGuide'),        href: '/faq#sizing' },
+    { label: t('faqLinks.usageMaintenance'),   href: '/faq#usage' },
+    { label: t('faqLinks.instructionVideo'),   href: '/faq#instruction-video' },
+    { label: t('faqLinks.returns'),            href: '/returns' },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -55,7 +56,7 @@ export const Navbar = () => {
     <>
       {barVisible && (
         <div className={styles.bar}>
-          <span>FREE SHIPPING ON ORDERS FROM €39</span>
+          <span>{t('bar')}</span>
           <button className={styles.barClose} onClick={() => setBarVisible(false)} aria-label="Close">
             <CloseIcon size={14} />
           </button>
@@ -72,7 +73,7 @@ export const Navbar = () => {
 
               <li className={styles.navItem} ref={shopRef}>
                 <button className={styles.navBtn} onClick={() => { setShopOpen(o => !o); setFaqOpen(false); }} aria-expanded={shopOpen}>
-                  Shop <ChevronDownIcon size={13} className={shopOpen ? styles.chevronOpen : styles.chevron} />
+                  {t('nav.shop')} <ChevronDownIcon size={13} className={shopOpen ? styles.chevronOpen : styles.chevron} />
                 </button>
                 {shopOpen && (
                   <div className={styles.dropdown}>
@@ -88,7 +89,7 @@ export const Navbar = () => {
 
               <li className={styles.navItem} ref={faqRef}>
                 <button className={styles.navBtn} onClick={() => { setFaqOpen(o => !o); setShopOpen(false); }} aria-expanded={faqOpen}>
-                  FAQ <ChevronDownIcon size={13} className={faqOpen ? styles.chevronOpen : styles.chevron} />
+                  {t('nav.faq')} <ChevronDownIcon size={13} className={faqOpen ? styles.chevronOpen : styles.chevron} />
                 </button>
                 {faqOpen && (
                   <div className={styles.dropdown}>
@@ -101,31 +102,33 @@ export const Navbar = () => {
                 )}
               </li>
 
-              <li className={styles.navItem}><Link href="/size-finder"   className={styles.navLink}>Size Finder</Link></li>
-              <li className={styles.navItem}><Link href="/store-locator" className={styles.navLink}>Store Locator</Link></li>
-              <li className={styles.navItem}><Link href="/about"         className={styles.navLink}>About</Link></li>
-              <li className={styles.navItem}><Link href="/contact"       className={styles.navLink}>Contact</Link></li>
+              <li className={styles.navItem}><Link href="/size-finder"   className={styles.navLink}>{t('nav.sizeFinder')}</Link></li>
+              <li className={styles.navItem}><Link href="/store-locator" className={styles.navLink}>{t('nav.storeLocator')}</Link></li>
+              <li className={styles.navItem}><Link href="/about"         className={styles.navLink}>{t('nav.about')}</Link></li>
+              <li className={styles.navItem}><Link href="/contact"       className={styles.navLink}>{t('nav.contact')}</Link></li>
+              <li className={styles.navItem}><Link href="/affiliates"    className={styles.navLink}>{t('nav.affiliates')}</Link></li>
             </ul>
           </nav>
 
           <div className={styles.actions}>
+            <LanguageSwitcher />
             <Link
               href={user ? '/account' : '/account/login'}
               className={styles.accountBtn}
-              aria-label={user ? `Account: ${user.firstName}` : 'Sign in'}
+              aria-label={user ? `${t('nav.about')}: ${user.firstName}` : t('nav.signIn')}
             >
               <AccountIcon />
               {user && <span className={styles.accountDot} />}
             </Link>
-            <button type="button" className={styles.cartBtn} onClick={openCart} aria-label="Open cart">
+            <button type="button" className={styles.cartBtn} onClick={openCart} aria-label={t('nav.openCart')}>
               <CartIcon />
               {totalCount > 0 && (
                 <span className={styles.cartCount}>{totalCount > 99 ? '99+' : totalCount}</span>
               )}
             </button>
-            <Link href="/collection" className={styles.ctaBtn}>Shop Now</Link>
+            <Link href="/collection" className={styles.ctaBtn}>{t('nav.shopNow')}</Link>
 
-            <button className={styles.burger} onClick={() => setMobileOpen(o => !o)} aria-label="Toggle menu" aria-expanded={mobileOpen}>
+            <button className={styles.burger} onClick={() => setMobileOpen(o => !o)} aria-label={t('nav.toggleMenu')} aria-expanded={mobileOpen}>
               {mobileOpen ? <CloseIcon size={22} /> : <HamburgerIcon />}
             </button>
           </div>
@@ -134,7 +137,7 @@ export const Navbar = () => {
         {mobileOpen && (
           <nav className={styles.mobileMenu}>
             <div className={styles.mobileGroup}>
-              <p className={styles.mobileLabel}>Shop</p>
+              <p className={styles.mobileLabel}>{t('mobileLabels.shop')}</p>
               {shopCategories.map(c => (
                 <Link key={c.href} href={c.href} className={styles.mobileLink} onClick={() => setMobileOpen(false)}>
                   <span className={styles.mobileLinkIcon}>{c.icon}</span>
@@ -143,7 +146,7 @@ export const Navbar = () => {
               ))}
             </div>
             <div className={styles.mobileGroup}>
-              <p className={styles.mobileLabel}>Support</p>
+              <p className={styles.mobileLabel}>{t('mobileLabels.support')}</p>
               {faqLinks.map(l => (
                 <Link key={l.href} href={l.href} className={styles.mobileLink} onClick={() => setMobileOpen(false)}>
                   {l.label}
@@ -151,10 +154,14 @@ export const Navbar = () => {
               ))}
             </div>
             <div className={styles.mobileGroup}>
-              <Link href="/size-finder"   className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Size Finder</Link>
-              <Link href="/store-locator" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Store Locator</Link>
-              <Link href="/about"         className={styles.mobileLink} onClick={() => setMobileOpen(false)}>About</Link>
-              <Link href="/contact"       className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Contact</Link>
+              <Link href="/size-finder"   className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.sizeFinder')}</Link>
+              <Link href="/store-locator" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.storeLocator')}</Link>
+              <Link href="/about"         className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.about')}</Link>
+              <Link href="/contact"       className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.contact')}</Link>
+              <Link href="/affiliates"    className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.affiliates')}</Link>
+            </div>
+            <div className={styles.mobileGroup}>
+              <LanguageSwitcher />
             </div>
           </nav>
         )}
