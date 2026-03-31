@@ -1,0 +1,129 @@
+{% comment %}
+  Layer 2 content for the Motorsport Earplugs product page.
+  Referenced by templates/product.motorsport.json (to be created)
+{% endcomment %}
+
+<section class="product-content product-content--motorsport">
+  <div class="product-content__hero product-content__hero--dark">
+    <div class="container product-content__hero-inner">
+      <div class="product-content__hero-text" data-reveal>
+        {% if section.settings.badge != blank %}
+          <p class="product-content__badge">{{ section.settings.badge }}</p>
+        {% endif %}
+        <h1 class="product-content__heading">{{ section.settings.heading }}</h1>
+        <p class="product-content__sub">{{ section.settings.subheading }}</p>
+        {% if section.settings.cta_label != blank %}
+          <a href="{{ section.settings.cta_url }}" class="btn btn--primary">{{ section.settings.cta_label }}</a>
+        {% endif %}
+      </div>
+      <div class="product-content__hero-img" data-reveal data-delay="1">
+        <img src="https://www.earasers.shop/cdn/shop/collections/Moto1.png" alt="Motorsport Earasers" loading="lazy" style="width:100%;border-radius:var(--radius-md);">
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter recommendations by helmet type -->
+  <div class="container" style="padding:48px 0;">
+    <h2 style="font-family:var(--font-display);font-size:clamp(24px,3vw,40px);text-align:center;margin-bottom:40px;" data-reveal>Choose your filter</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;" data-reveal>
+      <div class="feature-col" style="padding:28px;border:1px solid var(--color-border);border-radius:var(--radius-md);text-align:center;">
+        <p style="font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--color-text-muted);margin-bottom:8px;">Column 1</p>
+        <p style="font-size:20px;font-weight:700;margin-bottom:8px;">All Riders</p>
+        <p style="font-size:14px;color:var(--color-text-muted);">-36dB Peak noise reduction</p>
+      </div>
+      <div class="feature-col" style="padding:28px;border:2px solid var(--color-accent);border-radius:var(--radius-md);text-align:center;">
+        <p style="font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--color-accent);margin-bottom:8px;">OPEN HELMET</p>
+        <p style="font-size:20px;font-weight:700;margin-bottom:8px;">Recommended: -31dB 'Max'</p>
+        <p style="font-size:14px;color:var(--color-text-muted);">Highest protection. Ideal for open helmets with greater wind and engine noise exposure.</p>
+      </div>
+      <div class="feature-col" style="padding:28px;border:2px solid var(--color-teal);border-radius:var(--radius-md);text-align:center;">
+        <p style="font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--color-teal);margin-bottom:8px;">CLOSED HELMET</p>
+        <p style="font-size:20px;font-weight:700;margin-bottom:8px;">Recommended: -19dB 'Light'</p>
+        <p style="font-size:14px;color:var(--color-text-muted);">Soft protection, max clarity. Great for closed helmets where external noise is partially blocked.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'feature_row' %}
+          <div class="product-content__feature-row" {{ block.shopify_attributes }} data-reveal>
+            {% if block.settings.image %}
+              <div class="product-content__feature-img">
+                <img src="{{ block.settings.image | img_url: '500x' }}" alt="{{ block.settings.heading }}" loading="lazy">
+              </div>
+            {% endif %}
+            <div class="product-content__feature-text">
+              <h2>{{ block.settings.heading }}</h2>
+              <p>{{ block.settings.body }}</p>
+            </div>
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product content – Motorsport",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Hero badge",
+      "default": "For Motorsport"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Hero heading",
+      "default": "Protect your hearing on the track."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Hero subheading"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA button label",
+      "default": "Shop Motorsport Earasers"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA button URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature_row",
+      "name": "Feature row",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product content – Motorsport"
+    }
+  ]
+}
+{% endschema %}
