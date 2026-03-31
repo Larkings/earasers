@@ -1,0 +1,82 @@
+{
+  "breadcrumb": {
+    "home": "Home",
+    "shop": "Winkel"
+  },
+  "sizes": [
+    {
+      "label": "XS",
+      "tip": "Extra Klein — past bij ~3% van de gebruikers"
+    },
+    {
+      "label": "S",
+      "tip": "Klein — meest populair, ~40% van de gebruikers"
+    },
+    {
+      "label": "M",
+      "tip": "Medium — meest populair, ~40% van de gebruikers"
+    },
+    {
+      "label": "L",
+      "tip": "Groot — past bij ~14% van de gebruikers"
+    },
+    {
+      "label": "XS & S Kit",
+      "tip": "Extra Klein & Klein — ideaal als je tussen twee maten zit.",
+      "kit": true
+    },
+    {
+      "label": "S & M Kit",
+      "tip": "Klein & Medium — de meest populaire starterscombo.",
+      "kit": true
+    },
+    {
+      "label": "M & L Kit",
+      "tip": "Medium & Groot — voor een bredere gehoorgang.",
+      "kit": true
+    }
+  ],
+  "tabs": [
+    "Beschrijving",
+    "Specificaties",
+    "Beoordelingen"
+  ],
+  "size": "Maat",
+  "dontKnowSize": "Weet u uw maat niet? →",
+  "closeQuiz": "Quiz sluiten ×",
+  "sizeSetFromQuiz": "Maat ingesteld op basis van uw antwoorden",
+  "filterLevel": "Filterniveau",
+  "quantity": "Aantal",
+  "decreaseQty": "Verminderen",
+  "increaseQty": "Verhogen",
+  "addToCart": "{{qty}}× toevoegen aan winkelwagen — {{price}}",
+  "addToCartSingle": "Toevoegen aan winkelwagen — {{price}}",
+  "save": "Bespaar {{amount}}",
+  "reviewsCount": "{{count}} beoordelingen",
+  "addedToCart": "Toegevoegd aan winkelwagen",
+  "securePayment": "Veilige betaling",
+  "freeShipping": "Gratis verzending vanaf €39",
+  "returns": "30 dagen retourrecht",
+  "descriptionHeading": "Wat maakt Earasers anders?",
+  "descriptionBody": "Earasers gebruikt een gepatenteerd open-kanaalontwerp gecombineerd met een V-filter om schadelijke geluidsniveaus te verminderen terwijl de natuurlijke rijkdom van muziek behouden blijft.",
+  "specsHeading": "Dempingswaarden",
+  "specsBody": "Gemeten volgens ISO 11904-1. Waarden zijn gemiddelde demping per testfrequentie.",
+  "specsImgAlt": "Earasers dempingsgrafiek",
+  "reviewsRating": "{{rating}} van 5 — gebaseerd op {{count}} beoordelingen",
+  "recentlyViewed": "Recent bekeken",
+  "reviews": [
+    {
+      "name": "Michael T.",
+      "text": "Deze Earasers zijn perfect. Ze passen uitstekend, zijn nauwelijks zichtbaar en balanceren het geluid perfect."
+    },
+    {
+      "name": "Saskia H.",
+      "text": "Veel beter en goedkoper dan alle op maat gemaakte oordoppen van gevestigde merken die ik heb gehad!"
+    },
+    {
+      "name": "Joanne C.",
+      "text": "Uitstekende klantenservice — ze stuurden me de middens plus het filterverwijderingsgereedschap gratis!"
+    }
+  ],
+  "orComboKit": "of kies een combi-kit"
+}

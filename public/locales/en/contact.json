@@ -1,0 +1,33 @@
+{
+  "heading": "Get in touch",
+  "sub": "Questions? We're here seven days a week. Most emails get a reply within a few hours.",
+  "emailLabel": "Email",
+  "phoneLabel": "Phone",
+  "availLabel": "Availability",
+  "availValue": "Mon to Sun · 24/7 online",
+  "faqNote": "Before writing, check our",
+  "faqLink": "FAQ",
+  "faqNoteEnd": "— your question may already be answered there.",
+  "formTitle": "Send us a message",
+  "nameLabel": "Name",
+  "namePlaceholder": "Your name",
+  "emailFieldLabel": "Email",
+  "emailPlaceholder": "your@email.com",
+  "subjectLabel": "Subject",
+  "subjects": {
+    "sizing": "Question about sizing",
+    "order": "Order & delivery",
+    "returns": "Returns & warranty",
+    "product": "Product question",
+    "business": "Business / wholesale",
+    "other": "Other"
+  },
+  "messageLabel": "Message",
+  "messagePlaceholder": "How can we help you?",
+  "required": "*",
+  "validationError": "Please fill in all required fields.",
+  "send": "Send message",
+  "successTitle": "Message sent!",
+  "successSub": "Thank you for reaching out. We'll get back to you within a few hours.",
+  "sendAnother": "Send another message"
+}

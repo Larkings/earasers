@@ -1,0 +1,756 @@
+{
+  "ui": {
+    "home": "Home",
+    "shop": "Winkel",
+    "chooseOptions": "Opties kiezen",
+    "sortBy": "Sorteren op",
+    "featured": "Aanbevolen",
+    "priceLow": "Prijs: laag naar hoog",
+    "priceHigh": "Prijs: hoog naar laag",
+    "bestRated": "Best beoordeeld",
+    "newest": "Nieuwste",
+    "collectionHeading": "Muziek oordoppen",
+    "collectionSub": "Bekroonde HiFi-oordoppen voor muzikanten, concertbezoekers en muziekliefhebbers.",
+    "bestSeller": "Bestseller",
+    "recommended": "Aanbevolen",
+    "premium": "Premium",
+    "patentedFilterTech": "Gepatenteerde filtertechnologie",
+    "howFilterWorks": "Hoe het filter werkt",
+    "earasersVsAlternatives": "Earasers vs de alternatieven",
+    "chooseYourFilter": "Kies uw filter",
+    "filterSubtext": "Weet u niet welke sterkte u moet kiezen? Begin met de aanbevolen optie — u kunt filters altijd later verwisselen.",
+    "findYourFit": "Vind uw maat",
+    "notSureSize": "Weet u niet welke maat?",
+    "videoSub": "De grootte van het gehoorkanaal is niet gerelateerd aan lengte, gewicht of geslacht. Bekijk deze korte video om uw perfecte maat te vinden:",
+    "videoNote": "Nog steeds onzeker? Bestel de <strong>Small & Medium combo</strong> — de populairste keuze voor eerste kopers. 30 dagen maatgarantie.",
+    "testimonials": "Getuigenissen",
+    "trustedByProfessionals": "Vertrouwd door professionals in heel Europa",
+    "faqHeading": "Veelgestelde vragen",
+    "productsCount": "{{count}} producten",
+    "shopThisFilter": "Winkel dit filter →",
+    "shopNow": "Nu winkelen →",
+    "individualSizes": "Losse maten",
+    "individualSizesSub": "Kies de maat die past bij jouw gehoorgang.",
+    "comboKits": "Combi-kits",
+    "comboKitsSub": "Probeer 2 maten — houd de beste pasvorm. Voordelig ten opzichte van los.",
+    "kit": "Kit",
+    "videoTitle": "Hoe je je Earasers maat vindt"
+  },
+  "compareTable": {
+    "heading": "Earasers vs de alternatieven",
+    "sub": "Op maat gemaakte oordoppen kosten €200–400 en duren weken. Earasers bieden dezelfde HiFi-bescherming met vlakke respons voor €49,95.",
+    "colEarasers": "Earasers",
+    "colCustom": "Op maat gemaakt",
+    "colBudget": "Budget oordoppen",
+    "rowPrice": "Prijs",
+    "rowAudiologist": "Audioloog vereist",
+    "rowDelivery": "Levering",
+    "rowInvisible": "Vrijwel onzichtbaar",
+    "rowClearSound": "Helder, natuurlijk geluid",
+    "rowReplaceableFilter": "Vervangbaar filter",
+    "rowAwardWinning": "Bekroond",
+    "valEarasersPrice": "€49,95",
+    "valCustomPrice": "€199+",
+    "valBudgetPrice": "€5–15",
+    "valEarasersDelivery": "2–3 dagen",
+    "valCustomDelivery": "3–6 weken",
+    "valBudgetDelivery": "Volgende dag"
+  },
+  "attenSection": {
+    "eyebrow": "Gepatenteerde filtertechnologie",
+    "heading": "Hoe het filter werkt",
+    "body": "Het V-filter vermindert de meest schadelijke frequenties (rond 3.150 Hz) terwijl het natuurlijke muzikale bereik intact blijft. In tegenstelling tot vlak-attenuerende oordoppen klinkt Earasers helder — niet 'onderwater'. U hoort elke noot, maar veiliger.",
+    "points": [
+      "Open kanaalontwerp → geen verstopt gevoel",
+      "Medisch silicone → op maat voor uw oor",
+      "Vrijwel onzichtbaar → niemand ziet ze zitten",
+      "Vervangbaar filter → verleng de levensduur door alleen het filter te vervangen"
+    ]
+  },
+  "musician": {
+    "title": "Muziek oordoppen",
+    "badge": "Voor muzikanten & concertbezoekers",
+    "heading": "Speel harder.\nHoor langer.",
+    "sub": "Award-winnende HiFi oordopjes die je gehoor beschermen zonder het geluid te veranderen. Gebruikt door professionals op podia en dansvloeren wereldwijd.",
+    "stats": [
+      {
+        "value": "5×",
+        "label": "MusicRadar Award Winnaar"
+      },
+      {
+        "value": "Vlak",
+        "label": "Frequentierespons"
+      },
+      {
+        "value": "−19 dB",
+        "label": "Filterdempingsniveau"
+      },
+      {
+        "value": "3–6 mnd",
+        "label": "Filterlevensduur"
+      }
+    ],
+    "features": [
+      {
+        "title": "Vlakke frequentierespons",
+        "body": "Elke frequentie wordt gelijkmatig gereduceerd — bas, midden en hoog blijven allemaal in balans. Muziek klinkt als muziek, niet alsof u door een muur luistert."
+      },
+      {
+        "title": "5× MusicRadar Award Winnaar",
+        "body": "Onafhankelijk getest en bekroond door MusicRadar.com elk jaar sinds 2020. De meest vertrouwde oordop in de muziekindustrie."
+      },
+      {
+        "title": "Vervangbare filters",
+        "body": "Filters gaan 3–6 maanden mee en kunnen thuis worden vervangen. Geen nieuw paar nodig — vervang gewoon wat versleten is."
+      }
+    ],
+    "techHeading": "De wetenschap achter het geluid",
+    "techBody": "Standaard schuim oordoppen blokkeren hoge frequenties meer dan lage, waardoor muziek dof en gedempt klinkt. Het V-vormige filter van Earasers reduceert alle frequenties gelijkmatig — zodat u precies dezelfde mix hoort, maar op een veiliger volume.",
+    "techPoints": [
+      "V-vormig filter richt zich gelijkmatig op de 2–8 kHz gevarenzone in het spectrum",
+      "Behoudt het volledige dynamische bereik — details, nuance en het 'gevoel' van de ruimte blijven intact",
+      "Medisch siliconen tip vormt een passieve afdichting zonder omgevingsbewustzijn volledig te blokkeren",
+      "Geen op maat gemaakt gietsttuk nodig — verkrijgbaar in XS, S, M en L voor elk gehoorkanaal"
+    ],
+    "filters": [
+      {
+        "name": "Licht filter",
+        "snr": "SNR 14",
+        "db": "−19 dB piek",
+        "desc": "Ideaal voor repetities, kleinere podia en akoestische muziek waarbij u nog volledige onderdompeling wilt."
+      },
+      {
+        "name": "Standaard filter",
+        "snr": "SNR 20",
+        "db": "−26 dB piek",
+        "desc": "Het beste voor de meeste livemuziek — concerten, bandrepetities en festivalpodia."
+      }
+    ],
+    "quote": {
+      "text": "\"Ik heb elke oordop op de markt geprobeerd. Earasers zijn de enige waarbij ik nog steeds kan horen wat ik speel en een goed gesprek kan voeren op het podium tussen nummers door.\"",
+      "author": "Daan V.",
+      "role": "Professioneel gitarist — tourende muzikant"
+    },
+    "faq": [
+      {
+        "q": "Hoor ik de volledige mix nog steeds op het podium?",
+        "a": "Ja. Het V-filter behoudt de natuurlijke frequentiebalans terwijl schadelijke pieken worden verminderd. De meeste muzikanten zeggen dat Earasers natuurlijker klinken dan helemaal niets dragen."
+      },
+      {
+        "q": "Welk filterniveau moet ik gebruiken voor liveconcerten?",
+        "a": "Het −19 dB Comfort filter werkt goed voor de meeste concerten en repetities. Voor luide festivals of posities vooraan het podium kiest u het −26 dB Standaard filter."
+      },
+      {
+        "q": "Hoe kies ik mijn maat?",
+        "a": "Gebruik uw oordopjeservaring als referentie. Als oordopjes er gemakkelijk uitvallen, probeer dan XS of S. Als ze te strak voelen, probeer dan M. Bij twijfel bestelt u de Small & Medium combo — u krijgt beide maten en kunt de beste pasvorm houden."
+      },
+      {
+        "q": "Kan ik met bandgenoten praten zonder ze te verwijderen?",
+        "a": "Ja — het open kanaalontwerp laat spraak op een natuurlijke manier door. U hoeft ze niet te verwijderen tussen nummers of tijdens soundcheck-gesprekken."
+      },
+      {
+        "q": "Hoe reinig ik ze?",
+        "a": "Spoel af met warm water en milde zeep. Volledig laten drogen voor opbergen. Vermijd alcohol of bijtende oplosmiddelen."
+      }
+    ],
+    "influencers": [
+      {
+        "quote": "Voor comfortabele oordoppen om mee te spelen zou ik zeker Earasers kiezen! Hun perfecte pasvorm en superieure ruisonderdrukking maken ze mijn topkeuze voor elke optreden."
+      },
+      {
+        "quote": "Earasers zijn de enige oordoppen die we vertrouwen op het podium en in de studio. Kristalhelder geluid, de hele nacht lang."
+      }
+    ],
+    "products": [
+      {
+        "name": "Muziek oordoppen — Small",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Muziek oordoppen — Medium",
+        "tag": null
+      },
+      {
+        "name": "Muziek oordoppen — Large",
+        "tag": null
+      },
+      {
+        "name": "Muziek Oordopjes — XS & S Kit",
+        "tag": null
+      },
+      {
+        "name": "Muziek Oordopjes — S & M Kit",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Muziek Oordopjes — M & L Kit",
+        "tag": null
+      }
+    ]
+  },
+  "dj": {
+    "title": "DJ oordoppen",
+    "badge": "Voor DJ's & clubprofessionals",
+    "heading": "Bescherm uw voorsprong.\nBehoud uw geluid.",
+    "sub": "Gebouwd voor booth-volumes, monitorwiggen en festivalpodia. Maximale bescherming zonder het mixdetail dat u nodig heeft om te performen te verliezen.",
+    "stats": [
+      {
+        "value": "110 dB+",
+        "label": "Typisch booth-volume"
+      },
+      {
+        "value": "−31 dB",
+        "label": "Max piek demping"
+      },
+      {
+        "value": "Vlak",
+        "label": "Respons — hoor uw mix"
+      },
+      {
+        "value": "3 filters",
+        "label": "SNR 14 / 20 / 22"
+      }
+    ],
+    "features": [
+      {
+        "title": "Hoor uw mix, niet een muur van geluid",
+        "body": "Schuim oordoppen vernietigen hoge-detail en cue-vermogen. Earasers houdt het volledige frequentiebereik vlak zodat u de hele nacht nauwkeurig kunt mixen."
+      },
+      {
+        "title": "Gebouwd voor hoog SPL",
+        "body": "Clubmonitors en festivalinstallaties bereiken regelmatig 110+ dB. Kies SNR 20 voor booth-werk of SNR 22 als u al tinnitus heeft — vlakke demping in beide gevallen."
+      },
+      {
+        "title": "Nacht lang comfort",
+        "body": "Medisch silicone past zich via lichaamswarmte aan uw gehoorkanaal aan. Geen pijnlijke oren na een 6-uur durende set — gewoon bescherming die u daadwerkelijk inhoudt."
+      }
+    ],
+    "techHeading": "Waarom vlakke demping belangrijk is in een booth",
+    "techBody": "In een DJ-booth moet u elk element van het nummer horen — de sub kick, het hi-hat patroon, de vocale frequentie om correct te cuen. Standaard schuim oordoppen over-dempen hoge frequenties en laten bas ongemoeid, waardoor uw mixreferentie vernield wordt. Earasers reduceert alles gelijkmatig.",
+    "techPoints": [
+      "V-vormig filter reduceert 2–8 kHz (de gevarenzone) terwijl lage en hoge frequenties in verhouding blijven",
+      "300 Hz stemregister bewaard — u kunt nog steeds communiceren met het publiek en mede-DJ's",
+      "Past onder hoofdtelefoon zonder druk — compatibel met standaard DJ-koptelefoons",
+      "Laag profiel siliconen manchet zit vlak in het kanaal — geen uitstekende steel die de hoofdtelefoon hindert"
+    ],
+    "filters": [
+      {
+        "name": "Licht filter",
+        "snr": "SNR 14",
+        "db": "−19 dB piek",
+        "desc": "Voor monitoring in kleinere clubbooths of wanneer u gewend bent aan hoger SPL en minimale reductie wilt."
+      },
+      {
+        "name": "Standaard DJ",
+        "snr": "SNR 20",
+        "db": "−26 dB piek",
+        "desc": "De aanbevolen keuze voor de meeste DJ's. Dekt het volledige bereik van club-, festival- en magazijnvolumes."
+      },
+      {
+        "name": "Tinnitus Guard",
+        "snr": "SNR 22",
+        "db": "−31 dB piek",
+        "desc": "Maximale bescherming voor DJ's met bestaande tinnitus of degenen die op extreem luide outdoor podia spelen."
+      }
+    ],
+    "quote": {
+      "text": "\"Ik bracht jaren door met schuim oordoppen en haatte elke seconde omdat ik mijn mix niet goed kon horen. Earasers veranderde alles — ik kan de muziek echt voelen en hoor wat ik doe.\"",
+      "author": "Thijs R.",
+      "role": "Resident DJ — Amsterdamse clubcircuit"
+    },
+    "faq": [
+      {
+        "q": "Hoe doe ik mijn Earasers oordoppen in?",
+        "a": "Doe de oordop in met de steel naar beneden wijzend. Trek uw oor omhoog en naar achteren om het kanaal te openen, draai dan voorzichtig en duw totdat hij goed zit."
+      },
+      {
+        "q": "Passen ze?",
+        "a": "Earasers zijn verkrijgbaar in 4 maten (XS, S, M, L) en 3 combopakketten. De meeste DJ's gebruiken Small of Medium. Bij twijfel bestelt u de Small & Medium combo om uw perfecte pasvorm te vinden."
+      },
+      {
+        "q": "Kan ik ze tijdens een volledige DJ-set dragen?",
+        "a": "Ja — het open kanaalontwerp zorgt ervoor dat u zich niet 'verstopt' voelt. Veel DJ's dragen ze comfortabel voor sets van 6+ uur."
+      },
+      {
+        "q": "Welk filterniveau is geschikt voor een DJ-booth?",
+        "a": "Het −31 dB Max filter is ontworpen voor DJ-booths en clubvolumes. Het −26 dB Standaard filter werkt goed voor kleinere locaties."
+      },
+      {
+        "q": "Hoe lang gaan Earasers mee?",
+        "a": "Bij normaal gebruik en goed onderhoud gaan filters 3–6 maanden mee. Vervangende filters zijn apart verkrijgbaar — u hoeft geen heel nieuw paar te kopen."
+      }
+    ],
+    "influencers": [
+      {
+        "quote": "Ik heb ontdekt dat Earasers de meest comfortabele en helder klinkende gehoorbescherming zijn die ik heb gebruikt, en tijdens mijn tournees blijf ik er steeds naar terugkeren."
+      },
+      {
+        "quote": "Voor comfortabele oordoppen om mee te spelen zou ik zeker Earasers kiezen! Hun perfecte pasvorm en superieure ruisonderdrukking maken ze mijn topkeuze voor elke optreden."
+      },
+      {
+        "quote": "Dit is absoluut een game-changer."
+      },
+      {
+        "quote": "Als DJ is helderheid alles. Earasers levert kristalhelder geluid terwijl mijn oren veilig blijven — ik zou niets anders gebruiken."
+      }
+    ],
+    "products": [
+      {
+        "name": "DJ oordoppen — Small",
+        "tag": null
+      },
+      {
+        "name": "DJ oordoppen — Medium",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "DJ oordoppen — Large",
+        "tag": null
+      },
+      {
+        "name": "DJ Oordopjes — XS & S Kit",
+        "tag": null
+      },
+      {
+        "name": "DJ Oordopjes — S & M Kit",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "DJ Oordopjes — M & L Kit",
+        "tag": null
+      }
+    ]
+  },
+  "dentist": {
+    "title": "Oordoppen voor tandartsen & mondhygiënisten",
+    "badge": "Voor tandheelkundige professionals",
+    "heading": "Blokkeer de boor.\nHoor uw patiënt.",
+    "sub": "Precisie gehoorbescherming ontworpen voor de tandartspraktijk. Blokkeer schadelijk scaler- en boorgeluid terwijl patiëntcommunicatie glashelder blijft.",
+    "stats": [
+      {
+        "value": "2–8 kHz",
+        "label": "Scaler / boor gevarenzone"
+      },
+      {
+        "value": "250–300 Hz",
+        "label": "Stem patiënt — bewaard"
+      },
+      {
+        "value": "Hele dag",
+        "label": "Smart Seal comfort"
+      },
+      {
+        "value": "Geen gietst.",
+        "label": "Directe pasvorm, 4 maten"
+      }
+    ],
+    "features": [
+      {
+        "title": "Blokkeer scaler- & boorgeluid",
+        "body": "Ultrasone scalers produceren consistent hoogfrequent geluid op 2–8 kHz — precies het frequentiebereik dat de meeste cochleaire schade veroorzaakt bij dagelijkse blootstelling."
+      },
+      {
+        "title": "Behoud patiëntcommunicatie",
+        "body": "Het V-vormige filter behoudt het bereik van 250–300 Hz waar menselijke spraak zich bevindt. U blijft volledig beschermd tegen gereedschap terwijl u elk woord van uw patiënt hoort."
+      },
+      {
+        "title": "Geen op maat gemaakt oorgietsttuk nodig",
+        "body": "Earasers gebruikt medisch siliconen tips gebaseerd op hoorapparaattechnologie. Ze passen zich via lichaamswarmte aan uw gehoorkanaal aan — verkrijgbaar in XS, S, M en L."
+      }
+    ],
+    "techHeading": "Het gehoorrisico waar niemand over praat",
+    "techBody": "Studies tonen aan dat tandheelkundige professionals meetbaar gehoorverlies oplopen na slechts 5 jaar in de praktijk. Ultrasone scalers, hoge-snelheidshandstukken en zuigeenheden stoten allemaal continu geluid uit in het 2–8 kHz bereik — het meest gevoelige deel van de menselijke cochlea. Standaard schuim oordoppen blokkeren patiëntcommunicatie. Earasers lost beide problemen op.",
+    "techPoints": [
+      "Scaler- en boorfrequenties (2–8 kHz) worden gedempt met −19 dB of −26 dB afhankelijk van filterkeuze",
+      "Stemfrequenties (250–300 Hz) worden bewaard — patiëntinstructies blijven hoorbaar",
+      "Smart Seal siliconen tip kan voor een volledige 8-uur durende dienst worden gedragen zonder ongemak",
+      "Besmettingsrisico verminderd — oordoppen blijven gedurende de behandeling in, geen herhaalde verwijdering"
+    ],
+    "filters": [
+      {
+        "name": "Zachte standaard",
+        "snr": "SNR 14",
+        "db": "−19 dB piek",
+        "desc": "Voor professionals die in stillere praktijken werken of geleidelijk aan bescherming willen wennen. Alledaagse tandheelkundige omgevingen."
+      },
+      {
+        "name": "Klinische balans",
+        "snr": "SNR 20",
+        "db": "−26 dB piek",
+        "desc": "Aanbevolen voor mondhygiënisten en tandartsen die dagelijks ultrasone scalers of hoge-snelheidshandstukken gebruiken."
+      }
+    ],
+    "quote": {
+      "text": "\"Na 10 jaar schalen zonder bescherming had ik meetbaar hoogfrequent gehoorverlies. Ik draag Earasers elke dienst de afgelopen twee jaar en mijn audioloog zegt dat mijn gehoor gestabiliseerd is.\"",
+      "author": "Annelies B.",
+      "role": "Mondhygiënist — 12 jaar in de praktijk"
+    },
+    "faq": [
+      {
+        "q": "Waarom zou ik oordopjes dragen als tandarts?",
+        "a": "Tandartsen werken de hele dag met hoogfrequent boorgeluid en continue vacuümzuiging, die beide gehoorschade, tinnitus en mentale vermoeidheid kunnen veroorzaken. Goede oordopjes dempen deze pieken terwijl spraak duidelijk blijft, wat zorgt voor minder belasting en merkbaar meer energie aan het einde van de dag."
+      },
+      {
+        "q": "Wat is het beste filter voor een tandarts?",
+        "a": "Het SNR 14 | -19 dB filter is de beste keuze voor tandartsen omdat het hoogfrequent tandheelkundig gereedschapsgeluid reduceert terwijl spraak duidelijk blijft. Gevoelige oren? Beschadigde oren? Kies het SNR 20 | -26dB filter voor optimale bescherming. Je hoort je patiënten nog steeds duidelijk."
+      },
+      {
+        "q": "Welke maat moet ik kiezen?",
+        "a": "Is dit je eerste bestelling? Probeer de 'Perfect Maat Kit' en zorg dat je de juiste maat voor jou vindt. Combineer maat XS & S, of maat S & M en lees de instructiehandleiding om de beste pasvorm voor je oren te vinden."
+      },
+      {
+        "q": "Kan ik mijn patiënten nog steeds duidelijk horen?",
+        "a": "Ja. Het V-filter vermindert schadelijk hoogfrequent geluid (zoals de handstukboor) terwijl spraakfrequenties (250–300 Hz) bewaard blijven. U kunt een normaal gesprek voeren zonder ze te verwijderen."
+      },
+      {
+        "q": "Zijn deze geschikt voor mondhygiënisten die ultrasone scalers gebruiken?",
+        "a": "Absoluut. Het −19 dB Comfort filter is ideaal voor mondhygiënisten — het vermindert scaler-geluid zonder patiëntcommunicatie te dempen. Het −26 dB Standaard is beschikbaar voor de luidste procedures."
+      },
+      {
+        "q": "Welk filterniveau raadt u aan voor tandartsen?",
+        "a": "De meeste tandartsen gebruiken het −19 dB Comfort filter voor een volledige werkdag. Het −26 dB Standaard past bij de luidste procedures (hoge-snelheidshandstukken, turbines)."
+      },
+      {
+        "q": "Kan ik ze de hele dag dragen zonder ongemak?",
+        "a": "Ja — medisch silicone past zich via lichaamswarmte aan de vorm van uw kanaal aan. Veel tandheelkundige professionals dragen ze voor volledige 8-uur durende werkdagen zonder ze te verwijderen tussen patiënten."
+      },
+      {
+        "q": "Is er wetenschappelijk bewijs voor gehoorschade in de tandheelkunde?",
+        "a": "Ja — meerdere onafhankelijke studies tonen aan dat tandheelkundige professionals consistent worden blootgesteld aan geluid op schadelijke niveaus, voornamelijk van scalers en hoge-snelheidshandstukken."
+      }
+    ],
+    "reviewCards": [
+      {
+        "quote": "Ik ben afhankelijk van helder spraakbegrip. Deze oordoppen verminderen alleen de schadelijke frequenties, zodat ik mijn assistent en patiënten nog perfect kan horen. Ons hele team gebruikt ze nu.",
+        "name": "Dr. M. Richards"
+      },
+      {
+        "quote": "Erg blij met de oordoppen. Erg comfortabel en het maakte mijn werkdag veel relaxter.",
+        "name": "Brummans & Fa Tandartsen"
+      },
+      {
+        "quote": "Helder geluid, minder vermoeidheid. Deze oordoppen nemen de scherpte van het hoogfrequente geluid weg zonder mij van patiënten te isoleren.",
+        "name": "Dr. A. Vermeer"
+      },
+      {
+        "quote": "Licht, effectief en gemakkelijk de hele dag te dragen. Deze oordoppen zijn deel van mijn dagelijkse routine geworden.",
+        "name": "Dr. K. Maktur"
+      },
+      {
+        "quote": "Ik had nooit verwacht dat oordoppen zo'n groot verschil zouden maken. Ik hoor nog steeds alles duidelijk, maar aan het einde van de dag voel ik merkbaar meer energie.",
+        "name": "Dr. Shad Faraj"
+      }
+    ],
+    "influencers": [
+      {
+        "quote": "Ik ben erg blij dat ik met deze oordoppen kan werken. Ze maken mijn werkdag veel comfortabeler en relaxter."
+      },
+      {
+        "quote": "Ik had nooit verwacht dat oordoppen zo'n groot verschil zouden maken. Ik hoor nog steeds alles duidelijk, maar aan het einde van de dag voel ik merkbaar meer energie."
+      }
+    ],
+    "products": [
+      {
+        "name": "Tandarts oordoppen — Small",
+        "tag": null
+      },
+      {
+        "name": "Tandarts oordoppen — Medium",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Tandarts oordoppen — Large",
+        "tag": null
+      },
+      {
+        "name": "Tandarts Oordopjes — XS & S Kit",
+        "tag": null
+      },
+      {
+        "name": "Tandarts Oordopjes — S & M Kit",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Tandarts Oordopjes — M & L Kit",
+        "tag": null
+      }
+    ]
+  },
+  "sleeping": {
+    "title": "Slaap oordoppen",
+    "badge": "Voor beter slapen",
+    "heading": "Stille nachten.\nUitgeruste ochtenden.",
+    "sub": "Zachte, nauwelijks voelbare oordoppen ontworpen voor slapen. Blokkeer snurken, verkeer en stadsgeluid zonder het ongemak van schuim dat er om 3 uur 's nachts uitvalt.",
+    "stats": [
+      {
+        "value": "−19 dB",
+        "label": "Omgevingsruisreductie"
+      },
+      {
+        "value": "Vlak profiel",
+        "label": "Comfortabel op uw zij"
+      },
+      {
+        "value": "Wasbaar",
+        "label": "Herbruikbaar, hygiënisch"
+      },
+      {
+        "value": "3–6 mnd",
+        "label": "Filterlevensduur"
+      }
+    ],
+    "features": [
+      {
+        "title": "De hele nacht blijven zitten",
+        "body": "De laag-profiel siliconen tip zit vlak in uw gehoorkanaal zodat u op uw zij kunt slapen zonder druk of ongemak. Geen pijnlijke oren meer bij het ontwaken."
+      },
+      {
+        "title": "Blokkeer snurken & verkeer",
+        "body": "Earasers vermindert omgevingsgeluid met tot −19 dB — genoeg om de scherpte van een snurkende partner of een lawaaiige straat weg te nemen zonder alles volledig te blokkeren."
+      },
+      {
+        "title": "Herbruikbaar & hygiënisch",
+        "body": "In tegenstelling tot wegwerp schuim zijn Earasers wasbaar en langdurig. Het vervangbare filter houdt ze hygiënisch voor maanden van nachtelijk gebruik."
+      }
+    ],
+    "techHeading": "Waarom schuim u blijft teleurstellen",
+    "techBody": "Schuim oordoppen zetten ongelijkmatig uit, creëren druk in uw gehoorkanaal en vallen eruit als u beweegt. Earasers gebruikt medisch silicone dat zacht aan uw oor vormt via lichaamswarmte — geen druk, geen beweging, geen gesnuifel om 3 uur 's nachts naar een prop die op uw kussen is gevallen.",
+    "techPoints": [
+      "Laag-profiel ontwerp zit onder het buitenoor — comfortabel aan beide zijden de hele nacht",
+      "−19 dB reductie neemt de scherpte van snurken en verkeer weg zonder alarmgeluiden volledig te blokkeren",
+      "Medisch hypoallergeen silicone — veilig voor nachtelijks gebruik zonder huidirritatie",
+      "Wasbaar en herbruikbaar — veel minder afval dan wegwerp schuim, veel lagere langetermijnkosten"
+    ],
+    "filters": [
+      {
+        "name": "Slaapfilter",
+        "snr": "SNR 14",
+        "db": "−19 dB piek",
+        "desc": "Het standaard slaapfilter. Vermindert snurken, verkeer en omgevingsgeluid tot een beheersbaar niveau."
+      }
+    ],
+    "quote": {
+      "text": "\"Mijn partner snurkt als een goederentrein. Ik heb elk schuim oordopje geprobeerd en eindig altijd met pijnlijke oren of verlies ze 's nachts. Earasers zijn de eerste die ik echt blijf dragen.\"",
+      "author": "Marieke D.",
+      "role": "Geverifieerde koper — Amsterdam"
+    },
+    "faq": [
+      {
+        "q": "Hoor ik mijn wekker nog?",
+        "a": "Ja — −19 dB vermindert het volume maar blokkeert geluid niet volledig. Telefoonalarmen op normaal volume blijven hoorbaar."
+      },
+      {
+        "q": "Kan ik er op mijn zij mee slapen?",
+        "a": "Ja. Het laag-profiel vlak ontwerp is specifiek gekozen voor zijslapers. Er is geen uitstekende steel die druk tegen een kussen veroorzaakt."
+      },
+      {
+        "q": "Hoe houd ik ze hygiënisch voor nachtelijks gebruik?",
+        "a": "Spoel na gebruik af met warm water en milde zeep. Volledig laten drogen voor het terugplaatsen in de koker. Vervang het filter elke 3–6 maanden."
+      }
+    ],
+    "products": [
+      {
+        "name": "Slaap oordoppen — Small",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Slaap oordoppen — Medium",
+        "tag": null
+      },
+      {
+        "name": "Slaap oordoppen — Large",
+        "tag": null
+      },
+      {
+        "name": "Slaap Oordopjes — XS & S Kit",
+        "tag": null
+      },
+      {
+        "name": "Slaap Oordopjes — S & M Kit",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Slaap Oordopjes — M & L Kit",
+        "tag": null
+      }
+    ]
+  },
+  "motorsport": {
+    "title": "Motorsport oordoppen",
+    "badge": "Voor rijders & bestuurders",
+    "heading": "Wind weg.\nFocus aan.",
+    "sub": "Blokkeer windgeruis, motorgeluid en baanchaos terwijl uw intercom, GPS en co-rijder communicatie helder blijft. Gebouwd voor de rit.",
+    "stats": [
+      {
+        "value": "85 dB+",
+        "label": "Windgeluid op snelwegsnelheid"
+      },
+      {
+        "value": "−26 dB",
+        "label": "Piek demping"
+      },
+      {
+        "value": "Slank profiel",
+        "label": "Onder elke helm"
+      },
+      {
+        "value": "300 Hz",
+        "label": "Intercomstem bewaard"
+      }
+    ],
+    "features": [
+      {
+        "title": "Elimineer windgeruis",
+        "body": "Windgeluid op snelwegsnelheden bereikt 85–95 dB binnenin een helm — een ernstig langetermijn gehoorrisico. Earasers vermindert dramatisch dit constante breedbandige geruis."
+      },
+      {
+        "title": "Intercom compatibel",
+        "body": "Het slanke, laag-profiel ontwerp past comfortabel onder een helm en interfereert niet met Bluetooth intercom oorstukken of in-ear headsets."
+      },
+      {
+        "title": "Hele dag comfort",
+        "body": "Lange-afstand ritten en racedagen vereisen uren dragen. Medisch silicone past zich aan uw gehoorkanaal aan — geen drukopbouw, geen ongemak na 500 km."
+      }
+    ],
+    "techHeading": "Het verborgen gehoorrisico in uw helm",
+    "techBody": "Windturbulentie binnenin een motorhelm genereert breedbandige ruis van 85–105 dB afhankelijk van de snelheid. Over jaren van rijden veroorzaakt dit progressief hoogfrequent gehoorverlies — hetzelfde patroon als bij fabrieksarbeiders. In tegenstelling tot schuim pluggen, houden Earasers gevaargeluiden en intercomaudio hoorbaar terwijl het schadelijke geruis wordt weggesneden.",
+    "techPoints": [
+      "85–95 dB windgeluid op 100 km/h — Earasers reduceert dit tot veilige blootstellingsniveaus",
+      "300 Hz stempreservatie betekent dat intercomaudio, GPS-aanwijzingen en co-rijderoproepen helder blijven",
+      "Slank profiel past in de meeste full-face en open-face helmen zonder ongemak",
+      "Compatibel met in-ear Bluetooth intercomsystemen en standaard oordopje-stijl setups"
+    ],
+    "filters": [
+      {
+        "name": "Lichte rit",
+        "snr": "SNR 14",
+        "db": "−19 dB piek",
+        "desc": "Voor stadsrijden en kortere ritten waarbij u bewustzijn van verkeersgeluiden en gevaren wilt."
+      },
+      {
+        "name": "Lange rit",
+        "snr": "SNR 20",
+        "db": "−26 dB piek",
+        "desc": "De aanbevolen keuze voor snelweg- en toerritten. Dekt aanhoudende blootstelling aan snelwegwindgeluid."
+      }
+    ],
+    "quote": {
+      "text": "\"Na een tour van 1.200 km door Frankrijk had ik vroeger dagen lang suizende oren. Met Earasers kom ik volkomen fris thuis — en ik kon de hele weg mijn intercom perfect horen.\"",
+      "author": "Stefan K.",
+      "role": "Toerrijder — 20+ jaar op de weg"
+    },
+    "faq": [],
+    "products": [
+      {
+        "name": "Motorsport oordoppen — Small",
+        "tag": null
+      },
+      {
+        "name": "Motorsport oordoppen — Medium",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Motorsport oordoppen — Large",
+        "tag": null
+      },
+      {
+        "name": "Motorsport Oordopjes — XS & S Kit",
+        "tag": null
+      },
+      {
+        "name": "Motorsport Oordopjes — S & M Kit",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Motorsport Oordopjes — M & L Kit",
+        "tag": null
+      }
+    ]
+  },
+  "sensitivity": {
+    "title": "Oordoppen voor geluidsovergevoeligheid",
+    "badge": "Voor autisme, ADHD & hyperacusis",
+    "heading": "Kalmeer uw zintuigen.\nBlijf aanwezig.",
+    "sub": "Ontworpen voor mensen met geluidsovergevoeligheid, hyperacusis, autisme of ADHD. Neem de scherpte weg van overweldigende omgevingen zonder uzelf van de wereld af te sluiten.",
+    "stats": [
+      {
+        "value": "−19 dB",
+        "label": "Zachte omgevingsreductie"
+      },
+      {
+        "value": "Vlak",
+        "label": "Natuurlijk geluidskarakter"
+      },
+      {
+        "value": "Discreet",
+        "label": "Bijna onzichtbaar"
+      },
+      {
+        "value": "Dagelijks",
+        "label": "Hypoallergeen silicone"
+      }
+    ],
+    "features": [
+      {
+        "title": "Zacht, niet totaal",
+        "body": "Totale geluidsblokade kan desoriënterend aanvoelen. Earasers verlaagt het volume van de wereld zacht terwijl u zich bewust blijft van uw omgeving en gesprekken kunt voeren."
+      },
+      {
+        "title": "Vertrouwd door de neurodiverse gemeenschap",
+        "body": "Veel mensen met autisme, ADHD en sensorische verwerkingsverschillen gebruiken Earasers dagelijks — op het werk, in het openbaar vervoer, in drukke winkels en sociale omgevingen."
+      },
+      {
+        "title": "Discreet & comfortabel",
+        "body": "Bijna onzichtbaar wanneer gedragen. Zacht silicone is hypoallergeen en zacht genoeg voor langdurig dagelijks dragen zonder irritatie of druk."
+      }
+    ],
+    "techHeading": "Zachte reductie, geen totale isolatie",
+    "techBody": "Voor mensen met hyperacusis of sensorische overgevoeligheid kan totale geluidsblokade angst vergroten in plaats van verminderen. Het Earasers SNR 14 filter vermindert het totale volume met −19 dB terwijl het natuurlijke geluidskarakter intact blijft — stemmen klinken nog steeds als stemmen, muziek klinkt nog steeds als muziek.",
+    "techPoints": [
+      "Vlakke −19 dB reductie: de wereld klinkt hetzelfde, gewoon stiller en minder overweldigend",
+      "Stemmen blijven helder — u kunt nog steeds gesprekken voeren in drukke omgevingen",
+      "Hypoallergeen medisch silicone — geen latex, geen irriterende stoffen, veilig voor dagelijks dragen",
+      "Bijna onzichtbaar wanneer gedragen — geen sociaal stigma van zichtbare gehoorbeschermers"
+    ],
+    "filters": [
+      {
+        "name": "Overgevoeligheidsfilter",
+        "snr": "SNR 14",
+        "db": "−19 dB piek",
+        "desc": "Het enige filter dat we aanbevelen voor dagelijks gebruik bij overgevoeligheid. Zachte, vlakke reductie die de wereld toegankelijk houdt."
+      }
+    ],
+    "quote": {
+      "text": "\"Ik heb hyperacusis en kon niet naar een supermarkt zonder hoofdpijn. Earasers laat me weer een normaal leven leiden. Ik draag ze elke dag.\"",
+      "author": "Lena M.",
+      "role": "Hyperacusis — dagelijkse Earasers gebruiker"
+    },
+    "faq": [],
+    "products": [
+      {
+        "name": "Overgevoeligheid oordoppen — Small",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Overgevoeligheid oordoppen — Medium",
+        "tag": null
+      },
+      {
+        "name": "Overgevoeligheid oordoppen — Large",
+        "tag": null
+      },
+      {
+        "name": "Gevoeligheid Oordopjes — XS & S Kit",
+        "tag": null
+      },
+      {
+        "name": "Gevoeligheid Oordopjes — S & M Kit",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Gevoeligheid Oordopjes — M & L Kit",
+        "tag": null
+      }
+    ]
+  }
+}

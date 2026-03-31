@@ -1,0 +1,34 @@
+{
+  "posts": {
+    "5-time-award-winning": {
+      "title": "5x Bekroond: Earasers!",
+      "excerpt": "Voor het vijfde jaar op rij heeft MusicRadar Earasers uitgeroepen tot de beste muziek-oordoppen op de markt.",
+      "date": "Maart 2024",
+      "category": "Prijzen"
+    },
+    "trusted-by-djs": {
+      "title": "Vertrouwd door 's werelds beste DJ's",
+      "excerpt": "Van festivalpodia tot intieme clubavonden, professionele DJ's vertrouwen op Earasers om hun meest waardevolle instrument te beschermen.",
+      "date": "Januari 2024",
+      "category": "Artiesten"
+    },
+    "dijkman-amsterdam": {
+      "title": "Nu verkrijgbaar bij Dijkman Music Amsterdam",
+      "excerpt": "Je kunt Earasers nu in de winkel uitproberen en kopen bij Dijkman Music, een van de meest gerespecteerde muziekwinkels van Nederland.",
+      "date": "November 2023",
+      "category": "Retail"
+    },
+    "hearing-damage-explained": {
+      "title": "Hoe gehoorschade door geluid eigenlijk werkt",
+      "excerpt": "Geluid is trillingen. Te veel trillingen, te lang, en de kleine haarcellen in je slakkenhuis beginnen te sterven.",
+      "date": "September 2023",
+      "category": "Educatie"
+    }
+  },
+  "categories": {
+    "Awards": "Prijzen",
+    "Artists": "Artiesten",
+    "Retail": "Retail",
+    "Education": "Educatie"
+  }
+}

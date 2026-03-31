@@ -1,0 +1,756 @@
+{
+  "ui": {
+    "home": "Inicio",
+    "shop": "Tienda",
+    "chooseOptions": "Elegir opciones",
+    "sortBy": "Ordenar por",
+    "featured": "Destacado",
+    "priceLow": "Precio: menor a mayor",
+    "priceHigh": "Precio: mayor a menor",
+    "bestRated": "Mejor valorado",
+    "newest": "Más reciente",
+    "collectionHeading": "Tapones para música",
+    "collectionSub": "Tapones HiFi premiados para músicos, asistentes a conciertos y amantes de la música.",
+    "bestSeller": "Más vendido",
+    "recommended": "Recomendado",
+    "premium": "Premium",
+    "patentedFilterTech": "Tecnología de filtro patentada",
+    "howFilterWorks": "Cómo funciona el filtro",
+    "earasersVsAlternatives": "Earasers vs las alternativas",
+    "chooseYourFilter": "Elige tu filtro",
+    "filterSubtext": "¿No sabes qué potencia elegir? Empieza con la opción recomendada — siempre puedes cambiar los filtros más tarde.",
+    "findYourFit": "Encuentra tu talla",
+    "notSureSize": "¿No sabes cuál es tu talla?",
+    "videoSub": "El tamaño del canal auditivo no tiene relación con la altura, el peso o el género. Mira este breve vídeo para encontrar tu talla perfecta:",
+    "videoNote": "¿Aún dudas? Pide el <strong>combo Small & Medium</strong> — la opción más popular entre los primeros compradores. 30 días de garantía de cambio de talla.",
+    "testimonials": "Testimonios",
+    "trustedByProfessionals": "La confianza de profesionales en toda Europa",
+    "faqHeading": "Preguntas frecuentes",
+    "productsCount": "{{count}} productos",
+    "shopThisFilter": "Comprar este filtro →",
+    "shopNow": "Comprar ahora →",
+    "individualSizes": "Tallas individuales",
+    "individualSizesSub": "Elige el tamaño que se adapta a tu canal auditivo.",
+    "comboKits": "Kits combinados",
+    "comboKitsSub": "Prueba 2 tallas, quédate con la mejor. Ahorra frente a comprar por separado.",
+    "kit": "Kit",
+    "videoTitle": "Como encontrar tu talla de Earasers"
+  },
+  "compareTable": {
+    "heading": "Earasers vs las alternativas",
+    "sub": "Los tapones a medida cuestan €200–400 y tardan semanas. Earasers ofrece la misma protección HiFi de respuesta plana por €49,95.",
+    "colEarasers": "Earasers",
+    "colCustom": "A medida",
+    "colBudget": "Tapones económicos",
+    "rowPrice": "Precio",
+    "rowAudiologist": "Requiere audiólogo",
+    "rowDelivery": "Entrega",
+    "rowInvisible": "Prácticamente invisible",
+    "rowClearSound": "Sonido claro y natural",
+    "rowReplaceableFilter": "Filtro reemplazable",
+    "rowAwardWinning": "Premiado",
+    "valEarasersPrice": "€49,95",
+    "valCustomPrice": "€199+",
+    "valBudgetPrice": "€5–15",
+    "valEarasersDelivery": "2–3 días",
+    "valCustomDelivery": "3–6 semanas",
+    "valBudgetDelivery": "Al día siguiente"
+  },
+  "attenSection": {
+    "eyebrow": "Tecnología de filtro patentada",
+    "heading": "Cómo funciona el filtro",
+    "body": "El filtro en V reduce las frecuencias más dañinas (alrededor de 3.150 Hz) dejando intacto el rango musical natural. A diferencia de los tapones de atenuación plana, Earasers suena claro — no como si estuvieras debajo del agua. Escucharás cada nota, solo de forma más segura.",
+    "points": [
+      "Diseño de canal abierto → sin sensación de bloqueo",
+      "Silicona de grado médico → ajuste personalizado a tu oído",
+      "Prácticamente invisible → nadie sabe que los llevas",
+      "Filtro reemplazable → alarga la vida útil cambiando solo el filtro"
+    ]
+  },
+  "musician": {
+    "title": "Tapones para música",
+    "badge": "Para músicos y asistentes a conciertos",
+    "heading": "Toca más fuerte.\nEscucha más tiempo.",
+    "sub": "Tapones HiFi premiados que protegen tu audición sin cambiar el sonido. Usados por profesionales en escenarios y pistas de baile de todo el mundo.",
+    "stats": [
+      {
+        "value": "5×",
+        "label": "Premio MusicRadar"
+      },
+      {
+        "value": "Plana",
+        "label": "Respuesta en frecuencia"
+      },
+      {
+        "value": "−19 dB",
+        "label": "Nivel de reducción del filtro"
+      },
+      {
+        "value": "3–6 m",
+        "label": "Vida útil del filtro"
+      }
+    ],
+    "features": [
+      {
+        "title": "Respuesta en frecuencia plana",
+        "body": "Cada frecuencia se reduce por igual — los graves, los medios y los agudos permanecen en equilibrio. La música suena como música, no como si escucharas a través de una pared."
+      },
+      {
+        "title": "5× Premio MusicRadar",
+        "body": "Probado de forma independiente y premiado por MusicRadar.com cada año desde 2020. El tapón más confiable en la industria musical."
+      },
+      {
+        "title": "Filtros reemplazables",
+        "body": "Los filtros duran 3–6 meses y se pueden cambiar en casa. No es necesario comprar un par nuevo — solo reemplaza lo que se desgasta."
+      }
+    ],
+    "techHeading": "La ciencia detrás del sonido",
+    "techBody": "Los tapones de espuma estándar bloquean las frecuencias altas más que las bajas, haciendo que la música suene apagada y amortiguada. El filtro en V de Earasers reduce todas las frecuencias por igual — para que escuches exactamente la misma mezcla, solo a un volumen más seguro.",
+    "techPoints": [
+      "El filtro en V se dirige igualmente a la zona de peligro de 2–8 kHz en todo el espectro",
+      "Preserva el rango dinámico completo — los detalles, los matices y la 'sensación' de la sala permanecen intactos",
+      "La punta de silicona de grado médico forma un sello pasivo sin bloquear completamente la conciencia del entorno",
+      "No se requiere molde personalizado — disponible en XS, S, M y L para cualquier canal auditivo"
+    ],
+    "filters": [
+      {
+        "name": "Filtro ligero",
+        "snr": "SNR 14",
+        "db": "−19 dB máx.",
+        "desc": "Ideal para ensayos, recintos más pequeños y música acústica donde todavía quieres una inmersión total."
+      },
+      {
+        "name": "Filtro estándar",
+        "snr": "SNR 20",
+        "db": "−26 dB máx.",
+        "desc": "El equilibrio perfecto para la mayoría de situaciones de música en directo — conciertos, ensayos de banda y escenarios de festivales."
+      }
+    ],
+    "quote": {
+      "text": "\"He probado cada tapón del mercado. Earasers son los únicos con los que aún puedo escuchar lo que toco y mantener una conversación normal en el escenario entre canciones.\"",
+      "author": "Daan V.",
+      "role": "Guitarrista profesional — músico de gira"
+    },
+    "faq": [
+      {
+        "q": "¿Seguiré escuchando la mezcla completa en el escenario?",
+        "a": "Sí. El filtro V preserva el equilibrio de frecuencias natural mientras reduce los picos dañinos. La mayoría de los músicos dicen que Earasers suena más natural que no llevar nada."
+      },
+      {
+        "q": "¿Qué nivel de filtro debo usar para conciertos en directo?",
+        "a": "El filtro Comfort de −19 dB funciona bien para la mayoría de conciertos y ensayos. Para festivales ruidosos o posiciones en primera fila, elige el filtro Estándar de −26 dB."
+      },
+      {
+        "q": "¿Cómo elijo mi talla?",
+        "a": "Usa tu experiencia con auriculares como referencia. Si los auriculares se caen fácilmente, prueba XS o S. Si se sienten demasiado ajustados, prueba M. Si no estás seguro, pide el combo Small & Medium — recibes ambas tallas y puedes quedarte con la que mejor se ajuste."
+      },
+      {
+        "q": "¿Puedo hablar con mis compañeros de banda sin quitarlos?",
+        "a": "Sí — el diseño de canal abierto deja pasar el habla de forma natural. No es necesario quitarlos entre canciones o durante las conversaciones del ensayo de sonido."
+      },
+      {
+        "q": "¿Cómo los limpio?",
+        "a": "Enjuaga con agua tibia y jabón suave. Sécalos completamente antes de guardarlos. Evita el alcohol o disolventes fuertes."
+      }
+    ],
+    "influencers": [
+      {
+        "quote": "Para tapones cómodos con los que actuar, definitivamente elegiría Earasers. Su ajuste perfecto y su superior reducción de ruido los convierten en mi primera opción para cualquier actuación."
+      },
+      {
+        "quote": "Earasers son los únicos tapones en los que confiamos en el escenario y en el estudio. Sonido cristalino, toda la noche."
+      }
+    ],
+    "products": [
+      {
+        "name": "Tapones de música — Small",
+        "tag": "Más vendido"
+      },
+      {
+        "name": "Tapones de música — Medium",
+        "tag": null
+      },
+      {
+        "name": "Tapones de música — Large",
+        "tag": null
+      },
+      {
+        "name": "Tapones Músico — Kit XS & S",
+        "tag": null
+      },
+      {
+        "name": "Tapones Músico — Kit S & M",
+        "tag": "Más vendido"
+      },
+      {
+        "name": "Tapones Músico — Kit M & L",
+        "tag": null
+      }
+    ]
+  },
+  "dj": {
+    "title": "Tapones para DJ",
+    "badge": "Para DJs y profesionales de club",
+    "heading": "Protege tu ventaja.\nConserva tu sonido.",
+    "sub": "Diseñados para los volúmenes de cabina, monitores de cuña y escenarios de festivales. Máxima protección sin perder el detalle de la mezcla que necesitas para actuar.",
+    "stats": [
+      {
+        "value": "110 dB+",
+        "label": "Volumen típico de cabina"
+      },
+      {
+        "value": "−31 dB",
+        "label": "Atenuación máxima"
+      },
+      {
+        "value": "Plana",
+        "label": "Respuesta — escucha tu mezcla"
+      },
+      {
+        "value": "3 filtros",
+        "label": "SNR 14 / 20 / 22"
+      }
+    ],
+    "features": [
+      {
+        "title": "Escucha tu mezcla, no un muro de sonido",
+        "body": "Los tapones de espuma destruyen el detalle en los agudos y la capacidad de cueing. Earasers mantiene todo el rango de frecuencias plano para que puedas mezclar con precisión toda la noche."
+      },
+      {
+        "title": "Diseñado para alto SPL",
+        "body": "Los monitores de club y los equipos de festival alcanzan regularmente 110+ dB. Elige SNR 20 para trabajo en cabina o SNR 22 si tienes tinnitus existente — atenuación plana en cualquier caso."
+      },
+      {
+        "title": "Comodidad toda la noche",
+        "body": "La silicona de grado médico se adapta a tu canal auditivo mediante el calor corporal. Sin orejas doloridas después de un set de 6 horas — solo protección que realmente llevarás."
+      }
+    ],
+    "techHeading": "Por qué la atenuación plana importa en una cabina",
+    "techBody": "En una cabina de DJ, necesitas escuchar cada elemento de la pista — el sub kick, el patrón de hi-hat, la frecuencia vocal para hacer el cue correctamente. Los tapones de espuma estándar sobreatenuán los agudos y dejan los graves intactos, destruyendo tu referencia de mezcla. Earasers reduce todo por igual.",
+    "techPoints": [
+      "El filtro en V reduce 2–8 kHz (la zona de peligro) manteniendo los graves y agudos en proporción",
+      "Registro vocal de 300 Hz preservado — aún puedes comunicarte con el público y otros DJs",
+      "Cabe bajo los auriculares sin presión — compatible con los auriculares DJ estándar",
+      "La funda de silicona de bajo perfil encaja al ras en el canal — sin vástago sobresaliente que interfiera con las almohadillas"
+    ],
+    "filters": [
+      {
+        "name": "Filtro ligero",
+        "snr": "SNR 14",
+        "db": "−19 dB máx.",
+        "desc": "Para monitorear en cabinas de club más pequeñas o cuando estás acostumbrado a alto SPL y quieres reducción mínima."
+      },
+      {
+        "name": "DJ Estándar",
+        "snr": "SNR 20",
+        "db": "−26 dB máx.",
+        "desc": "La opción recomendada para la mayoría de DJs. Cubre todo el rango de volúmenes de club, festival y almacén."
+      },
+      {
+        "name": "Tinnitus Guard",
+        "snr": "SNR 22",
+        "db": "−31 dB máx.",
+        "desc": "Máxima protección para DJs con tinnitus existente o aquellos que actúan en escenarios al aire libre extremadamente ruidosos."
+      }
+    ],
+    "quote": {
+      "text": "\"Pasé años usando tapones de espuma y odiando cada segundo porque no podía escuchar bien mi mezcla. Earasers lo cambió todo — puedo sentir realmente la música y escuchar lo que hago.\"",
+      "author": "Thijs R.",
+      "role": "DJ residente — circuito de clubs de Ámsterdam"
+    },
+    "faq": [
+      {
+        "q": "¿Cómo coloco mis tapones Earasers?",
+        "a": "Inserta el tapón con el vástago apuntando hacia abajo. Tira de tu oreja hacia arriba y hacia atrás para abrir el canal, luego gira suavemente y empuja hasta que quede bien colocado."
+      },
+      {
+        "q": "¿Me quedarán bien?",
+        "a": "Earasers viene en 4 tallas (XS, S, M, L) y 3 packs combinados. La mayoría de DJs usa Small o Medium. Si no estás seguro, pide el combo Small & Medium para encontrar tu talla perfecta."
+      },
+      {
+        "q": "¿Puedo llevarlos durante un set de DJ completo?",
+        "a": "Sí — el diseño de canal abierto significa que no te sentirás 'tapado'. Muchos DJs los llevan cómodamente en sets de 6+ horas."
+      },
+      {
+        "q": "¿Qué nivel de filtro es adecuado para una cabina de DJ?",
+        "a": "El filtro Max de −31 dB está diseñado para cabinas de DJ y volúmenes de club. El filtro Estándar de −26 dB funciona bien para recintos más pequeños."
+      },
+      {
+        "q": "¿Cuánto duran los Earasers?",
+        "a": "Con uso normal y cuidado adecuado, los filtros duran 3–6 meses. Los filtros de repuesto están disponibles por separado — no hace falta comprar un par completamente nuevo."
+      }
+    ],
+    "influencers": [
+      {
+        "quote": "He encontrado que Earasers es la protección auditiva más cómoda y de sonido más claro que he usado, y durante mis giras, sigo volviendo a ellos."
+      },
+      {
+        "quote": "Para tapones cómodos con los que actuar, definitivamente elegiría Earasers. Su ajuste perfecto y su superior reducción de ruido los convierten en mi primera opción para cualquier actuación."
+      },
+      {
+        "quote": "Esto es definitivamente un cambio de juego."
+      },
+      {
+        "quote": "Como DJ, la claridad lo es todo. Earasers ofrece un sonido cristalino manteniendo mis oídos seguros — no usaría otra cosa."
+      }
+    ],
+    "products": [
+      {
+        "name": "Tapones de DJ — Small",
+        "tag": null
+      },
+      {
+        "name": "Tapones de DJ — Medium",
+        "tag": "Más vendido"
+      },
+      {
+        "name": "Tapones de DJ — Large",
+        "tag": null
+      },
+      {
+        "name": "Tapones DJ — Kit XS & S",
+        "tag": null
+      },
+      {
+        "name": "Tapones DJ — Kit S & M",
+        "tag": "Más vendido"
+      },
+      {
+        "name": "Tapones DJ — Kit M & L",
+        "tag": null
+      }
+    ]
+  },
+  "dentist": {
+    "title": "Tapones para dentistas e higienistas",
+    "badge": "Para profesionales dentales",
+    "heading": "Bloquea el torno.\nEscucha a tu paciente.",
+    "sub": "Protección auditiva de precisión diseñada para la consulta dental. Bloquea el ruido dañino del scaler y el torno mientras la comunicación con el paciente permanece cristalina.",
+    "stats": [
+      {
+        "value": "2–8 kHz",
+        "label": "Zona de peligro del scaler / torno"
+      },
+      {
+        "value": "250–300 Hz",
+        "label": "Voz del paciente — preservada"
+      },
+      {
+        "value": "Todo el día",
+        "label": "Comodidad Smart Seal"
+      },
+      {
+        "value": "Sin molde",
+        "label": "Ajuste inmediato, 4 tallas"
+      }
+    ],
+    "features": [
+      {
+        "title": "Bloquea el ruido del scaler y el torno",
+        "body": "Los scalers ultrasónicos producen ruido de alta frecuencia constante a 2–8 kHz — exactamente el rango de frecuencias que causa más daño coclear con exposición diaria."
+      },
+      {
+        "title": "Mantén la comunicación con el paciente",
+        "body": "El filtro en V preserva el rango de 250–300 Hz donde se sitúa el habla humana. Permaneces totalmente protegido de las herramientas mientras escuchas cada palabra de tu paciente."
+      },
+      {
+        "title": "No se necesita molde de oído personalizado",
+        "body": "Earasers usa puntas de silicona de grado médico basadas en tecnología de audífonos. Se adaptan a tu canal auditivo mediante el calor corporal — disponible en XS, S, M y L."
+      }
+    ],
+    "techHeading": "El riesgo auditivo del que nadie habla",
+    "techBody": "Los estudios muestran que los profesionales dentales pierden audición medible después de solo 5 años en la práctica. Los scalers ultrasónicos, las piezas de mano de alta velocidad y las unidades de succión emiten ruido continuo en el rango de 2–8 kHz — la parte más sensible de la cóclea humana. Los tapones de espuma estándar bloquean la comunicación con el paciente. Earasers resuelve ambos problemas.",
+    "techPoints": [
+      "Las frecuencias del scaler y el torno (2–8 kHz) se atenúan −19 dB o −26 dB según la elección de filtro",
+      "Las frecuencias de voz (250–300 Hz) se preservan — las instrucciones del paciente siguen siendo audibles",
+      "La punta de silicona Smart Seal se puede llevar durante un turno completo de 8 horas sin incomodidad",
+      "Riesgo de contaminación reducido — los tapones permanecen puestos durante todo el tratamiento, sin retirada repetida"
+    ],
+    "filters": [
+      {
+        "name": "Estándar suave",
+        "snr": "SNR 14",
+        "db": "−19 dB máx.",
+        "desc": "Para profesionales que trabajan en consultas más silenciosas o quieren acostumbrarse gradualmente a la protección. Entornos dentales cotidianos."
+      },
+      {
+        "name": "Balance clínico",
+        "snr": "SNR 20",
+        "db": "−26 dB máx.",
+        "desc": "Recomendado para higienistas y dentistas que usan scalers ultrasónicos o piezas de mano de alta velocidad a diario."
+      }
+    ],
+    "quote": {
+      "text": "\"Después de 10 años de scaling sin protección tenía pérdida auditiva medible en frecuencias altas. Llevo Earasers en cada turno durante los últimos dos años y mi audiólogo dice que mi audición se ha estabilizado.\"",
+      "author": "Annelies B.",
+      "role": "Higienista dental — 12 años en la práctica"
+    },
+    "faq": [
+      {
+        "q": "¿Por qué debería usar tapones como dentista?",
+        "a": "Los dentistas trabajan todo el día con el ruido de alta frecuencia del taladro y la succión continua del vacío, que pueden causar daño auditivo, tinnitus y fatiga mental. Los tapones adecuados reducen estos picos manteniendo el habla clara, lo que resulta en menos tensión y notablemente más energía al final del día."
+      },
+      {
+        "q": "¿Cuál es el mejor filtro para un dentista?",
+        "a": "El filtro SNR 14 | -19 dB es la mejor opción para dentistas porque reduce el ruido de alta frecuencia de los instrumentos dentales manteniendo el habla clara. ¿Oídos sensibles? ¿Oídos dañados? Elija el filtro SNR 20 | -26dB para asegurarse de estar protegido de la mejor manera. Seguirá escuchando a sus pacientes con claridad."
+      },
+      {
+        "q": "¿Qué talla debo elegir?",
+        "a": "¿Es este su primer pedido? Pruebe el 'Kit de Talla Perfecta' y asegúrese de obtener la talla correcta. Combine la talla XS & S, o la talla S & M y lea el manual de instrucciones para encontrar el mejor ajuste para sus oídos."
+      },
+      {
+        "q": "¿Seguiré pudiendo escuchar a mis pacientes con claridad?",
+        "a": "Sí. El filtro V reduce el ruido de alta frecuencia dañino (como el torno de la pieza de mano) mientras preserva las frecuencias del habla (250–300 Hz). Puedes mantener una conversación normal sin quitarlos."
+      },
+      {
+        "q": "¿Son adecuados para higienistas que usan scalers ultrasónicos?",
+        "a": "Absolutamente. El filtro Comfort de −19 dB es ideal para higienistas — reduce el ruido del scaler sin amortiguar la comunicación con el paciente. El Estándar de −26 dB está disponible para los procedimientos más ruidosos."
+      },
+      {
+        "q": "¿Qué nivel de filtro recomiendas para dentistas?",
+        "a": "La mayoría de dentistas usa el filtro Comfort de −19 dB para un día de trabajo completo. El Estándar de −26 dB es adecuado para los procedimientos más ruidosos (piezas de alta velocidad, turbinas)."
+      },
+      {
+        "q": "¿Puedo llevarlos todo el día sin incomodidad?",
+        "a": "Sí — la silicona de grado médico se adapta a la forma de tu canal mediante el calor corporal. Muchos profesionales dentales los llevan durante jornadas completas de 8 horas sin quitarlos entre pacientes."
+      },
+      {
+        "q": "¿Existe evidencia científica del daño auditivo en odontología?",
+        "a": "Sí — múltiples estudios independientes muestran que los profesionales dentales están expuestos de forma consistente a ruido en niveles dañinos, principalmente de scalers y piezas de mano de alta velocidad."
+      }
+    ],
+    "reviewCards": [
+      {
+        "quote": "Dependo de una comprensión oral clara. Estos tapones reducen solo las frecuencias dañinas, por lo que aún puedo escuchar a mi asistente y a los pacientes perfectamente. Todo nuestro equipo los usa ahora.",
+        "name": "Dr. M. Richards"
+      },
+      {
+        "quote": "Muy contento con los tapones. Muy cómodos y han hecho mi jornada laboral mucho más relajada.",
+        "name": "Brummans & Fa Dentistas"
+      },
+      {
+        "quote": "Sonido claro, menos fatiga. Estos tapones reducen el ruido de alta frecuencia sin aislarme de los pacientes.",
+        "name": "Dr. A. Vermeer"
+      },
+      {
+        "quote": "Ligeros, efectivos y fáciles de llevar todo el día. Estos tapones se han convertido en parte de mi rutina diaria.",
+        "name": "Dr. K. Maktur"
+      },
+      {
+        "quote": "Nunca esperé que los tapones marcaran tanta diferencia. Aún escucho todo con claridad, pero al final del día noto notablemente más energía.",
+        "name": "Dr. Shad Faraj"
+      }
+    ],
+    "influencers": [
+      {
+        "quote": "Estoy muy contento de poder trabajar con estos tapones. Hacen que mi jornada laboral sea mucho más cómoda y relajante."
+      },
+      {
+        "quote": "Nunca esperé que los tapones marcaran tanta diferencia. Aún escucho todo con claridad, pero al final del día noto notablemente más energía."
+      }
+    ],
+    "products": [
+      {
+        "name": "Tapones de dentista — Small",
+        "tag": null
+      },
+      {
+        "name": "Tapones de dentista — Medium",
+        "tag": "Más vendido"
+      },
+      {
+        "name": "Tapones de dentista — Large",
+        "tag": null
+      },
+      {
+        "name": "Tapones Dentista — Kit XS & S",
+        "tag": null
+      },
+      {
+        "name": "Tapones Dentista — Kit S & M",
+        "tag": "Más vendido"
+      },
+      {
+        "name": "Tapones Dentista — Kit M & L",
+        "tag": null
+      }
+    ]
+  },
+  "sleeping": {
+    "title": "Tapones para dormir",
+    "badge": "Para dormir mejor",
+    "heading": "Noches tranquilas.\nMañanas descansadas.",
+    "sub": "Tapones suaves y casi imperceptibles diseñados para dormir. Bloquea los ronquidos, el tráfico y el ruido urbano sin la incomodidad de la espuma que se cae a las 3 de la madrugada.",
+    "stats": [
+      {
+        "value": "−19 dB",
+        "label": "Reducción de ruido ambiental"
+      },
+      {
+        "value": "Ajuste al ras",
+        "label": "Cómodo de lado"
+      },
+      {
+        "value": "Lavable",
+        "label": "Reutilizable, higiénico"
+      },
+      {
+        "value": "3–6 m",
+        "label": "Duración del filtro"
+      }
+    ],
+    "features": [
+      {
+        "title": "Se quedan toda la noche",
+        "body": "La punta de silicona de bajo perfil encaja al ras en tu canal auditivo para que puedas dormir de lado sin presión ni incomodidad. Nunca más despertarte con las orejas doloridas."
+      },
+      {
+        "title": "Bloquea los ronquidos y el tráfico",
+        "body": "Earasers reduce el ruido ambiental hasta −19 dB — suficiente para quitarle el filo a un compañero que ronca o a una calle ruidosa sin bloquear todo completamente."
+      },
+      {
+        "title": "Reutilizable e higiénico",
+        "body": "A diferencia de la espuma desechable, Earasers es lavable y duradero. El filtro reemplazable los mantiene higiénicos durante meses de uso nocturno."
+      }
+    ],
+    "techHeading": "Por qué la espuma sigue fallándote",
+    "techBody": "Los tapones de espuma se expanden de forma desigual, crean presión en tu canal auditivo y se caen cuando te mueves. Earasers usa silicona de grado médico que se moldea suavemente a tu oído mediante el calor corporal — sin presión, sin movimiento, sin buscar a las 3 de la madrugada un tapón que ha caído en la almohada.",
+    "techPoints": [
+      "El diseño de bajo perfil se asienta bajo el oído externo — cómodo en ambos lados toda la noche",
+      "La reducción de −19 dB elimina el filo de los ronquidos y el tráfico sin bloquear completamente las alarmas",
+      "Silicona hipoalergénica de grado médico — segura para uso nocturno sin irritación cutánea",
+      "Lavable y reutilizable — mucho menos residuo que la espuma desechable, coste a largo plazo mucho menor"
+    ],
+    "filters": [
+      {
+        "name": "Filtro para dormir",
+        "snr": "SNR 14",
+        "db": "−19 dB máx.",
+        "desc": "El filtro estándar para dormir. Reduce los ronquidos, el tráfico y el ruido ambiental a un nivel manejable."
+      }
+    ],
+    "quote": {
+      "text": "\"Mi pareja ronca como un tren de mercancías. He probado cada tapón de espuma y siempre acabo con las orejas doloridas o perdiéndolos de noche. Earasers son los primeros que realmente sigo usando.\"",
+      "author": "Marieke D.",
+      "role": "Comprador verificado — Ámsterdam"
+    },
+    "faq": [
+      {
+        "q": "¿Seguiré escuchando mi alarma?",
+        "a": "Sí — −19 dB reduce el volumen pero no bloquea el sonido completamente. Las alarmas del teléfono a volumen normal siguen siendo audibles."
+      },
+      {
+        "q": "¿Puedo dormir de lado con ellos puestos?",
+        "a": "Sí. El diseño al ras de bajo perfil fue elegido específicamente para quienes duermen de lado. No hay vástago sobresaliente que cause presión contra una almohada."
+      },
+      {
+        "q": "¿Cómo los mantengo higiénicos para uso nocturno?",
+        "a": "Enjuaga con agua tibia y jabón suave después de cada uso. Sécalos completamente antes de guardarlos en el estuche. Reemplaza el filtro cada 3–6 meses."
+      }
+    ],
+    "products": [
+      {
+        "name": "Tapones para dormir — Small",
+        "tag": "Más vendido"
+      },
+      {
+        "name": "Tapones para dormir — Medium",
+        "tag": null
+      },
+      {
+        "name": "Tapones para dormir — Large",
+        "tag": null
+      },
+      {
+        "name": "Tapones Sueño — Kit XS & S",
+        "tag": null
+      },
+      {
+        "name": "Tapones Sueño — Kit S & M",
+        "tag": "Más vendido"
+      },
+      {
+        "name": "Tapones Sueño — Kit M & L",
+        "tag": null
+      }
+    ]
+  },
+  "motorsport": {
+    "title": "Tapones para motorsport",
+    "badge": "Para pilotos y conductores",
+    "heading": "Viento fuera.\nFoco dentro.",
+    "sub": "Bloquea el rugido del viento, el ruido del motor y el caos de la pista mientras tu intercom, GPS y comunicación con el copiloto permanecen claros. Construido para el viaje.",
+    "stats": [
+      {
+        "value": "85 dB+",
+        "label": "Ruido de viento a velocidad de autopista"
+      },
+      {
+        "value": "−26 dB",
+        "label": "Atenuación máxima"
+      },
+      {
+        "value": "Perfil slim",
+        "label": "Bajo cualquier casco"
+      },
+      {
+        "value": "300 Hz",
+        "label": "Voz del intercom preservada"
+      }
+    ],
+    "features": [
+      {
+        "title": "Elimina el rugido del viento",
+        "body": "El ruido del viento a velocidades de autopista alcanza 85–95 dB dentro de un casco — un riesgo auditivo serio a largo plazo. Earasers reduce drásticamente este rugido de banda ancha constante."
+      },
+      {
+        "title": "Compatible con intercom",
+        "body": "El diseño delgado y de bajo perfil cabe cómodamente bajo un casco y no interfiere con los auriculares de intercom Bluetooth o los auriculares in-ear."
+      },
+      {
+        "title": "Comodidad todo el día",
+        "body": "Las rutas de larga distancia y los días de carrera exigen horas de uso. La silicona de grado médico se adapta a tu canal auditivo — sin acumulación de presión, sin incomodidad después de 500 km."
+      }
+    ],
+    "techHeading": "El peligro auditivo oculto en tu casco",
+    "techBody": "La turbulencia del viento dentro de un casco de moto genera ruido de banda ancha de 85–105 dB según la velocidad. A lo largo de años de conducción, esto causa pérdida auditiva progresiva de alta frecuencia — el mismo patrón visto en trabajadores de fábricas. A diferencia de los tapones de espuma, Earasers mantiene audibles los sonidos de peligro y el audio del intercom mientras corta el rugido dañino.",
+    "techPoints": [
+      "85–95 dB de ruido de viento a 100 km/h — Earasers lo reduce a niveles de exposición seguros",
+      "La preservación vocal de 300 Hz significa que el audio del intercom, las instrucciones del GPS y las llamadas del copiloto permanecen claras",
+      "El perfil delgado cabe en la mayoría de cascos integrales y abiertos sin incomodidad",
+      "Compatible con sistemas de intercom Bluetooth in-ear y configuraciones estilo auricular estándar"
+    ],
+    "filters": [
+      {
+        "name": "Ruta ligera",
+        "snr": "SNR 14",
+        "db": "−19 dB máx.",
+        "desc": "Para conducción urbana y viajes cortos donde quieres ser consciente de los sonidos del tráfico y los peligros."
+      },
+      {
+        "name": "Larga distancia",
+        "snr": "SNR 20",
+        "db": "−26 dB máx.",
+        "desc": "La opción recomendada para rutas de autopista y touring. Cubre la exposición sostenida al ruido de viento en autopista."
+      }
+    ],
+    "quote": {
+      "text": "\"Después de un tour de 1.200 km por Francia solía tener los oídos zumbando durante días. Con Earasers llegué a casa sintiéndome completamente bien — y pude escuchar mi intercom perfectamente todo el camino.\"",
+      "author": "Stefan K.",
+      "role": "Piloto de touring — 20+ años en la carretera"
+    },
+    "faq": [],
+    "products": [
+      {
+        "name": "Tapones de motorsport — Small",
+        "tag": null
+      },
+      {
+        "name": "Tapones de motorsport — Medium",
+        "tag": "Más vendido"
+      },
+      {
+        "name": "Tapones de motorsport — Large",
+        "tag": null
+      },
+      {
+        "name": "Tapones Motorsport — Kit XS & S",
+        "tag": null
+      },
+      {
+        "name": "Tapones Motorsport — Kit S & M",
+        "tag": "Más vendido"
+      },
+      {
+        "name": "Tapones Motorsport — Kit M & L",
+        "tag": null
+      }
+    ]
+  },
+  "sensitivity": {
+    "title": "Tapones para hipersensibilidad auditiva",
+    "badge": "Para autismo, TDAH e hiperacusia",
+    "heading": "Calma tus sentidos.\nMantente presente.",
+    "sub": "Diseñados para personas con hipersensibilidad auditiva, hiperacusia, autismo o TDAH. Elimina el filo de los entornos abrumadores sin desconectarte del mundo.",
+    "stats": [
+      {
+        "value": "−19 dB",
+        "label": "Reducción ambiental suave"
+      },
+      {
+        "value": "Plana",
+        "label": "Carácter de sonido natural"
+      },
+      {
+        "value": "Discreto",
+        "label": "Casi invisible"
+      },
+      {
+        "value": "Uso diario",
+        "label": "Silicona hipoalergénica"
+      }
+    ],
+    "features": [
+      {
+        "title": "Suave, no total",
+        "body": "El bloqueo total del sonido puede resultar desorientador. Earasers baja suavemente el volumen del mundo manteniéndote consciente de tu entorno y capaz de mantener conversaciones."
+      },
+      {
+        "title": "La confianza de la comunidad neurodivergente",
+        "body": "Muchas personas con autismo, TDAH y diferencias de procesamiento sensorial usan Earasers a diario — en el trabajo, en el transporte, en tiendas concurridas y entornos sociales."
+      },
+      {
+        "title": "Discreto y cómodo",
+        "body": "Prácticamente invisible cuando se lleva. La silicona suave es hipoalergénica y suficientemente suave para uso diario prolongado sin irritación ni presión."
+      }
+    ],
+    "techHeading": "Reducción suave, no aislamiento total",
+    "techBody": "Para personas con hiperacusia o sensibilidad sensorial, el bloqueo total del sonido puede aumentar la ansiedad en lugar de reducirla. El filtro SNR 14 de Earasers reduce el volumen general en −19 dB manteniendo el carácter natural del sonido intacto — las voces siguen sonando como voces, la música sigue sonando como música.",
+    "techPoints": [
+      "Reducción plana de −19 dB: el mundo suena igual, solo más tranquilo y menos abrumador",
+      "Las voces siguen claras — aún puedes mantener conversaciones en entornos concurridos",
+      "Silicona hipoalergénica de grado médico — sin látex, sin irritantes, segura para uso durante todo el día",
+      "Prácticamente invisible cuando se lleva — sin estigma social por los protectores auditivos visibles"
+    ],
+    "filters": [
+      {
+        "name": "Filtro de sensibilidad",
+        "snr": "SNR 14",
+        "db": "−19 dB máx.",
+        "desc": "El único filtro que recomendamos para uso diario de sensibilidad. Reducción suave y plana que mantiene el mundo accesible."
+      }
+    ],
+    "quote": {
+      "text": "\"Tengo hiperacusia y no podía ir al supermercado sin dolor de cabeza. Earasers me deja vivir una vida normal de nuevo. Los llevo todos los días.\"",
+      "author": "Lena M.",
+      "role": "Hiperacusia — usuario diario de Earasers"
+    },
+    "faq": [],
+    "products": [
+      {
+        "name": "Tapones de sensibilidad — Small",
+        "tag": "Más vendido"
+      },
+      {
+        "name": "Tapones de sensibilidad — Medium",
+        "tag": null
+      },
+      {
+        "name": "Tapones de sensibilidad — Large",
+        "tag": null
+      },
+      {
+        "name": "Tapones Sensibilidad — Kit XS & S",
+        "tag": null
+      },
+      {
+        "name": "Tapones Sensibilidad — Kit S & M",
+        "tag": "Más vendido"
+      },
+      {
+        "name": "Tapones Sensibilidad — Kit M & L",
+        "tag": null
+      }
+    ]
+  }
+}

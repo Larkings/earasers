@@ -1,0 +1,180 @@
+{
+  "hero": {
+    "badge": "5× Mejores tapones para música · MusicRadar.com",
+    "headline": "Escucha todo.\nNo dañes nada.",
+    "sub": "Tapones HiFi premiados usados por músicos, DJs y dentistas en toda Europa. Protección que no arruina el ambiente.",
+    "cta": "Ver tapones para música",
+    "sizeCta": "Encontrar mi talla"
+  },
+  "useCases": {
+    "heading": "Hecho para tu mundo",
+    "sub": "Escenario, pista de baile, vida diaria, clínica o dormitorio. Tenemos el ajuste correcto.",
+    "musician": "Músico",
+    "musicianSub": "En el escenario y en el estudio",
+    "musicianProduct": "Tapones para música",
+    "dj": "DJ",
+    "djSub": "Desde sets de club hasta festivales",
+    "djProduct": "Tapones para DJ",
+    "dentist": "Dentista",
+    "dentistSub": "Bloquea el ruido del scaler, mantén la comunicación con el paciente",
+    "dentistProduct": "Tapones para dentista e higienista",
+    "sleeping": "Dormir",
+    "sleepingSub": "Silencioso, cómodo, toda la noche",
+    "sleepingProduct": "Tapones para dormir",
+    "motorsport": "Motorsport",
+    "motorsportSub": "Ruido de viento, motor y pista bajo control",
+    "motorsportProduct": "Tapones para motorsport",
+    "noiseSensitivity": "Sensibilidad al ruido",
+    "noiseSensitivitySub": "Calma tus sentidos sin perder claridad",
+    "noiseSensitivityProduct": "Tapones para sensibilidad al ruido"
+  },
+  "bestSellers": {
+    "heading": "Nuestros más vendidos",
+    "viewAll": "Ver todo",
+    "chooseOptions": "Elegir opciones",
+    "bestSeller": "Más vendido",
+    "perfectSizeKit": "Kit de talla perfecta",
+    "recommended": "Recomendado",
+    "premium": "Premium",
+    "products": [
+      {
+        "name": "Tapones para Musica"
+      },
+      {
+        "name": "Tapones para DJ"
+      },
+      {
+        "name": "Kit de Talla Perfecta"
+      },
+      {
+        "name": "Earasers Pro-Kit"
+      }
+    ]
+  },
+  "sizeQuiz": {
+    "heading": "Buscador de talla",
+    "subHeading": "¿No sabes qué talla?",
+    "description": "Responde 3 preguntas rápidas y te recomendaremos el ajuste correcto.",
+    "q1": "¿Para qué necesitas tapones?",
+    "a1_music": "Música / Conciertos",
+    "a1_dj": "Pinchar",
+    "a1_sleeping": "Dormir",
+    "a1_other": "Otro",
+    "q2": "¿Cómo te sientan normalmente las almohadillas de auriculares?",
+    "a2_large": "Se caen — demasiado grandes",
+    "a2_perfect": "Ajustan perfectamente",
+    "a2_small": "Dejan pasar sonido — demasiado pequeños",
+    "a2_unsure": "No estoy seguro/a",
+    "q3": "¿Cuántos años tienes?",
+    "a3_under25": "Menos de 25",
+    "a3_25to45": "25 – 45",
+    "a3_over45": "45+",
+    "stepOf": "Paso {{current}} de {{total}}",
+    "resultXS": "Extra pequeño (XS)",
+    "resultXSDesc": "Tienes un canal auditivo más pequeño — XS ofrece el mejor sellado.",
+    "resultL": "Grande (L)",
+    "resultLDesc": "Tienes un canal auditivo más grande — L asegura un buen sellado.",
+    "resultS": "Pequeño (S)",
+    "resultSDesc": "La mayoría de adultos jóvenes se adaptan cómodamente a S.",
+    "resultSM": "Pequeño / Mediano",
+    "resultSMDesc": "Pequeño y Mediano son ambos populares — el kit S&M te permite probar los dos.",
+    "resultKit": "Kit de inicio S & M",
+    "resultKitDesc": "¿No puedes decidirte? Nuestro kit más popular incluye tanto S como M para que encuentres tu ajuste perfecto.",
+    "yourFit": "Tu ajuste perfecto",
+    "shopSize": "Comprar mi talla",
+    "startOver": "Empezar de nuevo",
+    "selectSize": "Seleccionar talla recomendada",
+    "footer": "Envío gratuito desde €39 · Devoluciones gratuitas · Recomendado por expertos",
+    "filter31": "Filtro máximo -31dB",
+    "filter26": "Filtro estándar -26dB",
+    "filter19": "Filtro confort -19dB"
+  },
+  "award": {
+    "pill": "Aprobado por MusicRadar",
+    "heading": "Cinco años en la cima",
+    "sub": "Testado y premiado de forma independiente por MusicRadar.com cada año desde 2020.",
+    "reviewLink": "Ver la reseña completa en MusicRadar"
+  },
+  "compareTable": {
+    "heading": "Earasers vs. las alternativas",
+    "sub": "Una buena protección auditiva no debería costar una fortuna ni amortiguar todo.",
+    "earasers": "Earasers",
+    "customMolds": "Moldes personalizados",
+    "cheapFoam": "Espuma barata",
+    "price": "Precio",
+    "delivery": "Tiempo de entrega",
+    "deliveryEarasers": "2–3 días",
+    "deliveryCustom": "3–6 semanas",
+    "deliveryFoam": "Inmediato",
+    "priceCustom": "€199+",
+    "priceFoam": "€5–15",
+    "noSpecialist": "Sin especialista",
+    "nearlyInvisible": "Casi invisible",
+    "clearSound": "Sonido claro",
+    "adjustableFilter": "Filtro ajustable",
+    "cta": "Comprar Earasers desde €49,95"
+  },
+  "howItWorks": {
+    "heading": "Cómo funciona",
+    "sub": "Tres ideas inteligentes. Un tapón muy pequeño.",
+    "step1Title": "Diseño de canal abierto",
+    "step1Desc": "El sonido entra en tu oído de forma natural antes de que se produzca cualquier filtrado. Eso es lo que hace que la música suene como música, y no como si escucharas a través de una pared.",
+    "step2Title": "Tecnología V-Filter",
+    "step2Desc": "El diseño de canal abierto patentado de Earasers ofrece un audio cristalino mientras filtra con precisión frecuencias específicas. Así puedes escuchar las voces de forma natural, reduciendo solo el ruido no deseado.",
+    "step3Title": "Silicona de Grado Médico",
+    "step3Desc": "Fabricado con silicona de grado médico, Earasers se adapta a la forma de tu canal auditivo, logrando un ajuste personalizado perfecto.",
+    "chartAlt": "Gráfico de atenuación de Earasers",
+    "zoomHint": "Haz clic para ampliar",
+    "close": "Cerrar"
+  },
+  "reviews": {
+    "heading": "Personas reales. Opiniones reales.",
+    "sub": "Valorado con 4,7 sobre 5 por más de 1.000 clientes",
+    "trustpilot": "Ver en Trustpilot"
+  },
+  "influencers": {
+    "heading": "Confiado por profesionales",
+    "sub": "Músicos, DJs y expertos en audición que juran por Earasers."
+  },
+  "blogTeaser": {
+    "heading": "Del blog",
+    "readMore": "Leer más",
+    "viewAll": "Ver todos los artículos",
+    "posts": [
+      {
+        "title": "Earasers, 5 veces premiados!",
+        "excerpt": "Por quinto ano consecutivo, MusicRadar ha nombrado a Earasers los mejores tapones para musica del mercado.",
+        "date": "Marzo 2024",
+        "slug": "5-time-award-winning"
+      },
+      {
+        "title": "Los mejores DJs del mundo confian en Earasers",
+        "excerpt": "Desde los escenarios principales de festivales hasta las noches de club, los DJs profesionales confian en Earasers.",
+        "date": "Enero 2024",
+        "slug": "trusted-by-djs"
+      },
+      {
+        "title": "Ya disponible en Dijkman Music Amsterdam",
+        "excerpt": "Ya puedes probar y comprar Earasers en la tienda Dijkman Music, una de las tiendas de musica mas respetadas de los Paises Bajos.",
+        "date": "Noviembre 2023",
+        "slug": "dijkman-amsterdam"
+      }
+    ]
+  },
+  "videoSection": {
+    "label": "Compruébalo tú mismo",
+    "heading": "Siente la diferencia.",
+    "body": "Mira cómo Earasers protegen tu audición manteniendo intacta cada frecuencia de la música — sin amortiguar, sin solo graves. La misma claridad que amas, a un volumen seguro.",
+    "cta": "Comprar ahora",
+    "sub": "Mira cómo Earasers protegen tu audición sin comprometer la música."
+  },
+  "sizeFinder": {
+    "pill": "30 segundos",
+    "heading": "Encuentra tu talla perfecta",
+    "sub": "Responde 3 preguntas y obtén una recomendación personalizada — sin adivinar, sin devoluciones.",
+    "trust1": "Personalizado para ti",
+    "trust2": "Recomendado por expertos",
+    "trust3": "Devoluciones gratuitas",
+    "socialFull": "4,9/5 · más de 2.000 clientes · Envío gratuito a partir de €39 · Devoluciones gratuitas"
+  }
+}

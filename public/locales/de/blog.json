@@ -1,0 +1,34 @@
+{
+  "posts": {
+    "5-time-award-winning": {
+      "title": "5-fach ausgezeichnet: Earasers!",
+      "excerpt": "Zum funften Mal in Folge hat MusicRadar Earasers zum besten Musik-Ohrstopsel auf dem Markt gekurt.",
+      "date": "Marz 2024",
+      "category": "Auszeichnungen"
+    },
+    "trusted-by-djs": {
+      "title": "Von Weltklasse-DJs vertraut",
+      "excerpt": "Von Festival-Hauptbuhnen bis zu intimen Clubnachten, professionelle DJs verlassen sich auf Earasers.",
+      "date": "Januar 2024",
+      "category": "Kunstler"
+    },
+    "dijkman-amsterdam": {
+      "title": "Jetzt bei Dijkman Music Amsterdam erhaltlich",
+      "excerpt": "Probieren und kaufen Sie Earasers im Laden bei Dijkman Music, einem der angesehensten Musikgeschafte der Niederlande.",
+      "date": "November 2023",
+      "category": "Einzelhandel"
+    },
+    "hearing-damage-explained": {
+      "title": "Wie larmbedingter Horverlust wirklich funktioniert",
+      "excerpt": "Schall ist Vibration. Zu viel davon, zu lange, und die kleinen Haarzellen in Ihrer Cochlea beginnen dauerhaft abzusterben.",
+      "date": "September 2023",
+      "category": "Bildung"
+    }
+  },
+  "categories": {
+    "Awards": "Auszeichnungen",
+    "Artists": "Kunstler",
+    "Retail": "Einzelhandel",
+    "Education": "Bildung"
+  }
+}

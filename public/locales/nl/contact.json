@@ -1,0 +1,33 @@
+{
+  "heading": "Neem contact op",
+  "sub": "Vragen? We zijn er zeven dagen per week. De meeste e-mails krijgen binnen een paar uur een reactie.",
+  "emailLabel": "E-mail",
+  "phoneLabel": "Telefoon",
+  "availLabel": "Beschikbaarheid",
+  "availValue": "Ma t/m zo · 24/7 online",
+  "faqNote": "Bekijk eerst onze",
+  "faqLink": "FAQ",
+  "faqNoteEnd": "— je vraag staat er misschien al bij.",
+  "formTitle": "Stuur ons een bericht",
+  "nameLabel": "Naam",
+  "namePlaceholder": "Jouw naam",
+  "emailFieldLabel": "E-mail",
+  "emailPlaceholder": "jouw@email.com",
+  "subjectLabel": "Onderwerp",
+  "subjects": {
+    "sizing": "Vraag over maatvoering",
+    "order": "Bestelling & levering",
+    "returns": "Retourneren & garantie",
+    "product": "Productvraag",
+    "business": "Zakelijk / groothandel",
+    "other": "Anders"
+  },
+  "messageLabel": "Bericht",
+  "messagePlaceholder": "Hoe kunnen we je helpen?",
+  "required": "*",
+  "validationError": "Vul alle verplichte velden in.",
+  "send": "Bericht versturen",
+  "successTitle": "Bericht verzonden!",
+  "successSub": "Bedankt voor je bericht. We nemen binnen een paar uur contact met je op.",
+  "sendAnother": "Nog een bericht sturen"
+}

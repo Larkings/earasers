@@ -1,0 +1,180 @@
+{
+  "hero": {
+    "badge": "5× Best Music Earplugs · MusicRadar.com",
+    "headline": "Hear everything.\nDamage nothing.",
+    "sub": "Award-winning HiFi earplugs worn by musicians, DJs and dentists across Europe. Protection that doesn't kill the vibe.",
+    "cta": "Shop Music Earplugs",
+    "sizeCta": "Find My Size"
+  },
+  "useCases": {
+    "heading": "Made for your world",
+    "sub": "Stage, Dance Floor, Daily life, Clinic or bedroom. We have the right fit.",
+    "musician": "Musician",
+    "musicianSub": "On stage and in the studio",
+    "musicianProduct": "Music Earplugs",
+    "dj": "DJ",
+    "djSub": "From club sets to festival stages",
+    "djProduct": "DJ Earplugs",
+    "dentist": "Dentist",
+    "dentistSub": "Block scaler noise, keep patient communication",
+    "dentistProduct": "Dentist & Hygienist Earplugs",
+    "sleeping": "Sleeping",
+    "sleepingSub": "Quiet, comfortable, all night long",
+    "sleepingProduct": "Sleep Earplugs",
+    "motorsport": "Motorsport",
+    "motorsportSub": "Wind, engine and track noise under control",
+    "motorsportProduct": "Motorsport Earplugs",
+    "noiseSensitivity": "Noise Sensitivity",
+    "noiseSensitivitySub": "Calm your senses without losing clarity",
+    "noiseSensitivityProduct": "Noise Sensitivity Earplugs"
+  },
+  "bestSellers": {
+    "heading": "Our Best Sellers",
+    "viewAll": "View all",
+    "chooseOptions": "Choose options",
+    "bestSeller": "Best Seller",
+    "perfectSizeKit": "Perfect Size Kit",
+    "recommended": "Recommended",
+    "premium": "Premium",
+    "products": [
+      {
+        "name": "Music Earplugs"
+      },
+      {
+        "name": "DJ Earplugs"
+      },
+      {
+        "name": "Perfect Size Kit"
+      },
+      {
+        "name": "Earasers Pro-Kit"
+      }
+    ]
+  },
+  "sizeQuiz": {
+    "heading": "Size Finder",
+    "subHeading": "Not sure which size?",
+    "description": "Answer 3 quick questions and we'll recommend the right fit.",
+    "q1": "What do you need earplugs for?",
+    "a1_music": "Music / Concerts",
+    "a1_dj": "DJing",
+    "a1_sleeping": "Sleeping",
+    "a1_other": "Other",
+    "q2": "How do regular earbud tips normally fit you?",
+    "a2_large": "Fall out — too large",
+    "a2_perfect": "Fit perfectly",
+    "a2_small": "Let sound leak — too small",
+    "a2_unsure": "I'm not sure",
+    "q3": "How old are you?",
+    "a3_under25": "Under 25",
+    "a3_25to45": "25 – 45",
+    "a3_over45": "45+",
+    "stepOf": "Step {{current}} of {{total}}",
+    "resultXS": "Extra Small (XS)",
+    "resultXSDesc": "You have a smaller ear canal — XS gives you the best seal.",
+    "resultL": "Large (L)",
+    "resultLDesc": "You have a larger ear canal — L ensures a proper seal.",
+    "resultS": "Small (S)",
+    "resultSDesc": "Most young adults fit Small comfortably.",
+    "resultSM": "Small / Medium",
+    "resultSMDesc": "Small and Medium are both popular — the S&M kit lets you try both.",
+    "resultKit": "S & M Starter Kit",
+    "resultKitDesc": "Can't decide? Our most popular kit includes both S and M so you can find your perfect fit.",
+    "yourFit": "Your perfect fit",
+    "shopSize": "Shop My Size",
+    "startOver": "Start over",
+    "selectSize": "Select recommended size",
+    "footer": "Free shipping from €39 · Free returns · Expert-recommended",
+    "filter31": "-31dB Max filter",
+    "filter26": "-26dB Standard filter",
+    "filter19": "-19dB Comfort filter"
+  },
+  "award": {
+    "pill": "MusicRadar Approved",
+    "heading": "Five years at the top",
+    "sub": "Independently tested and awarded by MusicRadar.com every year since 2020.",
+    "reviewLink": "See the full review on MusicRadar"
+  },
+  "compareTable": {
+    "heading": "Earasers vs. the alternatives",
+    "sub": "Good hearing protection shouldn't cost a fortune or muffle everything.",
+    "earasers": "Earasers",
+    "customMolds": "Custom Molds",
+    "cheapFoam": "Cheap Foam",
+    "price": "Price",
+    "delivery": "Delivery time",
+    "deliveryEarasers": "2–3 days",
+    "deliveryCustom": "3–6 weeks",
+    "deliveryFoam": "Direct",
+    "priceCustom": "€199+",
+    "priceFoam": "€5–15",
+    "noSpecialist": "No specialist",
+    "nearlyInvisible": "Nearly invisible",
+    "clearSound": "Clear sound",
+    "adjustableFilter": "Adjustable filter",
+    "cta": "Shop Earasers from €49,95"
+  },
+  "howItWorks": {
+    "heading": "How It Works",
+    "sub": "Three smart ideas. One very small earplug.",
+    "step1Title": "Open Canal Design",
+    "step1Desc": "Sound enters your ear naturally before any filtering happens. That's what keeps music sounding like music, and not like you're listening through a wall.",
+    "step2Title": "V-Filter Technology",
+    "step2Desc": "Earasers' patented open-canal design delivers crystal-clear audio while precisely filtering specific frequencies. This allows you to hear voices naturally, while reducing only the unwanted noise.",
+    "step3Title": "Medical Grade Silicone",
+    "step3Desc": "Made from Medical Grade Silicone, Earasers shapes to the form of your ear canal – Making it Custom Fit.",
+    "chartAlt": "Earasers attenuation chart",
+    "zoomHint": "Click to enlarge",
+    "close": "Close"
+  },
+  "reviews": {
+    "heading": "Real people. Real opinions.",
+    "sub": "Rated 4.7 out of 5 by over 1,000 customers",
+    "trustpilot": "View on Trustpilot"
+  },
+  "influencers": {
+    "heading": "Trusted by professionals",
+    "sub": "Musicians, DJs and hearing experts who swear by Earasers."
+  },
+  "blogTeaser": {
+    "heading": "From the blog",
+    "readMore": "Read more",
+    "viewAll": "View all articles",
+    "posts": [
+      {
+        "title": "5-Time Award-Winning: Earasers!",
+        "excerpt": "For the fifth year in a row, MusicRadar has named Earasers the best music earplugs on the market.",
+        "date": "March 2024",
+        "slug": "5-time-award-winning"
+      },
+      {
+        "title": "Earasers Trusted by the World's Top DJs",
+        "excerpt": "From festival main stages to intimate club nights, professional DJs rely on Earasers.",
+        "date": "January 2024",
+        "slug": "trusted-by-djs"
+      },
+      {
+        "title": "Now Available at Dijkman Music Amsterdam",
+        "excerpt": "Try and buy Earasers in-store at Dijkman Music, one of the Netherlands' most respected music stores.",
+        "date": "November 2023",
+        "slug": "dijkman-amsterdam"
+      }
+    ]
+  },
+  "videoSection": {
+    "label": "See it for yourself",
+    "heading": "Hear the difference.",
+    "body": "Watch how Earasers protect your hearing while keeping every frequency of music intact — no muffling, no bass-only sound. The same clarity you love, at a safe volume.",
+    "cta": "Shop now",
+    "sub": "Watch how Earasers protect your hearing without compromising the music."
+  },
+  "sizeFinder": {
+    "pill": "30 seconds",
+    "heading": "Find Your Perfect Fit",
+    "sub": "Answer 3 questions and get a personalized earplug recommendation — no guessing, no returns.",
+    "trust1": "Personalized to you",
+    "trust2": "Expert-recommended",
+    "trust3": "Free returns",
+    "socialFull": "4.9/5 · 2,000+ customers · Free shipping from €39 · Free returns"
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "hero": {
+    "badge": "5× Beste Muziek Oordoppen · MusicRadar.com",
+    "headline": "Alles horen.\nNiets beschadigen.",
+    "sub": "Bekroonde HiFi-oordoppen gedragen door muzikanten, DJ's en tandartsen door heel Europa. Bescherming die de sfeer niet verpest.",
+    "cta": "Muziek oordoppen bekijken",
+    "sizeCta": "Vind mijn maat"
+  },
+  "useCases": {
+    "heading": "Gemaakt voor jouw wereld",
+    "sub": "Podium, dansvloer, dagelijks leven, kliniek of slaapkamer. Wij hebben de juiste pasvorm.",
+    "musician": "Muzikant",
+    "musicianSub": "Op het podium en in de studio",
+    "musicianProduct": "Muziek oordoppen",
+    "dj": "DJ",
+    "djSub": "Van clubsets tot festivalpodia",
+    "djProduct": "DJ oordoppen",
+    "dentist": "Tandarts",
+    "dentistSub": "Blokeer scalergeluid, houd patiëntcommunicatie",
+    "dentistProduct": "Tandarts & Mondhygiënist oordoppen",
+    "sleeping": "Slapen",
+    "sleepingSub": "Stil, comfortabel, de hele nacht",
+    "sleepingProduct": "Slaap oordoppen",
+    "motorsport": "Motorsport",
+    "motorsportSub": "Wind-, motor- en baangeluid onder controle",
+    "motorsportProduct": "Motorsport oordoppen",
+    "noiseSensitivity": "Geluidsgevoeligheid",
+    "noiseSensitivitySub": "Kalmeer je zintuigen zonder helderheid te verliezen",
+    "noiseSensitivityProduct": "Geluidsgevoeligheid oordoppen"
+  },
+  "bestSellers": {
+    "heading": "Onze bestverkochte producten",
+    "viewAll": "Alles bekijken",
+    "chooseOptions": "Kies opties",
+    "bestSeller": "Bestseller",
+    "perfectSizeKit": "Perfect Maat Kit",
+    "recommended": "Aanbevolen",
+    "premium": "Premium",
+    "products": [
+      {
+        "name": "Muziek Oordoppen"
+      },
+      {
+        "name": "DJ Oordoppen"
+      },
+      {
+        "name": "Perfect Maat Kit"
+      },
+      {
+        "name": "Earasers Pro-Kit"
+      }
+    ]
+  },
+  "sizeQuiz": {
+    "heading": "Maatwijzer",
+    "subHeading": "Weet je niet welke maat?",
+    "description": "Beantwoord 3 snelle vragen en we raden de juiste pasvorm aan.",
+    "q1": "Waarvoor heb je oordoppen nodig?",
+    "a1_music": "Muziek / Concerten",
+    "a1_dj": "DJ'en",
+    "a1_sleeping": "Slapen",
+    "a1_other": "Anders",
+    "q2": "Hoe passen gewone oordopjes bij jou?",
+    "a2_large": "Vallen eruit — te groot",
+    "a2_perfect": "Passen perfect",
+    "a2_small": "Laten geluid door — te klein",
+    "a2_unsure": "Ik weet het niet",
+    "q3": "Hoe oud ben je?",
+    "a3_under25": "Jonger dan 25",
+    "a3_25to45": "25 – 45",
+    "a3_over45": "45+",
+    "stepOf": "Stap {{current}} van {{total}}",
+    "resultXS": "Extra Klein (XS)",
+    "resultXSDesc": "Je hebt een kleiner gehoorkanaal — XS geeft de beste afdichting.",
+    "resultL": "Groot (L)",
+    "resultLDesc": "Je hebt een groter gehoorkanaal — L zorgt voor een goede afdichting.",
+    "resultS": "Klein (S)",
+    "resultSDesc": "De meeste jongvolwassenen passen comfortabel in S.",
+    "resultSM": "Klein / Medium",
+    "resultSMDesc": "Klein en Medium zijn beide populair — de S&M-kit laat je beide proberen.",
+    "resultKit": "S & M Starterskit",
+    "resultKitDesc": "Kan je niet kiezen? Onze populairste kit bevat zowel S als M zodat je de perfecte pasvorm vindt.",
+    "yourFit": "Jouw perfecte pasvorm",
+    "shopSize": "Mijn maat bestellen",
+    "startOver": "Opnieuw beginnen",
+    "selectSize": "Aanbevolen maat selecteren",
+    "footer": "Gratis verzending vanaf €39 · Gratis retourneren · Expertaanbeveling",
+    "filter31": "-31dB Max filter",
+    "filter26": "-26dB Standaard filter",
+    "filter19": "-19dB Comfort filter"
+  },
+  "award": {
+    "pill": "MusicRadar Goedgekeurd",
+    "heading": "Vijf jaar aan de top",
+    "sub": "Onafhankelijk getest en bekroond door MusicRadar.com elk jaar sinds 2020.",
+    "reviewLink": "Lees de volledige review op MusicRadar"
+  },
+  "compareTable": {
+    "heading": "Earasers vs. de alternatieven",
+    "sub": "Goede gehoorbescherming hoeft geen fortuin te kosten of alles te dempen.",
+    "earasers": "Earasers",
+    "customMolds": "Op maat gemaakte oordoppen",
+    "cheapFoam": "Goedkoop schuim",
+    "price": "Prijs",
+    "delivery": "Levertijd",
+    "deliveryEarasers": "2–3 dagen",
+    "deliveryCustom": "3–6 weken",
+    "deliveryFoam": "Direct",
+    "priceCustom": "€199+",
+    "priceFoam": "€5–15",
+    "noSpecialist": "Geen specialist nodig",
+    "nearlyInvisible": "Nauwelijks zichtbaar",
+    "clearSound": "Helder geluid",
+    "adjustableFilter": "Instelbaar filter",
+    "cta": "Bestel Earasers vanaf €49,95"
+  },
+  "howItWorks": {
+    "heading": "Hoe het werkt",
+    "sub": "Drie slimme ideeën. Één heel klein oordopje.",
+    "step1Title": "Open kanaalontwerp",
+    "step1Desc": "Geluid komt op een natuurlijke manier je oor binnen voordat er filtering plaatsvindt. Dat is wat muziek als muziek laat klinken, en niet alsof je door een muur luistert.",
+    "step2Title": "V-Filter Technologie",
+    "step2Desc": "Earasers' gepatenteerd open-kanaalontwerp levert glashelder geluid, terwijl specifieke frequenties precies worden gefilterd. Zo hoor je stemmen op een natuurlijke manier, terwijl alleen het ongewenste geluid wordt gedempt.",
+    "step3Title": "Medisch Siliconen",
+    "step3Desc": "Gemaakt van medisch siliconen past Earasers zich aan de vorm van jouw gehoorgang aan – voor een volledig op maat passende fit.",
+    "chartAlt": "Earasers dempingsgrafiek",
+    "zoomHint": "Klik om te vergroten",
+    "close": "Sluiten"
+  },
+  "reviews": {
+    "heading": "Echte mensen. Echte meningen.",
+    "sub": "Beoordeeld met 4.7 uit 5 door meer dan 1.000 klanten",
+    "trustpilot": "Bekijk op Trustpilot"
+  },
+  "influencers": {
+    "heading": "Vertrouwd door professionals",
+    "sub": "Muzikanten, DJ's en gehoorexperts die zweren bij Earasers."
+  },
+  "blogTeaser": {
+    "heading": "Van de blog",
+    "readMore": "Lees meer",
+    "viewAll": "Alle artikelen bekijken",
+    "posts": [
+      {
+        "title": "5x Bekroond: Earasers!",
+        "excerpt": "Voor het vijfde jaar op rij heeft MusicRadar Earasers uitgeroepen tot de beste muziek-oordoppen op de markt.",
+        "date": "Maart 2024",
+        "slug": "5-time-award-winning"
+      },
+      {
+        "title": "Vertrouwd door 's werelds beste DJ's",
+        "excerpt": "Van festivalpodia tot intieme clubavonden, professionele DJ's vertrouwen op Earasers.",
+        "date": "Januari 2024",
+        "slug": "trusted-by-djs"
+      },
+      {
+        "title": "Nu verkrijgbaar bij Dijkman Music Amsterdam",
+        "excerpt": "Probeer en koop Earasers in de winkel bij Dijkman Music, een van de meest gerespecteerde muziekwinkels van Nederland.",
+        "date": "November 2023",
+        "slug": "dijkman-amsterdam"
+      }
+    ]
+  },
+  "videoSection": {
+    "label": "Bekijk het zelf",
+    "heading": "Hoor het verschil.",
+    "body": "Bekijk hoe Earasers je gehoor beschermen terwijl elke frequentie van de muziek intact blijft — geen demping, geen bas-alleen geluid. Dezelfde helderheid die je liefhebt, op een veilig volume.",
+    "cta": "Nu bestellen",
+    "sub": "Bekijk hoe Earasers je gehoor beschermen zonder de muziek te compromitteren."
+  },
+  "sizeFinder": {
+    "pill": "30 seconden",
+    "heading": "Vind jouw perfecte pasvorm",
+    "sub": "Beantwoord 3 vragen en ontvang een persoonlijke aanbeveling — geen giswerk, geen retourzendingen.",
+    "trust1": "Persoonlijk voor jou",
+    "trust2": "Aanbevolen door experts",
+    "trust3": "Gratis retourneren",
+    "socialFull": "4.9/5 · 2.000+ klanten · Gratis verzending vanaf €39 · Gratis retourneren"
+  }
+}

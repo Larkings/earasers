@@ -1,0 +1,33 @@
+{
+  "heading": "Kontakt aufnehmen",
+  "sub": "Fragen? Wir sind sieben Tage die Woche erreichbar. Die meisten E-Mails erhalten innerhalb weniger Stunden eine Antwort.",
+  "emailLabel": "E-Mail",
+  "phoneLabel": "Telefon",
+  "availLabel": "Verfügbarkeit",
+  "availValue": "Mo bis So · 24/7 online",
+  "faqNote": "Schau zuerst in unsere",
+  "faqLink": "FAQ",
+  "faqNoteEnd": "— deine Frage ist vielleicht bereits beantwortet.",
+  "formTitle": "Schreib uns eine Nachricht",
+  "nameLabel": "Name",
+  "namePlaceholder": "Dein Name",
+  "emailFieldLabel": "E-Mail",
+  "emailPlaceholder": "deine@email.com",
+  "subjectLabel": "Betreff",
+  "subjects": {
+    "sizing": "Frage zur Größe",
+    "order": "Bestellung & Lieferung",
+    "returns": "Rücksendung & Garantie",
+    "product": "Produktfrage",
+    "business": "Geschäftlich / Großhandel",
+    "other": "Sonstiges"
+  },
+  "messageLabel": "Nachricht",
+  "messagePlaceholder": "Wie können wir dir helfen?",
+  "required": "*",
+  "validationError": "Bitte fülle alle Pflichtfelder aus.",
+  "send": "Nachricht senden",
+  "successTitle": "Nachricht gesendet!",
+  "successSub": "Danke für deine Anfrage. Wir melden uns innerhalb weniger Stunden bei dir.",
+  "sendAnother": "Weitere Nachricht senden"
+}

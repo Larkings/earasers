@@ -1,0 +1,82 @@
+{
+  "breadcrumb": {
+    "home": "Inicio",
+    "shop": "Tienda"
+  },
+  "sizes": [
+    {
+      "label": "XS",
+      "tip": "Extra Pequeño — se adapta al ~3% de los usuarios"
+    },
+    {
+      "label": "S",
+      "tip": "Pequeño — el más popular, ~40% de los usuarios"
+    },
+    {
+      "label": "M",
+      "tip": "Mediano — el más popular, ~40% de los usuarios"
+    },
+    {
+      "label": "L",
+      "tip": "Grande — se adapta al ~14% de los usuarios"
+    },
+    {
+      "label": "XS & S Kit",
+      "tip": "Extra Pequeño & Pequeño — ideal si estás entre dos tallas.",
+      "kit": true
+    },
+    {
+      "label": "S & M Kit",
+      "tip": "Pequeño & Mediano — la combo inicial más popular.",
+      "kit": true
+    },
+    {
+      "label": "M & L Kit",
+      "tip": "Mediano & Grande — para un canal auditivo más amplio.",
+      "kit": true
+    }
+  ],
+  "tabs": [
+    "Descripción",
+    "Especificaciones",
+    "Reseñas"
+  ],
+  "size": "Talla",
+  "dontKnowSize": "¿No sabes tu talla? →",
+  "closeQuiz": "Cerrar test ×",
+  "sizeSetFromQuiz": "Talla establecida según tus respuestas",
+  "filterLevel": "Nivel de filtro",
+  "quantity": "Cantidad",
+  "decreaseQty": "Disminuir",
+  "increaseQty": "Aumentar",
+  "addToCart": "Añadir {{qty}}× al carrito — {{price}}",
+  "addToCartSingle": "Añadir al carrito — {{price}}",
+  "save": "Ahorra {{amount}}",
+  "reviewsCount": "{{count}} reseñas",
+  "addedToCart": "Añadido al carrito",
+  "securePayment": "Pago seguro",
+  "freeShipping": "Envío gratis desde €39",
+  "returns": "Devoluciones en 30 días",
+  "descriptionHeading": "¿Qué hace diferentes a los Earasers?",
+  "descriptionBody": "Earasers utiliza un diseño de canal abierto patentado combinado con un V-Filter para reducir los niveles de sonido dañinos preservando la riqueza natural de la música.",
+  "specsHeading": "Valores de atenuación",
+  "specsBody": "Medidos según ISO 11904-1. Los valores son la atenuación promedio por frecuencia de prueba.",
+  "specsImgAlt": "Gráfico de atenuación de Earasers",
+  "reviewsRating": "{{rating}} de 5 — basado en {{count}} reseñas",
+  "recentlyViewed": "Vistos recientemente",
+  "reviews": [
+    {
+      "name": "Michael T.",
+      "text": "Estos Earasers son perfectos. Se ajustan muy bien, apenas son visibles y equilibran el sonido perfectamente."
+    },
+    {
+      "name": "Saskia H.",
+      "text": "¡Mucho mejor y más baratos que todos los tapones a medida de marcas reconocidas que he tenido!"
+    },
+    {
+      "name": "Joanne C.",
+      "text": "¡Excelente atención al cliente — me enviaron los medianos más la herramienta de extracción de filtros gratis!"
+    }
+  ],
+  "orComboKit": "o elige un kit combinado"
+}

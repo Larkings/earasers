@@ -1,0 +1,34 @@
+{
+  "posts": {
+    "5-time-award-winning": {
+      "title": "Earasers, 5 veces premiados!",
+      "excerpt": "Por quinto ano consecutivo, MusicRadar ha nombrado a Earasers los mejores tapones para musica del mercado.",
+      "date": "Marzo 2024",
+      "category": "Premios"
+    },
+    "trusted-by-djs": {
+      "title": "Los mejores DJs del mundo confian en Earasers",
+      "excerpt": "Desde los escenarios principales de festivales hasta las noches de club, los DJs profesionales confian en Earasers.",
+      "date": "Enero 2024",
+      "category": "Artistas"
+    },
+    "dijkman-amsterdam": {
+      "title": "Ya disponible en Dijkman Music Amsterdam",
+      "excerpt": "Ya puedes probar y comprar Earasers en la tienda Dijkman Music, una de las tiendas de musica mas respetadas de los Paises Bajos.",
+      "date": "Noviembre 2023",
+      "category": "Minoristas"
+    },
+    "hearing-damage-explained": {
+      "title": "Como funciona realmente la perdida auditiva inducida por ruido",
+      "excerpt": "El sonido es vibracion. Demasiado, durante demasiado tiempo, y las pequenas celulas ciliadas de tu coclea comienzan a morir de forma permanente.",
+      "date": "Septiembre 2023",
+      "category": "Educacion"
+    }
+  },
+  "categories": {
+    "Awards": "Premios",
+    "Artists": "Artistas",
+    "Retail": "Minoristas",
+    "Education": "Educacion"
+  }
+}

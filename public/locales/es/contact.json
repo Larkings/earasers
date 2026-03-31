@@ -1,0 +1,33 @@
+{
+  "heading": "Ponte en contacto",
+  "sub": "¿Preguntas? Estamos aquí siete días a la semana. La mayoría de correos reciben respuesta en pocas horas.",
+  "emailLabel": "Correo electrónico",
+  "phoneLabel": "Teléfono",
+  "availLabel": "Disponibilidad",
+  "availValue": "Lun a Dom · 24/7 online",
+  "faqNote": "Antes de escribir, consulta nuestras",
+  "faqLink": "FAQ",
+  "faqNoteEnd": "— tu pregunta puede que ya esté respondida allí.",
+  "formTitle": "Envíanos un mensaje",
+  "nameLabel": "Nombre",
+  "namePlaceholder": "Tu nombre",
+  "emailFieldLabel": "Correo electrónico",
+  "emailPlaceholder": "tu@email.com",
+  "subjectLabel": "Asunto",
+  "subjects": {
+    "sizing": "Pregunta sobre tallas",
+    "order": "Pedido y entrega",
+    "returns": "Devoluciones y garantía",
+    "product": "Pregunta sobre el producto",
+    "business": "Negocios / mayorista",
+    "other": "Otro"
+  },
+  "messageLabel": "Mensaje",
+  "messagePlaceholder": "¿Cómo podemos ayudarte?",
+  "required": "*",
+  "validationError": "Por favor, completa todos los campos obligatorios.",
+  "send": "Enviar mensaje",
+  "successTitle": "¡Mensaje enviado!",
+  "successSub": "Gracias por contactarnos. Te responderemos en pocas horas.",
+  "sendAnother": "Enviar otro mensaje"
+}

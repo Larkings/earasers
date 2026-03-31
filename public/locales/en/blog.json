@@ -1,0 +1,34 @@
+{
+  "posts": {
+    "5-time-award-winning": {
+      "title": "5-Time Award-Winning: Earasers!",
+      "excerpt": "For the fifth year in a row, MusicRadar has named Earasers the best music earplugs on the market.",
+      "date": "March 2024",
+      "category": "Awards"
+    },
+    "trusted-by-djs": {
+      "title": "Earasers Trusted by the World's Top DJs",
+      "excerpt": "From festival main stages to intimate club nights, professional DJs rely on Earasers to protect their most important tool.",
+      "date": "January 2024",
+      "category": "Artists"
+    },
+    "dijkman-amsterdam": {
+      "title": "Now Available at Dijkman Music Amsterdam",
+      "excerpt": "You can now try and buy Earasers in-store at Dijkman Music, one of the Netherlands' most respected music stores.",
+      "date": "November 2023",
+      "category": "Retail"
+    },
+    "hearing-damage-explained": {
+      "title": "How Noise-Induced Hearing Loss Actually Works",
+      "excerpt": "Sound is vibration. Too much of it, for too long, and the tiny hair cells in your cochlea start dying permanently.",
+      "date": "September 2023",
+      "category": "Education"
+    }
+  },
+  "categories": {
+    "Awards": "Awards",
+    "Artists": "Artists",
+    "Retail": "Retail",
+    "Education": "Education"
+  }
+}

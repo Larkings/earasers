@@ -1,0 +1,82 @@
+{
+  "breadcrumb": {
+    "home": "Home",
+    "shop": "Shop"
+  },
+  "sizes": [
+    {
+      "label": "XS",
+      "tip": "Extra Small — fits ~3% of users"
+    },
+    {
+      "label": "S",
+      "tip": "Small — most popular, ~40% of users"
+    },
+    {
+      "label": "M",
+      "tip": "Medium — most popular, ~40% of users"
+    },
+    {
+      "label": "L",
+      "tip": "Large — fits ~14% of users"
+    },
+    {
+      "label": "XS & S Kit",
+      "tip": "Extra Small & Small — ideal if you are between sizes.",
+      "kit": true
+    },
+    {
+      "label": "S & M Kit",
+      "tip": "Small & Medium — the most popular starter combo.",
+      "kit": true
+    },
+    {
+      "label": "M & L Kit",
+      "tip": "Medium & Large — for a wider ear canal.",
+      "kit": true
+    }
+  ],
+  "tabs": [
+    "Description",
+    "Specs",
+    "Reviews"
+  ],
+  "size": "Size",
+  "dontKnowSize": "Don't know your size? →",
+  "closeQuiz": "Close quiz ×",
+  "sizeSetFromQuiz": "Size set based on your answers",
+  "filterLevel": "Filter level",
+  "quantity": "Quantity",
+  "decreaseQty": "Decrease",
+  "increaseQty": "Increase",
+  "addToCart": "Add {{qty}}× to cart — {{price}}",
+  "addToCartSingle": "Add to cart — {{price}}",
+  "save": "Save {{amount}}",
+  "reviewsCount": "{{count}} reviews",
+  "addedToCart": "Added to cart",
+  "securePayment": "Secure payment",
+  "freeShipping": "Free shipping from €39",
+  "returns": "30-day returns",
+  "descriptionHeading": "What makes Earasers different?",
+  "descriptionBody": "Earasers use a patented open-canal design combined with a V-Filter to reduce harmful sound levels while preserving the natural richness of music.",
+  "specsHeading": "Attenuation values",
+  "specsBody": "Measured according to ISO 11904-1. Values are average attenuation per test frequency.",
+  "specsImgAlt": "Earasers attenuation chart",
+  "reviewsRating": "{{rating}} out of 5 — based on {{count}} reviews",
+  "recentlyViewed": "Recently viewed",
+  "reviews": [
+    {
+      "name": "Michael T.",
+      "text": "These Earasers are perfect. They fit in very nicely, are barely visible, and balance the sound perfectly."
+    },
+    {
+      "name": "Saskia H.",
+      "text": "Much better and cheaper than all the custom-fitted earplugs from established brands that I have had!"
+    },
+    {
+      "name": "Joanne C.",
+      "text": "Great customer service — they sent me the mediums plus the filter removal tool free of charge!"
+    }
+  ],
+  "orComboKit": "or choose a combo kit"
+}

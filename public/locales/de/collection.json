@@ -1,0 +1,756 @@
+{
+  "ui": {
+    "home": "Startseite",
+    "shop": "Shop",
+    "chooseOptions": "Optionen wählen",
+    "sortBy": "Sortieren nach",
+    "featured": "Empfohlen",
+    "priceLow": "Preis: niedrig bis hoch",
+    "priceHigh": "Preis: hoch bis niedrig",
+    "bestRated": "Beste Bewertung",
+    "newest": "Neueste",
+    "collectionHeading": "Musik-Ohrstöpsel",
+    "collectionSub": "Preisgekrönte HiFi-Ohrstöpsel für Musiker, Konzertbesucher und Musikliebhaber.",
+    "bestSeller": "Bestseller",
+    "recommended": "Empfohlen",
+    "premium": "Premium",
+    "patentedFilterTech": "Patentierte Filtertechnologie",
+    "howFilterWorks": "Wie der Filter funktioniert",
+    "earasersVsAlternatives": "Earasers vs. die Alternativen",
+    "chooseYourFilter": "Filter wählen",
+    "filterSubtext": "Nicht sicher, welche Stärke Sie wählen sollen? Beginnen Sie mit der empfohlenen Option — Sie können Filter jederzeit wechseln.",
+    "findYourFit": "Ihre Größe finden",
+    "notSureSize": "Nicht sicher, welche Größe?",
+    "videoSub": "Die Gehörkanalgröße korreliert nicht mit Größe, Gewicht oder Geschlecht. Schauen Sie sich dieses kurze Video an, um Ihre perfekte Passform zu finden:",
+    "videoNote": "Noch unsicher? Bestellen Sie das <strong>Small & Medium Combo</strong> — die beliebteste Wahl für Erstkäufer. 30 Tage Größenumtauschgarantie.",
+    "testimonials": "Erfahrungsberichte",
+    "trustedByProfessionals": "Vertraut von Fachleuten in ganz Europa",
+    "faqHeading": "Häufig gestellte Fragen",
+    "productsCount": "{{count}} Produkte",
+    "shopThisFilter": "Diesen Filter kaufen →",
+    "shopNow": "Jetzt kaufen →",
+    "individualSizes": "Einzelne Größen",
+    "individualSizesSub": "Wähle die Größe, die zu deinem Gehörgang passt.",
+    "comboKits": "Kombipakete",
+    "comboKitsSub": "2 Größen ausprobieren — die beste Passform behalten. Günstiger als Einzelkauf.",
+    "kit": "Kit",
+    "videoTitle": "Wie Sie Ihre Earasers Groesse finden"
+  },
+  "compareTable": {
+    "heading": "Earasers vs. die Alternativen",
+    "sub": "Maßangefertigte Ohrstöpsel kosten €200–400 und dauern Wochen. Earasers bieten denselben HiFi-Schutz mit flachem Frequenzgang für €49,95.",
+    "colEarasers": "Earasers",
+    "colCustom": "Maßanfertigung",
+    "colBudget": "Günstige Stöpsel",
+    "rowPrice": "Preis",
+    "rowAudiologist": "Audiologe erforderlich",
+    "rowDelivery": "Lieferung",
+    "rowInvisible": "Nahezu unsichtbar",
+    "rowClearSound": "Klarer, natürlicher Klang",
+    "rowReplaceableFilter": "Austauschbarer Filter",
+    "rowAwardWinning": "Ausgezeichnet",
+    "valEarasersPrice": "€49,95",
+    "valCustomPrice": "€199+",
+    "valBudgetPrice": "€5–15",
+    "valEarasersDelivery": "2–3 Tage",
+    "valCustomDelivery": "3–6 Wochen",
+    "valBudgetDelivery": "Am nächsten Tag"
+  },
+  "attenSection": {
+    "eyebrow": "Patentierte Filtertechnologie",
+    "heading": "Wie der Filter funktioniert",
+    "body": "Der V-Filter reduziert die schädlichsten Frequenzen (um 3.150 Hz), während der natürliche Musikbereich intakt bleibt. Im Gegensatz zu flach-dämpfenden Ohrstöpseln klingt Earasers klar — nicht wie unter Wasser. Sie hören jede Note, nur sicherer.",
+    "points": [
+      "Offenes Kanaldesign → kein verstopftes Gefühl",
+      "Medizinisches Silikon → individuell an Ihr Ohr angepasst",
+      "Nahezu unsichtbar → niemand sieht, dass Sie sie tragen",
+      "Austauschbarer Filter → Lebensdauer durch bloßen Filterwechsel verlängern"
+    ]
+  },
+  "musician": {
+    "title": "Musik-Ohrstöpsel",
+    "badge": "Für Musiker & Konzertbesucher",
+    "heading": "Lauter spielen.\nLänger hören.",
+    "sub": "Preisgekrönte HiFi-Ohrstöpsel, die dein Gehör schützen, ohne den Klang zu verändern. Von Profis auf Bühnen und Tanzflächen weltweit verwendet.",
+    "stats": [
+      {
+        "value": "5×",
+        "label": "MusicRadar-Preisträger"
+      },
+      {
+        "value": "Flach",
+        "label": "Frequenzgang"
+      },
+      {
+        "value": "−19 dB",
+        "label": "Filterabschwächung"
+      },
+      {
+        "value": "3–6 Mo.",
+        "label": "Filterlebensdauer"
+      }
+    ],
+    "features": [
+      {
+        "title": "Flacher Frequenzgang",
+        "body": "Jede Frequenz wird gleichmäßig reduziert — Bass, Mitten und Höhen bleiben alle im Gleichgewicht. Musik klingt wie Musik, nicht wie durch eine Wand gehört."
+      },
+      {
+        "title": "5× MusicRadar-Preisträger",
+        "body": "Unabhängig getestet und von MusicRadar.com seit 2020 jedes Jahr ausgezeichnet. Der vertrauenswürdigste Ohrstöpsel in der Musikindustrie."
+      },
+      {
+        "title": "Austauschbare Filter",
+        "body": "Filter halten 3–6 Monate und können zu Hause gewechselt werden. Kein neues Paar nötig — ersetzen Sie nur, was abgenutzt ist."
+      }
+    ],
+    "techHeading": "Die Wissenschaft hinter dem Klang",
+    "techBody": "Standard-Schaumstoffohrstöpsel blockieren hohe Frequenzen stärker als tiefe, wodurch Musik dumpf und gedämpft klingt. Der V-förmige Filter von Earasers reduziert alle Frequenzen gleichmäßig — sodass Sie genau denselben Mix hören, nur auf einem sicheren Lautstärkepegel.",
+    "techPoints": [
+      "V-förmiger Filter zielt gleichmäßig auf die 2–8 kHz Gefahrenzone im Spektrum",
+      "Erhält den vollen Dynamikbereich — Details, Nuancen und das 'Gefühl' des Raums bleiben erhalten",
+      "Medizinische Silikonspizte bildet eine passive Abdichtung ohne das Umgebungsbewusstsein vollständig zu blockieren",
+      "Keine Maßanfertigung erforderlich — erhältlich in XS, S, M und L für jeden Gehörkanal"
+    ],
+    "filters": [
+      {
+        "name": "Leichter Filter",
+        "snr": "SNR 14",
+        "db": "−19 dB Spitze",
+        "desc": "Ideal für Proben, kleinere Veranstaltungsorte und akustische Musik, bei der Sie noch vollständig eintauchen wollen."
+      },
+      {
+        "name": "Standard Filter",
+        "snr": "SNR 20",
+        "db": "−26 dB Spitze",
+        "desc": "Der ideale Kompromiss für die meisten Live-Musik-Situationen — Konzerte, Bandproben und Festivalbühnen."
+      }
+    ],
+    "quote": {
+      "text": "\"Ich habe jeden Ohrstöpsel auf dem Markt ausprobiert. Earasers sind die einzigen, bei denen ich noch hören kann, was ich spiele, und zwischen den Songs auf der Bühne ein richtiges Gespräch führen kann.\"",
+      "author": "Daan V.",
+      "role": "Professioneller Gitarrist — Tournee-Musiker"
+    },
+    "faq": [
+      {
+        "q": "Werde ich auf der Bühne noch den vollen Mix hören?",
+        "a": "Ja. Der V-Filter erhält die natürliche Frequenzbalance und reduziert schädliche Spitzen. Die meisten Musiker sagen, Earasers klingen natürlicher als gar nichts zu tragen."
+      },
+      {
+        "q": "Welchen Filterpegel sollte ich für Live-Konzerte verwenden?",
+        "a": "Der −19 dB Comfort-Filter funktioniert gut für die meisten Konzerte und Proben. Für laute Festivals oder Positionen vor der Bühne wählen Sie den −26 dB Standard-Filter."
+      },
+      {
+        "q": "Wie wähle ich meine Größe?",
+        "a": "Nutzen Sie Ihre Erfahrung mit Ohrstöpseln als Referenz. Wenn Ohrstöpsel leicht herausfallen, versuchen Sie XS oder S. Wenn sie zu eng sitzen, versuchen Sie M. Im Zweifelsfall bestellen Sie das Small & Medium Combo — Sie erhalten beide Größen und können die beste Passform behalten."
+      },
+      {
+        "q": "Kann ich mit Bandkollegen sprechen, ohne sie zu entfernen?",
+        "a": "Ja — das offene Kanaldesign lässt Sprache auf natürliche Weise durch. Sie müssen sie nicht zwischen Songs oder während Soundcheck-Gesprächen entfernen."
+      },
+      {
+        "q": "Wie reinige ich sie?",
+        "a": "Mit warmem Wasser und milder Seife abspülen. Vollständig trocknen lassen vor dem Aufbewahren. Alkohol oder starke Lösungsmittel vermeiden."
+      }
+    ],
+    "influencers": [
+      {
+        "quote": "Für bequeme Ohrstöpsel zum Spielen würde ich definitiv Earasers wählen! Ihre perfekte Passform und überlegene Geräuschreduzierung machen sie zu meiner ersten Wahl für jede Aufführung."
+      },
+      {
+        "quote": "Earasers sind die einzigen Ohrstöpsel, denen wir auf der Bühne und im Studio vertrauen. Kristallklarer Klang, die ganze Nacht."
+      }
+    ],
+    "products": [
+      {
+        "name": "Musik-Ohrstöpsel — Small",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Musik-Ohrstöpsel — Medium",
+        "tag": null
+      },
+      {
+        "name": "Musik-Ohrstöpsel — Large",
+        "tag": null
+      },
+      {
+        "name": "Musik Ohrstöpsel — XS & S Kit",
+        "tag": null
+      },
+      {
+        "name": "Musik Ohrstöpsel — S & M Kit",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Musik Ohrstöpsel — M & L Kit",
+        "tag": null
+      }
+    ]
+  },
+  "dj": {
+    "title": "DJ-Ohrstöpsel",
+    "badge": "Für DJs & Club-Profis",
+    "heading": "Schütze deinen Vorsprung.\nBehalte deinen Sound.",
+    "sub": "Gebaut für Booth-Lautstärken, Monitor-Keile und Festivalbühnen. Maximaler Schutz ohne den Mix-Detail zu verlieren, den Sie zum Performen brauchen.",
+    "stats": [
+      {
+        "value": "110 dB+",
+        "label": "Typische Booth-Lautstärke"
+      },
+      {
+        "value": "−31 dB",
+        "label": "Max. Spitzendämpfung"
+      },
+      {
+        "value": "Flach",
+        "label": "Frequenzgang — Mix hören"
+      },
+      {
+        "value": "3 Filter",
+        "label": "SNR 14 / 20 / 22"
+      }
+    ],
+    "features": [
+      {
+        "title": "Ihren Mix hören, nicht eine Klangwand",
+        "body": "Schaumstoffohrstöpsel zerstören Hochton-Details und die Cue-Fähigkeit. Earasers hält den gesamten Frequenzbereich flach, sodass Sie die ganze Nacht präzise mixen können."
+      },
+      {
+        "title": "Für hohen Schalldruckpegel gebaut",
+        "body": "Club-Monitore und Festival-Anlagen erreichen regelmäßig 110+ dB. Wählen Sie SNR 20 für Booth-Arbeit oder SNR 22, wenn Sie bereits Tinnitus haben — flache Dämpfung in jedem Fall."
+      },
+      {
+        "title": "Komfort die ganze Nacht",
+        "body": "Medizinisches Silikon passt sich über Körperwärme Ihrem Gehörkanal an. Keine schmerzenden Ohren nach einem 6-stündigen Set — nur Schutz, den Sie tatsächlich tragen werden."
+      }
+    ],
+    "techHeading": "Warum flache Dämpfung in einer Booth wichtig ist",
+    "techBody": "In einer DJ-Booth müssen Sie jedes Element des Tracks hören — den Sub-Kick, das Hi-Hat-Muster, die Vokalfrequenz, um korrekt zu cueing. Standard-Schaumstoffohrstöpsel dämpfen Höhen übermäßig und lassen Bass unberührt, was Ihre Mix-Referenz zerstört. Earasers reduziert alles gleichmäßig.",
+    "techPoints": [
+      "V-förmiger Filter reduziert 2–8 kHz (die Gefahrenzone) und hält Bässe und Höhen im Verhältnis",
+      "300-Hz-Stimmregister erhalten — Sie können noch mit dem Publikum und anderen DJs kommunizieren",
+      "Passt unter Kopfhörer ohne Druck — kompatibel mit Standard-DJ-Kopfhörern",
+      "Flaches Silikon-Profil sitzt bündig im Kanal — kein herausstehender Stiel, der die Kopfhörerabdeckungen stört"
+    ],
+    "filters": [
+      {
+        "name": "Leichter Filter",
+        "snr": "SNR 14",
+        "db": "−19 dB Spitze",
+        "desc": "Für Monitoring in kleineren Club-Booths oder wenn Sie hohen Schalldruckpegel gewohnt sind und minimale Reduktion wollen."
+      },
+      {
+        "name": "Standard DJ",
+        "snr": "SNR 20",
+        "db": "−26 dB Spitze",
+        "desc": "Die empfohlene Wahl für die meisten DJs. Deckt das gesamte Spektrum an Club-, Festival- und Warehouse-Lautstärken ab."
+      },
+      {
+        "name": "Tinnitus Guard",
+        "snr": "SNR 22",
+        "db": "−31 dB Spitze",
+        "desc": "Maximaler Schutz für DJs mit bestehendem Tinnitus oder solche, die auf extrem lauten Open-Air-Bühnen spielen."
+      }
+    ],
+    "quote": {
+      "text": "\"Ich habe jahrelang Schaumstoffohrstöpsel getragen und jede Sekunde gehasst, weil ich meinen Mix nicht richtig hören konnte. Earasers hat alles verändert — ich kann die Musik wirklich fühlen und höre, was ich tue.\"",
+      "author": "Thijs R.",
+      "role": "Resident DJ — Amsterdamer Club-Szene"
+    },
+    "faq": [
+      {
+        "q": "Wie setze ich meine Earasers Ohrstöpsel ein?",
+        "a": "Setzen Sie den Ohrstöpsel mit dem Stiel nach unten zeigend ein. Ziehen Sie Ihr Ohr nach oben und hinten, um den Kanal zu öffnen, und drehen und drücken Sie dann sanft, bis er richtig sitzt."
+      },
+      {
+        "q": "Werden sie passen?",
+        "a": "Earasers sind in 4 Größen (XS, S, M, L) und 3 Kombipaketen erhältlich. Die meisten DJs verwenden Small oder Medium. Im Zweifelsfall bestellen Sie das Small & Medium Combo, um Ihre perfekte Passform zu finden."
+      },
+      {
+        "q": "Kann ich sie während eines vollständigen DJ-Sets tragen?",
+        "a": "Ja — das offene Kanaldesign bedeutet, dass Sie sich nicht 'verstopft' fühlen werden. Viele DJs tragen sie bequem für Sets von 6+ Stunden."
+      },
+      {
+        "q": "Welcher Filterpegel ist für eine DJ-Booth geeignet?",
+        "a": "Der −31 dB Max-Filter ist für DJ-Booths und Club-Lautstärken konzipiert. Der −26 dB Standard-Filter funktioniert gut für kleinere Veranstaltungsorte."
+      },
+      {
+        "q": "Wie lange halten Earasers?",
+        "a": "Bei normalem Gebrauch und ordnungsgemäßer Pflege halten Filter 3–6 Monate. Ersatzfilter sind separat erhältlich — kein ganzes neues Paar kaufen nötig."
+      }
+    ],
+    "influencers": [
+      {
+        "quote": "Ich habe festgestellt, dass Earasers der komfortabelste und klarste Gehörschutz ist, den ich je verwendet habe, und auf meinen Tourneen kehre ich immer wieder zu ihnen zurück."
+      },
+      {
+        "quote": "Für bequeme Ohrstöpsel zum Spielen würde ich definitiv Earasers wählen! Ihre perfekte Passform und überlegene Geräuschreduzierung machen sie zu meiner ersten Wahl für jede Aufführung."
+      },
+      {
+        "quote": "Das ist definitiv ein Game-Changer."
+      },
+      {
+        "quote": "Als DJ ist Klarheit alles. Earasers liefert kristallklaren Klang und schützt gleichzeitig meine Ohren — ich würde nichts anderes verwenden."
+      }
+    ],
+    "products": [
+      {
+        "name": "DJ-Ohrstöpsel — Small",
+        "tag": null
+      },
+      {
+        "name": "DJ-Ohrstöpsel — Medium",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "DJ-Ohrstöpsel — Large",
+        "tag": null
+      },
+      {
+        "name": "DJ Ohrstöpsel — XS & S Kit",
+        "tag": null
+      },
+      {
+        "name": "DJ Ohrstöpsel — S & M Kit",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "DJ Ohrstöpsel — M & L Kit",
+        "tag": null
+      }
+    ]
+  },
+  "dentist": {
+    "title": "Ohrstöpsel für Zahnärzte & Prophylaxefachkräfte",
+    "badge": "Für Zahnarztprofis",
+    "heading": "Bohrer blocken.\nPatienten hören.",
+    "sub": "Präziser Gehörschutz für die Zahnarztpraxis. Schädliche Scaler- und Bohrergeräusche blocken, während die Patientenkommunikation kristallklar bleibt.",
+    "stats": [
+      {
+        "value": "2–8 kHz",
+        "label": "Scaler / Bohrer Gefahrenzone"
+      },
+      {
+        "value": "250–300 Hz",
+        "label": "Patientenstimme — erhalten"
+      },
+      {
+        "value": "Ganztägig",
+        "label": "Smart Seal Komfort"
+      },
+      {
+        "value": "Kein Abdr.",
+        "label": "Sofortpassform, 4 Größen"
+      }
+    ],
+    "features": [
+      {
+        "title": "Scaler- & Bohrergeräusche blocken",
+        "body": "Ultraschall-Scaler erzeugen konstantes hochfrequentes Rauschen bei 2–8 kHz — genau der Frequenzbereich, der bei täglicher Exposition den meisten Cochlea-Schaden verursacht."
+      },
+      {
+        "title": "Patientenkommunikation erhalten",
+        "body": "Der V-förmige Filter erhält den Bereich von 250–300 Hz, in dem menschliche Sprache liegt. Sie bleiben vollständig vor Werkzeugen geschützt, hören aber jedes Wort Ihres Patienten."
+      },
+      {
+        "title": "Kein maßgefertigter Ohrabdruck nötig",
+        "body": "Earasers verwendet medizinische Silikontips basierend auf Hörgerätetechnologie. Sie passen sich über Körperwärme Ihrem Gehörkanal an — erhältlich in XS, S, M und L."
+      }
+    ],
+    "techHeading": "Das Hörrisiko, über das niemand spricht",
+    "techBody": "Studien zeigen, dass Zahnärzte nach nur 5 Jahren in der Praxis messbaren Hörverlust erleiden. Ultraschall-Scaler, schnelle Handstücke und Absaugeinheiten alle emittieren kontinuierliches Rauschen im 2–8 kHz-Bereich — dem empfindlichsten Teil der menschlichen Cochlea. Standard-Schaumstoffohrstöpsel blockieren die Patientenkommunikation. Earasers löst beide Probleme.",
+    "techPoints": [
+      "Scaler- und Bohrerfrequenzen (2–8 kHz) werden je nach Filterwahl um −19 dB oder −26 dB gedämpft",
+      "Stimmfrequenzen (250–300 Hz) werden erhalten — Patientenanweisungen bleiben hörbar",
+      "Smart Seal Silikontip kann für eine volle 8-Stunden-Schicht ohne Beschwerden getragen werden",
+      "Kontaminationsrisiko reduziert — Ohrstöpsel bleiben während der Behandlung drin, kein wiederholtes Entfernen"
+    ],
+    "filters": [
+      {
+        "name": "Sanfter Standard",
+        "snr": "SNR 14",
+        "db": "−19 dB Spitze",
+        "desc": "Für Fachleute, die in ruhigeren Praxen arbeiten oder sich schrittweise an Schutz gewöhnen wollen. Alltägliche Zahnarztumgebungen."
+      },
+      {
+        "name": "Klinische Balance",
+        "snr": "SNR 20",
+        "db": "−26 dB Spitze",
+        "desc": "Empfohlen für Prophylaxefachkräfte und Zahnärzte, die täglich Ultraschall-Scaler oder schnelle Handstücke verwenden."
+      }
+    ],
+    "quote": {
+      "text": "\"Nach 10 Jahren Scaling ohne Schutz hatte ich messbaren hochfrequenten Hörverlust. Ich trage Earasers jede Schicht seit zwei Jahren und mein Audiologe sagt, mein Gehör hat sich stabilisiert.\"",
+      "author": "Annelies B.",
+      "role": "Dentalhygienikerin — 12 Jahre in der Praxis"
+    },
+    "faq": [
+      {
+        "q": "Warum sollte ich als Zahnarzt Ohrstöpsel tragen?",
+        "a": "Zahnärzte arbeiten den ganzen Tag mit hochfrequentem Bohrerlärm und kontinuierlichem Absaugen, die beide Hörschäden, Tinnitus und geistige Erschöpfung verursachen können. Gute Ohrstöpsel reduzieren diese Spitzen, während die Sprachverständlichkeit erhalten bleibt, was zu weniger Belastung und spürbar mehr Energie am Ende des Tages führt."
+      },
+      {
+        "q": "Welches Filter ist am besten für einen Zahnarzt?",
+        "a": "Das SNR 14 | -19 dB Filter ist die beste Wahl für Zahnärzte, da es hochfrequente Zahnarztgeräusche reduziert und gleichzeitig die Sprache klar hält. Empfindliche Ohren? Beschädigte Ohren? Wählen Sie das SNR 20 | -26dB Filter für optimalen Schutz. Sie hören Ihre Patienten noch klar."
+      },
+      {
+        "q": "Welche Größe soll ich wählen?",
+        "a": "Ist dies Ihre erste Bestellung? Probieren Sie das 'Perfekte Größen-Set' und finden Sie die richtige Größe für Sie. Kombinieren Sie Größe XS & S oder Größe S & M und lesen Sie die Bedienungsanleitung, um die beste Passform für Ihre Ohren zu finden."
+      },
+      {
+        "q": "Werde ich meine Patienten noch klar hören können?",
+        "a": "Ja. Der V-Filter reduziert schädliche hochfrequente Geräusche (wie den Handstückbohrer), während Sprachfrequenzen (250–300 Hz) erhalten bleiben. Sie können ein normales Gespräch führen, ohne sie zu entfernen."
+      },
+      {
+        "q": "Sind diese für Prophylaxefachkräfte geeignet, die Ultraschall-Scaler verwenden?",
+        "a": "Absolut. Der −19 dB Comfort-Filter ist ideal für Prophylaxefachkräfte — er reduziert Scaler-Geräusche ohne die Patientenkommunikation zu dämpfen. Der −26 dB Standard ist für die lautesten Verfahren verfügbar."
+      },
+      {
+        "q": "Welchen Filterpegel empfehlen Sie für Zahnärzte?",
+        "a": "Die meisten Zahnärzte verwenden den −19 dB Comfort-Filter für einen ganzen Arbeitstag. Der −26 dB Standard eignet sich für die lautesten Verfahren (Schnell-Handstücke, Turbinen)."
+      },
+      {
+        "q": "Kann ich sie den ganzen Tag ohne Beschwerden tragen?",
+        "a": "Ja — medizinisches Silikon passt sich über Körperwärme der Form Ihres Kanals an. Viele Zahnarztprofis tragen sie für volle 8-stündige Arbeitstage, ohne sie zwischen Patienten zu entfernen."
+      },
+      {
+        "q": "Gibt es wissenschaftliche Belege für Hörschäden in der Zahnmedizin?",
+        "a": "Ja — mehrere unabhängige Studien zeigen, dass Zahnarztprofis konsistent Lärm auf schädlichen Pegeln ausgesetzt sind, hauptsächlich durch Scaler und schnelle Handstücke."
+      }
+    ],
+    "reviewCards": [
+      {
+        "quote": "Ich bin auf klares Sprachverstehen angewiesen. Diese Ohrstöpsel reduzieren nur die schädlichen Frequenzen, sodass ich meinen Assistenten und Patienten noch perfekt hören kann. Unser gesamtes Team verwendet sie jetzt.",
+        "name": "Dr. M. Richards"
+      },
+      {
+        "quote": "Sehr zufrieden mit den Ohrstöpseln. Sehr bequem und sie haben meinen Arbeitstag viel entspannter gemacht.",
+        "name": "Brummans & Fa Zahnarztpraxis"
+      },
+      {
+        "quote": "Klarer Klang, weniger Ermüdung. Diese Ohrstöpsel nehmen den Rand des hochfrequenten Rauschens weg, ohne mich von Patienten zu isolieren.",
+        "name": "Dr. A. Vermeer"
+      },
+      {
+        "quote": "Leicht, effektiv und einfach den ganzen Tag zu tragen. Diese Ohrstöpsel sind Teil meiner täglichen Routine geworden.",
+        "name": "Dr. K. Maktur"
+      },
+      {
+        "quote": "Ich hätte nie erwartet, dass Ohrstöpsel so einen großen Unterschied machen. Ich höre noch alles klar, aber am Ende des Tages fühle ich merklich mehr Energie.",
+        "name": "Dr. Shad Faraj"
+      }
+    ],
+    "influencers": [
+      {
+        "quote": "Ich bin sehr froh, mit diesen Ohrstöpseln arbeiten zu können. Sie machen meinen Arbeitstag viel bequemer und entspannter."
+      },
+      {
+        "quote": "Ich hätte nie erwartet, dass Ohrstöpsel so einen großen Unterschied machen. Ich höre noch alles klar, aber am Ende des Tages fühle ich merklich mehr Energie."
+      }
+    ],
+    "products": [
+      {
+        "name": "Zahnarzt-Ohrstöpsel — Small",
+        "tag": null
+      },
+      {
+        "name": "Zahnarzt-Ohrstöpsel — Medium",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Zahnarzt-Ohrstöpsel — Large",
+        "tag": null
+      },
+      {
+        "name": "Zahnarzt Ohrstöpsel — XS & S Kit",
+        "tag": null
+      },
+      {
+        "name": "Zahnarzt Ohrstöpsel — S & M Kit",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Zahnarzt Ohrstöpsel — M & L Kit",
+        "tag": null
+      }
+    ]
+  },
+  "sleeping": {
+    "title": "Schlaf-Ohrstöpsel",
+    "badge": "Für besseren Schlaf",
+    "heading": "Ruhige Nächte.\nAusgeruhte Morgen.",
+    "sub": "Weiche, kaum spürbare Ohrstöpsel für den Schlaf. Schnarchen, Verkehr und Stadtlärm blocken ohne den Unbehagen von Schaumstoff, der um 3 Uhr morgens herausfällt.",
+    "stats": [
+      {
+        "value": "−19 dB",
+        "label": "Umgebungsgeräuschreduzierung"
+      },
+      {
+        "value": "Bündige Passf.",
+        "label": "Komfortabel auf der Seite"
+      },
+      {
+        "value": "Waschbar",
+        "label": "Wiederverwendbar, hygienisch"
+      },
+      {
+        "value": "3–6 Mo.",
+        "label": "Filterlebensdauer"
+      }
+    ],
+    "features": [
+      {
+        "title": "Die ganze Nacht drin bleiben",
+        "body": "Der flache Silikontip sitzt bündig in Ihrem Gehörkanal, sodass Sie auf der Seite schlafen können ohne Druck oder Beschwerden. Kein schmerzendes Aufwachen mehr."
+      },
+      {
+        "title": "Schnarchen & Verkehr blocken",
+        "body": "Earasers reduziert Umgebungsgeräusche um bis zu −19 dB — genug, um den Rand eines schnarchenden Partners oder einer lauten Straße wegzunehmen, ohne alles vollständig zu blocken."
+      },
+      {
+        "title": "Wiederverwendbar & hygienisch",
+        "body": "Im Gegensatz zu Einwegschaum sind Earasers waschbar und langlebig. Der austauschbare Filter hält sie monatelang für den nächtlichen Gebrauch hygienisch."
+      }
+    ],
+    "techHeading": "Warum Schaum Sie immer wieder enttäuscht",
+    "techBody": "Schaumstoffohrstöpsel dehnen sich ungleichmäßig aus, erzeugen Druck in Ihrem Gehörkanal und fallen heraus, wenn Sie sich bewegen. Earasers verwendet medizinisches Silikon, das sich sanft über Körperwärme an Ihr Ohr anpasst — kein Druck, keine Bewegung, kein nächtliches Suchen nach einem Stöpsel, der aufs Kissen gefallen ist.",
+    "techPoints": [
+      "Flaches Design sitzt unter dem Außenohr — bequem auf beiden Seiten die ganze Nacht",
+      "−19 dB Reduzierung nimmt den Rand von Schnarchen und Verkehr weg ohne Alarmsignale vollständig zu blockieren",
+      "Medizinisches hypoallergenes Silikon — sicher für den nächtlichen Gebrauch ohne Hautirritationen",
+      "Waschbar und wiederverwendbar — weit weniger Abfall als Einwegschaum, deutlich geringere Langzeitkosten"
+    ],
+    "filters": [
+      {
+        "name": "Schlaffilter",
+        "snr": "SNR 14",
+        "db": "−19 dB Spitze",
+        "desc": "Der Standard-Schlaffilter. Reduziert Schnarchen, Verkehr und Umgebungsraumgeräusche auf ein beherrschbares Niveau."
+      }
+    ],
+    "quote": {
+      "text": "\"Mein Partner schnarcht wie ein Güterzug. Ich habe jeden Schaumstoffohrstöpsel ausprobiert und ende immer mit schmerzenden Ohren oder verliere sie in der Nacht. Earasers sind die ersten, die ich wirklich weiter trage.\"",
+      "author": "Marieke D.",
+      "role": "Verifizierter Käufer — Amsterdam"
+    },
+    "faq": [
+      {
+        "q": "Werde ich meinen Wecker noch hören?",
+        "a": "Ja — −19 dB reduziert die Lautstärke, blockiert Klang aber nicht vollständig. Telefonalarme bei normaler Lautstärke bleiben hörbar."
+      },
+      {
+        "q": "Kann ich damit auf der Seite schlafen?",
+        "a": "Ja. Das flache bündige Design wurde speziell für Seitenschläfer gewählt. Es gibt keinen herausstehenden Stiel, der Druck gegen ein Kissen erzeugt."
+      },
+      {
+        "q": "Wie halte ich sie für den nächtlichen Gebrauch hygienisch?",
+        "a": "Nach Gebrauch mit warmem Wasser und milder Seife abspülen. Vollständig trocknen lassen, bevor Sie sie ins Etui zurücklegen. Den Filter alle 3–6 Monate wechseln."
+      }
+    ],
+    "products": [
+      {
+        "name": "Schlaf-Ohrstöpsel — Small",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Schlaf-Ohrstöpsel — Medium",
+        "tag": null
+      },
+      {
+        "name": "Schlaf-Ohrstöpsel — Large",
+        "tag": null
+      },
+      {
+        "name": "Schlaf Ohrstöpsel — XS & S Kit",
+        "tag": null
+      },
+      {
+        "name": "Schlaf Ohrstöpsel — S & M Kit",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Schlaf Ohrstöpsel — M & L Kit",
+        "tag": null
+      }
+    ]
+  },
+  "motorsport": {
+    "title": "Motorsport-Ohrstöpsel",
+    "badge": "Für Fahrer & Piloten",
+    "heading": "Wind aus.\nFokus ein.",
+    "sub": "Windgeräusch, Motorenlärm und Strecken-Chaos blocken, während Ihr Intercom, GPS und Beifahrerkommunikation klar bleibt. Gebaut für die Fahrt.",
+    "stats": [
+      {
+        "value": "85 dB+",
+        "label": "Windgeräusch auf Autobahngeschwindigkeit"
+      },
+      {
+        "value": "−26 dB",
+        "label": "Spitzendämpfung"
+      },
+      {
+        "value": "Slim-Profil",
+        "label": "Unter jedem Helm"
+      },
+      {
+        "value": "300 Hz",
+        "label": "Intercom-Stimme erhalten"
+      }
+    ],
+    "features": [
+      {
+        "title": "Windgeräusch eliminieren",
+        "body": "Windgeräusch bei Autobahngeschwindigkeit erreicht 85–95 dB in einem Helm — ein ernstes Langzeit-Hörrisiko. Earasers reduziert dieses konstante Breitbandrauschen dramatisch."
+      },
+      {
+        "title": "Intercom-kompatibel",
+        "body": "Das schlanke, flache Design passt komfortabel unter einen Helm und stört keine Bluetooth-Intercom-Ohrstücke oder In-Ear-Headsets."
+      },
+      {
+        "title": "Ganztägiger Komfort",
+        "body": "Langstreckenfahrten und Renntage erfordern stundenlangem Tragen. Medizinisches Silikon passt sich Ihrem Gehörkanal an — kein Druckaufbau, keine Beschwerden nach 500 km."
+      }
+    ],
+    "techHeading": "Das versteckte Hörrisiko in Ihrem Helm",
+    "techBody": "Windturbulenz in einem Motorradhelm erzeugt Breitbandrauschen von 85–105 dB je nach Geschwindigkeit. Über Jahre des Fahrens verursacht dies progressiven hochfrequenten Hörverlust — das gleiche Muster wie bei Fabrikarbeitern. Im Gegensatz zu Schaumstoffstöpseln hält Earasers Gefahrensignale und Intercom-Audio hörbar, während das schädliche Rauschen abgeschnitten wird.",
+    "techPoints": [
+      "85–95 dB Windgeräusch bei 100 km/h — Earasers reduziert dies auf sichere Expositionspegel",
+      "300-Hz-Stimmerhaltung bedeutet, dass Intercom-Audio, GPS-Anweisungen und Beifahreranrufe klar bleiben",
+      "Schlankes Profil passt in die meisten Vollvisier- und Offenface-Helme ohne Beschwerden",
+      "Kompatibel mit In-Ear-Bluetooth-Intercom-Systemen und Standard-Ohrstöpsel-Setups"
+    ],
+    "filters": [
+      {
+        "name": "Leichte Fahrt",
+        "snr": "SNR 14",
+        "db": "−19 dB Spitze",
+        "desc": "Für Stadtfahrten und kürzere Strecken, bei denen Sie Verkehrsgeräusche und Gefahren wahrnehmen wollen."
+      },
+      {
+        "name": "Lange Strecke",
+        "snr": "SNR 20",
+        "db": "−26 dB Spitze",
+        "desc": "Die empfohlene Wahl für Autobahn- und Tourenfahrten. Deckt anhaltende Autobahnwindgeräusch-Exposition ab."
+      }
+    ],
+    "quote": {
+      "text": "\"Nach einer 1.200-km-Tour durch Frankreich hatte ich früher tagelang klingelnde Ohren. Mit Earasers komme ich völlig erholt nach Hause — und ich konnte den ganzen Weg mein Intercom perfekt hören.\"",
+      "author": "Stefan K.",
+      "role": "Tourenfahrer — 20+ Jahre auf der Straße"
+    },
+    "faq": [],
+    "products": [
+      {
+        "name": "Motorsport-Ohrstöpsel — Small",
+        "tag": null
+      },
+      {
+        "name": "Motorsport-Ohrstöpsel — Medium",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Motorsport-Ohrstöpsel — Large",
+        "tag": null
+      },
+      {
+        "name": "Motorsport Ohrstöpsel — XS & S Kit",
+        "tag": null
+      },
+      {
+        "name": "Motorsport Ohrstöpsel — S & M Kit",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Motorsport Ohrstöpsel — M & L Kit",
+        "tag": null
+      }
+    ]
+  },
+  "sensitivity": {
+    "title": "Ohrstöpsel für Geräuschempfindlichkeit",
+    "badge": "Für Autismus, ADHS & Hyperakusis",
+    "heading": "Sinne beruhigen.\nPräsent bleiben.",
+    "sub": "Entwickelt für Menschen mit Geräuschempfindlichkeit, Hyperakusis, Autismus oder ADHS. Den Rand überwältigender Umgebungen nehmen, ohne sich von der Welt abzukapseln.",
+    "stats": [
+      {
+        "value": "−19 dB",
+        "label": "Sanfte Umgebungsreduzierung"
+      },
+      {
+        "value": "Flach",
+        "label": "Natürlicher Klangcharakter"
+      },
+      {
+        "value": "Dezent",
+        "label": "Nahezu unsichtbar"
+      },
+      {
+        "value": "Tägl. Gebrauch",
+        "label": "Hypoallerg. Silikon"
+      }
+    ],
+    "features": [
+      {
+        "title": "Sanft, nicht total",
+        "body": "Totale Geräuschblockierung kann desorientierend wirken. Earasers senkt die Lautstärke der Welt sanft, während Sie Ihrer Umgebung bewusst bleiben und Gespräche führen können."
+      },
+      {
+        "title": "Von der neurodivergen Gemeinschaft vertraut",
+        "body": "Viele Menschen mit Autismus, ADHS und sensorischen Verarbeitungsunterschieden verwenden Earasers täglich — bei der Arbeit, im Nahverkehr, in belebten Geschäften und sozialen Umgebungen."
+      },
+      {
+        "title": "Dezent & bequem",
+        "body": "Beim Tragen nahezu unsichtbar. Weiches Silikon ist hypoallergen und sanft genug für ausgedehnten täglichen Gebrauch ohne Reizungen oder Druck."
+      }
+    ],
+    "techHeading": "Sanfte Reduzierung, keine totale Isolation",
+    "techBody": "Für Menschen mit Hyperakusis oder sensorischer Empfindlichkeit kann totale Geräuschblockierung Angst eher verstärken als verringern. Der Earasers SNR 14 Filter reduziert die Gesamtlautstärke um −19 dB, während der natürliche Klangcharakter intakt bleibt — Stimmen klingen noch wie Stimmen, Musik klingt noch wie Musik.",
+    "techPoints": [
+      "Flache −19 dB Reduzierung: die Welt klingt gleich, nur leiser und weniger überwältigend",
+      "Stimmen bleiben klar — Sie können noch in belebten Umgebungen Gespräche führen",
+      "Hypoallergenes medizinisches Silikon — kein Latex, keine Reizstoffe, sicher für den ganztägigen Gebrauch",
+      "Beim Tragen nahezu unsichtbar — kein soziales Stigma durch sichtbare Kapselgehörschützer"
+    ],
+    "filters": [
+      {
+        "name": "Empfindlichkeitsfilter",
+        "snr": "SNR 14",
+        "db": "−19 dB Spitze",
+        "desc": "Der einzige Filter, den wir für den täglichen Empfindlichkeitsgebrauch empfehlen. Sanfte, flache Reduzierung, die die Welt zugänglich hält."
+      }
+    ],
+    "quote": {
+      "text": "\"Ich habe Hyperakusis und konnte ohne Kopfschmerzen nicht in einen Supermarkt gehen. Earasers lässt mich wieder ein normales Leben führen. Ich trage sie jeden einzelnen Tag.\"",
+      "author": "Lena M.",
+      "role": "Hyperakusis — täglicher Earasers-Nutzer"
+    },
+    "faq": [],
+    "products": [
+      {
+        "name": "Empfindlichkeits-Ohrstöpsel — Small",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Empfindlichkeits-Ohrstöpsel — Medium",
+        "tag": null
+      },
+      {
+        "name": "Empfindlichkeits-Ohrstöpsel — Large",
+        "tag": null
+      },
+      {
+        "name": "Empfindlichkeit Ohrstöpsel — XS & S Kit",
+        "tag": null
+      },
+      {
+        "name": "Empfindlichkeit Ohrstöpsel — S & M Kit",
+        "tag": "Bestseller"
+      },
+      {
+        "name": "Empfindlichkeit Ohrstöpsel — M & L Kit",
+        "tag": null
+      }
+    ]
+  }
+}

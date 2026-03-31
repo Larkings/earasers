@@ -1,0 +1,180 @@
+{
+  "hero": {
+    "badge": "5× Beste Musik-Ohrstöpsel · MusicRadar.com",
+    "headline": "Alles hören.\nNichts beschädigen.",
+    "sub": "Preisgekrönte HiFi-Ohrstöpsel, getragen von Musikern, DJs und Zahnärzten in ganz Europa. Schutz, der die Stimmung nicht tötet.",
+    "cta": "Musik-Ohrstöpsel ansehen",
+    "sizeCta": "Meine Größe finden"
+  },
+  "useCases": {
+    "heading": "Gemacht für deine Welt",
+    "sub": "Bühne, Tanzfläche, Alltag, Klinik oder Schlafzimmer. Wir haben die richtige Passform.",
+    "musician": "Musiker",
+    "musicianSub": "Auf der Bühne und im Studio",
+    "musicianProduct": "Musik-Ohrstöpsel",
+    "dj": "DJ",
+    "djSub": "Von Club-Sets bis zu Festivalbühnen",
+    "djProduct": "DJ-Ohrstöpsel",
+    "dentist": "Zahnarzt",
+    "dentistSub": "Scalergeräusche blockieren, Patientenkommunikation erhalten",
+    "dentistProduct": "Zahnarzt & Hygieniker Ohrstöpsel",
+    "sleeping": "Schlafen",
+    "sleepingSub": "Ruhig, bequem, die ganze Nacht",
+    "sleepingProduct": "Schlaf-Ohrstöpsel",
+    "motorsport": "Motorsport",
+    "motorsportSub": "Wind-, Motor- und Streckengeräusche unter Kontrolle",
+    "motorsportProduct": "Motorsport-Ohrstöpsel",
+    "noiseSensitivity": "Geräuschempfindlichkeit",
+    "noiseSensitivitySub": "Beruhige deine Sinne ohne Klarheit zu verlieren",
+    "noiseSensitivityProduct": "Geräuschempfindlichkeit Ohrstöpsel"
+  },
+  "bestSellers": {
+    "heading": "Unsere Bestseller",
+    "viewAll": "Alle ansehen",
+    "chooseOptions": "Optionen wählen",
+    "bestSeller": "Bestseller",
+    "perfectSizeKit": "Perfektes Größen-Set",
+    "recommended": "Empfohlen",
+    "premium": "Premium",
+    "products": [
+      {
+        "name": "Musik-Ohrstopsel"
+      },
+      {
+        "name": "DJ-Ohrstopsel"
+      },
+      {
+        "name": "Perfektes Grossenset"
+      },
+      {
+        "name": "Earasers Pro-Kit"
+      }
+    ]
+  },
+  "sizeQuiz": {
+    "heading": "Größenfinder",
+    "subHeading": "Unsicher welche Größe?",
+    "description": "Beantworte 3 kurze Fragen und wir empfehlen die richtige Passform.",
+    "q1": "Wofür brauchst du Ohrstöpsel?",
+    "a1_music": "Musik / Konzerte",
+    "a1_dj": "Auflegen",
+    "a1_sleeping": "Schlafen",
+    "a1_other": "Sonstiges",
+    "q2": "Wie passen dir normale In-Ear-Aufsätze?",
+    "a2_large": "Fallen heraus — zu groß",
+    "a2_perfect": "Passen perfekt",
+    "a2_small": "Lassen Schall durch — zu klein",
+    "a2_unsure": "Ich bin nicht sicher",
+    "q3": "Wie alt bist du?",
+    "a3_under25": "Unter 25",
+    "a3_25to45": "25 – 45",
+    "a3_over45": "45+",
+    "stepOf": "Schritt {{current}} von {{total}}",
+    "resultXS": "Extra Klein (XS)",
+    "resultXSDesc": "Du hast einen kleineren Gehörgang — XS bietet die beste Abdichtung.",
+    "resultL": "Groß (L)",
+    "resultLDesc": "Du hast einen größeren Gehörgang — L sorgt für eine gute Abdichtung.",
+    "resultS": "Klein (S)",
+    "resultSDesc": "Die meisten jungen Erwachsenen passen bequem in S.",
+    "resultSM": "Klein / Medium",
+    "resultSMDesc": "Klein und Medium sind beide beliebt — das S&M-Set lässt dich beide ausprobieren.",
+    "resultKit": "S & M Starter-Set",
+    "resultKitDesc": "Unentschlossen? Unser beliebtestes Set enthält sowohl S als auch M, damit du die perfekte Passform findest.",
+    "yourFit": "Deine perfekte Passform",
+    "shopSize": "Meine Größe kaufen",
+    "startOver": "Neu starten",
+    "selectSize": "Empfohlene Größe wählen",
+    "footer": "Kostenloser Versand ab €39 · Kostenlose Rücksendung · Expertenempfehlung",
+    "filter31": "-31dB Max-Filter",
+    "filter26": "-26dB Standard-Filter",
+    "filter19": "-19dB Komfort-Filter"
+  },
+  "award": {
+    "pill": "MusicRadar Ausgezeichnet",
+    "heading": "Fünf Jahre an der Spitze",
+    "sub": "Unabhängig getestet und von MusicRadar.com jedes Jahr seit 2020 ausgezeichnet.",
+    "reviewLink": "Vollständige Bewertung auf MusicRadar lesen"
+  },
+  "compareTable": {
+    "heading": "Earasers vs. die Alternativen",
+    "sub": "Guter Gehörschutz sollte kein Vermögen kosten oder alles dämpfen.",
+    "earasers": "Earasers",
+    "customMolds": "Maßgefertigte Ohrstöpsel",
+    "cheapFoam": "Billiger Schaumstoff",
+    "price": "Preis",
+    "delivery": "Lieferzeit",
+    "deliveryEarasers": "2–3 Tage",
+    "deliveryCustom": "3–6 Wochen",
+    "deliveryFoam": "Sofort",
+    "priceCustom": "€199+",
+    "priceFoam": "€5–15",
+    "noSpecialist": "Kein Spezialist nötig",
+    "nearlyInvisible": "Kaum sichtbar",
+    "clearSound": "Klarer Klang",
+    "adjustableFilter": "Einstellbarer Filter",
+    "cta": "Earasers ab €49,95 kaufen"
+  },
+  "howItWorks": {
+    "heading": "Wie es funktioniert",
+    "sub": "Drei clevere Ideen. Ein sehr kleiner Ohrstöpsel.",
+    "step1Title": "Offenes Kanal-Design",
+    "step1Desc": "Schall gelangt auf natürliche Weise in dein Ohr, bevor eine Filterung stattfindet. Das lässt Musik wie Musik klingen und nicht, als würdest du durch eine Wand hören.",
+    "step2Title": "V-Filter Technologie",
+    "step2Desc": "Earasers' patentiertes Open-Canal-Design liefert kristallklaren Sound und filtert dabei gezielt bestimmte Frequenzen. So hörst du Stimmen ganz natürlich, während nur der unerwünschte Lärm reduziert wird.",
+    "step3Title": "Medizinisches Silikon",
+    "step3Desc": "Aus medizinischem Silikon gefertigt, passt sich Earasers der Form deines Gehörgangs an – für einen individuell angepassten Sitz.",
+    "chartAlt": "Earasers Dämpfungsdiagramm",
+    "zoomHint": "Klicken zum Vergrößern",
+    "close": "Schließen"
+  },
+  "reviews": {
+    "heading": "Echte Menschen. Echte Meinungen.",
+    "sub": "Mit 4,7 von 5 von über 1.000 Kunden bewertet",
+    "trustpilot": "Auf Trustpilot ansehen"
+  },
+  "influencers": {
+    "heading": "Von Profis vertraut",
+    "sub": "Musiker, DJs und Hörexperten, die auf Earasers schwören."
+  },
+  "blogTeaser": {
+    "heading": "Aus dem Blog",
+    "readMore": "Mehr lesen",
+    "viewAll": "Alle Artikel ansehen",
+    "posts": [
+      {
+        "title": "5-fach ausgezeichnet: Earasers!",
+        "excerpt": "Zum funften Mal in Folge hat MusicRadar Earasers zum besten Musik-Ohrstopsel gekurt.",
+        "date": "Marz 2024",
+        "slug": "5-time-award-winning"
+      },
+      {
+        "title": "Von Weltklasse-DJs vertraut",
+        "excerpt": "Von Festival-Hauptbuhnen bis zu intimen Clubnachten, professionelle DJs verlassen sich auf Earasers.",
+        "date": "Januar 2024",
+        "slug": "trusted-by-djs"
+      },
+      {
+        "title": "Jetzt bei Dijkman Music Amsterdam erhaltlich",
+        "excerpt": "Probieren und kaufen Sie Earasers im Laden bei Dijkman Music, einem der angesehensten Musikgeschafte der Niederlande.",
+        "date": "November 2023",
+        "slug": "dijkman-amsterdam"
+      }
+    ]
+  },
+  "videoSection": {
+    "label": "Sieh selbst",
+    "heading": "Hör den Unterschied.",
+    "body": "Schau, wie Earasers dein Gehör schützen und dabei jede Musikfrequenz intakt halten — kein Dumpfen, kein Nur-Bass-Sound. Dieselbe Klarheit, die du liebst, bei einem sicheren Lautstärkepegel.",
+    "cta": "Jetzt kaufen",
+    "sub": "Schau, wie Earasers dein Gehör schützen, ohne die Musik zu beeinträchtigen."
+  },
+  "sizeFinder": {
+    "pill": "30 Sekunden",
+    "heading": "Finde deine perfekte Passform",
+    "sub": "Beantworte 3 Fragen und erhalte eine personalisierte Empfehlung — kein Raten, keine Rücksendungen.",
+    "trust1": "Personalisiert für dich",
+    "trust2": "Von Experten empfohlen",
+    "trust3": "Kostenlose Rücksendungen",
+    "socialFull": "4,9/5 · 2.000+ Kunden · Kostenloser Versand ab €39 · Kostenlose Rücksendungen"
+  }
+}

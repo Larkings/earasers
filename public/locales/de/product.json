@@ -1,0 +1,82 @@
+{
+  "breadcrumb": {
+    "home": "Startseite",
+    "shop": "Shop"
+  },
+  "sizes": [
+    {
+      "label": "XS",
+      "tip": "Extra Klein — passt für ~3% der Nutzer"
+    },
+    {
+      "label": "S",
+      "tip": "Klein — am beliebtesten, ~40% der Nutzer"
+    },
+    {
+      "label": "M",
+      "tip": "Medium — am beliebtesten, ~40% der Nutzer"
+    },
+    {
+      "label": "L",
+      "tip": "Groß — passt für ~14% der Nutzer"
+    },
+    {
+      "label": "XS & S Kit",
+      "tip": "Extra Klein & Klein — ideal wenn du zwischen zwei Größen liegst.",
+      "kit": true
+    },
+    {
+      "label": "S & M Kit",
+      "tip": "Klein & Medium — die beliebteste Einstiegskombi.",
+      "kit": true
+    },
+    {
+      "label": "M & L Kit",
+      "tip": "Medium & Groß — für einen breiteren Gehörgang.",
+      "kit": true
+    }
+  ],
+  "tabs": [
+    "Beschreibung",
+    "Spezifikationen",
+    "Bewertungen"
+  ],
+  "size": "Größe",
+  "dontKnowSize": "Größe nicht bekannt? →",
+  "closeQuiz": "Quiz schließen ×",
+  "sizeSetFromQuiz": "Größe basierend auf Ihren Antworten festgelegt",
+  "filterLevel": "Filterstufe",
+  "quantity": "Menge",
+  "decreaseQty": "Verringern",
+  "increaseQty": "Erhöhen",
+  "addToCart": "{{qty}}× in den Warenkorb — {{price}}",
+  "addToCartSingle": "In den Warenkorb — {{price}}",
+  "save": "{{amount}} sparen",
+  "reviewsCount": "{{count}} Bewertungen",
+  "addedToCart": "In den Warenkorb gelegt",
+  "securePayment": "Sichere Zahlung",
+  "freeShipping": "Kostenloser Versand ab €39",
+  "returns": "30 Tage Rückgabe",
+  "descriptionHeading": "Was macht Earasers besonders?",
+  "descriptionBody": "Earasers verwendet ein patentiertes offenes Kanaldesign kombiniert mit einem V-Filter, um schädliche Schallpegel zu reduzieren und dabei den natürlichen Klang der Musik zu bewahren.",
+  "specsHeading": "Dämpfungswerte",
+  "specsBody": "Gemessen nach ISO 11904-1. Werte sind durchschnittliche Dämpfung je Prüffrequenz.",
+  "specsImgAlt": "Earasers Dämpfungsdiagramm",
+  "reviewsRating": "{{rating}} von 5 — basierend auf {{count}} Bewertungen",
+  "recentlyViewed": "Zuletzt angesehen",
+  "reviews": [
+    {
+      "name": "Michael T.",
+      "text": "Diese Earasers sind perfekt. Sie passen sehr gut, sind kaum sichtbar und balancieren den Klang perfekt."
+    },
+    {
+      "name": "Saskia H.",
+      "text": "Viel besser und günstiger als alle maßgefertigten Ohrstöpsel von bekannten Marken, die ich hatte!"
+    },
+    {
+      "name": "Joanne C.",
+      "text": "Ausgezeichneter Kundendienst — sie schickten mir die Mittels plus das Filterentfernungswerkzeug kostenlos!"
+    }
+  ],
+  "orComboKit": "oder ein Kombipaket wählen"
+}
