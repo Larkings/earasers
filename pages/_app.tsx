@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import i18n, { type Resource } from 'i18next';
+import i18n, { type Resource, type InitOptions } from 'i18next';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
 import { CartProvider } from '../context/cart';
 import { AuthProvider } from '../context/auth';
@@ -36,9 +36,8 @@ function createI18nInstance(
     defaultNS: 'common',
     resources,
     interpolation: { escapeValue: false },
-    initImmediate: false,       // synchronous init — prevents SSR/client mismatch
     react: { useSuspense: false },
-  });
+  } as InitOptions);
   return instance;
 }
 
