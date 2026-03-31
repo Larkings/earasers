@@ -54,26 +54,26 @@ function MyApp({ Component, pageProps }: AppProps) {
   const instanceRef = useRef<I18nInstance | null>(null);
   if (!instanceRef.current) {
     instanceRef.current = createI18nInstance(locale, resources, ns);
-  }
-
-  // Keep translations up-to-date when navigating between pages
-  useEffect(() => {
+  } else {
+    // Synchronously inject any namespaces the new page brought in before render,
+    // so t() never falls back to keys on the first client-side navigation render.
     const inst = instanceRef.current;
-    if (!inst) return;
-
-    // Add namespaces that are new for this page
-    const localeData = resources[locale] || {};
+    const localeData = (resources as Record<string, Record<string, unknown>>)[locale] || {};
     Object.entries(localeData).forEach(([nsKey, nsData]) => {
       if (!inst.hasResourceBundle(locale, nsKey)) {
         inst.addResourceBundle(locale, nsKey, nsData as Record<string, unknown>, true, true);
       }
     });
+  }
 
-    // Switch language when the locale changes
+  // Keep language in sync when the locale changes (e.g. user switches language)
+  useEffect(() => {
+    const inst = instanceRef.current;
+    if (!inst) return;
     if (inst.language !== locale) {
       inst.changeLanguage(locale);
     }
-  }, [locale, resources]);
+  }, [locale]);
 
   // Auto-detect locale on first visit
   useEffect(() => {
