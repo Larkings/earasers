@@ -697,7 +697,6 @@
 .imgWrap {
   position: relative;
   aspect-ratio: 1;
-  background: var(--color-surface-2, #f5f2ee);
   overflow: hidden;
 }
 

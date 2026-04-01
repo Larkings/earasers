@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import styles from './footer.module.css';
+import Image from "next/image";
 
 export const Footer = () => {
   const { t } = useTranslation('common');
@@ -38,7 +39,16 @@ export const Footer = () => {
 
           {/* Brand */}
           <div className={styles.brand}>
-            <Link href="/" className={styles.logo}>EARASERS</Link>
+            <Link href="/" className={styles.logo}>
+              <Image
+                  src="/Test_Logo_Earasres_2.png"
+                  alt="EARASERS Logo"
+                  width={150}    // Pas dit aan naar de gewenste breedte
+                  height={50}    // Pas dit aan naar de gewenste hoogte
+                  priority       // Zorgt dat het logo direct geladen wordt (LCP)
+                  className={styles.logoImage}
+              />
+            </Link>
             <p className={styles.tagline}>BE EARRESPONSIBLE</p>
             <p className={styles.desc}>{t('footer.tagline')}</p>
             <div className={styles.socials}>

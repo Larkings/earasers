@@ -8,6 +8,7 @@ import { CartProvider } from '../context/cart';
 import { AuthProvider } from '../context/auth';
 import { CookieBanner } from '../components/cookie-banner';
 import { CartDrawer } from '../components/cart-drawer';
+import { AuthDrawer } from '../components/auth-drawer';
 
 const LOCALE_KEY = 'earasers-locale';
 const SUPPORTED = ['en', 'nl', 'de', 'es'];
@@ -123,6 +124,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <CartProvider>
           <Component {...pageProps} />
           <CartDrawer />
+          <AuthDrawer />
           <CookieBanner />
         </CartProvider>
       </AuthProvider>

@@ -125,11 +125,6 @@
     "searchLabel": "Winkels zoeken",
     "searchBtn": "Zoeken",
     "tabAll": "Alle",
-    "tabNetherlands": "Nederland",
-    "tabBelgium": "België",
-    "tabGermany": "Duitsland",
-    "tabUK": "Verenigd Koninkrijk",
-    "tabOther": "Overig",
     "noResults": "Geen winkels gevonden. Probeer een andere zoekopdracht.",
     "getDirections": "Routebeschrijving",
     "website": "Website",
@@ -140,7 +135,11 @@
     "retailerHeading": "Word een officiële Earasers-retailer",
     "retailerSub": "Heb je een muziekwinkel, apotheek of speciaalzaak? Verkoop Europa's meest bekroonde HiFi-oordoppen en geef je klanten de gehoorbescherming die ze écht willen dragen.",
     "retailerLink": "Neem contact op over het verkopen van Earasers",
-    "officialRetailer": "Officiële Retailer"
+    "officialRetailer": "Officiële Retailer",
+    "tabUS": "Verenigde Staten",
+    "tabCanada": "Canada",
+    "tabAustralia": "Australië",
+    "tabInternational": "Internationaal"
   },
   "influencersLabel": "Klanten die Earasers gebruiken"
 }

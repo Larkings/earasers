@@ -125,11 +125,6 @@
     "searchLabel": "Händler suchen",
     "searchBtn": "Suchen",
     "tabAll": "Alle",
-    "tabNetherlands": "Niederlande",
-    "tabBelgium": "Belgien",
-    "tabGermany": "Deutschland",
-    "tabUK": "Vereinigtes Königreich",
-    "tabOther": "Sonstige",
     "noResults": "Keine Händler gefunden. Versuche eine andere Suche.",
     "getDirections": "Route anzeigen",
     "website": "Website",
@@ -140,7 +135,11 @@
     "retailerHeading": "Werde offizieller Earasers-Händler",
     "retailerSub": "Hast du ein Musikgeschäft, eine Apotheke oder ein Fachgeschäft? Verkaufe Europas meistausgezeichnete HiFi-Ohrstöpsel und biete deinen Kunden den Gehörschutz, den sie wirklich tragen möchten.",
     "retailerLink": "Kontaktiere uns wegen des Verkaufs von Earasers",
-    "officialRetailer": "Offizieller Händler"
+    "officialRetailer": "Offizieller Händler",
+    "tabUS": "Vereinigte Staaten",
+    "tabCanada": "Kanada",
+    "tabAustralia": "Australien",
+    "tabInternational": "International"
   },
   "influencersLabel": "Kunden, die Earasers verwenden"
 }

@@ -11,7 +11,7 @@ import Image from 'next/image';
 export const Navbar = () => {
   const { t } = useTranslation('common');
   const { totalCount, openCart } = useCart();
-  const { user } = useAuth();
+  const { user, openAuthDrawer } = useAuth();
   const [scrolled, setScrolled]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [shopOpen, setShopOpen]     = useState(false);
@@ -71,8 +71,8 @@ export const Navbar = () => {
             <Image
                 src="/logo.png"
                 alt="EARASERS Logo"
-                width={150}    // Pas dit aan naar de gewenste breedte
-                height={50}    // Pas dit aan naar de gewenste hoogte
+                width={170}    // Pas dit aan naar de gewenste breedte
+                height={40}    // Pas dit aan naar de gewenste hoogte
                 priority       // Zorgt dat het logo direct geladen wordt (LCP)
                 className={styles.logoImage}
             />
@@ -122,14 +122,16 @@ export const Navbar = () => {
 
           <div className={styles.actions}>
             <LanguageSwitcher />
-            <Link
-              href={user ? '/account' : '/account/login'}
-              className={styles.accountBtn}
-              aria-label={user ? `${t('nav.about')}: ${user.firstName}` : t('nav.signIn')}
-            >
-              <AccountIcon />
-              {user && <span className={styles.accountDot} />}
-            </Link>
+            {user ? (
+              <Link href="/account" className={styles.accountBtn} aria-label={`${t('nav.about')}: ${user.firstName}`}>
+                <AccountIcon />
+                <span className={styles.accountDot} />
+              </Link>
+            ) : (
+              <button type="button" className={styles.accountBtn} onClick={openAuthDrawer} aria-label={t('nav.signIn')}>
+                <AccountIcon />
+              </button>
+            )}
             <button type="button" className={styles.cartBtn} onClick={openCart} aria-label={t('nav.openCart')}>
               <CartIcon />
               {totalCount > 0 && (

@@ -125,11 +125,6 @@
     "searchLabel": "Buscar tiendas",
     "searchBtn": "Buscar",
     "tabAll": "Todas",
-    "tabNetherlands": "Países Bajos",
-    "tabBelgium": "Bélgica",
-    "tabGermany": "Alemania",
-    "tabUK": "Reino Unido",
-    "tabOther": "Otros",
     "noResults": "No se encontraron tiendas. Intenta otra búsqueda.",
     "getDirections": "Cómo llegar",
     "website": "Sitio web",
@@ -140,7 +135,11 @@
     "retailerHeading": "Conviértete en distribuidor oficial de Earasers",
     "retailerSub": "¿Tienes una tienda de música, farmacia o tienda especializada? Vende los auriculares HiFi más premiados de Europa y ofrece a tus clientes la protección auditiva que realmente quieren usar.",
     "retailerLink": "Contáctanos sobre la distribución de Earasers",
-    "officialRetailer": "Distribuidor Oficial"
+    "officialRetailer": "Distribuidor Oficial",
+    "tabUS": "Estados Unidos",
+    "tabCanada": "Canadá",
+    "tabAustralia": "Australia",
+    "tabInternational": "Internacional"
   },
   "influencersLabel": "Clientes que usan Earasers"
 }

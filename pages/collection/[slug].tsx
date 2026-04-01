@@ -20,13 +20,17 @@ import { Influencers } from '../../components/influencers';
 
 /* ─── CDN shortcuts ─── */
 const CDN = 'https://www.earasers.shop/cdn/shop/files';
-const BASE = `${CDN}/Earasersuitgezoomd.png`;
-const MINK = `${CDN}/EarasersmodelsMinkvierkant.png`;
 const KIT  = `${CDN}/Earasers_starter_combo_kit.png`;
-const DJ_MAIN   = `${CDN}/MainProductPicDJ.png`;
+const DJ_MAIN   = '/DJ%20Package%20no%20back.png';
+const MUSIC_PKG = '/Music%20Package%20no%20back.png';
+const DENT_PKG  = '/Dentist%20Package%20Front%20no%20back.png';
+const SLEEP_PKG = '/Sleeping%20earplugs%20package%20no%20back.png';
+const MOTO_PKG  = '/Motorsport%20package%20no%20back.png';
+const BASE = '/Earasers%20Transparent%202%20no%20back.png';
+const MINK = BASE; // no separate mink variant in no-bg set
 const WADE_IMG  = `${CDN}/WADE_earasers.webp`;
 const MASON_IMG = `${CDN}/Masoncollective.png`;
-const FRANKY    = `${CDN}/Earasersmodelsinear.png`;
+const FRANKY    = `/Franky_Joey.png`;
 const BODZIN    = `${CDN}/Img_Earasers_Invictim_799be337-dc9f-4fb1-af41-87ad6b0ad933.jpg`;
 const JOEY      = `${CDN}/EARASERS_2024_1.webp`;
 const DENT1     = `${CDN}/Matis_Mink_Dentist_2.png`;
@@ -69,7 +73,7 @@ type CategoryConfig = {
 const CATEGORIES: Record<string, CategoryConfig> = {
   musician: {
     theme: 'warm',
-    heroImg: WADE_IMG,
+    heroImg: MUSIC_PKG,
     stats: [
       { value: '5×' },
       { value: 'Flat' },
@@ -86,19 +90,19 @@ const CATEGORIES: Record<string, CategoryConfig> = {
     showCompareTable: true,
     influencers: [
       { name: 'WADE',           role: 'DJ / Producer',            img: WADE_IMG,  handle: 'wadedj' },
-      { name: 'MASON COLLECTIVE', role: 'DJ Duo',                 img: MASON_IMG },
+      { name: 'FRANKY RIZARDO', role: 'International DJ',         img: FRANKY,    handle: 'frankyr' },
     ],
     filters: [
       { snr: 'SNR 14', db: '−19 dB peak', recommended: false },
       { snr: 'SNR 20', db: '−26 dB peak', recommended: true },
     ],
     products: [
-      { slug: 'musician', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 1024, img: BASE },
-      { slug: 'musician', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 876,  img: MINK },
-      { slug: 'musician', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 213,  img: BASE },
-      { slug: 'musician', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.7, reviews: 312, img: KIT },
-      { slug: 'musician', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.8, reviews: 542, img: KIT },
-      { slug: 'musician', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.6, reviews: 198, img: KIT },
+      { slug: 'musician', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 1024, img: MUSIC_PKG },
+      { slug: 'musician', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 876,  img: MUSIC_PKG },
+      { slug: 'musician', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 213,  img: MUSIC_PKG },
+      { slug: 'musician', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.7, reviews: 312, img: MUSIC_PKG },
+      { slug: 'musician', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.8, reviews: 542, img: MUSIC_PKG },
+      { slug: 'musician', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.6, reviews: 198, img: MUSIC_PKG },
     ],
   },
 
@@ -117,10 +121,9 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { icon: <ClockIcon size={28} /> },
     ],
     influencers: [
-      { name: 'FRANKY RIZARDO', role: 'International DJ',           img: FRANKY,   handle: 'frankyr' },
-      { name: 'WADE',           role: 'DJ / Producer',              img: WADE_IMG,  handle: 'wadedj' },
-      { name: 'STEPHAN BODZIN', role: 'Electronic Music Producer',  img: BODZIN,   handle: 'stephanbodzin' },
-      { name: 'JOEY DANIEL',    role: 'DJ / Producer',              img: JOEY,     handle: 'joeydaniel_ofc' },
+      { name: 'MASON COLLECTIVE', role: 'DJ Duo',                     img: MASON_IMG },
+      { name: 'STEPHAN BODZIN',   role: 'Electronic Music Producer',  img: BODZIN,    handle: 'stephanbodzin' },
+      { name: 'JOEY DANIEL',      role: 'DJ / Producer',              img: JOEY,      handle: 'joeydaniel_ofc' },
     ],
     filters: [
       { snr: 'SNR 14', db: '−19 dB peak' },
@@ -131,15 +134,15 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { slug: 'dj', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.8, reviews: 312, img: DJ_MAIN },
       { slug: 'dj', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.8, reviews: 289, img: DJ_MAIN },
       { slug: 'dj', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 104, img: DJ_MAIN },
-      { slug: 'dj', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.8, reviews: 98,  img: KIT },
-      { slug: 'dj', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.9, reviews: 156, img: KIT },
-      { slug: 'dj', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.7, reviews: 72,  img: KIT },
+      { slug: 'dj', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.8, reviews: 98,  img: DJ_MAIN },
+      { slug: 'dj', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.9, reviews: 156, img: DJ_MAIN },
+      { slug: 'dj', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.7, reviews: 72,  img: DJ_MAIN },
     ],
   },
 
   dentist: {
     theme: 'teal',
-    heroImg: DENT1,
+    heroImg: DENT_PKG,
     stats: [
       { value: '2–8 kHz' },
       { value: '250–300 Hz' },
@@ -168,18 +171,18 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { snr: 'SNR 20', db: '−26 dB peak', recommended: true },
     ],
     products: [
-      { slug: 'dentist', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 198, img: BASE },
-      { slug: 'dentist', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 174, img: MINK },
-      { slug: 'dentist', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.5, reviews: 62,  img: BASE },
-      { slug: 'dentist', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.6, reviews: 41, img: KIT },
-      { slug: 'dentist', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.7, reviews: 89, img: KIT },
-      { slug: 'dentist', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.5, reviews: 35, img: KIT },
+      { slug: 'dentist', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 198, img: DENT_PKG },
+      { slug: 'dentist', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 174, img: DENT_PKG },
+      { slug: 'dentist', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.5, reviews: 62,  img: DENT_PKG },
+      { slug: 'dentist', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.6, reviews: 41, img: DENT_PKG },
+      { slug: 'dentist', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.7, reviews: 89, img: DENT_PKG },
+      { slug: 'dentist', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.5, reviews: 35, img: DENT_PKG },
     ],
   },
 
   sleeping: {
     theme: 'purple',
-    heroImg: KIT,
+    heroImg: SLEEP_PKG,
     stats: [
       { value: '−19 dB' },
       { value: 'Flush fit' },
@@ -195,18 +198,18 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { snr: 'SNR 14', db: '−19 dB peak', recommended: true },
     ],
     products: [
-      { slug: 'sleeping', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.5, reviews: 432, img: BASE },
-      { slug: 'sleeping', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.5, reviews: 381, img: MINK },
-      { slug: 'sleeping', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.4, reviews: 117, img: BASE },
-      { slug: 'sleeping', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.5, reviews: 94,  img: KIT },
-      { slug: 'sleeping', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.6, reviews: 203, img: KIT },
-      { slug: 'sleeping', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.4, reviews: 67,  img: KIT },
+      { slug: 'sleeping', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.5, reviews: 432, img: SLEEP_PKG },
+      { slug: 'sleeping', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.5, reviews: 381, img: SLEEP_PKG },
+      { slug: 'sleeping', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.4, reviews: 117, img: SLEEP_PKG },
+      { slug: 'sleeping', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.5, reviews: 94,  img: SLEEP_PKG },
+      { slug: 'sleeping', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.6, reviews: 203, img: SLEEP_PKG },
+      { slug: 'sleeping', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.4, reviews: 67,  img: SLEEP_PKG },
     ],
   },
 
   motorsport: {
     theme: 'dark',
-    heroImg: BASE,
+    heroImg: MOTO_PKG,
     stats: [
       { value: '85 dB+' },
       { value: '−26 dB' },
@@ -223,12 +226,12 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { snr: 'SNR 20', db: '−26 dB peak', recommended: true },
     ],
     products: [
-      { slug: 'motorsport', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 156, img: BASE },
-      { slug: 'motorsport', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 134, img: MINK },
-      { slug: 'motorsport', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 48,  img: BASE },
-      { slug: 'motorsport', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.7, reviews: 31, img: KIT },
-      { slug: 'motorsport', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.8, reviews: 72, img: KIT },
-      { slug: 'motorsport', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.6, reviews: 24, img: KIT },
+      { slug: 'motorsport', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 156, img: MOTO_PKG },
+      { slug: 'motorsport', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 134, img: MOTO_PKG },
+      { slug: 'motorsport', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 48,  img: MOTO_PKG },
+      { slug: 'motorsport', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.7, reviews: 31, img: MOTO_PKG },
+      { slug: 'motorsport', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.8, reviews: 72, img: MOTO_PKG },
+      { slug: 'motorsport', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.6, reviews: 24, img: MOTO_PKG },
     ],
   },
 
@@ -503,7 +506,7 @@ const CollectionPage: NextPage = () => {
                 {singles.map((p, idx) => (
                   <Link key={idx} href={`/product?slug=${p.slug}`} className={styles.card}>
                     <div className={styles.imgWrap}>
-                      <Image src={p.img} alt={p.name} fill style={{ objectFit: 'cover' }} />
+                      <Image src={p.img} alt={p.name} fill style={{ objectFit: 'contain', padding: '8px' }} />
                       {p.tag && <span className={styles.tag}>{p.tag}</span>}
                     </div>
                     <div className={styles.info}>
@@ -535,7 +538,7 @@ const CollectionPage: NextPage = () => {
                 {kits.map((p, idx) => (
                   <Link key={idx} href={`/product?slug=${p.slug}`} className={`${styles.card} ${styles.kitCard}`} style={{ '--kit-color': kitColor } as React.CSSProperties}>
                     <div className={styles.imgWrap}>
-                      <Image src={p.img} alt={p.name} fill style={{ objectFit: 'cover' }} />
+                      <Image src={p.img} alt={p.name} fill style={{ objectFit: 'contain', padding: '8px' }} />
                       {p.tag && <span className={styles.tag}>{p.tag}</span>}
                       <span className={styles.kitBadge}>{t('ui.kit')}</span>
                     </div>

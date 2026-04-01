@@ -25,10 +25,13 @@ type AuthState = {
 };
 
 type AuthCtx = AuthState & {
-  login:           (email: string, password: string) => Promise<string | null>;
-  register:        (data: RegisterData)              => Promise<string | null>;
-  logout:          () => void;
-  forgotPassword:  (email: string)                   => Promise<string | null>;
+  login:             (email: string, password: string) => Promise<string | null>;
+  register:          (data: RegisterData)              => Promise<string | null>;
+  logout:            () => void;
+  forgotPassword:    (email: string)                   => Promise<string | null>;
+  isAuthOpen:        boolean;
+  openAuthDrawer:    () => void;
+  closeAuthDrawer:   () => void;
 };
 
 // ── Reducer ──────────────────────────────────────────────────────────────────
@@ -57,6 +60,9 @@ const Ctx = createContext<AuthCtx>({
   register: async () => null,
   logout: () => {},
   forgotPassword: async () => null,
+  isAuthOpen: false,
+  openAuthDrawer: () => {},
+  closeAuthDrawer: () => {},
 });
 
 export const useAuth = () => useContext(Ctx);
@@ -65,6 +71,9 @@ export const useAuth = () => useContext(Ctx);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, { user: null, token: null, loading: true });
+  const [isAuthOpen, setIsAuthOpen] = React.useState(false);
+  const openAuthDrawer  = () => setIsAuthOpen(true);
+  const closeAuthDrawer = () => setIsAuthOpen(false);
 
   // Rehydrate from localStorage on mount
   useEffect(() => {
@@ -162,7 +171,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <Ctx.Provider value={{ ...state, login, register, logout, forgotPassword }}>
+    <Ctx.Provider value={{ ...state, login, register, logout, forgotPassword, isAuthOpen, openAuthDrawer, closeAuthDrawer }}>
       {children}
     </Ctx.Provider>
   );

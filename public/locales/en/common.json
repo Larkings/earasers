@@ -125,11 +125,6 @@
     "searchLabel": "Search stores",
     "searchBtn": "Search",
     "tabAll": "All",
-    "tabNetherlands": "Netherlands",
-    "tabBelgium": "Belgium",
-    "tabGermany": "Germany",
-    "tabUK": "United Kingdom",
-    "tabOther": "Other",
     "noResults": "No stores found. Try a different search.",
     "getDirections": "Get Directions",
     "website": "Website",
@@ -140,7 +135,11 @@
     "retailerHeading": "Become an official Earasers retailer",
     "retailerSub": "Run a music store, pharmacy or specialist shop? Stock Europe's most awarded HiFi earplugs and give your customers the hearing protection they actually want to wear.",
     "retailerLink": "Get in touch about stocking Earasers",
-    "officialRetailer": "Official Retailer"
+    "officialRetailer": "Official Retailer",
+    "tabUS": "United States",
+    "tabCanada": "Canada",
+    "tabAustralia": "Australia",
+    "tabInternational": "International"
   },
   "influencersLabel": "Customers using Earasers"
 }
