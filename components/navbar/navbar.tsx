@@ -71,8 +71,8 @@ export const Navbar = () => {
             <Image
                 src="/logo.png"
                 alt="EARASERS Logo"
-                width={170}    // Pas dit aan naar de gewenste breedte
-                height={40}    // Pas dit aan naar de gewenste hoogte
+                width={150}    // Pas dit aan naar de gewenste breedte
+                height={50}    // Pas dit aan naar de gewenste hoogte
                 priority       // Zorgt dat het logo direct geladen wordt (LCP)
                 className={styles.logoImage}
             />
