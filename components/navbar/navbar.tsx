@@ -6,6 +6,7 @@ import { MusicIcon, HeadphonesIcon, ToothIcon, MoonIcon, HelmetIcon, EarIcon, Ch
 import { useCart } from '../../context/cart';
 import { useAuth } from '../../context/auth';
 import { LanguageSwitcher } from '../language-switcher';
+import Image from 'next/image';
 
 export const Navbar = () => {
   const { t } = useTranslation('common');
@@ -66,7 +67,16 @@ export const Navbar = () => {
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`} style={{ top: barVisible ? 'var(--bar-height)' : 0 }}>
         <div className={`container ${styles.inner}`}>
 
-          <Link href="/" className={styles.logo}>EARASERS</Link>
+          <Link href="/" className={styles.logo}>
+            <Image
+                src="/logo.png"
+                alt="EARASERS Logo"
+                width={150}    // Pas dit aan naar de gewenste breedte
+                height={50}    // Pas dit aan naar de gewenste hoogte
+                priority       // Zorgt dat het logo direct geladen wordt (LCP)
+                className={styles.logoImage}
+            />
+          </Link>
 
           <nav className={styles.nav}>
             <ul className={styles.navList}>
