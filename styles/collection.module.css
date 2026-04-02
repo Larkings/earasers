@@ -1166,10 +1166,11 @@
   display: grid;
   grid-template-columns: 1fr;
   border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
 }
 
 @media (min-width: 768px) {
-  .influencerSplit { grid-template-columns: 1fr 1fr; max-height: 320px; }
+  .influencerSplit { grid-template-columns: 1fr 1fr; height: 420px; }
   .influencerSplitReversed { direction: rtl; }
   .influencerSplitReversed > * { direction: ltr; }
 }
@@ -1177,17 +1178,13 @@
 .influencerImg {
   position: relative;
   overflow: hidden;
-  height: 220px;
+  height: 260px;
   background: var(--color-surface-2, #f0ede8);
-  border-radius: 12px;
-  margin: 12px;
 }
 
 @media (min-width: 768px) {
   .influencerImg {
-    border-radius: 0;
-    margin: 0;
-    height: 320px;
+    height: 420px;
   }
 }
 
@@ -1224,7 +1221,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
   display: block;
   transition: transform 0.6s ease;
 }

@@ -30,7 +30,7 @@ const BASE = '/EarasersTransparent.png';
 const MINK = BASE; // no separate mink variant in no-bg set
 const WADE_IMG  = `${CDN}/WADE_earasers.webp`;
 const MASON_IMG = `${CDN}/Masoncollective.png`;
-const FRANKY    = `/Franky_Joey.png`;
+const FRANKY    = `/FrankyRizardo.png`;
 const BODZIN    = `${CDN}/Img_Earasers_Invictim_799be337-dc9f-4fb1-af41-87ad6b0ad933.jpg`;
 const JOEY      = `${CDN}/EARASERS_2024_1.webp`;
 const DENT1     = `${CDN}/Matis_Mink_Dentist_2.png`;
@@ -45,7 +45,7 @@ type StatData       = { value: string };
 type FeatureData    = { icon: React.ReactNode };
 type FilterData     = { snr: string; db: string; recommended?: boolean };
 type ProductData    = { slug: string; size: string; price: string; original: string; rating: number; reviews: number; img: string };
-type InfluencerData = { name: string; role?: string; img: string; handle?: string; };
+type InfluencerData = { name: string; role?: string; img: string; handle?: string; imagePosition?: string; };
 type ReviewCardData = { img: string; name: string; year: number; };
 // Full type used by ReviewScroll (includes translated text)
 type ReviewCard     = ReviewCardData & { quote: string };
@@ -89,8 +89,8 @@ const CATEGORIES: Record<string, CategoryConfig> = {
     youtubeId: 'Zmj-jJi93q0',
     showCompareTable: true,
     influencers: [
-      { name: 'WADE',           role: 'DJ / Producer',            img: WADE_IMG,  handle: 'wadedj' },
-      { name: 'FRANKY RIZARDO', role: 'International DJ',         img: FRANKY,    handle: 'frankyr' },
+      { name: 'WADE',           role: 'DJ / Producer',            img: WADE_IMG,  handle: 'wadedj',   imagePosition: 'center 10%' },
+      { name: 'FRANKY RIZARDO', role: 'International DJ',         img: FRANKY,    handle: 'frankyr',  imagePosition: 'center 30%' },
     ],
     filters: [
       { snr: 'SNR 14', db: '−19 dB peak', recommended: false },
@@ -121,9 +121,9 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { icon: <ClockIcon size={28} /> },
     ],
     influencers: [
-      { name: 'MASON COLLECTIVE', role: 'DJ Duo',                     img: MASON_IMG },
-      { name: 'STEPHAN BODZIN',   role: 'Electronic Music Producer',  img: BODZIN,    handle: 'stephanbodzin' },
-      { name: 'JOEY DANIEL',      role: 'DJ / Producer',              img: JOEY,      handle: 'joeydaniel_ofc' },
+      { name: 'MASON COLLECTIVE', role: 'DJ Duo',                     img: MASON_IMG, imagePosition: 'center 20%' },
+      { name: 'STEPHAN BODZIN',   role: 'Electronic Music Producer',  img: BODZIN,    handle: 'stephanbodzin',    imagePosition: 'center 25%' },
+      { name: 'JOEY DANIEL',      role: 'DJ / Producer',              img: JOEY,      handle: 'joeydaniel_ofc',   imagePosition: '70% center' },
     ],
     filters: [
       { snr: 'SNR 14', db: '−19 dB peak' },
@@ -162,8 +162,8 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { img: DENT5, name: 'Dr. Shad Faraj',         year: 2026 },
     ],
     influencers: [
-      { name: 'Brummans & Fa Dentists', role: 'Dental Practice', img: DENT2 },
-      { name: 'Resmile Dentistry',      role: 'Dr. Shad Faraj',  img: DENT3 },
+      { name: 'Brummans & Fa Dentists', role: 'Dental Practice', img: DENT2, imagePosition: 'center 60%' },
+      { name: 'Resmile Dentistry',      role: 'Dr. Shad Faraj',  img: DENT3, imagePosition: 'center 35%' },
     ],
     clinicNames: ['Vidveer', 'Lassus Tandartsen', 'DC Clinics', 'Mondarts Alkmaar', 'Resmile Dentistry', 'Mondzorg', 'TOED'],
     filters: [
@@ -323,7 +323,7 @@ const ReviewScroll = ({ cards }: { cards: ReviewCard[] }) => (
 const InfluencerSplit = ({ influencer, reversed }: { influencer: Influencer; reversed: boolean }) => (
   <div className={`${styles.influencerSplit} ${reversed ? styles.influencerSplitReversed : ''}`}>
     <div className={styles.influencerImg}>
-      <img src={influencer.img} alt={influencer.name} loading="lazy" />
+      <img src={influencer.img} alt={influencer.name} loading="lazy" style={{ objectPosition: influencer.imagePosition ?? 'center 20%' }} />
     </div>
     <div className={styles.influencerContent}>
       {influencer.role && <p className={styles.influencerLabel}>{influencer.role}</p>}
