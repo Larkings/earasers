@@ -21,10 +21,10 @@ import { Influencers } from '../../components/influencers';
 /* ─── CDN shortcuts ─── */
 const CDN = 'https://www.earasers.shop/cdn/shop/files';
 const KIT  = `${CDN}/Earasers_starter_combo_kit.png`;
-const DJ_MAIN   = '/DJPackage.png';
-const MUSIC_PKG = '/MusicPackage.png';
-const DENT_PKG  = '/DentistPackage.png';
-const SLEEP_PKG = '/EarasersTransparent.png';
+const DJ_MAIN   = '/DJHero.png';
+const MUSIC_PKG = '/MusicianHero.jpg';
+const DENT_PKG  = '/DentistHero.png';
+const SLEEP_PKG = '/SleepingHero.png';
 const MOTO_PKG  = '/MotorsportPackage.png';
 const BASE = '/EarasersTransparent.png';
 const MINK = BASE; // no separate mink variant in no-bg set
