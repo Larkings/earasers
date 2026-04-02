@@ -60,19 +60,38 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .inner { gap: 16px; }
 }
 
 /* Logo */
 .logo {
-  font-family: var(--font-display);
+  font-family: var(--font-display), serif;
   font-size: 26px;
   letter-spacing: 0.08em;
   color: var(--color-text);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .logo:hover { color: var(--color-accent); }
+
+.logoImage {
+  width: 130px;
+  height: auto;
+}
+
+@media (min-width: 480px) {
+  .logoImage { width: 150px; }
+}
+
+@media (min-width: 768px) {
+  .logoImage { width: 170px; }
+}
 
 /* Desktop nav */
 .nav { flex: 1; display: flex; justify-content: center; }
@@ -167,8 +186,27 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
   flex-shrink: 0;
+}
+
+@media (min-width: 480px) {
+  .actions { gap: 10px; }
+}
+
+@media (min-width: 768px) {
+  .actions { gap: 12px; }
+}
+
+/* Hide language switcher in top bar on mobile — it lives in the mobile menu */
+.actions > *:first-child {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .actions > *:first-child {
+    display: flex;
+  }
 }
 
 .accountBtn {
@@ -264,7 +302,8 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  max-height: calc(100vh - var(--nav-height));
+  max-height: calc(100dvh - var(--nav-height));
+  padding-bottom: max(24px, var(--safe-bottom));
   overflow-y: auto;
 }
 

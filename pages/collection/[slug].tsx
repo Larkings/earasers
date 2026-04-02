@@ -21,12 +21,12 @@ import { Influencers } from '../../components/influencers';
 /* ─── CDN shortcuts ─── */
 const CDN = 'https://www.earasers.shop/cdn/shop/files';
 const KIT  = `${CDN}/Earasers_starter_combo_kit.png`;
-const DJ_MAIN   = '/DJ%20Package%20no%20back.png';
-const MUSIC_PKG = '/Music%20Package%20no%20back.png';
-const DENT_PKG  = '/Dentist%20Package%20Front%20no%20back.png';
-const SLEEP_PKG = '/Sleeping%20earplugs%20package%20no%20back.png';
-const MOTO_PKG  = '/Motorsport%20package%20no%20back.png';
-const BASE = '/Earasers%20Transparent%202%20no%20back.png';
+const DJ_MAIN   = '/DJPackage.png';
+const MUSIC_PKG = '/MusicPackage.png';
+const DENT_PKG  = '/DentistPackage.png';
+const SLEEP_PKG = '/EarasersTransparent.png';
+const MOTO_PKG  = '/MotorsportPackage.png';
+const BASE = '/EarasersTransparent.png';
 const MINK = BASE; // no separate mink variant in no-bg set
 const WADE_IMG  = `${CDN}/WADE_earasers.webp`;
 const MASON_IMG = `${CDN}/Masoncollective.png`;

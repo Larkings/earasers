@@ -33,7 +33,7 @@ export const PRODUCTS: Record<string, Product> = {
     rating: 4.7,
     reviews: 1024,
     images: [
-      'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',
+      '/MusicPackage.png',
       'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
       'https://www.earasers.shop/cdn/shop/files/Earasers_starter_combo_kit.png',
     ],
@@ -53,8 +53,7 @@ export const PRODUCTS: Record<string, Product> = {
     rating: 4.8,
     reviews: 312,
     images: [
-      'https://www.earasers.shop/cdn/shop/files/MainProductPicDJ.png',
-      'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',
+      '/DJPackage.png',
       'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
     ],
     description: 'Built for booth monitors and festival volumes. Maximum protection with crystal-clear sound reproduction — trusted by professional DJs across Europe.',
@@ -76,7 +75,7 @@ export const PRODUCTS: Record<string, Product> = {
     rating: 4.6,
     reviews: 198,
     images: [
-      'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',
+      '/DentistPackage.png',
       'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
     ],
     description: 'Block out scaler and drill noise while keeping full patient communication. Worn by dental professionals across Europe throughout the full working day.',
@@ -98,7 +97,7 @@ export const PRODUCTS: Record<string, Product> = {
     rating: 4.5,
     reviews: 432,
     images: [
-      'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',
+      '/EarasersTransparent.png',
       'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
     ],
     description: 'Quiet, comfortable, and barely noticeable. Sleep deeper without the pressure and discomfort of traditional foam earplugs.',
@@ -120,7 +119,7 @@ export const PRODUCTS: Record<string, Product> = {
     rating: 4.7,
     reviews: 156,
     images: [
-      'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',
+      '/MotorsportPackage.png',
       'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
     ],
     description: 'Protect against wind noise and engine roar while keeping helmet communications, GPS instructions, and co-driver calls crystal clear.',
@@ -142,7 +141,7 @@ export const PRODUCTS: Record<string, Product> = {
     rating: 4.8,
     reviews: 287,
     images: [
-      'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',
+      '/EarasersTransparent.png',
       'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
     ],
     description: 'Calm your senses and manage sensory overload without losing awareness of your surroundings — ideal for autism, ADHD, hyperacusis, and misophonia.',

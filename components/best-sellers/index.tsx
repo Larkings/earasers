@@ -5,8 +5,8 @@ import styles from './best-sellers.module.css';
 import { StarIcon, StarEmptyIcon, ArrowRightIcon } from '../icons';
 
 const PRODUCT_DATA = [
-  { price: '€49,95', original: '€58,00', rating: 4.7, reviews: 1024, img: 'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png', href: '/collections/musician-s-hifi-earplugs', tagKey: 'bestSellers.bestSeller' },
-  { price: '€49,95', original: '€58,00', rating: 4.8, reviews: 312,  img: 'https://www.earasers.shop/cdn/shop/files/MainProductPicDJ.png',              href: '/products/earasers-dj-earplugs-new',       tagKey: null },
+  { price: '€49,95', original: '€58,00', rating: 4.7, reviews: 1024, img: '/MusicPackage.png', href: '/collections/musician-s-hifi-earplugs', tagKey: 'bestSellers.bestSeller' },
+  { price: '€49,95', original: '€58,00', rating: 4.8, reviews: 312,  img: '/DJPackage.png',    href: '/products/earasers-dj-earplugs-new',    tagKey: null },
   { price: '€54,95', original: '€69,00', rating: 4.6, reviews: 198,  img: 'https://www.earasers.shop/cdn/shop/files/Earasers_starter_combo_kit.png',    href: '/collections/musician-s-hifi-earplugs',    tagKey: 'bestSellers.recommended' },
   { price: '€79,00', original: '€99,00', rating: 4.9, reviews: 87,   img: 'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',    href: '/collections/all',                         tagKey: 'bestSellers.premium' },
 ];
@@ -43,7 +43,7 @@ export const BestSellers = () => {
             return (
             <a key={idx} href={p.href} className={styles.card}>
               <div className={styles.imgWrap}>
-                <Image src={p.img} alt={name} fill style={{ objectFit: 'cover' }} />
+                <Image src={p.img} alt={name} fill style={{ objectFit: 'contain', padding: '12px' }} />
                 {p.tagKey && <span className={styles.tag}>{t(p.tagKey)}</span>}
               </div>
               <div className={styles.info}>

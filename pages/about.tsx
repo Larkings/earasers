@@ -52,10 +52,10 @@ const About: NextPage = () => {
             <div className={styles.storyGrid}>
               <div className={styles.storyImg} data-reveal>
                 <Image
-                  src="/Earasasers%20About%20Us%20no%20back.png"
+                  src="/EarasasersAboutUs.png"
                   alt="Earasers product"
                   fill
-                  style={{ objectFit: 'contain' }}
+                  style={{ objectFit: 'contain', borderRadius: 'var(--radius-lg)' }}
                 />
               </div>
               <div className={styles.storyText} data-reveal data-delay="1">

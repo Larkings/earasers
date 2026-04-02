@@ -4,9 +4,12 @@ import { useTranslation } from 'react-i18next';
 import styles from './use-cases.module.css';
 import { MusicIcon, HeadphonesIcon, ToothIcon, MoonIcon, HelmetIcon, EarIcon, ArrowRightIcon } from '../icons';
 
-const BASE_IMG  = 'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png';
-const DJ_IMG    = 'https://www.earasers.shop/cdn/shop/files/MainProductPicDJ.png';
-const KIT_IMG   = 'https://www.earasers.shop/cdn/shop/files/Earasers_starter_combo_kit.png';
+const MUSIC_IMG  = '/MusicPackage.png';
+const DJ_IMG     = '/DJPackage.png';
+const DENTIST_IMG = '/DentistPackage.png';
+const SLEEP_IMG  = '/SleepingEarplugsPackage.png';
+const MOTO_IMG   = '/MotorsportPackage.png';
+const SENSE_IMG  = '/EarasersTransparent.png';
 
 export const UseCases = () => {
   const { t } = useTranslation('home');
@@ -20,7 +23,7 @@ export const UseCases = () => {
       price: '€49,95',
       slug: 'musician',
       bg: '#FDF0F0',
-      img: BASE_IMG,
+      img: MUSIC_IMG,
     },
     {
       icon: <HeadphonesIcon size={28} />,
@@ -40,7 +43,7 @@ export const UseCases = () => {
       price: '€49,95',
       slug: 'dentist',
       bg: '#F0FDF4',
-      img: BASE_IMG,
+      img: DENTIST_IMG,
     },
     {
       icon: <MoonIcon size={28} />,
@@ -50,7 +53,7 @@ export const UseCases = () => {
       price: '€49,95',
       slug: 'sleeping',
       bg: '#F5F0FD',
-      img: KIT_IMG,
+      img: SENSE_IMG,
     },
     {
       icon: <HelmetIcon size={28} />,
@@ -60,7 +63,7 @@ export const UseCases = () => {
       price: '€49,95',
       slug: 'motorsport',
       bg: '#FDF5F0',
-      img: BASE_IMG,
+      img: MOTO_IMG,
     },
     {
       icon: <EarIcon size={28} />,
@@ -70,7 +73,7 @@ export const UseCases = () => {
       price: '€49,95',
       slug: 'sensitivity',
       bg: '#F0FDFD',
-      img: BASE_IMG,
+      img: SENSE_IMG,
     },
   ];
 
