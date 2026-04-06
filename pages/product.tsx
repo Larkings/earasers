@@ -8,7 +8,10 @@ import { useRouter } from 'next/router';
 import { Layout } from '../components/layout';
 import { StarIcon, StarEmptyIcon, CheckIcon, ShieldIcon } from '../components/icons';
 import styles from '../styles/product.module.css';
-import { getProduct, PRODUCTS, fmt, fmtSave, type Product } from '../lib/products';
+import {
+  getProduct, PRODUCTS, fmt, fmtSave, type Product,
+  getProductWithVariants, SLUG_TO_HANDLE, findVariant, type ShopifyVariant,
+} from '../lib/products';
 import { useCart, type CartItem } from '../context/cart';
 import { SizeQuiz } from '../components/size-quiz';
 import { VideoSection } from '../components/video-section';
@@ -45,7 +48,9 @@ function useRecentlyViewed(currentSlug: string) {
   return viewed;
 }
 
-const Product: NextPage = () => {
+type Props = { variantsMap: Record<string, ShopifyVariant[]> }
+
+const Product: NextPage<Props> = ({ variantsMap }) => {
   const router = useRouter();
   const { t } = useTranslation('product');
   const { addToCart, openCart } = useCart();
@@ -75,8 +80,8 @@ const Product: NextPage = () => {
     if (!router.isReady) return;
     const p = getProduct(router.query.slug as string);
     startTransition(() => {
-      setProduct(p);
       setActiveImg(0);
+      setProduct(p);
       setActiveFilter(0);
       setActiveSize(1);
       setActiveTab(0);
@@ -101,15 +106,23 @@ const Product: NextPage = () => {
   const original = isKit ? product.kitOriginal : product.originalPrice;
 
   const handleAddToCart = () => {
+    const sizeLabel = sizes[activeSize].label;
+    const filterDb  = product.filters[activeFilter].db;
+
+    // Zoek Shopify variant ID op via selectedOptions
+    const slugVariants = variantsMap[product.slug] ?? [];
+    const variant = findVariant(slugVariants, sizeLabel, filterDb);
+
     const item: CartItem = {
-      id:     `${product.slug}-${sizes[activeSize].label}-${product.filters[activeFilter].db}`,
-      slug:   product.slug,
-      name:   product.name,
-      img:    product.images[0],
-      size:   sizes[activeSize].label,
-      filter: product.filters[activeFilter].db,
+      id:        `${product.slug}-${sizeLabel}-${filterDb}`,
+      slug:      product.slug,
+      name:      product.name,
+      img:       product.images[0],
+      size:      sizeLabel,
+      filter:    filterDb,
       price,
       qty,
+      variantId: variant?.id,   // gid://shopify/ProductVariant/...
     };
     addToCart(item);
     openCart();
@@ -136,7 +149,7 @@ const Product: NextPage = () => {
             {/* Gallery */}
             <div className={styles.gallery}>
               <div className={styles.mainImg}>
-                <Image src={product.images[activeImg]} alt={product.name} fill style={{ objectFit: 'cover' }} />
+                <Image src={product.images[activeImg]} alt={product.name} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
                 {product.tag && <span className={styles.galleryTag}>{product.tag}</span>}
               </div>
               <div className={styles.thumbs}>
@@ -146,7 +159,7 @@ const Product: NextPage = () => {
                     className={`${styles.thumb} ${i === activeImg ? styles.thumbActive : ''}`}
                     onClick={() => setActiveImg(i)}
                   >
-                    <Image src={src} alt={`View ${i + 1}`} fill style={{ objectFit: 'cover' }} />
+                    <Image src={src} alt={`View ${i + 1}`} fill sizes="80px" style={{ objectFit: 'cover' }} />
                   </button>
                 ))}
               </div>
@@ -388,7 +401,7 @@ const Product: NextPage = () => {
                   return (
                     <Link key={slug} href={`/product?slug=${slug}`} className={styles.recentCard}>
                       <div className={styles.recentImg}>
-                        <Image src={p.images[0]} alt={p.name} fill style={{ objectFit: 'cover' }} />
+                        <Image src={p.images[0]} alt={p.name} fill sizes="(max-width: 640px) 50vw, 200px" style={{ objectFit: 'cover' }} />
                       </div>
                       <p className={styles.recentCollection}>{p.collection}</p>
                       <p className={styles.recentName}>{p.name}</p>
@@ -406,10 +419,26 @@ const Product: NextPage = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'product', 'home'])),
-  },
-});
+export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
+  // Haal alle product variants op via Shopify Storefront API (ISR: elke 5 min)
+  const entries = await Promise.all(
+    Object.entries(SLUG_TO_HANDLE).map(async ([slug, handle]) => {
+      try {
+        const product = await getProductWithVariants(handle)
+        return [slug, product?.variants ?? []] as [string, ShopifyVariant[]]
+      } catch {
+        return [slug, []] as [string, ShopifyVariant[]]
+      }
+    }),
+  )
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common', 'product', 'home'])),
+      variantsMap: Object.fromEntries(entries),
+    },
+    revalidate: 300,
+  }
+};
 
 export default Product;

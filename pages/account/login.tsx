@@ -1,11 +1,12 @@
-import type { NextPage, GetStaticProps } from 'next';
-import { serverSideTranslations } from '../../lib/i18n';
-import React, { useState } from 'react';
+import type {GetStaticProps, NextPage} from 'next';
+import {serverSideTranslations} from '../../lib/i18n';
+import React, {useState} from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useTranslation } from 'react-i18next';
-import { Layout } from '../../components/layout';
-import { useAuth } from '../../context/auth';
+import {useRouter} from 'next/router';
+import {useTranslation} from 'react-i18next';
+import {Layout} from '../../components/layout';
+import {useAuth} from '../../context/auth';
+import {getLoginUrl} from '../../lib/customer-auth';
 import styles from '../../styles/account.module.css';
 
 const EyeIcon = ({ open }: { open: boolean }) => open ? (
@@ -31,6 +32,10 @@ const Login: NextPage = () => {
 
   const redirect = (router.query.redirect as string) || '/account';
 
+  const handleShopifyLogin = async () => {
+    window.location.href = await getLoginUrl()
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -48,6 +53,18 @@ const Login: NextPage = () => {
             <div className={styles.card}>
               <h1 className={styles.cardHeading}>{t('login.heading')}</h1>
               <p className={styles.cardSub}>{t('login.sub')}</p>
+
+              {/* Shopify OAuth — aanbevolen inlogmethode */}
+              <button
+                type="button"
+                className={styles.submitBtn}
+                onClick={handleShopifyLogin}
+                style={{ marginBottom: 8 }}
+              >
+                Inloggen met Shopify
+              </button>
+
+              <div className={styles.divider}>{t('login.or')}</div>
 
               {error && <div className={styles.errorBanner} style={{ marginBottom: 20 }}>{error}</div>}
 

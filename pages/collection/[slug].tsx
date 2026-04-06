@@ -1,18 +1,19 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import { serverSideTranslations } from '../../lib/i18n';
+import { getProductWithVariants, SLUG_TO_HANDLE } from '../../lib/products';
 import { useTranslation } from 'react-i18next';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Layout } from '../../components/layout';
 import {
   StarIcon, StarEmptyIcon, ArrowRightIcon,
-  MusicIcon, TrophyIcon, RefreshIcon,
+  MusicIcon, RefreshIcon,
   HeadphonesIcon, ZapIcon, ClockIcon,
   ToothIcon, MessageCircleIcon, EarIcon,
-  MoonIcon, WaveIcon, LayersIcon,
-  HelmetIcon, RadioIcon, ShieldIcon, CogIcon,
+  MoonIcon, WaveIcon,
+  HelmetIcon, RadioIcon, CogIcon,
   AwardIcon, HeartIcon, EyeOffIcon,
 } from '../../components/icons';
 import styles from '../../styles/collection.module.css';
@@ -357,7 +358,9 @@ const ClinicMarquee = ({ names, label }: { names: string[]; label: string }) => 
 );
 
 /* ─── Main page ─── */
-const CollectionPage: NextPage = () => {
+type PageProps = { shopifyProductImg: string | null };
+
+const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg }) => {
   const router = useRouter();
   const { t } = useTranslation('collection');
   const [sort, setSort] = useState(0);
@@ -506,7 +509,7 @@ const CollectionPage: NextPage = () => {
                 {singles.map((p, idx) => (
                   <Link key={idx} href={`/product?slug=${p.slug}`} className={styles.card}>
                     <div className={styles.imgWrap}>
-                      <Image src={p.img} alt={p.name} fill style={{ objectFit: 'contain', padding: '8px' }} />
+                      <Image src={shopifyProductImg ?? p.img} alt={p.name} fill sizes="(max-width: 640px) 50vw, 25vw" style={{ objectFit: 'contain', padding: '8px' }} />
                       {p.tag && <span className={styles.tag}>{p.tag}</span>}
                     </div>
                     <div className={styles.info}>
@@ -538,7 +541,7 @@ const CollectionPage: NextPage = () => {
                 {kits.map((p, idx) => (
                   <Link key={idx} href={`/product?slug=${p.slug}`} className={`${styles.card} ${styles.kitCard}`} style={{ '--kit-color': kitColor } as React.CSSProperties}>
                     <div className={styles.imgWrap}>
-                      <Image src={p.img} alt={p.name} fill style={{ objectFit: 'contain', padding: '8px' }} />
+                      <Image src={shopifyProductImg ?? p.img} alt={p.name} fill sizes="(max-width: 640px) 50vw, 25vw" style={{ objectFit: 'contain', padding: '8px' }} />
                       {p.tag && <span className={styles.tag}>{p.tag}</span>}
                       <span className={styles.kitBadge}>{t('ui.kit')}</span>
                     </div>
@@ -755,10 +758,24 @@ const CollectionPage: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'collection'])),
-  },
-});
+export const getServerSideProps: GetServerSideProps<PageProps> = async ({ locale, params }) => {
+  const slug = typeof params?.slug === 'string' ? params.slug : 'musician'
+
+  let shopifyProductImg: string | null = null
+  try {
+    const handle = SLUG_TO_HANDLE[slug]
+    if (handle) {
+      const product = await getProductWithVariants(handle)
+      shopifyProductImg = product?.images?.[0]?.url ?? null
+    }
+  } catch {}
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common', 'collection'])),
+      shopifyProductImg,
+    },
+  }
+};
 
 export default CollectionPage;

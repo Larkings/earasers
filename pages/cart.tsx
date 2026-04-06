@@ -30,7 +30,7 @@ const CartIcon = () => (
 
 const Cart: NextPage = () => {
   const { t } = useTranslation('common');
-  const { items, totalCount, setQty, removeItem } = useCart();
+  const { items, totalCount, setQty, removeItem, checkout, checkoutUrl } = useCart();
 
   const subtotal  = items.reduce((s, i) => s + i.price * i.qty, 0);
   const shipping  = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : SHIPPING_COST;
@@ -74,7 +74,7 @@ const Cart: NextPage = () => {
                 {items.map(item => (
                   <div key={item.id} className={styles.item}>
                     <Link href={`/product?slug=${item.slug}`} className={styles.itemImg}>
-                      <Image src={item.img} alt={item.name} fill style={{ objectFit: 'cover' }} />
+                      <Image src={item.img} alt={item.name} fill sizes="80px" style={{ objectFit: 'cover' }} />
                     </Link>
                     <div className={styles.itemBody}>
                       <Link href={`/product?slug=${item.slug}`} className={styles.itemName}>
@@ -160,7 +160,11 @@ const Cart: NextPage = () => {
                   <span className={styles.summaryTotalPrice}>{fmt(total)}</span>
                 </div>
 
-                <button className={styles.checkoutBtn}>
+                <button
+                  className={styles.checkoutBtn}
+                  onClick={checkout}
+                  disabled={!checkoutUrl}
+                >
                   {t('cart.checkout')} <ArrowRightIcon size={15} />
                 </button>
 
@@ -189,7 +193,7 @@ const Cart: NextPage = () => {
                 {crossSell.map(p => (
                   <Link key={p.slug} href={`/product?slug=${p.slug}`} className={styles.crossCard}>
                     <div className={styles.crossImg}>
-                      <Image src={p.images[0]} alt={p.name} fill style={{ objectFit: 'cover' }} />
+                      <Image src={p.images[0]} alt={p.name} fill sizes="(max-width: 640px) 50vw, 200px" style={{ objectFit: 'cover' }} />
                     </div>
                     <div className={styles.crossInfo}>
                       <p className={styles.crossCollection}>{p.collection}</p>

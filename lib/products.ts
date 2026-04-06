@@ -1,3 +1,5 @@
+import { shopifyFetch } from './shopify'
+
 export type ProductFilter = { db: string; label: string; desc: string };
 
 export type Product = {
@@ -164,3 +166,121 @@ export const fmt = (price: number) =>
 
 export const fmtSave = (price: number, original: number) =>
   fmt(original - price);
+
+// ─── Shopify Storefront ───────────────────────────────────────────────────────
+
+/** Lokale slug → Shopify product handle */
+export const SLUG_TO_HANDLE: Record<string, string> = {
+  musician:    'earasers-music-earplugs-2024',
+  dj:          'earasers-dj-earplugs-new',
+  dentist:     'earasers-dentists-hygienists',
+  sensitivity: 'earasers-sensory-reduction-hyperacusis',
+  sleeping:    'earasers-sleeping-earplugs',
+  motorsport:  'earasers-motorsport-earplugs',
+};
+
+export type ShopifyVariant = {
+  id: string;
+  title: string;
+  availableForSale: boolean;
+  price: { amount: string; currencyCode: string };
+  compareAtPrice: { amount: string; currencyCode: string } | null;
+  selectedOptions: Array<{ name: string; value: string }>;
+};
+
+export type ShopifyProductImage = {
+  url: string;
+  altText: string | null;
+}
+
+type ShopifyProductResponse = {
+  product: {
+    id: string;
+    title: string;
+    handle: string;
+    images: { edges: Array<{ node: ShopifyProductImage }> };
+    variants: { edges: Array<{ node: ShopifyVariant }> };
+  } | null;
+};
+
+export async function getProductWithVariants(handle: string) {
+  const data = await shopifyFetch<ShopifyProductResponse>(`
+    query ProductByHandle($handle: String!) {
+      product(handle: $handle) {
+        id
+        title
+        handle
+        images(first: 2) {
+          edges { node { url altText } }
+        }
+        variants(first: 30) {
+          edges {
+            node {
+              id
+              title
+              availableForSale
+              price { amount currencyCode }
+              compareAtPrice { amount currencyCode }
+              selectedOptions { name value }
+            }
+          }
+        }
+      }
+    }
+  `, { handle })
+
+  if (!data.product) return null
+  return {
+    ...data.product,
+    images:   data.product.images.edges.map(e => e.node),
+    variants: data.product.variants.edges.map(e => e.node),
+  }
+}
+
+/**
+ * Shopify gebruikt lange optiewaarden:
+ *   Size:   "Small (75% of Woman & Young Adults)"
+ *   Filter: "SNR 20 | Best for in the DJ Booth (-26dB Peak)"
+ *
+ * We matchen size op startsWith van het volledige woord ("small", "medium" …)
+ * en filter op includes van de dB-waarde ("-26dB").
+ */
+
+// Lokale size labels → volledige Shopify maat-naam (lowercase prefix)
+const SIZE_PREFIX: Record<string, string> = {
+  XS:  'extra small',
+  S:   'small',
+  M:   'medium',
+  L:   'large',
+  XL:  'extra large',
+}
+
+function matchesSize(optionValue: string, sizeLabel: string): boolean {
+  const v       = optionValue.toLowerCase()
+  const keyword = SIZE_PREFIX[sizeLabel.toUpperCase()] ?? sizeLabel.toLowerCase()
+  return v.startsWith(keyword)
+}
+
+function matchesFilter(optionValue: string, filterDb: string): boolean {
+  // filterDb = "-26dB" → zit in "... (-26dB Peak)"
+  return optionValue.toLowerCase().includes(filterDb.toLowerCase())
+}
+
+export function findVariant(
+  variants: ShopifyVariant[],
+  sizeLabel: string,
+  filterDb: string,
+): ShopifyVariant | undefined {
+  // Beste match: één optie matcht de maat, één optie matcht de filter
+  const full = variants.find(v => {
+    const vals = v.selectedOptions.map(o => o.value)
+    return vals.some(val => matchesSize(val, sizeLabel))
+        && vals.some(val => matchesFilter(val, filterDb))
+  })
+  if (full) return full
+
+  // Fallback: alleen filter matcht (producten met één optie)
+  return variants.find(v =>
+    v.selectedOptions.some(o => matchesFilter(o.value, filterDb)),
+  )
+}

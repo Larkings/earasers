@@ -1,58 +1,89 @@
-import type { NextPage, GetStaticProps } from 'next';
-import { serverSideTranslations } from '../../lib/i18n';
-import React, { useEffect } from 'react';
+import type { GetServerSideProps } from 'next';
+import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useTranslation } from 'react-i18next';
+import Image from 'next/image';
 import { Layout } from '../../components/layout';
-import { useAuth } from '../../context/auth';
 import { ArrowRightIcon } from '../../components/icons';
+import { getCustomerWithOrders, type CustomerProfile, type CustomerOrder } from '../../lib/customer-api';
 import styles from '../../styles/account.module.css';
 
-const PackageIcon = () => (
-  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--color-border)' }}>
-    <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
-    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-    <line x1="12" y1="22.08" x2="12" y2="12"/>
-  </svg>
-);
+// Cookie reader — geen externe dependency nodig
+function getCookie(cookieHeader: string, name: string): string | null {
+  const found = cookieHeader.split(';')
+    .map(c => c.trim())
+    .find(c => c.startsWith(`${name}=`))
+  return found ? found.slice(name.length + 1) : null
+}
 
-const Account: NextPage = () => {
-  const router = useRouter();
-  const { user, loading, logout } = useAuth();
-  const { t } = useTranslation('account');
+function fmt(amount: string, currency: string) {
+  return new Intl.NumberFormat('nl-NL', { style: 'currency', currency }).format(Number(amount))
+}
 
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/account/login?redirect=/account');
-    }
-  }, [loading, user, router]);
+function OrderCard({ order }: { order: CustomerOrder }) {
+  const date = new Date(order.processedAt).toLocaleDateString('nl-NL', {
+    day: 'numeric', month: 'long', year: 'numeric',
+  })
 
-  if (loading || !user) {
-    return (
-      <Layout>
-        <div className={styles.page}>
-          <div className="container" style={{ display: 'flex', justifyContent: 'center', padding: '80px 0' }}>
-            <div style={{ width: 32, height: 32, border: '3px solid var(--color-border)', borderTopColor: 'var(--color-accent)', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} />
+  return (
+    <div className={styles.orderCard ?? ''} style={{
+      border: '1.5px solid var(--color-border)',
+      borderRadius: 'var(--radius-md)',
+      padding: '16px 20px',
+      marginBottom: 12,
+    }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginBottom: 12 }}>
+        <span style={{ fontWeight: 600, fontSize: 14 }}>{order.name}</span>
+        <span style={{ fontSize: 13, color: 'var(--color-text-muted)' }}>{date}</span>
+        <span style={{ fontWeight: 600, fontSize: 14 }}>
+          {fmt(order.totalPrice.amount, order.totalPrice.currencyCode)}
+        </span>
+        <span style={{
+          fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em',
+          padding: '3px 10px', borderRadius: 'var(--radius-pill)',
+          background: 'var(--color-accent-light, #f0faf0)',
+          color: 'var(--color-accent)',
+        }}>
+          {order.fulfillmentStatus}
+        </span>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {order.lineItems.edges.map(({ node: item }) => (
+          <div key={item.title} style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            {item.image && (
+              <div style={{ position: 'relative', width: 48, height: 48, borderRadius: 6, overflow: 'hidden', flexShrink: 0, background: 'var(--color-bg-subtle)' }}>
+                <Image src={item.image.url} alt={item.image.altText ?? item.title} fill sizes="48px" style={{ objectFit: 'cover' }} />
+              </div>
+            )}
+            <div>
+              <p style={{ fontSize: 13, fontWeight: 500, margin: 0 }}>{item.title}</p>
+              <p style={{ fontSize: 12, color: 'var(--color-text-muted)', margin: 0 }}>
+                x{item.quantity} · {fmt(item.price.amount, item.price.currencyCode)}
+              </p>
+            </div>
           </div>
-        </div>
-      </Layout>
-    );
+        ))}
+      </div>
+    </div>
+  )
+}
+
+type Props = { customer: CustomerProfile }
+
+export default function AccountPage({ customer }: Props) {
+  const quickLinks = [
+    { label: 'Winkelwagen',       href: '/cart' },
+    { label: 'Zoek mijn maat',   href: '/size-finder' },
+    { label: 'Contact',          href: '/contact' },
+    { label: 'FAQ',              href: '/faq' },
+  ]
+
+  const handleLogout = async () => {
+    // logout() importeren als client-side — dynamic import om SSR te vermijden
+    const { logout } = await import('../../lib/customer-auth')
+    await logout()
   }
 
-  const handleLogout = () => {
-    logout();
-    router.push('/');
-  };
-
-  const quickLinks = [
-    { label: t('account.viewCart'),   href: '/cart' },
-    { label: t('account.findSize'),   href: '/size-finder' },
-    { label: t('account.contactUs'),  href: '/contact' },
-    { label: t('account.faq'),        href: '/faq' },
-  ];
+  const orders = customer.orders.edges.map(e => e.node)
 
   return (
     <Layout>
@@ -63,11 +94,11 @@ const Account: NextPage = () => {
             {/* Header */}
             <div className={styles.dashHeader}>
               <div>
-                <h1 className={styles.dashGreeting}>Hi, {user.firstName}!</h1>
-                <p className={styles.dashSub}>{user.email}</p>
+                <h1 className={styles.dashGreeting}>Hi, {customer.firstName}!</h1>
+                <p className={styles.dashSub}>{customer.emailAddress.emailAddress}</p>
               </div>
               <button className={styles.logoutBtn} onClick={handleLogout}>
-                {t('account.signOut')}
+                Uitloggen
               </button>
             </div>
 
@@ -75,40 +106,34 @@ const Account: NextPage = () => {
 
               {/* Account info */}
               <div className={styles.dashCard}>
-                <p className={styles.dashCardTitle}>{t('account.accountDetails')}</p>
+                <p className={styles.dashCardTitle}>Accountgegevens</p>
                 <div className={styles.infoRow}>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>{t('account.name')}</span>
-                    <span className={styles.infoValue}>{user.firstName} {user.lastName}</span>
+                    <span className={styles.infoLabel}>Naam</span>
+                    <span className={styles.infoValue}>{customer.firstName} {customer.lastName}</span>
                   </div>
                   <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>{t('account.email')}</span>
-                    <span className={styles.infoValue}>{user.email}</span>
-                  </div>
-                  <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>{t('account.newsletter')}</span>
-                    <span className={styles.infoValue}>{user.acceptsMarketing ? t('account.yes') : t('account.no')}</span>
+                    <span className={styles.infoLabel}>E-mail</span>
+                    <span className={styles.infoValue}>{customer.emailAddress.emailAddress}</span>
                   </div>
                 </div>
-                <button className={styles.editBtn}>{t('account.editDetails')}</button>
               </div>
 
               {/* Orders */}
               <div className={styles.dashCard}>
-                <p className={styles.dashCardTitle}>{t('account.orders')}</p>
-                {/*
-                  ── SHOPIFY INTEGRATION POINT ──────────────────────────────
-                  Replace with real order data fetched via:
-                  query { customer(customerAccessToken: $token) { orders { ... } } }
-                  ────────────────────────────────────────────────────────────
-                */}
-                <div className={styles.emptyOrders}>
-                  <PackageIcon />
-                  <p>{t('account.noOrders')}</p>
-                  <Link href="/collection" className={styles.shopLink}>
-                    {t('account.discoverCollection')} <ArrowRightIcon size={13} />
-                  </Link>
-                </div>
+                <p className={styles.dashCardTitle}>Bestellingen</p>
+                {orders.length === 0 ? (
+                  <div className={styles.emptyOrders}>
+                    <p>Nog geen bestellingen.</p>
+                    <Link href="/collection" className={styles.shopLink}>
+                      Ontdek de collectie <ArrowRightIcon size={13} />
+                    </Link>
+                  </div>
+                ) : (
+                  <div>
+                    {orders.map(order => <OrderCard key={order.id} order={order} />)}
+                  </div>
+                )}
               </div>
 
             </div>
@@ -132,17 +157,24 @@ const Account: NextPage = () => {
           </div>
         </div>
       </div>
-
-      {/* Inline spin keyframe for the loading state */}
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </Layout>
-  );
-};
+  )
+}
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'account'])),
-  },
-});
+export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
+  const token = getCookie(req.headers.cookie ?? '', 'customer_token')
 
-export default Account;
+  if (!token) {
+    return { redirect: { destination: '/account/login', permanent: false } }
+  }
+
+  try {
+    const customer = await getCustomerWithOrders(token)
+    if (!customer) {
+      return { redirect: { destination: '/account/login', permanent: false } }
+    }
+    return { props: { customer } }
+  } catch {
+    return { redirect: { destination: '/account/login', permanent: false } }
+  }
+}

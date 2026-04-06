@@ -24,7 +24,7 @@ const DrawerItem = ({ item }: { item: CartItem }) => {
   return (
     <div className={styles.item}>
       <Link href={`/product?slug=${item.slug}`} className={styles.itemImg} onClick={closeCart}>
-        <Image src={item.img} alt={item.name} fill style={{ objectFit: 'cover' }} />
+        <Image src={item.img} alt={item.name} fill sizes="64px" style={{ objectFit: 'cover' }} />
       </Link>
       <div className={styles.itemBody}>
         <Link href={`/product?slug=${item.slug}`} className={styles.itemName} onClick={closeCart}>

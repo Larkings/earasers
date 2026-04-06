@@ -17,6 +17,11 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap"
             rel="stylesheet"
           />
+          {/* Shopify Analytics — vereist voor Web Pixels & session tracking */}
+          <script
+            async
+            src={`https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/cdn/shop/t/1/assets/theme.js`}
+          />
         </Head>
         <body>
           <Main />
