@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import styles from './authDrawer.module.css';
 import { useAuth, type RegisterData } from '../../context/auth';
+import { getLoginUrl } from '../../lib/customer-auth';
 import { CloseIcon } from '../icons';
 
 type View = 'login' | 'register' | 'forgot';
@@ -204,59 +205,22 @@ const RegisterView = ({ onSwitch }: { onSwitch: (v: View) => void }) => {
 // ── Forgot password view ──────────────────────────────────────────────────────
 
 const ForgotView = ({ onSwitch }: { onSwitch: (v: View) => void }) => {
-  const { forgotPassword, loading } = useAuth();
   const { t } = useTranslation('account');
 
-  const [email,   setEmail]   = useState('');
-  const [error,   setError]   = useState('');
-  const [success, setSuccess] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    if (!email.includes('@')) { setError(t('forgot.errorEmail')); return; }
-    const err = await forgotPassword(email);
-    if (err) { setError(err); return; }
-    setSuccess(true);
-  };
-
-  if (success) {
-    return (
-      <div className={styles.viewWrap}>
-        <h2 className={styles.heading}>{t('forgot.heading')}</h2>
-        <p className={styles.successMsg}>{t('forgot.checkInbox')} <strong>{email}</strong></p>
-        <button type="button" className={styles.switchLink} style={{ marginTop: 24 }} onClick={() => onSwitch('login')}>
-          {t('forgot.backToSignIn')}
-        </button>
-      </div>
-    );
+  const handleRedirect = async () => {
+    window.location.href = await getLoginUrl()
   }
 
   return (
     <div className={styles.viewWrap}>
       <h2 className={styles.heading}>{t('forgot.heading')}</h2>
-      <p className={styles.sub}>{t('forgot.sub')}</p>
+      <p className={styles.sub}>
+        {t('forgot.shopifySub', { defaultValue: 'Shopify beheert je wachtwoord. De resetlink vind je op de Shopify loginpagina.' })}
+      </p>
 
-      {error && <div className={styles.errorBanner}>{error}</div>}
-
-      <form onSubmit={handleSubmit} noValidate className={styles.form}>
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="auth-forgot-email">{t('forgot.email')}</label>
-          <input
-            id="auth-forgot-email"
-            type="email"
-            autoComplete="email"
-            className={styles.input}
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            placeholder="name@example.com"
-          />
-        </div>
-
-        <button type="submit" className={styles.submitBtn} disabled={loading}>
-          {loading ? <span className={styles.spinner} /> : t('forgot.submitBtn')}
-        </button>
-      </form>
+      <button type="button" className={styles.submitBtn} onClick={handleRedirect}>
+        {t('forgot.shopifyBtn', { defaultValue: 'Verder naar Shopify' })}
+      </button>
 
       <button type="button" className={styles.backLink} onClick={() => onSwitch('login')}>
         {t('forgot.backToSignIn')}
