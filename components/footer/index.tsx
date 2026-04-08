@@ -8,19 +8,19 @@ export const Footer = () => {
   const { t } = useTranslation('common');
 
   const shopLinks = [
-    { label: t('shopCategories.music'),          href: '/collection' },
-    { label: t('shopCategories.dj'),             href: '/collection' },
-    { label: t('shopCategories.dentist'),        href: '/collection' },
-    { label: t('shopCategories.sleeping'),       href: '/collection' },
-    { label: t('shopCategories.motorsport'),     href: '/collection' },
-    { label: t('shopCategories.noiseSensitivity'), href: '/collection' },
+    { label: t('shopCategories.music'),          href: '/collection/musician' },
+    { label: t('shopCategories.dj'),             href: '/collection/dj' },
+    { label: t('shopCategories.dentist'),        href: '/collection/dentist' },
+    { label: t('shopCategories.sleeping'),       href: '/collection/sleeping' },
+    { label: t('shopCategories.motorsport'),     href: '/collection/motorsport' },
+    { label: t('shopCategories.noiseSensitivity'), href: '/collection/sensitivity' },
   ];
 
   const supportLinks = [
     { label: t('footer.faq'),              href: '/faq' },
-    { label: t('footer.specs'),            href: '/faq' },
-    { label: t('footer.instructionVideos'), href: '/faq' },
-    { label: t('footer.warranty'),         href: '/faq' },
+    { label: t('footer.specs'),            href: '/faq#product' },
+    { label: t('footer.instructionVideos'), href: '/faq#instruction-video' },
+    { label: t('footer.warranty'),         href: '/faq#ordering' },
     { label: t('footer.returns'),          href: '/returns' },
     { label: t('footer.contact'),          href: '/contact' },
   ];

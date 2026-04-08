@@ -766,9 +766,12 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ locale
     const handle = SLUG_TO_HANDLE[slug]
     if (handle) {
       const product = await getProductWithVariants(handle)
+      // Gebruik altijd de Shopify CDN URL als primaire afbeelding
       shopifyProductImg = product?.images?.[0]?.url ?? null
     }
-  } catch {}
+  } catch (err) {
+    console.error('[collection] Shopify image fetch failed:', err)
+  }
 
   return {
     props: {

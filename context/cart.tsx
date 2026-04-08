@@ -194,7 +194,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const checkoutUrl = shopifyCart?.checkoutUrl ?? null;
 
   const checkout = () => {
-    if (!checkoutUrl) return;
+    console.log('[checkout] checkoutUrl:', checkoutUrl);
+    if (!checkoutUrl) {
+      console.warn('[checkout] Geen checkoutUrl beschikbaar — Shopify cart niet gesynchroniseerd');
+      return;
+    }
     trackCheckoutStarted(checkoutUrl, shopifyCart?.cost.totalAmount.amount ?? '0');
     window.location.href = checkoutUrl;
   };

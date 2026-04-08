@@ -1,5 +1,12 @@
-const DOMAIN  = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN!
-const TOKEN   = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN!
+if (!process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN) {
+  throw new Error('NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN is not set')
+}
+if (!process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN) {
+  throw new Error('NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN is not set')
+}
+
+const DOMAIN  = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN
+const TOKEN   = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN
 const API_URL = `https://${DOMAIN}/api/2024-01/graphql.json`
 
 export async function shopifyFetch<T>(
