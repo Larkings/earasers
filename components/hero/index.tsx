@@ -8,7 +8,7 @@ export const Hero = () => {
   const { t } = useTranslation('home');
 
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} style={{ backgroundImage: "url('/HeroEarasers.jpg')" }}>
       <div className={styles.overlay} />
 
       <div className={`container ${styles.content}`}>
