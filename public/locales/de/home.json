@@ -130,7 +130,27 @@
   "reviews": {
     "heading": "Echte Menschen. Echte Meinungen.",
     "sub": "Mit 4,7 von 5 von über 1.000 Kunden bewertet",
-    "trustpilot": "Auf Trustpilot ansehen"
+    "trustpilot": "Auf Trustpilot ansehen",
+    "cards": [
+      {
+        "text": "Viel besser und günstiger als alle maßgefertigten Ohrstöpsel von etablierten Marken, die ich hatte!"
+      },
+      {
+        "text": "Diese sind perfekt. Sie sitzen sehr angenehm, sind kaum sichtbar und balancieren den Klang wunderschön aus."
+      },
+      {
+        "text": "Toller Kundenservice. Sie haben mir die Mediums plus das Filterentfernungswerkzeug kostenlos zugeschickt!"
+      },
+      {
+        "text": "Zufrieden mit meinen Earasers. Die Größenwahl war etwas schwierig, aber ich folgte ihrem Rat und er war genau richtig."
+      },
+      {
+        "text": "Das weiche Material und die anatomische Form sorgen für eine perfekte Passform. Äußerst komfortabel und überraschend effektiv."
+      },
+      {
+        "text": "Sie dämpfen den Skaliererlärm gut ab und lassen mich trotzdem meine Patienten klar hören. Jeden Cent wert."
+      }
+    ]
   },
   "influencers": {
     "heading": "Von Profis vertraut",

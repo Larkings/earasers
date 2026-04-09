@@ -130,7 +130,27 @@
   "reviews": {
     "heading": "Real people. Real opinions.",
     "sub": "Rated 4.7 out of 5 by over 1,000 customers",
-    "trustpilot": "View on Trustpilot"
+    "trustpilot": "View on Trustpilot",
+    "cards": [
+      {
+        "text": "Much better and cheaper than all the custom-fitted earplugs from established brands I have had!"
+      },
+      {
+        "text": "These are perfect. They fit in very nicely, are barely visible, and balance the sound beautifully."
+      },
+      {
+        "text": "Great customer service. They sent me the mediums plus the filter removal tool free of charge!"
+      },
+      {
+        "text": "Happy with my Earasers. I found it a bit hard to choose the size but eventually went with their advice and it was spot on."
+      },
+      {
+        "text": "The soft material and anatomical shape made this a perfect fit. Extremely comfortable and surprisingly effective."
+      },
+      {
+        "text": "They do a good job at blocking out scaler noise while still letting me hear my patients clearly. Worth every cent."
+      }
+    ]
   },
   "influencers": {
     "heading": "Trusted by professionals",

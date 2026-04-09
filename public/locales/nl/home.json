@@ -130,7 +130,27 @@
   "reviews": {
     "heading": "Echte mensen. Echte meningen.",
     "sub": "Beoordeeld met 4.7 uit 5 door meer dan 1.000 klanten",
-    "trustpilot": "Bekijk op Trustpilot"
+    "trustpilot": "Bekijk op Trustpilot",
+    "cards": [
+      {
+        "text": "Veel beter en goedkoper dan alle op maat gemaakte oortjes van gevestigde merken die ik gehad heb!"
+      },
+      {
+        "text": "Perfect. Ze zitten heel comfortabel, zijn nauwelijks zichtbaar en balanceren het geluid prachtig."
+      },
+      {
+        "text": "Geweldige klantenservice. Ze stuurden me de mediums én het filterverwijderhulpstuk gratis!"
+      },
+      {
+        "text": "Blij met mijn Earasers. Het was even lastig om de maat te kiezen, maar ik volgde hun advies en dat klopte precies."
+      },
+      {
+        "text": "Het zachte materiaal en de anatomische vorm zorgen voor een perfecte pasvorm. Extreem comfortabel en verrassend effectief."
+      },
+      {
+        "text": "Ze blokkeren het scalergeluid uitstekend terwijl ik mijn patiënten nog steeds goed kan horen. Elke cent waard."
+      }
+    ]
   },
   "influencers": {
     "heading": "Vertrouwd door professionals",

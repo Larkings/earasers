@@ -130,7 +130,27 @@
   "reviews": {
     "heading": "Personas reales. Opiniones reales.",
     "sub": "Valorado con 4,7 sobre 5 por más de 1.000 clientes",
-    "trustpilot": "Ver en Trustpilot"
+    "trustpilot": "Ver en Trustpilot",
+    "cards": [
+      {
+        "text": "¡Mucho mejor y más barato que todos los tapones a medida de marcas establecidas que he tenido!"
+      },
+      {
+        "text": "Son perfectos. Se ajustan muy bien, apenas se notan y equilibran el sonido de manera magnífica."
+      },
+      {
+        "text": "¡Excelente servicio al cliente. Me enviaron las medianas más la herramienta de extracción del filtro sin cargo!"
+      },
+      {
+        "text": "Contento con mis Earasers. Me costó un poco elegir la talla, pero seguí su consejo y acertaron de pleno."
+      },
+      {
+        "text": "El material suave y la forma anatómica lo convierten en un ajuste perfecto. Extremadamente cómodo y sorprendentemente efectivo."
+      },
+      {
+        "text": "Bloquean muy bien el ruido del scaler y aun así me permiten escuchar a mis pacientes con claridad. Vale cada céntimo."
+      }
+    ]
   },
   "influencers": {
     "heading": "Confiado por profesionales",
