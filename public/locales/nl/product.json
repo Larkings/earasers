@@ -78,5 +78,74 @@
       "text": "Uitstekende klantenservice — ze stuurden me de middens plus het filterverwijderingsgereedschap gratis!"
     }
   ],
-  "orComboKit": "of kies een combi-kit"
+  "orComboKit": "of kies een combi-kit",
+  "productData": {
+    "musician": {
+      "name": "Muziek Oordoppen",
+      "collection": "HiFi Muziek Collectie",
+      "description": "De enige bekroonde HiFi oordoppen ter wereld. Bescherm je gehoor zonder de muziek te dempen — dankzij onze gepatenteerde V-Filter technologie en medisch siliconen pasvorm.",
+      "features": ["Gepatenteerde V-Filter technologie", "Medisch silicone — zelfpassend", "Vrijwel onzichtbaar in het oor", "Geen specialist nodig", "5× MusicRadar Beste Muziek Oordoppen"],
+      "tag": "Bestseller",
+      "filters": [
+        { "label": "Comfort", "desc": "Lichte bescherming, maximale helderheid. Ideaal voor kleine podia." },
+        { "label": "Standaard", "desc": "Europese norm. Ideaal voor de meeste livemuziek situaties." },
+        { "label": "Max", "desc": "Hoogste bescherming. Aanbevolen voor DJ's en zware industrie." }
+      ]
+    },
+    "dj": {
+      "name": "DJ Oordoppen",
+      "collection": "DJ Collectie",
+      "description": "Gebouwd voor booth monitors en festivalvolumes. Maximale bescherming met kristalhelder geluid — vertrouwd door professionele DJ's in heel Europa.",
+      "features": ["Max -31dB bescherming beschikbaar", "Vlakke frequentierespons voor nauwkeurig monitoring", "Zweetbestendig medisch silicone", "Compatibel met in-ear monitors", "Aanbevolen door tourende professionals"],
+      "tag": null,
+      "filters": [
+        { "label": "Comfort", "desc": "Lichte bescherming, maximale helderheid. Goed voor kleinere clubbooths." },
+        { "label": "Standaard DJ", "desc": "Aanbevolen voor de meeste DJ's. Dekt het volledige bereik van club- en festivalvolumes." },
+        { "label": "Tinnitus Guard", "desc": "Maximale bescherming voor DJ's met bestaand tinnitus of extreem luide podia." }
+      ]
+    },
+    "dentist": {
+      "name": "Tandarts & Mondhygiënist Oordoppen",
+      "collection": "Professionele Collectie",
+      "description": "Blokkeer het geluid van de boor en scaler terwijl u patiëntcommunicatie duidelijk hoort. Gedragen door tandheelkundige professionals in heel Europa gedurende de volledige werkdag.",
+      "features": ["Vermindert hoge frequentie instrumentgeluid", "Spraakfrequenties blijven duidelijk", "Comfortabel voor de hele dag", "Medisch silicone", "EU veiligheidscertificering"],
+      "tag": null,
+      "filters": [
+        { "label": "Zachte Standaard", "desc": "Voor professionals in rustigere praktijken. Dagelijkse tandheelkundige omgevingen." },
+        { "label": "Klinische Balans", "desc": "Aanbevolen voor mondhygiënisten en tandartsen die dagelijks ultrasonische scalers gebruiken." }
+      ]
+    },
+    "sleeping": {
+      "name": "Slaap Oordoppen",
+      "collection": "Rust & Stilte Collectie",
+      "description": "Stil, comfortabel en nauwelijks merkbaar. Slaap dieper zonder de druk en het ongemak van traditionele schuim oordoppen.",
+      "features": ["Ultra-zacht medisch silicone", "Laag profiel — ideaal voor zijslapers", "Geen druk op het gehoorkanaal", "Herbruikbaar en wasbaar", "Wekker alarm hoorbaar"],
+      "tag": null,
+      "filters": [
+        { "label": "Comfort", "desc": "Dempt snurken en omgevingsgeluid — je kunt nog steeds alarmen horen." },
+        { "label": "Diep", "desc": "Voor lichte slapers en lawaaierige omgevingen. Maximale stilte, nog steeds veilig." }
+      ]
+    },
+    "motorsport": {
+      "name": "Motorsport Oordoppen",
+      "collection": "Moto HiFi Collectie",
+      "description": "Bescherm tegen windgeluid en motorlawaai terwijl helmcommunicatie, GPS-instructies en co-piloot gesprekken kristalhelder blijven.",
+      "features": ["Wind- en motorgeluid demping", "Past comfortabel onder alle helmen", "Intercom & bluetooth compatibel", "EU CE gecertificeerd", "Vermindert vermoeidheid op lange ritten"],
+      "tag": null,
+      "filters": [
+        { "label": "Lichte Rit", "desc": "Voor stadsrijden en kortere ritten waar je bewust wil blijven van verkeer." },
+        { "label": "Lange Afstand", "desc": "Aanbevolen voor snelweg- en toerritten. Dekt aanhoudend windgeluid op de snelweg." }
+      ]
+    },
+    "sensitivity": {
+      "name": "Geluidsovergevoeligheid Oordoppen",
+      "collection": "Rust Collectie",
+      "description": "Kalmeer uw zintuigen en beheers sensorische overprikkeling zonder bewustzijn van uw omgeving te verliezen — ideaal voor autisme, ADHD, hyperacusis en misofonie.",
+      "features": ["Zachte -19dB demping", "Geen occlusie effect", "Ideaal voor autisme, ADHD, hyperacusis", "Discrete onzichtbare pasvorm", "Hele dag comfort zonder vermoeidheid"],
+      "tag": null,
+      "filters": [
+        { "label": "Gevoeligheidsfilter", "desc": "Het enige filter dat we aanbevelen voor dagelijks gebruik. Zachte, vlakke demping." }
+      ]
+    }
+  }
 }

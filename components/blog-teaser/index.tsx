@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import styles from './blog-teaser.module.css';
 
 const POST_IMAGES = [
-  'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',
-  'https://www.earasers.shop/cdn/shop/files/MainProductPicDJ.png',
-  'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
+  'https://earasers-eu.myshopify.com/cdn/shop/files/Earasersuitgezoomd.png',
+  'https://earasers-eu.myshopify.com/cdn/shop/files/MainProductPicDJ.png',
+  'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',
 ];
 
 export const BlogTeaser = () => {

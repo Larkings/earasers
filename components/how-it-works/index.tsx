@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './how-it-works.module.css';
 import { CircleIcon, WaveIcon, LayersIcon } from '../icons';
 
-const CHART = 'https://www.earasers.shop/cdn/shop/files/EARASERS_attenuation_tables.png';
+const CHART = 'https://earasers-eu.myshopify.com/cdn/shop/files/EARASERS_attenuation_tables.png';
 
 export const HowItWorks = () => {
   const { t } = useTranslation('home');

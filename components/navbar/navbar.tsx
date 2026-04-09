@@ -97,6 +97,9 @@ export const Navbar = () => {
                 )}
               </li>
 
+              <li className={styles.navItem}><Link href="/blog"          className={styles.navLink}>{t('nav.blog')}</Link></li>
+              <li className={styles.navItem}><Link href="/size-finder"   className={styles.navLink}>{t('nav.sizeFinder')}</Link></li>
+
               <li className={styles.navItem} ref={faqRef}>
                 <button className={styles.navBtn} onClick={() => { setFaqOpen(o => !o); setShopOpen(false); }} aria-expanded={faqOpen}>
                   {t('nav.faq')} <ChevronDownIcon size={13} className={faqOpen ? styles.chevronOpen : styles.chevron} />
@@ -112,7 +115,6 @@ export const Navbar = () => {
                 )}
               </li>
 
-              <li className={styles.navItem}><Link href="/size-finder"   className={styles.navLink}>{t('nav.sizeFinder')}</Link></li>
               <li className={styles.navItem}><Link href="/store-locator" className={styles.navLink}>{t('nav.storeLocator')}</Link></li>
               <li className={styles.navItem}><Link href="/about"         className={styles.navLink}>{t('nav.about')}</Link></li>
               <li className={styles.navItem}><Link href="/contact"       className={styles.navLink}>{t('nav.contact')}</Link></li>
@@ -166,6 +168,7 @@ export const Navbar = () => {
               ))}
             </div>
             <div className={styles.mobileGroup}>
+              <Link href="/blog"          className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.blog')}</Link>
               <Link href="/size-finder"   className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.sizeFinder')}</Link>
               <Link href="/store-locator" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.storeLocator')}</Link>
               <Link href="/about"         className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.about')}</Link>

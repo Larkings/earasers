@@ -36,8 +36,8 @@ export const PRODUCTS: Record<string, Product> = {
     reviews: 1024,
     images: [
       '/MusicPackage.png',
-      'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
-      'https://www.earasers.shop/cdn/shop/files/Earasers_starter_combo_kit.png',
+      'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',
+      'https://earasers-eu.myshopify.com/cdn/shop/files/Earasers_starter_combo_kit.png',
     ],
     description: 'The world\'s only award-winning HiFi earplugs. Protect your hearing without muffling the music — thanks to our patented V-Filter technology and medical grade silicone fit.',
     features: ['Patented V-Filter technology', 'Medical grade silicone — self-fitting', 'Nearly invisible in the ear', 'No specialist required', '5× MusicRadar Best Music Earplugs'],
@@ -56,12 +56,13 @@ export const PRODUCTS: Record<string, Product> = {
     reviews: 312,
     images: [
       '/DJPackage.png',
-      'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
+      'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',
     ],
     description: 'Built for booth monitors and festival volumes. Maximum protection with crystal-clear sound reproduction — trusted by professional DJs across Europe.',
     features: ['Max -31dB protection available', 'Flat frequency response for accurate monitoring', 'Sweat-resistant medical silicone', 'Compatible with in-ear monitors', 'Endorsed by touring professionals'],
     tag: null,
     filters: [
+      COMFORT,
       STANDARD,
       MAX,
     ],
@@ -78,7 +79,7 @@ export const PRODUCTS: Record<string, Product> = {
     reviews: 198,
     images: [
       '/DentistPackage.png',
-      'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
+      'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',
     ],
     description: 'Block out scaler and drill noise while keeping full patient communication. Worn by dental professionals across Europe throughout the full working day.',
     features: ['Reduces high-frequency instrument noise', 'Speech frequencies remain clear', 'Comfortable for all-day wear', 'Medical grade silicone', 'EU safety compliant'],
@@ -100,14 +101,14 @@ export const PRODUCTS: Record<string, Product> = {
     reviews: 432,
     images: [
       '/EarasersTransparent.png',
-      'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
+      'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',
     ],
     description: 'Quiet, comfortable, and barely noticeable. Sleep deeper without the pressure and discomfort of traditional foam earplugs.',
     features: ['Ultra-soft medical silicone', 'Low-profile — ideal for side sleepers', 'No pressure on ear canal', 'Reusable and washable', 'Wake-up alarm audible'],
     tag: null,
     filters: [
       { ...COMFORT, desc: 'Muffles snoring and ambient noise — you can still hear alarms.' },
-      { db: '-26dB', label: 'Deep', desc: 'For light sleepers and noisy environments. Maximum quiet, still safe.' },
+      { db: '-36dB', label: 'Deep', desc: 'For light sleepers and noisy environments. Maximum quiet, still safe.' },
     ],
   },
   motorsport: {
@@ -122,7 +123,7 @@ export const PRODUCTS: Record<string, Product> = {
     reviews: 156,
     images: [
       '/MotorsportPackage.png',
-      'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
+      'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',
     ],
     description: 'Protect against wind noise and engine roar while keeping helmet communications, GPS instructions, and co-driver calls crystal clear.',
     features: ['Wind and engine noise attenuation', 'Fits comfortably under all helmets', 'Intercom & bluetooth compatible', 'EU CE certified', 'Reduces fatigue on long rides'],
@@ -144,7 +145,7 @@ export const PRODUCTS: Record<string, Product> = {
     reviews: 287,
     images: [
       '/EarasersTransparent.png',
-      'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
+      'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',
     ],
     description: 'Calm your senses and manage sensory overload without losing awareness of your surroundings — ideal for autism, ADHD, hyperacusis, and misophonia.',
     features: ['Gentle -19dB attenuation', 'No occlusion effect', 'Ideal for autism, ADHD, hyperacusis', 'Discreet invisible fit', 'All-day comfort without fatigue'],

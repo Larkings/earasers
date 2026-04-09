@@ -158,7 +158,7 @@
         "quote": "Für bequeme Ohrstöpsel zum Spielen würde ich definitiv Earasers wählen! Ihre perfekte Passform und überlegene Geräuschreduzierung machen sie zu meiner ersten Wahl für jede Aufführung."
       },
       {
-        "quote": "Earasers sind die einzigen Ohrstöpsel, denen wir auf der Bühne und im Studio vertrauen. Kristallklarer Klang, die ganze Nacht."
+        "quote": "Earasers sind die einzigen Ohrstöpsel, denen wir auf der Bühne und im Publikum vertrauen. Kristallklarer Klang, die ganze Nacht."
       }
     ],
     "products": [
@@ -421,24 +421,32 @@
     ],
     "reviewCards": [
       {
-        "quote": "Ich bin auf klares Sprachverstehen angewiesen. Diese Ohrstöpsel reduzieren nur die schädlichen Frequenzen, sodass ich meinen Assistenten und Patienten noch perfekt hören kann. Unser gesamtes Team verwendet sie jetzt.",
-        "name": "Dr. M. Richards"
+        "quote": "Ich praktiziere seit über zwölf Jahren und habe den Bohrlärm immer als Teil des Berufs akzeptiert. Nach zwei Wochen mit Earasers ist der Unterschied am Ende des Tages bemerkenswert — weniger Erschöpfung, kein Ohrensausen und ich höre noch jedes Wort meiner Patienten.",
+        "name": "Dr. Matis Mink"
       },
       {
-        "quote": "Sehr zufrieden mit den Ohrstöpseln. Sehr bequem und sie haben meinen Arbeitstag viel entspannter gemacht.",
+        "quote": "Wir haben Earasers in unserer gesamten Praxis eingeführt und das Feedback unseres Teams ist überwältigend positiv. Angenehmere Arbeitstage, bessere Konzentration und keine Kopfschmerzen mehr nach der Schicht. Wir empfehlen sie jedem Kollegen.",
         "name": "Brummans & Fa Zahnarztpraxis"
       },
       {
-        "quote": "Klarer Klang, weniger Ermüdung. Diese Ohrstöpsel nehmen den Rand des hochfrequenten Rauschens weg, ohne mich von Patienten zu isolieren.",
+        "quote": "Als Zahnarzt, der den ganzen Tag mit Hochgeschwindigkeitsgeräten arbeitet, ist Gehörschutz unverzichtbar. Earasers sind die ersten Ohrstöpsel, die wirklich schützen, ohne mich von meinen Patienten zu isolieren. Klares Sprachverstehen, reduzierter Bohrlärm — genau das, was ich brauchte.",
+        "name": "Dr. Shad Faraj"
+      },
+      {
+        "quote": "Der Unterschied zwischen Earasers und normalen Schaumstoffstöpseln ist wie Tag und Nacht. Mit Schaumstoff konnte ich meine Patienten überhaupt nicht hören. Mit Earasers sinkt der Bohrlärm auf ein sicheres Niveau, während die Patientenkommunikation vollständig erhalten bleibt.",
         "name": "Dr. A. Vermeer"
       },
       {
-        "quote": "Leicht, effektiv und einfach den ganzen Tag zu tragen. Diese Ohrstöpsel sind Teil meiner täglichen Routine geworden.",
+        "quote": "Nach Jahren der Hygieniker-Arbeit begann ich Tinnitus-Symptome zu entwickeln. Mein Audiologe empfahl besseren Gehörschutz bei Eingriffen. Earasers haben das Problem gelöst — ich trage sie bei jeder Schicht und die Symptome haben sich deutlich verringert.",
         "name": "Dr. K. Maktur"
       },
       {
-        "quote": "Ich hätte nie erwartet, dass Ohrstöpsel so einen großen Unterschied machen. Ich höre noch alles klar, aber am Ende des Tages fühle ich merklich mehr Energie.",
-        "name": "Dr. Shad Faraj"
+        "quote": "Ich bin auf klares Sprachverstehen den ganzen Tag angewiesen. Diese Ohrstöpsel reduzieren nur die schädlichen Frequenzen, sodass ich meinen Assistenten und Patienten noch perfekt hören kann. Unser gesamtes Team verwendet sie jetzt und ich würde nie zurückgehen.",
+        "name": "Dr. M. Richards"
+      },
+      {
+        "quote": "Wir haben Earasers allen Zahnärzten in unserem Netzwerk empfohlen, nachdem wir die Ergebnisse selbst erlebt haben. Die Kombination aus effektiver Lärmreduzierung und erhaltenen Sprachfrequenzen ist genau das, was Zahnmediziner benötigen.",
+        "name": "Resmile Dentistry"
       }
     ],
     "influencers": [

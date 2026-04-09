@@ -64,6 +64,15 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
 
   const [product, setProduct] = useState<Product>(getProduct('musician'));
 
+  // Product-specific translations (after product state is declared)
+  const tProductName       = t(`productData.${product.slug}.name`,        { defaultValue: product.name });
+  const tProductCollection = t(`productData.${product.slug}.collection`,   { defaultValue: product.collection });
+  const tProductDesc       = t(`productData.${product.slug}.description`,  { defaultValue: product.description });
+  const _tProductFeatures  = t(`productData.${product.slug}.features`,     { returnObjects: true, defaultValue: product.features });
+  const tProductFeatures   = Array.isArray(_tProductFeatures) ? (_tProductFeatures as string[]) : product.features;
+  const _tProductFilters   = t(`productData.${product.slug}.filters`,      { returnObjects: true, defaultValue: [] });
+  const tProductFilters    = Array.isArray(_tProductFilters) ? (_tProductFilters as Array<{ label: string; desc: string }>) : [];
+
   const [activeImg,    setActiveImg]    = useState(0);
   const [activeSize,   setActiveSize]   = useState(1);
   const [activeFilter, setActiveFilter] = useState(0);
@@ -141,7 +150,7 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
             <span>/</span>
             <Link href="/collection">{t('breadcrumb.shop')}</Link>
             <span>/</span>
-            <span>{product.collection}</span>
+            <span>{tProductCollection}</span>
           </nav>
 
           <div className={styles.grid}>
@@ -149,7 +158,7 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
             {/* Gallery */}
             <div className={styles.gallery}>
               <div className={styles.mainImg}>
-                <Image src={product.images[activeImg]} alt={product.name} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
+                <Image src={product.images[activeImg]} alt={tProductName} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
                 {product.tag && <span className={styles.galleryTag}>{product.tag}</span>}
               </div>
               <div className={styles.thumbs}>
@@ -167,8 +176,8 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
 
             {/* Info */}
             <div className={styles.info}>
-              <p className={styles.collection}>{product.collection}</p>
-              <h1 className={styles.title}>{product.name}</h1>
+              <p className={styles.collection}>{tProductCollection}</p>
+              <h1 className={styles.title}>{tProductName}</h1>
 
               <div className={styles.ratingRow}>
                 <Stars count={product.rating} />
@@ -183,7 +192,7 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
                 <span className={styles.badge}>{t('save', { amount: fmtSave(price, original) })}</span>
               </div>
 
-              <p className={styles.desc}>{product.description}</p>
+              <p className={styles.desc}>{tProductDesc}</p>
 
               {/* Size selector */}
               <div className={styles.selectorBlock}>
@@ -269,8 +278,8 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
                       onClick={() => setActiveFilter(i)}
                     >
                       <span className={styles.filterDb}>{f.db}</span>
-                      <span className={styles.filterLabel}>{f.label}</span>
-                      <span className={styles.filterDesc}>{f.desc}</span>
+                      <span className={styles.filterLabel}>{tProductFilters[i]?.label ?? f.label}</span>
+                      <span className={styles.filterDesc}>{tProductFilters[i]?.desc ?? f.desc}</span>
                     </button>
                   ))}
                 </div>
@@ -339,8 +348,8 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
                 <h3>{t('descriptionHeading')}</h3>
                 <p>{t('descriptionBody')}</p>
                 <ul className={styles.featureList}>
-                  {product.features.map(f => (
-                    <li key={f}><CheckIcon size={15} className={styles.featureCheck} /> {f}</li>
+                  {tProductFeatures.map((f, i) => (
+                    <li key={i}><CheckIcon size={15} className={styles.featureCheck} /> {f}</li>
                   ))}
                 </ul>
               </div>
@@ -351,7 +360,7 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
                 <h3>{t('specsHeading')}</h3>
                 <p>{t('specsBody')}</p>
                 <Image
-                  src="https://www.earasers.shop/cdn/shop/files/EARASERS_attenuation_tables.png"
+                  src="https://earasers-eu.myshopify.com/cdn/shop/files/EARASERS_attenuation_tables.png"
                   alt={t('specsImgAlt')}
                   width={1200}
                   height={500}

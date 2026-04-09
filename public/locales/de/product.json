@@ -78,5 +78,74 @@
       "text": "Ausgezeichneter Kundendienst — sie schickten mir die Mittels plus das Filterentfernungswerkzeug kostenlos!"
     }
   ],
-  "orComboKit": "oder ein Kombipaket wählen"
+  "orComboKit": "oder ein Kombipaket wählen",
+  "productData": {
+    "musician": {
+      "name": "Musik-Ohrstöpsel",
+      "collection": "HiFi Musik Kollektion",
+      "description": "Die einzigen preisgekrönten HiFi-Ohrstöpsel der Welt. Schützen Sie Ihr Gehör ohne Musik zu dämpfen — dank unserer patentierten V-Filter-Technologie und medizinischen Silikonpassform.",
+      "features": ["Patentierte V-Filter-Technologie", "Medizinisches Silikon — selbstanpassend", "Nahezu unsichtbar im Ohr", "Kein Spezialist erforderlich", "5× MusicRadar Bester Musik-Ohrstöpsel"],
+      "tag": "Bestseller",
+      "filters": [
+        { "label": "Comfort", "desc": "Leichter Schutz, maximale Klarheit. Ideal für kleinere Bühnen." },
+        { "label": "Standard", "desc": "Europäische Norm. Ideal für die meisten Live-Musik-Situationen." },
+        { "label": "Max", "desc": "Höchster Schutz. Empfohlen für DJs und schwere Industrie." }
+      ]
+    },
+    "dj": {
+      "name": "DJ-Ohrstöpsel",
+      "collection": "DJ Kollektion",
+      "description": "Entwickelt für Booth-Monitore und Festivalvolumen. Maximaler Schutz mit kristallklarem Klang — vertraut von professionellen DJs in ganz Europa.",
+      "features": ["Max -31dB Schutz verfügbar", "Flacher Frequenzgang für präzises Monitoring", "Schweißresistentes medizinisches Silikon", "Kompatibel mit In-Ear-Monitoren", "Von tourenden Profis empfohlen"],
+      "tag": null,
+      "filters": [
+        { "label": "Comfort", "desc": "Leichter Schutz für kleinere Club-Booths." },
+        { "label": "Standard DJ", "desc": "Empfohlen für die meisten DJs. Deckt Club- und Festivalvolumen ab." },
+        { "label": "Tinnitus Guard", "desc": "Maximaler Schutz für DJs mit bestehendem Tinnitus oder sehr lauten Bühnen." }
+      ]
+    },
+    "dentist": {
+      "name": "Zahnarzt & Hygieniker Ohrstöpsel",
+      "collection": "Professionelle Kollektion",
+      "description": "Blockieren Sie Bohrer- und Scaler-Geräusche, während Sie die Patientenkommunikation klar hören. Von Zahnmedizinern in ganz Europa während des gesamten Arbeitstages getragen.",
+      "features": ["Reduziert hochfrequente Instrumentengeräusche", "Sprachfrequenzen bleiben klar", "Komfortabel für ganztägiges Tragen", "Medizinisches Silikon", "EU-Sicherheitskonformität"],
+      "tag": null,
+      "filters": [
+        { "label": "Sanfter Standard", "desc": "Für Fachleute in ruhigeren Praxen. Alltägliche Zahnarztumgebungen." },
+        { "label": "Klinische Balance", "desc": "Empfohlen für Hygieniker und Zahnärzte, die täglich Ultraschall-Scaler verwenden." }
+      ]
+    },
+    "sleeping": {
+      "name": "Schlaf-Ohrstöpsel",
+      "collection": "Ruhe & Stille Kollektion",
+      "description": "Leise, komfortabel und kaum wahrnehmbar. Schlafen Sie tiefer ohne den Druck und das Unbehagen herkömmlicher Schaumstoff-Ohrstöpsel.",
+      "features": ["Ultra-weiches medizinisches Silikon", "Niedriges Profil — ideal für Seitenschläfer", "Kein Druck auf den Gehörkanal", "Wiederverwendbar und waschbar", "Weckalarm hörbar"],
+      "tag": null,
+      "filters": [
+        { "label": "Comfort", "desc": "Dämpft Schnarchen und Umgebungsgeräusche — Wecker bleiben hörbar." },
+        { "label": "Tief", "desc": "Für leichte Schläfer und laute Umgebungen. Maximale Ruhe, noch sicher." }
+      ]
+    },
+    "motorsport": {
+      "name": "Motorsport-Ohrstöpsel",
+      "collection": "Moto HiFi Kollektion",
+      "description": "Schützen Sie sich vor Windgeräuschen und Motorenlärm, während Helmkommunikation, GPS-Anweisungen und Beifahrergespräche kristallklar bleiben.",
+      "features": ["Wind- und Motorgeräuschdämpfung", "Passt komfortabel unter alle Helme", "Intercom & Bluetooth kompatibel", "EU CE zertifiziert", "Reduziert Ermüdung auf langen Fahrten"],
+      "tag": null,
+      "filters": [
+        { "label": "Leichte Fahrt", "desc": "Für Stadtfahrten und kürzere Trips mit Verkehrsbewusstsein." },
+        { "label": "Langstrecke", "desc": "Empfohlen für Autobahn- und Tourenfahrten. Reduziert anhaltenden Windlärm." }
+      ]
+    },
+    "sensitivity": {
+      "name": "Geräuschempfindlichkeit Ohrstöpsel",
+      "collection": "Ruhe Kollektion",
+      "description": "Beruhigen Sie Ihre Sinne und bewältigen Sie sensorische Überlastung ohne das Bewusstsein für Ihre Umgebung zu verlieren — ideal für Autismus, ADHS, Hyperakusis und Misophonie.",
+      "features": ["Sanfte -19dB Dämpfung", "Kein Okklusionseffekt", "Ideal für Autismus, ADHS, Hyperakusis", "Diskreter unsichtbarer Sitz", "Ganztägiger Komfort ohne Ermüdung"],
+      "tag": null,
+      "filters": [
+        { "label": "Empfindlichkeitsfilter", "desc": "Der einzige empfohlene Filter für den täglichen Gebrauch. Sanfte, flache Dämpfung." }
+      ]
+    }
+  }
 }

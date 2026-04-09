@@ -9,12 +9,12 @@ import { StarIcon, StarEmptyIcon, ArrowRightIcon } from '../components/icons';
 import styles from '../styles/collection.module.css';
 
 const products = [
-  { name: 'Music Earplugs — Small',     price: '€49,95', original: '€58,00', rating: 4.7, reviews: 1024, img: 'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',           tagKey: 'ui.bestSeller' },
-  { name: 'Music Earplugs — Medium',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 876,  img: 'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',    tagKey: null },
-  { name: 'Music Earplugs — Large',     price: '€49,95', original: '€58,00', rating: 4.6, reviews: 213,  img: 'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',           tagKey: null },
-  { name: 'S & M Starter Kit',          price: '€54,95', original: '€69,00', rating: 4.8, reviews: 542,  img: 'https://www.earasers.shop/cdn/shop/files/Earasers_starter_combo_kit.png',   tagKey: 'ui.recommended' },
-  { name: 'Perfect Size Kit',           price: '€54,95', original: '€69,00', rating: 4.6, reviews: 198,  img: 'https://www.earasers.shop/cdn/shop/files/Earasers_starter_combo_kit.png',   tagKey: null },
-  { name: 'Pro-Kit',                    price: '€79,00', original: '€99,00', rating: 4.9, reviews: 87,   img: 'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',    tagKey: 'ui.premium' },
+  { name: 'Music Earplugs — Small',     price: '€49,95', original: '€58,00', rating: 4.7, reviews: 1024, img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasersuitgezoomd.png',           tagKey: 'ui.bestSeller' },
+  { name: 'Music Earplugs — Medium',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 876,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',    tagKey: null },
+  { name: 'Music Earplugs — Large',     price: '€49,95', original: '€58,00', rating: 4.6, reviews: 213,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasersuitgezoomd.png',           tagKey: null },
+  { name: 'S & M Starter Kit',          price: '€54,95', original: '€69,00', rating: 4.8, reviews: 542,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasers_starter_combo_kit.png',   tagKey: 'ui.recommended' },
+  { name: 'Perfect Size Kit',           price: '€54,95', original: '€69,00', rating: 4.6, reviews: 198,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasers_starter_combo_kit.png',   tagKey: null },
+  { name: 'Pro-Kit',                    price: '€79,00', original: '€99,00', rating: 4.9, reviews: 87,   img: 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',    tagKey: 'ui.premium' },
 ];
 
 const Stars = ({ rating }: { rating: number }) => {

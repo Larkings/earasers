@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './reviews.module.css';
 import { StarIcon, StarEmptyIcon, ExternalLinkIcon } from '../icons';
 
-const CDN = 'https://www.earasers.shop/cdn/shop/files';
+const CDN = 'https://earasers-eu.myshopify.com/cdn/shop/files';
 
 const reviews = [
   {

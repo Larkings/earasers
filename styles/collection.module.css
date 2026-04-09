@@ -7,10 +7,12 @@
    HERO — light (sensitivity / default)
 ═══════════════════════════════════════════ */
 .hero {
-  background: linear-gradient(135deg, #f7f5f2 0%, #edeae4 100%);
-  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(135deg, #1a1410 0%, #2a1e14 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
   padding: 56px 0 48px;
   margin-bottom: 0;
+  position: relative;
+  overflow: hidden;
 }
 
 /* ── DJ / Dark ── */
@@ -101,27 +103,34 @@
 .heroWarm .breadcrumb,
 .heroWarm .breadcrumb a,
 .heroPurple .breadcrumb,
-.heroPurple .breadcrumb a { color: rgba(255,255,255,0.4); }
+.heroPurple .breadcrumb a { color: rgba(255,255,255,0.85); }
 
 .heroDark .breadcrumb span,
 .heroTeal .breadcrumb span,
 .heroWarm .breadcrumb span,
-.heroPurple .breadcrumb span { color: rgba(255,255,255,0.2); }
+.heroPurple .breadcrumb span { color: rgba(255,255,255,0.5); }
+
+.hero .breadcrumb,
+.hero .breadcrumb a { color: rgba(255,255,255,0.85); }
+.hero .breadcrumb span { color: rgba(255,255,255,0.5); }
 
 .heroDark .heading,
 .heroTeal .heading,
 .heroWarm .heading,
-.heroPurple .heading { color: #fff; }
+.heroPurple .heading,
+.hero .heading { color: #fff; }
 
 .heroDark .sub,
 .heroTeal .sub,
 .heroWarm .sub,
-.heroPurple .sub { color: rgba(255,255,255,0.65); }
+.heroPurple .sub,
+.hero .sub { color: rgba(255,255,255,0.65); }
 
 .heroDark .badge,
 .heroTeal .badge,
 .heroWarm .badge,
-.heroPurple .badge {
+.heroPurple .badge,
+.hero .badge {
   background: rgba(255,255,255,0.1);
   color: rgba(255,255,255,0.9);
   border: 1px solid rgba(255,255,255,0.15);
@@ -851,7 +860,7 @@
 }
 
 .reviewCardImg {
-  height: 210px;
+  height: 320px;
   overflow: hidden;
   border-radius: 16px 16px 0 0;
   position: relative;
@@ -905,6 +914,18 @@
   color: var(--color-text-muted);
   font-weight: 600;
   letter-spacing: 0.02em;
+}
+
+.reviewScrollHint {
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 12px;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 1024px) {
+  .reviewScrollHint { display: none; }
 }
 
 /* ═══════════════════════════════════════════

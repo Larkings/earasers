@@ -92,10 +92,11 @@
 
 .collection {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   color: var(--color-accent);
+  opacity: 1;
 }
 
 .title {

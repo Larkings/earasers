@@ -35,9 +35,6 @@ export const Hero = () => {
         </div>
       </div>
 
-      <div className={styles.scroll}>
-        <span className={styles.scrollLine} />
-      </div>
     </section>
   );
 };

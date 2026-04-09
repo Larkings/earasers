@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './use-cases.module.css';
 import { MusicIcon, HeadphonesIcon, ToothIcon, MoonIcon, HelmetIcon, EarIcon, ArrowRightIcon } from '../icons';
 
-const MUSIC_IMG  = '/MusicPackage.png';
+const MUSIC_IMG  = '/EarasersTransparent.png';
 const DJ_IMG     = '/DJPackage.png';
 const DENTIST_IMG = '/DentistPackage.png';
 const SLEEP_IMG  = '/SleepingEarplugsPackage.png';

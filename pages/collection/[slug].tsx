@@ -2,7 +2,7 @@ import type { NextPage, GetServerSideProps } from 'next';
 import { serverSideTranslations } from '../../lib/i18n';
 import { getProductWithVariants, SLUG_TO_HANDLE } from '../../lib/products';
 import { useTranslation } from 'react-i18next';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -20,7 +20,7 @@ import styles from '../../styles/collection.module.css';
 import { Influencers } from '../../components/influencers';
 
 /* ─── CDN shortcuts ─── */
-const CDN = 'https://www.earasers.shop/cdn/shop/files';
+const CDN = 'https://earasers-eu.myshopify.com/cdn/shop/files';
 const KIT  = `${CDN}/Earasers_starter_combo_kit.png`;
 const DJ_MAIN   = '/DJHero.png';
 const MUSIC_PKG = '/MusicianHero.jpg';
@@ -31,14 +31,16 @@ const BASE = '/EarasersTransparent.png';
 const MINK = BASE; // no separate mink variant in no-bg set
 const WADE_IMG  = `${CDN}/WADE_earasers.webp`;
 const MASON_IMG = `${CDN}/Masoncollective.png`;
-const FRANKY    = `/FrankyRizardo.png`;
-const BODZIN    = `${CDN}/Img_Earasers_Invictim_799be337-dc9f-4fb1-af41-87ad6b0ad933.jpg`;
-const JOEY      = `${CDN}/EARASERS_2024_1.webp`;
+const FRANKY    = '/FrankyRizardo.png';
+const BODZIN    = `${CDN}/EARASERS_2024_1.webp`;
+const JOEY      = `${CDN}/MainProductPicDJ.png`;
 const DENT1     = `${CDN}/Matis_Mink_Dentist_2.png`;
 const DENT2     = `${CDN}/Close_Up_Pic_Dentist_74afcccd-2f3c-4178-a73f-b2bf59418973.png`;
 const DENT3     = `${CDN}/IMG_4654.jpg`;
 const DENT4     = `${CDN}/3_05f550b8-2ff8-4b8a-8a28-1ebbbe40fdf4.png`;
 const DENT5     = `${CDN}/1_9fb6a91f-53c3-40d4-a55d-0a36242d8c78.png`;
+const DENT6     = `${CDN}/2_7b8968b0-7b67-4cda-a10a-56ecddabdac7.png`;
+const DENT7     = `${CDN}/Untitleddesign_25.png`;
 const ATTEN     = `${CDN}/EARASERS_attenuation_tables.png`;
 
 /* ─── Types ─── */
@@ -47,7 +49,7 @@ type FeatureData    = { icon: React.ReactNode };
 type FilterData     = { snr: string; db: string; recommended?: boolean };
 type ProductData    = { slug: string; size: string; price: string; original: string; rating: number; reviews: number; img: string };
 type InfluencerData = { name: string; role?: string; img: string; handle?: string; imagePosition?: string; };
-type ReviewCardData = { img: string; name: string; year: number; };
+type ReviewCardData = { img: string; name: string; year: number; quote?: string };
 // Full type used by ReviewScroll (includes translated text)
 type ReviewCard     = ReviewCardData & { quote: string };
 // Full type used by InfluencerSplit (includes translated quote)
@@ -98,12 +100,12 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { snr: 'SNR 20', db: '−26 dB peak', recommended: true },
     ],
     products: [
-      { slug: 'musician', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 1024, img: MUSIC_PKG },
-      { slug: 'musician', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 876,  img: MUSIC_PKG },
-      { slug: 'musician', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 213,  img: MUSIC_PKG },
-      { slug: 'musician', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.7, reviews: 312, img: MUSIC_PKG },
-      { slug: 'musician', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.8, reviews: 542, img: MUSIC_PKG },
-      { slug: 'musician', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.6, reviews: 198, img: MUSIC_PKG },
+      { slug: 'musician', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 1024, img: BASE },
+      { slug: 'musician', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 876,  img: BASE },
+      { slug: 'musician', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 213,  img: BASE },
+      { slug: 'musician', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.7, reviews: 312, img: BASE },
+      { slug: 'musician', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.8, reviews: 542, img: BASE },
+      { slug: 'musician', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.6, reviews: 198, img: BASE },
     ],
   },
 
@@ -156,11 +158,15 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { icon: <EarIcon size={28} /> },
     ],
     reviewCards: [
-      { img: DENT1, name: 'Dr. M. Richards',        year: 2025 },
-      { img: DENT2, name: 'Brummans & Fa Dentists', year: 2025 },
-      { img: DENT3, name: 'Dr. A. Vermeer',         year: 2025 },
-      { img: DENT4, name: 'Dr. K. Maktur',          year: 2025 },
-      { img: DENT5, name: 'Dr. Shad Faraj',         year: 2026 },
+      { img: DENT1, name: 'Dr. Shad Faraj',                    year: 2026, quote: "I never expected earplugs to make such a big difference. I still hear everything clear, but by the end of the day, I feel noticeably more energy." },
+      { img: DENT4, name: 'Dr. Kpbajr',                        year: 2026, quote: "Naast de bescherming voor gehoorschade geeft het tijdens behandeling ook veel rust." },
+      { img: DENT3, name: 'M. Vos',                            year: 2025, quote: "Conversations stay clear, but the drill noise is no longer overwhelming. Noticeable difference in end-of-day energy." },
+      { img: DENT5, name: 'Dr. M. Richards',                   year: 2025, quote: "I depend on clear speech understanding. These earplugs reduce only the damaging frequencies, so I can still hear my assistant and patients perfectly. Our full team uses them now." },
+      { img: DENT6, name: 'Lorena Fa, Brummans & Fa Dentists', year: 2025, quote: "Very happy with the earplugs. Very comfortable and it made my workday so much more relaxed." },
+      { img: DENT2, name: 'Dr. K. Maktur',                     year: 2025, quote: "Lightweight, effective, and easy to wear all day. These earplugs have become part of my daily routine." },
+      { img: `${CDN}/EARASERS_2024_1.webp`,  name: 'Tutku Dogan',   year: 2025, quote: "I use these at work as a hygienist. They do a good job at cancelling out the noise especially from the ultrasonic scaler and high vol suction." },
+      { img: DENT1, name: 'Dr. Marian L.',                     year: 2025, quote: "I've been practicing for 12 years and never realized how much the high-pitched noise was affecting me. After using Earasers for just a week, the ringing disappeared." },
+      { img: DENT3, name: 'Anis Lobiyed',                      year: 2026, quote: "Ik kan niet meer zonder! Tijdens operaties zorgen oordoppen ervoor dat ik minder last krijg van mijn gehoor. Aan het einde van mijn werkdag merk ik duidelijk verschil." },
     ],
     influencers: [
       { name: 'Brummans & Fa Dentists', role: 'Dental Practice', img: DENT2, imagePosition: 'center 60%' },
@@ -302,24 +308,48 @@ const FaqAccordion = ({ items }: { items: FaqItem[] }) => {
   );
 };
 
-const ReviewScroll = ({ cards }: { cards: ReviewCard[] }) => (
-  <div className={styles.reviewScrollOuter}>
-    <div className={styles.reviewScrollTrack}>
-      {cards.map((c, i) => (
-        <div key={i} className={styles.reviewCard}>
-          <div className={styles.reviewCardImg}>
-            <img src={c.img} alt={c.name} loading="lazy" />
+const ReviewScroll = ({ cards }: { cards: ReviewCard[] }) => {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    let isDown = false, startX = 0, scrollLeft = 0;
+    const onDown  = (e: MouseEvent) => { isDown = true; startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft; el.style.cursor = 'grabbing'; };
+    const onUp    = () => { isDown = false; el.style.cursor = 'grab'; };
+    const onMove  = (e: MouseEvent) => { if (!isDown) return; e.preventDefault(); el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX) * 1.5; };
+    el.addEventListener('mousedown', onDown);
+    el.addEventListener('mouseleave', onUp);
+    el.addEventListener('mouseup', onUp);
+    el.addEventListener('mousemove', onMove);
+    return () => {
+      el.removeEventListener('mousedown', onDown);
+      el.removeEventListener('mouseleave', onUp);
+      el.removeEventListener('mouseup', onUp);
+      el.removeEventListener('mousemove', onMove);
+    };
+  }, []);
+
+  return (
+    <div className={styles.reviewScrollOuter}>
+      <div className={styles.reviewScrollTrack} ref={trackRef} style={{ cursor: 'grab' }}>
+        {cards.map((c, i) => (
+          <div key={i} className={styles.reviewCard}>
+            <div className={styles.reviewCardImg}>
+              <img src={c.img} alt={c.name} loading="lazy" />
+            </div>
+            <div className={styles.reviewCardBody}>
+              <div className={styles.reviewCardStars}>★★★★★</div>
+              <p className={styles.reviewCardQuote}>&#34;{c.quote}&#34;</p>
+              <p className={styles.reviewCardAttrib}>— {c.name}, {c.year}</p>
+            </div>
           </div>
-          <div className={styles.reviewCardBody}>
-            <div className={styles.reviewCardStars}>★★★★★</div>
-            <p className={styles.reviewCardQuote}>&#34;{c.quote}&#34;</p>
-            <p className={styles.reviewCardAttrib}>— {c.name}, {c.year}</p>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
+      <p className={styles.reviewScrollHint}>← scroll for more →</p>
     </div>
-  </div>
-);
+  );
+};
 
 const InfluencerSplit = ({ influencer, reversed }: { influencer: Influencer; reversed: boolean }) => (
   <div className={`${styles.influencerSplit} ${reversed ? styles.influencerSplitReversed : ''}`}>
@@ -721,7 +751,7 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg }) => {
         {cat.reviewCards && (
           <ReviewScroll cards={cat.reviewCards.map((c, i) => ({
             ...c,
-            quote: tReviewCards[i]?.quote ?? '',
+            quote: c.quote ?? tReviewCards[i]?.quote ?? '',
             name:  tReviewCards[i]?.name  ?? c.name,
           }))} />
         )}

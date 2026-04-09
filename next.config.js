@@ -16,6 +16,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'earasers-eu.myshopify.com',
+        pathname: '/cdn/shop/files/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'www.earasers.shop',
         pathname: '/cdn/shop/files/**',
       },

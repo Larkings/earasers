@@ -58,7 +58,7 @@ const Contact: NextPage = () => {
                   </span>
                   <div>
                     <p className={styles.infoLabel}>{t('emailLabel')}</p>
-                    <a href="mailto:support@earasers.shop" className={styles.infoValue}>support@earasers.shop</a>
+                    <a href="mailto:Info@earasers.shop" className={styles.infoValue}>Info@earasers.shop</a>
                   </div>
                 </div>
 
@@ -70,7 +70,7 @@ const Contact: NextPage = () => {
                   </span>
                   <div>
                     <p className={styles.infoLabel}>{t('phoneLabel')}</p>
-                    <a href="tel:+31201234567" className={styles.infoValue}>+31 20 123 4567</a>
+                    <a href="tel:+31850074002" className={styles.infoValue}>+31 85 007 4002</a>
                   </div>
                 </div>
 

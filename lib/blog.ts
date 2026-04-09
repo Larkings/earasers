@@ -18,7 +18,7 @@ export const POSTS: BlogPost[] = [
     date: 'March 2024',
     dateIso: '2024-03-01',
     category: 'Awards',
-    img: 'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',
+    img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasersuitgezoomd.png',
     content: `
 <p>For the fifth consecutive year, <strong>MusicRadar</strong> has awarded Earasers the title of best music earplugs on the market. It&rsquo;s an honour we don&rsquo;t take lightly.</p>
 
@@ -45,7 +45,7 @@ export const POSTS: BlogPost[] = [
     date: 'January 2024',
     dateIso: '2024-01-15',
     category: 'Artists',
-    img: 'https://www.earasers.shop/cdn/shop/files/MainProductPicDJ.png',
+    img: 'https://earasers-eu.myshopify.com/cdn/shop/files/MainProductPicDJ.png',
     content: `
 <p>A DJ&rsquo;s ears are their most valuable instrument. Night after night, performing in environments where sound pressure levels regularly exceed 110 dB, the cumulative damage can end a career before it really begins. Yet for years, most hearing protection on the market was designed for construction workers — not artists.</p>
 
@@ -76,7 +76,7 @@ export const POSTS: BlogPost[] = [
     date: 'November 2023',
     dateIso: '2023-11-10',
     category: 'Retail',
-    img: 'https://www.earasers.shop/cdn/shop/files/EarasersmodelsMinkvierkant.png',
+    img: 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',
     content: `
 <p>We&rsquo;re excited to announce that Earasers are now available in-store at <strong>Dijkman Music Amsterdam</strong> — one of the Netherlands&rsquo; most beloved and respected music retailers.</p>
 
@@ -101,7 +101,7 @@ export const POSTS: BlogPost[] = [
     date: 'September 2023',
     dateIso: '2023-09-05',
     category: 'Education',
-    img: 'https://www.earasers.shop/cdn/shop/files/Earasersuitgezoomd.png',
+    img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasersuitgezoomd.png',
     content: `
 <p>Noise-Induced Hearing Loss (NIHL) is the most preventable form of hearing damage — and yet it affects an estimated 1.1 billion young people worldwide, according to the World Health Organization.</p>
 
