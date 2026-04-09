@@ -1,14 +1,19 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript, DocumentContext, DocumentInitialProps } from 'next/document';
 
-class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
-    return Document.getInitialProps(ctx);
+interface MyDocumentProps extends DocumentInitialProps {
+  locale: string;
+}
+
+class MyDocument extends Document<MyDocumentProps> {
+  static async getInitialProps(ctx: DocumentContext): Promise<MyDocumentProps> {
+    const initialProps = await Document.getInitialProps(ctx);
+    return { ...initialProps, locale: ctx.locale ?? 'en' };
   }
 
   render() {
     return (
-      <Html lang="en">
+      <Html lang={this.props.locale ?? 'en'}>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />

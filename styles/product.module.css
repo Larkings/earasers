@@ -14,13 +14,13 @@
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: var(--color-text-muted);
+  color: #555555;
   margin-bottom: 32px;
 }
 
 .breadcrumb a { transition: color 0.2s; }
 .breadcrumb a:hover { color: var(--color-accent); }
-.breadcrumb span { color: var(--color-border); }
+.breadcrumb span { color: #999999; }
 
 /* Product grid */
 .grid {

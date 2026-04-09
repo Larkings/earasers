@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import styles from './navbar.module.css';
 import { MusicIcon, HeadphonesIcon, ToothIcon, MoonIcon, HelmetIcon, EarIcon, ChevronDownIcon, CloseIcon } from '../icons';
@@ -9,6 +10,7 @@ import { LanguageSwitcher } from '../language-switcher';
 import Image from 'next/image';
 
 export const Navbar = () => {
+  const router = useRouter();
   const { t } = useTranslation('common');
   const { totalCount, openCart } = useCart();
   const { user, openAuthDrawer } = useAuth();
@@ -20,6 +22,10 @@ export const Navbar = () => {
 
   const shopRef = useRef<HTMLLIElement>(null);
   const faqRef  = useRef<HTMLLIElement>(null);
+
+  const { pathname } = router;
+  const isActive = (href: string) =>
+    href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   const shopCategories = [
     { label: t('shopCategories.music'),          href: '/collection/musician',    icon: <MusicIcon size={16} /> },
@@ -82,7 +88,7 @@ export const Navbar = () => {
             <ul className={styles.navList}>
 
               <li className={styles.navItem} ref={shopRef}>
-                <button className={styles.navBtn} onClick={() => { setShopOpen(o => !o); setFaqOpen(false); }} aria-expanded={shopOpen}>
+                <button className={`${styles.navBtn} ${isActive('/collection') || isActive('/product') ? styles.navLinkActive : ''}`} onClick={() => { setShopOpen(o => !o); setFaqOpen(false); }} aria-expanded={shopOpen}>
                   {t('nav.shop')} <ChevronDownIcon size={13} className={shopOpen ? styles.chevronOpen : styles.chevron} />
                 </button>
                 {shopOpen && (
@@ -97,11 +103,11 @@ export const Navbar = () => {
                 )}
               </li>
 
-              <li className={styles.navItem}><Link href="/blog"          className={styles.navLink}>{t('nav.blog')}</Link></li>
-              <li className={styles.navItem}><Link href="/size-finder"   className={styles.navLink}>{t('nav.sizeFinder')}</Link></li>
+              <li className={styles.navItem}><Link href="/blog"          className={`${styles.navLink} ${isActive('/blog') ? styles.navLinkActive : ''}`}>{t('nav.blog')}</Link></li>
+              <li className={styles.navItem}><Link href="/size-finder"   className={`${styles.navLink} ${isActive('/size-finder') ? styles.navLinkActive : ''}`}>{t('nav.sizeFinder')}</Link></li>
 
               <li className={styles.navItem} ref={faqRef}>
-                <button className={styles.navBtn} onClick={() => { setFaqOpen(o => !o); setShopOpen(false); }} aria-expanded={faqOpen}>
+                <button className={`${styles.navBtn} ${isActive('/faq') || isActive('/returns') ? styles.navLinkActive : ''}`} onClick={() => { setFaqOpen(o => !o); setShopOpen(false); }} aria-expanded={faqOpen}>
                   {t('nav.faq')} <ChevronDownIcon size={13} className={faqOpen ? styles.chevronOpen : styles.chevron} />
                 </button>
                 {faqOpen && (
@@ -115,10 +121,10 @@ export const Navbar = () => {
                 )}
               </li>
 
-              <li className={styles.navItem}><Link href="/store-locator" className={styles.navLink}>{t('nav.storeLocator')}</Link></li>
-              <li className={styles.navItem}><Link href="/about"         className={styles.navLink}>{t('nav.about')}</Link></li>
-              <li className={styles.navItem}><Link href="/contact"       className={styles.navLink}>{t('nav.contact')}</Link></li>
-              <li className={styles.navItem}><Link href="/affiliates"    className={styles.navLink}>{t('nav.affiliates')}</Link></li>
+              <li className={styles.navItem}><Link href="/store-locator" className={`${styles.navLink} ${isActive('/store-locator') ? styles.navLinkActive : ''}`}>{t('nav.storeLocator')}</Link></li>
+              <li className={styles.navItem}><Link href="/about"         className={`${styles.navLink} ${isActive('/about') ? styles.navLinkActive : ''}`}>{t('nav.about')}</Link></li>
+              <li className={styles.navItem}><Link href="/contact"       className={`${styles.navLink} ${isActive('/contact') ? styles.navLinkActive : ''}`}>{t('nav.contact')}</Link></li>
+              <li className={styles.navItem}><Link href="/affiliates"    className={`${styles.navLink} ${isActive('/affiliates') ? styles.navLinkActive : ''}`}>{t('nav.affiliates')}</Link></li>
             </ul>
           </nav>
 
@@ -150,10 +156,31 @@ export const Navbar = () => {
 
         {mobileOpen && (
           <nav className={styles.mobileMenu}>
+            {/* Language switcher — top of menu, prominent */}
+            <div className={styles.mobileLangSwitcher}>
+              {[
+                { code: 'en', flag: '🇬🇧' },
+                { code: 'nl', flag: '🇳🇱' },
+                { code: 'de', flag: '🇩🇪' },
+                { code: 'es', flag: '🇪🇸' },
+              ].map(lang => (
+                <button
+                  key={lang.code}
+                  className={`${styles.mobileLangBtn} ${router.locale === lang.code ? styles.mobileLangBtnActive : ''}`}
+                  onClick={() => {
+                    try { localStorage.setItem('earasers-locale', lang.code); } catch {}
+                    router.push(router.asPath, router.asPath, { locale: lang.code, scroll: false });
+                  }}
+                >
+                  {lang.flag} {lang.code.toUpperCase()}
+                </button>
+              ))}
+            </div>
+
             <div className={styles.mobileGroup}>
               <p className={styles.mobileLabel}>{t('mobileLabels.shop')}</p>
               {shopCategories.map(c => (
-                <Link key={c.href} href={c.href} className={styles.mobileLink} onClick={() => setMobileOpen(false)}>
+                <Link key={c.href} href={c.href} className={`${styles.mobileLink} ${isActive(c.href) ? styles.mobileLinkActive : ''}`} onClick={() => setMobileOpen(false)}>
                   <span className={styles.mobileLinkIcon}>{c.icon}</span>
                   {c.label}
                 </Link>
@@ -162,21 +189,18 @@ export const Navbar = () => {
             <div className={styles.mobileGroup}>
               <p className={styles.mobileLabel}>{t('mobileLabels.support')}</p>
               {faqLinks.map(l => (
-                <Link key={l.href} href={l.href} className={styles.mobileLink} onClick={() => setMobileOpen(false)}>
+                <Link key={l.href} href={l.href} className={`${styles.mobileLink} ${isActive(l.href) ? styles.mobileLinkActive : ''}`} onClick={() => setMobileOpen(false)}>
                   {l.label}
                 </Link>
               ))}
             </div>
             <div className={styles.mobileGroup}>
-              <Link href="/blog"          className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.blog')}</Link>
-              <Link href="/size-finder"   className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.sizeFinder')}</Link>
-              <Link href="/store-locator" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.storeLocator')}</Link>
-              <Link href="/about"         className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.about')}</Link>
-              <Link href="/contact"       className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.contact')}</Link>
-              <Link href="/affiliates"    className={styles.mobileLink} onClick={() => setMobileOpen(false)}>{t('nav.affiliates')}</Link>
-            </div>
-            <div className={styles.mobileGroup}>
-              <LanguageSwitcher />
+              <Link href="/blog"          className={`${styles.mobileLink} ${isActive('/blog') ? styles.mobileLinkActive : ''}`}          onClick={() => setMobileOpen(false)}>{t('nav.blog')}</Link>
+              <Link href="/size-finder"   className={`${styles.mobileLink} ${isActive('/size-finder') ? styles.mobileLinkActive : ''}`}   onClick={() => setMobileOpen(false)}>{t('nav.sizeFinder')}</Link>
+              <Link href="/store-locator" className={`${styles.mobileLink} ${isActive('/store-locator') ? styles.mobileLinkActive : ''}`} onClick={() => setMobileOpen(false)}>{t('nav.storeLocator')}</Link>
+              <Link href="/about"         className={`${styles.mobileLink} ${isActive('/about') ? styles.mobileLinkActive : ''}`}         onClick={() => setMobileOpen(false)}>{t('nav.about')}</Link>
+              <Link href="/contact"       className={`${styles.mobileLink} ${isActive('/contact') ? styles.mobileLinkActive : ''}`}       onClick={() => setMobileOpen(false)}>{t('nav.contact')}</Link>
+              <Link href="/affiliates"    className={`${styles.mobileLink} ${isActive('/affiliates') ? styles.mobileLinkActive : ''}`}    onClick={() => setMobileOpen(false)}>{t('nav.affiliates')}</Link>
             </div>
           </nav>
         )}
