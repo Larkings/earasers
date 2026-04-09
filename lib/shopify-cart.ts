@@ -130,3 +130,26 @@ export async function removeFromCart(
   `, { cartId, lineIds })
   return data.cartLinesRemove.cart
 }
+
+/**
+ * Maak een aparte directe checkout aan voor één variant.
+ * Beïnvloedt de bestaande cart van de gebruiker NIET.
+ * Geeft de checkoutUrl terug om direct naartoe te redirecten.
+ */
+export async function createDirectCheckout(
+  variantId: string,
+  quantity: number = 1,
+): Promise<string> {
+  const data = await shopifyFetch<{ cartCreate: { cart: ShopifyCart; userErrors: Array<{ message: string }> } }>(`
+    mutation DirectCheckout($lines: [CartLineInput!]!) {
+      cartCreate(input: { lines: $lines, buyerIdentity: { countryCode: NL } }) {
+        cart { checkoutUrl }
+        userErrors { message }
+      }
+    }
+  `, { lines: [{ merchandiseId: variantId, quantity }] })
+
+  const checkoutUrl = data.cartCreate.cart?.checkoutUrl
+  if (!checkoutUrl) throw new Error('Could not create direct checkout')
+  return checkoutUrl
+}

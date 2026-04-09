@@ -14,6 +14,19 @@ async function addToCart(variantId, qty = 1) {
   openCart();
 }
 
+async function buyNow() {
+  const variantId = document.getElementById('variant-id')?.value;
+  const qty = parseInt(document.getElementById('qty')?.value || '1', 10);
+  if (!variantId) return;
+  const res = await fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: variantId, quantity: qty }),
+  });
+  if (!res.ok) return;
+  window.location.href = '/checkout';
+}
+
 async function updateCartItem(key, qty) {
   await fetch('/cart/change.js', {
     method: 'POST',

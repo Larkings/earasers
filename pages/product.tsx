@@ -13,6 +13,7 @@ import {
   getProductWithVariants, SLUG_TO_HANDLE, findVariant, type ShopifyVariant,
 } from '../lib/products';
 import { useCart, type CartItem } from '../context/cart';
+import { createDirectCheckout } from '../lib/shopify-cart';
 import { SizeQuiz } from '../components/size-quiz';
 import { VideoSection } from '../components/video-section';
 import { Reviews } from '../components/reviews';
@@ -80,6 +81,7 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
   const [tooltip,      setTooltip]      = useState<number | null>(null);
   const [qty,          setQty]          = useState(1);
   const [added,        setAdded]        = useState(false);
+  const [buyNowLoading, setBuyNowLoading] = useState(false);
   const [quizOpen,     setQuizOpen]     = useState(false);
   const [quizApplied,  setQuizApplied]  = useState(false);
 
@@ -113,6 +115,28 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
   const isKit  = sizes[activeSize]?.kit ?? activeSize >= 4;
   const price    = isKit ? product.kitPrice    : product.price;
   const original = isKit ? product.kitOriginal : product.originalPrice;
+
+  const getVariantId = () => {
+    const sizeLabel = sizes[activeSize].label;
+    const filterDb  = product.filters[activeFilter].db;
+    const slugVariants = variantsMap[product.slug] ?? [];
+    return findVariant(slugVariants, sizeLabel, filterDb)?.id;
+  };
+
+  const handleBuyNow = async () => {
+    const variantId = getVariantId();
+    if (!variantId) return;
+    setBuyNowLoading(true);
+    try {
+      const checkoutUrl = await createDirectCheckout(variantId, qty);
+      window.location.href = checkoutUrl;
+    } catch {
+      // Fallback: voeg toe aan normale cart en open cart drawer
+      handleAddToCart();
+    } finally {
+      setBuyNowLoading(false);
+    }
+  };
 
   const handleAddToCart = () => {
     const sizeLabel = sizes[activeSize].label;
@@ -318,6 +342,14 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
                     ? t('addToCart', { qty: String(qty), price: fmt(price * qty) })
                     : t('addToCartSingle', { price: fmt(price) })
                 }
+              </button>
+
+              <button
+                className={styles.buyNowBtn}
+                onClick={handleBuyNow}
+                disabled={buyNowLoading}
+              >
+                {buyNowLoading ? t('buyNowLoading') : t('buyNow')}
               </button>
 
               {/* Trust */}

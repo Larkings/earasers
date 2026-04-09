@@ -120,6 +120,11 @@
               {% endif %}
             </button>
           </div>
+          {% if product.selected_or_first_available_variant.available %}
+            <button type="button" class="btn btn--outline btn--full" id="buy-now-btn" onclick="buyNow()">
+              {{ 'products.product.buy_it_now' | t | default: 'Buy now' }}
+            </button>
+          {% endif %}
         {% endform %}
 
         {% if section.settings.trust_text != blank %}

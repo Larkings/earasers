@@ -54,6 +54,8 @@
   "save": "Bespaar {{amount}}",
   "reviewsCount": "{{count}} beoordelingen",
   "addedToCart": "Toegevoegd aan winkelwagen",
+  "buyNow": "Koop nu — direct afrekenen →",
+  "buyNowLoading": "Laden...",
   "securePayment": "Veilige betaling",
   "freeShipping": "Gratis verzending vanaf €39",
   "returns": "30 dagen retourrecht",

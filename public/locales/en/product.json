@@ -54,6 +54,8 @@
   "save": "Save {{amount}}",
   "reviewsCount": "{{count}} reviews",
   "addedToCart": "Added to cart",
+  "buyNow": "Buy now — checkout directly →",
+  "buyNowLoading": "Loading...",
   "securePayment": "Secure payment",
   "freeShipping": "Free shipping from €39",
   "returns": "30-day returns",

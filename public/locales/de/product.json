@@ -54,6 +54,8 @@
   "save": "{{amount}} sparen",
   "reviewsCount": "{{count}} Bewertungen",
   "addedToCart": "In den Warenkorb gelegt",
+  "buyNow": "Jetzt kaufen — direkt zur Kasse →",
+  "buyNowLoading": "Laden...",
   "securePayment": "Sichere Zahlung",
   "freeShipping": "Kostenloser Versand ab €39",
   "returns": "30 Tage Rückgabe",

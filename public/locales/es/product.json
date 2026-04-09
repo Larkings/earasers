@@ -54,6 +54,8 @@
   "save": "Ahorra {{amount}}",
   "reviewsCount": "{{count}} reseñas",
   "addedToCart": "Añadido al carrito",
+  "buyNow": "Comprar ahora — ir directo al pago →",
+  "buyNowLoading": "Cargando...",
   "securePayment": "Pago seguro",
   "freeShipping": "Envío gratis desde €39",
   "returns": "Devoluciones en 30 días",
