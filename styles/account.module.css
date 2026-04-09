@@ -2,7 +2,11 @@
 
 .page {
   min-height: calc(100dvh - 120px);
-  padding: 60px 0 80px;
+  padding: 32px 0 48px;
+}
+
+@media (min-width: 768px) {
+  .page { padding: 60px 0 80px; }
 }
 
 /* ── Auth card (login / register / forgot-password) ─────────── */

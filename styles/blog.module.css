@@ -1,7 +1,11 @@
 /* ── Blog listing ──────────────────────────────────────────────────────────── */
 
 .page {
-  padding: calc(var(--nav-height) + 48px) 0 80px;
+  padding: calc(var(--nav-height) + 24px) 0 48px;
+}
+
+@media (min-width: 768px) {
+  .page { padding: calc(var(--nav-height) + 48px) 0 80px; }
 }
 
 .hero {

@@ -47,7 +47,11 @@
 
 /* ── Body ──────────────────────────────────── */
 .body {
-  padding: 64px 0 96px;
+  padding: 36px 0 56px;
+}
+
+@media (min-width: 768px) {
+  .body { padding: 64px 0 96px; }
 }
 
 .inner {

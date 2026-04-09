@@ -1,6 +1,10 @@
 .page {
-  padding: calc(var(--nav-height) + 48px) 0 80px;
+  padding: calc(var(--nav-height) + 32px) 0 48px;
   background: var(--color-bg);
+}
+
+@media (min-width: 768px) {
+  .page { padding: calc(var(--nav-height) + 48px) 0 80px; }
 }
 
 /* Hero */

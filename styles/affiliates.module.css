@@ -1,6 +1,10 @@
 .page {
   background: var(--color-bg);
-  padding: 0 0 80px;
+  padding: 0 0 48px;
+}
+
+@media (min-width: 768px) {
+  .page { padding-bottom: 80px; }
 }
 
 /* Hero */
