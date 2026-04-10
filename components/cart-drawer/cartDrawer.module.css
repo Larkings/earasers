@@ -357,6 +357,47 @@
 
 .viewCartBtn:hover { color: var(--color-text); }
 
+/* Payment methods */
+.paymentRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.paymentBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.paymentBtn:hover:not(:disabled) {
+  border-color: var(--color-text-muted);
+  background: var(--color-surface-2);
+}
+
+.paymentBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.paymentBtnApple {
+  background: #000000;
+  border-color: #000000;
+}
+
+.paymentBtnApple:hover:not(:disabled) {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+}
+
 /* Kleine schermen: comprimeer footer zodat checkout knop altijd zichtbaar is */
 @media (max-height: 600px) {
   .footer {
@@ -366,6 +407,8 @@
   }
   .totalsPrice { font-size: 20px; }
   .shippingBar { display: none; }
+  .paymentRow { gap: 8px; }
+  .paymentBtn { min-height: 40px; }
 }
 
 @media (max-width: 375px) {
