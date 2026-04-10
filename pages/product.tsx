@@ -57,7 +57,8 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
   const router = useRouter();
   const { t } = useTranslation('product');
   const { addToCart, openCart } = useCart();
-  const { fmt } = useCurrency();
+  const { fmt, currency } = useCurrency();
+  const countryCode = currency === 'GBP' ? 'GB' : 'NL';
 
   const _sizes       = t('sizes',   { returnObjects: true });
   const _tabs        = t('tabs',    { returnObjects: true });
@@ -130,7 +131,7 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
     if (!variantId) return;
     setBuyNowLoading(true);
     try {
-      const checkoutUrl = await createDirectCheckout(variantId, qty);
+      const checkoutUrl = await createDirectCheckout(variantId, qty, countryCode);
       window.location.href = checkoutUrl;
     } catch {
       // Fallback: voeg toe aan normale cart en open cart drawer

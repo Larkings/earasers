@@ -64,15 +64,15 @@ const CART_FRAGMENT = `
   }
 `
 
-export async function createCart(): Promise<ShopifyCart> {
+export async function createCart(countryCode: string = 'NL'): Promise<ShopifyCart> {
   const data = await shopifyFetch<{ cartCreate: { cart: ShopifyCart } }>(`
-    mutation {
-      cartCreate(input: { buyerIdentity: { countryCode: NL } }) {
+    mutation CreateCart($countryCode: CountryCode!) @inContext(country: $countryCode) {
+      cartCreate(input: { buyerIdentity: { countryCode: $countryCode } }) {
         cart { ...CartFields }
       }
     }
     ${CART_FRAGMENT}
-  `)
+  `, { countryCode })
   return data.cartCreate.cart
 }
 
@@ -139,15 +139,16 @@ export async function removeFromCart(
 export async function createDirectCheckout(
   variantId: string,
   quantity: number = 1,
+  countryCode: string = 'NL',
 ): Promise<string> {
   const data = await shopifyFetch<{ cartCreate: { cart: ShopifyCart; userErrors: Array<{ message: string }> } }>(`
-    mutation DirectCheckout($lines: [CartLineInput!]!) {
-      cartCreate(input: { lines: $lines, buyerIdentity: { countryCode: NL } }) {
+    mutation DirectCheckout($lines: [CartLineInput!]!, $countryCode: CountryCode!) @inContext(country: $countryCode) {
+      cartCreate(input: { lines: $lines, buyerIdentity: { countryCode: $countryCode } }) {
         cart { checkoutUrl }
         userErrors { message }
       }
     }
-  `, { lines: [{ merchandiseId: variantId, quantity }] })
+  `, { lines: [{ merchandiseId: variantId, quantity }], countryCode })
 
   const checkoutUrl = data.cartCreate.cart?.checkoutUrl
   if (!checkoutUrl) throw new Error('Could not create direct checkout')

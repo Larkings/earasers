@@ -23,7 +23,8 @@ const AccessoryPage: NextPage<Props> = ({ product }) => {
   const { t } = useTranslation('product');
   const { t: tc } = useTranslation('common');
   const { addToCart, openCart } = useCart();
-  const { fmt } = useCurrency();
+  const { fmt, currency } = useCurrency();
+  const countryCode = currency === 'GBP' ? 'GB' : 'NL';
 
   const [activeImg,      setActiveImg]      = useState(0);
   const [selectedVariant, setSelectedVariant] = useState<ShopifyVariant>(product.variants[0]);
@@ -60,7 +61,7 @@ const AccessoryPage: NextPage<Props> = ({ product }) => {
     if (!selectedVariant?.id) return;
     setBuyNowLoading(true);
     try {
-      const url = await createDirectCheckout(selectedVariant.id, qty);
+      const url = await createDirectCheckout(selectedVariant.id, qty, countryCode);
       window.location.href = url;
     } catch {
       handleAddToCart();
