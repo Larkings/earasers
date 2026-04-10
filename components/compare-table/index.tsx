@@ -32,7 +32,9 @@ export const CompareTable = () => {
       <div className="container">
         <h2 className={styles.heading} data-reveal>{t('compareTable.heading')}</h2>
         <p className={styles.sub} data-reveal data-delay="1">{t('compareTable.sub')}</p>
+      </div>
 
+      <div className={styles.tableContainer}>
         <div className={styles.tableWrap} data-reveal data-delay="2">
           <table className={styles.table}>
             <thead>
@@ -59,7 +61,9 @@ export const CompareTable = () => {
             </tbody>
           </table>
         </div>
+      </div>
 
+      <div className="container">
         <div className={styles.cta} data-reveal data-delay="3">
           <Link href="/collection" className={styles.ctaBtn}>
             {t('compareTable.cta')} <ArrowRightIcon size={15} />
