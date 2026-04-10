@@ -21,7 +21,13 @@
     "dentist": "Tandarts & Mondhygiënist",
     "sleeping": "Slapen",
     "motorsport": "Motorsport",
-    "noiseSensitivity": "Geluidsgevoeligheid"
+    "noiseSensitivity": "Geluidsgevoeligheid",
+    "accessories": "Accessoires"
+  },
+  "accessoriesCollection": {
+    "badge": "ACCESSOIRES",
+    "title": "Onderdelen & Accessoires",
+    "description": "Alles wat je nodig hebt om je Earasers te onderhouden en te beschermen."
   },
   "faqLinks": {
     "allQuestions": "Alle vragen",
@@ -142,5 +148,10 @@
     "tabAustralia": "Australië",
     "tabInternational": "Internationaal"
   },
-  "influencersLabel": "Klanten die Earasers gebruiken"
+  "influencersLabel": "Klanten die Earasers gebruiken",
+  "instructionVideos": {
+    "badge": "SUPPORT",
+    "title": "Instructievideo's",
+    "subtitle": "Alles wat je moet weten over het gebruik, inbrengen en onderhouden van je Earasers."
+  }
 }

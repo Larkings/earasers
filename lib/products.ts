@@ -180,6 +180,7 @@ export const SLUG_TO_HANDLE: Record<string, string> = {
   sensitivity: 'earasers-sensory-reduction-hyperacusis',
   sleeping:    'earasers-sleeping-earplugs',
   motorsport:  'earasers-motorsport-earplugs',
+  accessories: 'accessories',
 };
 
 export type ShopifyVariant = {
@@ -237,6 +238,149 @@ export async function getProductWithVariants(handle: string) {
     ...data.product,
     images:   data.product.images.edges.map(e => e.node),
     variants: data.product.variants.edges.map(e => e.node),
+  }
+}
+
+// ─── Collection products (used for Accessories page) ─────────────────────────
+
+export type AccessoryProduct = {
+  id: string;
+  title: string;
+  handle: string;
+  onlineStoreUrl: string | null;
+  image: ShopifyProductImage | null;
+  price: number;
+  compareAtPrice: number;
+}
+
+type ShopifyCollectionResponse = {
+  collection: {
+    id: string;
+    title: string;
+    description: string;
+    products: {
+      edges: Array<{
+        node: {
+          id: string;
+          title: string;
+          handle: string;
+          onlineStoreUrl: string | null;
+          images: { edges: Array<{ node: ShopifyProductImage }> };
+          priceRange: { minVariantPrice: { amount: string } };
+          compareAtPriceRange: { minVariantPrice: { amount: string } };
+        }
+      }>
+    };
+  } | null;
+}
+
+export async function getAllProductHandlesFromCollection(handle: string): Promise<string[]> {
+  const products = await getCollectionProducts(handle)
+  return products.map(p => p.handle)
+}
+
+export type AccessoryProductDetail = {
+  id: string;
+  title: string;
+  handle: string;
+  description: string;
+  images: ShopifyProductImage[];
+  variants: ShopifyVariant[];
+}
+
+type AccessoryProductResponse = {
+  product: {
+    id: string;
+    title: string;
+    handle: string;
+    description: string;
+    images: { edges: Array<{ node: ShopifyProductImage }> };
+    variants: { edges: Array<{ node: ShopifyVariant }> };
+  } | null;
+}
+
+export async function getAccessoryProduct(handle: string): Promise<AccessoryProductDetail | null> {
+  try {
+    const data = await shopifyFetch<AccessoryProductResponse>(`
+      query AccessoryByHandle($handle: String!) {
+        product(handle: $handle) {
+          id
+          title
+          handle
+          description
+          images(first: 5) {
+            edges { node { url altText } }
+          }
+          variants(first: 20) {
+            edges {
+              node {
+                id
+                title
+                availableForSale
+                price { amount currencyCode }
+                compareAtPrice { amount currencyCode }
+                selectedOptions { name value }
+              }
+            }
+          }
+        }
+      }
+    `, { handle })
+
+    if (!data.product) return null
+    return {
+      ...data.product,
+      images:   data.product.images.edges.map(e => e.node),
+      variants: data.product.variants.edges.map(e => e.node),
+    }
+  } catch {
+    return null
+  }
+}
+
+export async function getCollectionProducts(handle: string): Promise<AccessoryProduct[]> {
+  try {
+    const data = await shopifyFetch<ShopifyCollectionResponse>(`
+      query CollectionByHandle($handle: String!) {
+        collection(handle: $handle) {
+          id
+          title
+          description
+          products(first: 30) {
+            edges {
+              node {
+                id
+                title
+                handle
+                onlineStoreUrl
+                images(first: 1) {
+                  edges { node { url altText } }
+                }
+                priceRange {
+                  minVariantPrice { amount }
+                }
+                compareAtPriceRange {
+                  minVariantPrice { amount }
+                }
+              }
+            }
+          }
+        }
+      }
+    `, { handle })
+
+    if (!data.collection) return []
+    return data.collection.products.edges.map(({ node }) => ({
+      id:             node.id,
+      title:          node.title,
+      handle:         node.handle,
+      onlineStoreUrl: node.onlineStoreUrl,
+      image:          node.images.edges[0]?.node ?? null,
+      price:          parseFloat(node.priceRange.minVariantPrice.amount),
+      compareAtPrice: parseFloat(node.compareAtPriceRange.minVariantPrice.amount),
+    }))
+  } catch {
+    return []
   }
 }
 

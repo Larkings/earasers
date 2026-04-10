@@ -14,12 +14,13 @@ export const Footer = () => {
     { label: t('shopCategories.sleeping'),       href: '/collection/sleeping' },
     { label: t('shopCategories.motorsport'),     href: '/collection/motorsport' },
     { label: t('shopCategories.noiseSensitivity'), href: '/collection/sensitivity' },
+    { label: t('shopCategories.accessories'),      href: '/collection/accessories' },
   ];
 
   const supportLinks = [
     { label: t('footer.faq'),              href: '/faq' },
     { label: t('footer.specs'),            href: '/faq#product' },
-    { label: t('footer.instructionVideos'), href: '/faq#instruction-video' },
+    { label: t('footer.instructionVideos'), href: '/faq/instruction-videos' },
     { label: t('footer.warranty'),         href: '/faq#ordering' },
     { label: t('footer.returns'),          href: '/returns' },
     { label: t('footer.contact'),          href: '/contact' },

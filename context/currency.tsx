@@ -23,22 +23,28 @@ export const CurrencyProvider = ({ children }: { children: React.ReactNode }) =>
   const [currency, setCurrencyState] = useState<Currency>('EUR')
 
   useEffect(() => {
-    // 1. Expliciete keuze van de gebruiker heeft prioriteit
-    try {
-      const saved = localStorage.getItem(CURRENCY_KEY)
-      if (saved === 'EUR' || saved === 'GBP') {
-        setCurrencyState(saved)
-        return
-      }
-    } catch {}
+    let cancelled = false
 
-    // 2. IP-gebaseerde detectie als geen opgeslagen voorkeur
-    fetch('/api/geo')
-      .then(r => r.json())
-      .then(({ country }: { country: string }) => {
-        if (country === 'GB') setCurrencyState('GBP')
-      })
-      .catch(() => {}) // stille fallback naar EUR
+    const init = async () => {
+      // 1. Expliciete keuze van de gebruiker heeft prioriteit
+      try {
+        const saved = localStorage.getItem(CURRENCY_KEY)
+        if (saved === 'EUR' || saved === 'GBP') {
+          if (!cancelled) setCurrencyState(saved)
+          return
+        }
+      } catch {}
+
+      // 2. IP-gebaseerde detectie als geen opgeslagen voorkeur
+      try {
+        const r = await fetch('/api/geo')
+        const { country } = (await r.json()) as { country: string }
+        if (country === 'GB' && !cancelled) setCurrencyState('GBP')
+      } catch {}
+    }
+
+    void init()
+    return () => { cancelled = true }
   }, [])
 
   const setCurrency = (c: Currency) => {

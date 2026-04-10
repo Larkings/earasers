@@ -25,9 +25,14 @@ const nextConfig = {
         pathname: '/cdn/shop/files/**',
       },
       {
-        // Shopify Storefront API product images
+        // Shopify Storefront API product images + instruction diagram images
         protocol: 'https',
         hostname: 'cdn.shopify.com',
+      },
+      {
+        // YouTube video thumbnails
+        protocol: 'https',
+        hostname: 'img.youtube.com',
       },
     ],
   },

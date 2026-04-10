@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import styles from './navbar.module.css';
-import { MusicIcon, HeadphonesIcon, ToothIcon, MoonIcon, HelmetIcon, EarIcon, ChevronDownIcon, CloseIcon } from '../icons';
+import { MusicIcon, HeadphonesIcon, ToothIcon, MoonIcon, HelmetIcon, EarIcon, CogIcon, ChevronDownIcon, CloseIcon } from '../icons';
 import { useCart } from '../../context/cart';
 import { useAuth } from '../../context/auth';
 import { LanguageSwitcher } from '../language-switcher';
@@ -30,19 +30,20 @@ export const Navbar = () => {
     href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   const shopCategories = [
-    { label: t('shopCategories.music'),          href: '/collection/musician',    icon: <MusicIcon size={16} /> },
-    { label: t('shopCategories.dj'),             href: '/collection/dj',          icon: <HeadphonesIcon size={16} /> },
-    { label: t('shopCategories.dentist'),        href: '/collection/dentist',     icon: <ToothIcon size={16} /> },
-    { label: t('shopCategories.sleeping'),       href: '/collection/sleeping',    icon: <MoonIcon size={16} /> },
-    { label: t('shopCategories.motorsport'),     href: '/collection/motorsport',  icon: <HelmetIcon size={16} /> },
+    { label: t('shopCategories.music'),            href: '/collection/musician',    icon: <MusicIcon size={16} /> },
+    { label: t('shopCategories.dj'),               href: '/collection/dj',          icon: <HeadphonesIcon size={16} /> },
+    { label: t('shopCategories.dentist'),          href: '/collection/dentist',     icon: <ToothIcon size={16} /> },
+    { label: t('shopCategories.sleeping'),         href: '/collection/sleeping',    icon: <MoonIcon size={16} /> },
+    { label: t('shopCategories.motorsport'),       href: '/collection/motorsport',  icon: <HelmetIcon size={16} /> },
     { label: t('shopCategories.noiseSensitivity'), href: '/collection/sensitivity', icon: <EarIcon size={16} /> },
+    { label: t('shopCategories.accessories'),      href: '/collection/accessories', icon: <CogIcon size={16} />, divider: true },
   ];
 
   const faqLinks = [
     { label: t('faqLinks.allQuestions'),       href: '/faq' },
     { label: t('faqLinks.sizingGuide'),        href: '/faq#sizing' },
     { label: t('faqLinks.usageMaintenance'),   href: '/faq#usage' },
-    { label: t('faqLinks.instructionVideo'),   href: '/faq#instruction-video' },
+    { label: t('faqLinks.instructionVideo'),   href: '/faq/instruction-videos' },
     { label: t('faqLinks.returns'),            href: '/returns' },
   ];
 
@@ -96,10 +97,13 @@ export const Navbar = () => {
                 {shopOpen && (
                   <div className={styles.dropdown}>
                     {shopCategories.map(c => (
-                      <Link key={c.href} href={c.href} className={styles.dropItem} onClick={() => setShopOpen(false)}>
-                        <span className={styles.dropIcon}>{c.icon}</span>
-                        {c.label}
-                      </Link>
+                      <React.Fragment key={c.href}>
+                        {c.divider && <hr className={styles.dropDivider} />}
+                        <Link href={c.href} className={styles.dropItem} onClick={() => setShopOpen(false)}>
+                          <span className={styles.dropIcon}>{c.icon}</span>
+                          {c.label}
+                        </Link>
+                      </React.Fragment>
                     ))}
                   </div>
                 )}

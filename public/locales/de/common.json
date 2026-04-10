@@ -21,7 +21,13 @@
     "dentist": "Zahnarzt & Hygieniker",
     "sleeping": "Schlafen",
     "motorsport": "Motorsport",
-    "noiseSensitivity": "Geräuschempfindlichkeit"
+    "noiseSensitivity": "Geräuschempfindlichkeit",
+    "accessories": "Zubehör"
+  },
+  "accessoriesCollection": {
+    "badge": "ZUBEHÖR",
+    "title": "Teile & Zubehör",
+    "description": "Alles was Sie benötigen, um Ihre Earasers zu pflegen und zu schützen."
   },
   "faqLinks": {
     "allQuestions": "Alle Fragen",
@@ -142,5 +148,10 @@
     "tabAustralia": "Australien",
     "tabInternational": "International"
   },
-  "influencersLabel": "Kunden, die Earasers verwenden"
+  "influencersLabel": "Kunden, die Earasers verwenden",
+  "instructionVideos": {
+    "badge": "SUPPORT",
+    "title": "Anleitungsvideos",
+    "subtitle": "Alles, was Sie über die Verwendung, das Einsetzen und die Pflege Ihrer Earasers wissen müssen."
+  }
 }
