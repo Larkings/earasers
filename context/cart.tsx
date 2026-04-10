@@ -8,7 +8,6 @@ import {
   type ShopifyCart,
 } from '../lib/shopify-cart';
 import { trackAddToCart, trackCheckoutStarted } from '../lib/analytics';
-import { useCurrency } from './currency';
 
 export type CartItem = {
   id: string;      // slug + size + filter
@@ -91,8 +90,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [shopifyCart, setShopifyCart] = useState<ShopifyCart | null>(null);
   const syncingRef = useRef(false);
-  const { currency } = useCurrency();
-  const countryCode = currency === 'GBP' ? 'GB' : 'NL';
 
   const openCart  = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
@@ -135,6 +132,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         return existing;
       }
     }
+    const savedCurrency = typeof window !== 'undefined' ? localStorage.getItem('earasers-currency') : null;
+    const countryCode = savedCurrency === 'GBP' ? 'GB' : 'NL';
     const newCart = await createCart(countryCode);
     localStorage.setItem(CART_ID_KEY, newCart.id);
     setShopifyCart(newCart);

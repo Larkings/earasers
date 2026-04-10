@@ -48,7 +48,7 @@ const ATTEN     = `${CDN}/EARASERS_attenuation_tables.png`;
 type StatData       = { value: string };
 type FeatureData    = { icon: React.ReactNode };
 type FilterData     = { snr: string; db: string; recommended?: boolean };
-type ProductData    = { slug: string; size: string; price: string; original: string; rating: number; reviews: number; img: string };
+type ProductData    = { slug: string; size: string; price: number; original: number; rating: number; reviews: number; img: string };
 type InfluencerData = { name: string; role?: string; img: string; handle?: string; imagePosition?: string; };
 type ReviewCardData = { img: string; name: string; year: number; quote?: string };
 // Full type used by ReviewScroll (includes translated text)

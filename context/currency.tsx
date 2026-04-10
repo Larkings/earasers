@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react'
 
 export type Currency = 'EUR' | 'GBP'
 
@@ -47,20 +47,22 @@ export const CurrencyProvider = ({ children }: { children: React.ReactNode }) =>
     return () => { cancelled = true }
   }, [])
 
-  const setCurrency = (c: Currency) => {
+  const setCurrency = useCallback((c: Currency) => {
     setCurrencyState(c)
     try { localStorage.setItem(CURRENCY_KEY, c) } catch {}
-  }
+  }, [])
 
-  const fmt = (eurPrice: number): string => {
+  const fmt = useCallback((eurPrice: number): string => {
     if (currency === 'GBP') {
       return `£${(eurPrice * EUR_TO_GBP).toFixed(2)}`
     }
     return `€${eurPrice.toFixed(2).replace('.', ',')}`
-  }
+  }, [currency])
+
+  const value = useMemo(() => ({ currency, setCurrency, fmt }), [currency, setCurrency, fmt])
 
   return (
-    <CurrencyContext.Provider value={{ currency, setCurrency, fmt }}>
+    <CurrencyContext.Provider value={value}>
       {children}
     </CurrencyContext.Provider>
   )
