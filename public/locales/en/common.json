@@ -97,6 +97,7 @@
     "shippingFree": "Free shipping!",
     "subtotal": "Subtotal",
     "checkout": "Checkout",
+    "checkoutLoading": "Loading…",
     "viewCart": "View cart",
     "heading": "Cart",
     "home": "Home",

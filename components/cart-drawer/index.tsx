@@ -57,6 +57,7 @@ const DrawerContent = () => {
   const { items, totalCount, closeCart, checkout, checkoutUrl } = useCart();
   const { t } = useTranslation('common');
   const { fmt } = useCurrency();
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   const subtotal  = items.reduce((s, i) => s + i.price * i.qty, 0);
   const remaining = Math.max(0, FREE_SHIPPING - subtotal);
@@ -72,6 +73,17 @@ const DrawerContent = () => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
   }, []);
+
+  const handleCheckout = () => {
+    if (checkoutUrl) {
+      setCheckoutLoading(true);
+      window.location.href = checkoutUrl;
+      return;
+    }
+    // Fallback: use context checkout (triggers cart sync then redirect)
+    setCheckoutLoading(true);
+    checkout();
+  };
 
   return (
     <>
@@ -133,10 +145,10 @@ const DrawerContent = () => {
 
             <button
               className={styles.checkoutBtn}
-              onClick={() => { closeCart(); checkout(); }}
-              disabled={!checkoutUrl}
+              onClick={handleCheckout}
+              disabled={checkoutLoading}
             >
-              {t('cart.checkout')} <ArrowRightIcon size={15} />
+              {checkoutLoading ? t('cart.checkoutLoading') || 'Loading…' : <>{t('cart.checkout')} <ArrowRightIcon size={15} /></>}
             </button>
 
             <Link href="/cart" className={styles.viewCartBtn} onClick={closeCart}>

@@ -97,6 +97,7 @@
     "shippingFree": "¡Envío gratuito!",
     "subtotal": "Subtotal",
     "checkout": "Pagar",
+    "checkoutLoading": "Cargando…",
     "viewCart": "Ver carrito",
     "heading": "Carrito",
     "home": "Inicio",

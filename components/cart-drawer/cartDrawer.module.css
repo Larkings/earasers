@@ -17,13 +17,17 @@
   position: fixed;
   top: 0;
   right: 0;
-  bottom: 0;
   width: 420px;
   max-width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
   background: var(--color-bg);
   z-index: 401;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   box-shadow: -4px 0 32px rgba(0, 0, 0, 0.12);
   animation: slideIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -313,19 +317,24 @@
 /* Buttons */
 .checkoutBtn {
   width: 100%;
-  padding: 15px;
+  min-height: 52px;
+  padding: 14px 24px;
   background: var(--color-accent);
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
+  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 700;
   letter-spacing: 0.04em;
   border-radius: var(--radius-sm);
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   transition: background 0.2s, transform 0.15s;
   text-align: center;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
 }
 
 .checkoutBtn:hover:not(:disabled) {
@@ -333,7 +342,7 @@
   transform: translateY(-1px);
 }
 .checkoutBtn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
