@@ -13,6 +13,7 @@ type Result = {
   filterDb:  FilterDb;
   href:      string;
   sizeIdx:   number;
+  productSlug?: string;
 };
 
 function getResult(a: Answers): Result {
@@ -23,19 +24,39 @@ function getResult(a: Answers): Result {
     : fit === 'large' || fit === 'small' ? '-26dB'
     : '-19dB';
 
+  // Map use case to product slug
+  const productSlug = use === 'dj' ? 'dj'
+    : use === 'sleep' ? 'sleeping'
+    : 'musician';
+
+  // Determine size index first
+  let sizeIdx = 1;
   if (fit === 'large') {
-    return { sizeKey: 'XS', filterDb, href: '/collections/musician-s-hifi-earplugs', sizeIdx: 0 };
+    sizeIdx = 0;   // XS
+  } else if (fit === 'small') {
+    sizeIdx = 3;   // L
+  } else if (fit === 'perfect') {
+    sizeIdx = a.age === 'young' ? 1 : 4;  // S for young, SM/Kit for others
+  } else if (fit === 'unsure') {
+    sizeIdx = 4;   // Kit
+  }
+
+  // Build href to product page with quiz parameters to auto-select size & filter
+  const href = `/product?slug=${productSlug}&sizeIdx=${sizeIdx}&filter=${encodeURIComponent(filterDb)}`;
+
+  if (fit === 'large') {
+    return { sizeKey: 'XS', filterDb, href, sizeIdx, productSlug };
   }
   if (fit === 'small') {
-    return { sizeKey: 'L', filterDb, href: '/collections/musician-s-hifi-earplugs', sizeIdx: 3 };
+    return { sizeKey: 'L', filterDb, href, sizeIdx, productSlug };
   }
   if (fit === 'perfect') {
     if (a.age === 'young') {
-      return { sizeKey: 'S', filterDb: '-19dB', href: '/collections/musician-s-hifi-earplugs', sizeIdx: 1 };
+      return { sizeKey: 'S', filterDb: '-19dB', href, sizeIdx, productSlug };
     }
-    return { sizeKey: 'SM', filterDb, href: '/collections/musician-s-hifi-earplugs', sizeIdx: 4 };
+    return { sizeKey: 'SM', filterDb, href, sizeIdx, productSlug };
   }
-  return { sizeKey: 'Kit', filterDb: '-26dB', href: '/collections/musician-s-hifi-earplugs', sizeIdx: 4 };
+  return { sizeKey: 'Kit', filterDb: '-26dB', href, sizeIdx, productSlug };
 }
 
 type Props = {

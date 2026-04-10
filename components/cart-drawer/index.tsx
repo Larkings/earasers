@@ -74,6 +74,15 @@ const DrawerContent = () => {
     return () => { document.body.style.overflow = ''; };
   }, []);
 
+  // Reset checkout loading when user returns from checkout (window gets focus)
+  useEffect(() => {
+    const handleWindowFocus = () => {
+      setCheckoutLoading(false);
+    };
+    window.addEventListener('focus', handleWindowFocus);
+    return () => window.removeEventListener('focus', handleWindowFocus);
+  }, []);
+
   const handleCheckout = () => {
     if (checkoutUrl) {
       setCheckoutLoading(true);

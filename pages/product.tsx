@@ -90,21 +90,36 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
 
   const recentlyViewed = useRecentlyViewed(product.slug);
 
-  useEffect(() => {
-    if (!router.isReady) return;
-    const p = getProduct(router.query.slug as string);
-    startTransition(() => {
-      setActiveImg(0);
-      setProduct(p);
-      setActiveFilter(0);
-      setActiveSize(1);
-      setActiveTab(0);
-      setQty(1);
-      setAdded(false);
-      setQuizOpen(false);
-      setQuizApplied(false);
-    });
-  }, [router.isReady, router.query.slug]);
+   useEffect(() => {
+     if (!router.isReady) return;
+     const p = getProduct(router.query.slug as string);
+
+     // Parse quiz parameters from URL
+     const sizeIdxParam = router.query.sizeIdx ? parseInt(router.query.sizeIdx as string, 10) : null;
+     const filterParam = router.query.filter as string | undefined;
+     const fromQuiz = sizeIdxParam !== null && filterParam;
+
+     startTransition(() => {
+       setActiveImg(0);
+       setProduct(p);
+       setActiveTab(0);
+       setQty(1);
+       setAdded(false);
+       setQuizOpen(false);
+
+       // Apply quiz results if coming from quiz
+       if (fromQuiz && sizeIdxParam !== null) {
+         setActiveSize(sizeIdxParam);
+         const fIdx = genreFilters.findIndex(f => f.db === filterParam);
+         setActiveFilter(fIdx >= 0 ? fIdx : 0);
+         setQuizApplied(true);
+         setTimeout(() => setQuizApplied(false), 4000);
+       } else {
+         setActiveFilter(0);
+         setActiveSize(1);
+       }
+     });
+   }, [router.isReady, router.query.slug, router.query.sizeIdx, router.query.filter]);
 
   const handleQuizSelect = (sizeIdx: number, filterDb: string) => {
     setActiveSize(sizeIdx);
