@@ -6,6 +6,7 @@ import i18n, { type Resource, type InitOptions } from 'i18next';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
 import { CartProvider } from '../context/cart';
 import { AuthProvider } from '../context/auth';
+import { CurrencyProvider } from '../context/currency';
 import { CookieBanner } from '../components/cookie-banner';
 import { CartDrawer } from '../components/cart-drawer';
 import { AuthDrawer } from '../components/auth-drawer';
@@ -120,14 +121,16 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <I18nextProvider i18n={instanceRef.current}>
-      <AuthProvider>
-        <CartProvider>
-          <Component {...pageProps} />
-          <CartDrawer />
-          <AuthDrawer />
-          <CookieBanner />
-        </CartProvider>
-      </AuthProvider>
+      <CurrencyProvider>
+        <AuthProvider>
+          <CartProvider>
+            <Component {...pageProps} />
+            <CartDrawer />
+            <AuthDrawer />
+            <CookieBanner />
+          </CartProvider>
+        </AuthProvider>
+      </CurrencyProvider>
     </I18nextProvider>
   );
 }

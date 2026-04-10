@@ -81,6 +81,7 @@
     }
   ],
   "orComboKit": "oder ein Kombipaket wählen",
+  "filterSingleNote": "Dieser Ohrstöpsel wird mit einer optimierten Filterstufe geliefert.",
   "productData": {
     "musician": {
       "name": "Musik-Ohrstöpsel",
@@ -89,9 +90,9 @@
       "features": ["Patentierte V-Filter-Technologie", "Medizinisches Silikon — selbstanpassend", "Nahezu unsichtbar im Ohr", "Kein Spezialist erforderlich", "5× MusicRadar Bester Musik-Ohrstöpsel"],
       "tag": "Bestseller",
       "filters": [
-        { "label": "Comfort", "desc": "Leichter Schutz, maximale Klarheit. Ideal für kleinere Bühnen." },
-        { "label": "Standard", "desc": "Europäische Norm. Ideal für die meisten Live-Musik-Situationen." },
-        { "label": "Max", "desc": "Höchster Schutz. Empfohlen für DJs und schwere Industrie." }
+        { "label": "SNR 14 | Leichter Filter",  "desc": "-19dB Peak — leichter Schutz, maximale Klangklarheit." },
+        { "label": "SNR 20 | Mittlerer Filter",  "desc": "-26dB Peak — ideal für die meisten Live-Musik-Situationen." },
+        { "label": "SNR 22 | Max Filter",        "desc": "-31dB Peak — maximaler Schutz für laute Bühnen." }
       ]
     },
     "dj": {
@@ -101,9 +102,9 @@
       "features": ["Max -31dB Schutz verfügbar", "Flacher Frequenzgang für präzises Monitoring", "Schweißresistentes medizinisches Silikon", "Kompatibel mit In-Ear-Monitoren", "Von tourenden Profis empfohlen"],
       "tag": null,
       "filters": [
-        { "label": "Comfort", "desc": "Leichter Schutz für kleinere Club-Booths." },
-        { "label": "Standard DJ", "desc": "Empfohlen für die meisten DJs. Deckt Club- und Festivalvolumen ab." },
-        { "label": "Tinnitus Guard", "desc": "Maximaler Schutz für DJs mit bestehendem Tinnitus oder sehr lauten Bühnen." }
+        { "label": "SNR 14 | Light Filter",                          "desc": "-19dB Peak — gut für Monitoring bei niedrigeren Lautstärken." },
+        { "label": "SNR 20 | Best for in the DJ Booth",              "desc": "-26dB Peak — empfohlen für Booth- und Festivalnutzung." },
+        { "label": "SNR 22 | Wenn du bereits Tinnitus hast",         "desc": "-31dB Peak — maximaler Schutz bei bestehendem Tinnitus." }
       ]
     },
     "dentist": {
@@ -113,8 +114,8 @@
       "features": ["Reduziert hochfrequente Instrumentengeräusche", "Sprachfrequenzen bleiben klar", "Komfortabel für ganztägiges Tragen", "Medizinisches Silikon", "EU-Sicherheitskonformität"],
       "tag": null,
       "filters": [
-        { "label": "Sanfter Standard", "desc": "Für Fachleute in ruhigeren Praxen. Alltägliche Zahnarztumgebungen." },
-        { "label": "Klinische Balance", "desc": "Empfohlen für Hygieniker und Zahnärzte, die täglich Ultraschall-Scaler verwenden." }
+        { "label": "SNR 14 | Sanfter Zahnarzt Standard Filter",                                "desc": "-19dB Peak — reduziert Bohrerlärm, Sprache bleibt klar." },
+        { "label": "SNR 20 | Zahnarzt Klinische Balance — Geräuschempfindlichkeit & Tinnitus", "desc": "-26dB Peak — empfohlen für Hygieniker und Tinnitus-Betroffene." }
       ]
     },
     "sleeping": {
@@ -124,8 +125,7 @@
       "features": ["Ultra-weiches medizinisches Silikon", "Niedriges Profil — ideal für Seitenschläfer", "Kein Druck auf den Gehörkanal", "Wiederverwendbar und waschbar", "Weckalarm hörbar"],
       "tag": null,
       "filters": [
-        { "label": "Comfort", "desc": "Dämpft Schnarchen und Umgebungsgeräusche — Wecker bleiben hörbar." },
-        { "label": "Tief", "desc": "Für leichte Schläfer und laute Umgebungen. Maximale Ruhe, noch sicher." }
+        { "label": "SNR 22 | Ruhe & Stille", "desc": "-36dB Peak — maximale Stille für tiefen, ungestörten Schlaf." }
       ]
     },
     "motorsport": {
@@ -135,8 +135,8 @@
       "features": ["Wind- und Motorgeräuschdämpfung", "Passt komfortabel unter alle Helme", "Intercom & Bluetooth kompatibel", "EU CE zertifiziert", "Reduziert Ermüdung auf langen Fahrten"],
       "tag": null,
       "filters": [
-        { "label": "Leichte Fahrt", "desc": "Für Stadtfahrten und kürzere Trips mit Verkehrsbewusstsein." },
-        { "label": "Langstrecke", "desc": "Empfohlen für Autobahn- und Tourenfahrten. Reduziert anhaltenden Windlärm." }
+        { "label": "SNR 14 | Geschlossener Helm", "desc": "-19dB Peak — für Integralhelme, reduziert Wind- und Straßenlärm." },
+        { "label": "SNR 22 | Offener Helm",       "desc": "-31dB Peak — für Jethelme mit höherer Windexposition." }
       ]
     },
     "sensitivity": {
@@ -146,7 +146,10 @@
       "features": ["Sanfte -19dB Dämpfung", "Kein Okklusionseffekt", "Ideal für Autismus, ADHS, Hyperakusis", "Diskreter unsichtbarer Sitz", "Ganztägiger Komfort ohne Ermüdung"],
       "tag": null,
       "filters": [
-        { "label": "Empfindlichkeitsfilter", "desc": "Der einzige empfohlene Filter für den täglichen Gebrauch. Sanfte, flache Dämpfung." }
+        { "label": "SNR 14 | Sanfter Komfortfilter",   "desc": "-19dB Peak — nimmt die Schärfe aus belebten Umgebungen." },
+        { "label": "SNR 20 | Ausgewogener Filter",     "desc": "-26dB Peak — ideal für Veranstaltungen und öffentliche Verkehrsmittel." },
+        { "label": "SNR 22 | Starker Filter",          "desc": "-31dB Peak — für stark reizende Umgebungen." },
+        { "label": "SNR 26 | Ruhe und Stille Filter",  "desc": "-36dB Peak — maximale Ruhe bei schwerer Überempfindlichkeit." }
       ]
     }
   }

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import styles from './cartDrawer.module.css';
 import { useCart, type CartItem } from '../../context/cart';
-import { fmt } from '../../lib/products';
+import { useCurrency } from '../../context/currency';
 import { CloseIcon, CheckIcon, ArrowRightIcon } from '../icons';
 
 const FREE_SHIPPING = 39;
@@ -21,6 +21,7 @@ const EmptyCartIcon = () => (
 const DrawerItem = ({ item }: { item: CartItem }) => {
   const { setQty, removeItem, closeCart } = useCart();
   const { t } = useTranslation('common');
+  const { fmt } = useCurrency();
   return (
     <div className={styles.item}>
       <Link href={`/product?slug=${item.slug}`} className={styles.itemImg} onClick={closeCart}>
@@ -53,8 +54,9 @@ const DrawerItem = ({ item }: { item: CartItem }) => {
 };
 
 const DrawerContent = () => {
-  const { items, totalCount, closeCart } = useCart();
+  const { items, totalCount, closeCart, checkout, checkoutUrl } = useCart();
   const { t } = useTranslation('common');
+  const { fmt } = useCurrency();
 
   const subtotal  = items.reduce((s, i) => s + i.price * i.qty, 0);
   const remaining = Math.max(0, FREE_SHIPPING - subtotal);
@@ -129,9 +131,13 @@ const DrawerContent = () => {
               <span className={styles.totalsPrice}>{fmt(subtotal)}</span>
             </div>
 
-            <Link href="/cart" className={styles.checkoutBtn} onClick={closeCart}>
+            <button
+              className={styles.checkoutBtn}
+              onClick={() => { closeCart(); checkout(); }}
+              disabled={!checkoutUrl}
+            >
               {t('cart.checkout')} <ArrowRightIcon size={15} />
-            </Link>
+            </button>
 
             <Link href="/cart" className={styles.viewCartBtn} onClick={closeCart}>
               {t('cart.viewCart')}

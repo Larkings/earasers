@@ -60,7 +60,10 @@ body {
 img  { max-width: 100%; display: block; }
 a    { color: inherit; text-decoration: none; }
 ul   { list-style: none; }
-button { cursor: pointer; border: none; background: none; font-family: inherit; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; max-width: 100%; }
+
+/* Knoppen en links mogen nooit horizontaal buiten hun container vallen */
+button, a, [class*="btn"] { box-sizing: border-box; max-width: 100%; }
 
 .container {
   width: 100%;

@@ -315,42 +315,72 @@
 
 .filterBtn {
   display: grid;
-  grid-template-columns: 56px auto 1fr;
+  grid-template-columns: 56px 100px 1fr;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 14px 16px;
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-bg);
   text-align: left;
   transition: border-color 0.2s, background 0.2s;
+  width: 100%;
 }
 
-.filterBtn:hover { border-color: var(--color-accent); }
+.filterBtn:hover:not(:disabled) { border-color: var(--color-accent); }
+.filterBtn:disabled { cursor: default; }
 
 .filterBtnActive {
   border-color: var(--color-accent);
-  background: var(--color-accent-light);
+  background: #FDF5F5;
 }
 
 .filterDb {
   font-size: 13px;
   font-weight: 700;
   color: var(--color-accent);
-  font-family: var(--font-display);
-  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
 }
 
-.filterLabel {
-  font-size: 13px;
+.filterName {
+  font-size: 14px;
   font-weight: 600;
   color: var(--color-text);
 }
 
-.filterDesc {
+.filterSnr {
   font-size: 12px;
   color: var(--color-text-muted);
   line-height: 1.4;
+}
+
+.filterSingleNote {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 6px;
+}
+
+@media (max-width: 480px) {
+  .filterBtn {
+    grid-template-columns: 48px 1fr;
+    grid-template-rows: auto auto;
+    gap: 4px 10px;
+  }
+
+  .filterDb {
+    grid-row: 1 / 3;
+    align-self: center;
+  }
+
+  .filterName {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .filterSnr {
+    grid-column: 2;
+    grid-row: 2;
+  }
 }
 
 /* Quantity */
@@ -427,7 +457,7 @@
 
 .buyNowBtn {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 6px;
   padding: 16px;
   background: transparent;
   color: var(--color-text);
@@ -455,6 +485,44 @@
     min-height: 52px;
     font-size: 15px;
   }
+}
+
+.paymentRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.paymentBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 8px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  min-height: 44px;
+}
+.paymentBtn:hover:not(:disabled) {
+  border-color: var(--color-text-muted);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.paymentBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.paymentBtnApple {
+  background: #000;
+  border-color: #000;
+}
+.paymentBtnApple:hover:not(:disabled) {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
 
 /* Trust */

@@ -9,11 +9,13 @@ import { Layout } from '../components/layout';
 import { StarIcon, StarEmptyIcon, CheckIcon, ShieldIcon } from '../components/icons';
 import styles from '../styles/product.module.css';
 import {
-  getProduct, PRODUCTS, fmt, fmtSave, type Product,
-  getProductWithVariants, SLUG_TO_HANDLE, findVariant, type ShopifyVariant,
+  getProduct, PRODUCTS, type Product,
+  getProductWithVariants, SLUG_TO_HANDLE, findVariantByFilter, type ShopifyVariant,
 } from '../lib/products';
+import { FILTERS_BY_GENRE } from '../lib/filters';
 import { useCart, type CartItem } from '../context/cart';
 import { createDirectCheckout } from '../lib/shopify-cart';
+import { useCurrency } from '../context/currency';
 import { SizeQuiz } from '../components/size-quiz';
 import { VideoSection } from '../components/video-section';
 import { Reviews } from '../components/reviews';
@@ -55,6 +57,7 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
   const router = useRouter();
   const { t } = useTranslation('product');
   const { addToCart, openCart } = useCart();
+  const { fmt } = useCurrency();
 
   const _sizes       = t('sizes',   { returnObjects: true });
   const _tabs        = t('tabs',    { returnObjects: true });
@@ -65,15 +68,14 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
 
   const [product, setProduct] = useState<Product>(getProduct('musician'));
 
+  const genreFilters = FILTERS_BY_GENRE[product.slug] ?? FILTERS_BY_GENRE['musician'];
+
   // Product-specific translations (after product state is declared)
   const tProductName       = t(`productData.${product.slug}.name`,        { defaultValue: product.name });
   const tProductCollection = t(`productData.${product.slug}.collection`,   { defaultValue: product.collection });
   const tProductDesc       = t(`productData.${product.slug}.description`,  { defaultValue: product.description });
   const _tProductFeatures  = t(`productData.${product.slug}.features`,     { returnObjects: true, defaultValue: product.features });
   const tProductFeatures   = Array.isArray(_tProductFeatures) ? (_tProductFeatures as string[]) : product.features;
-  const _tProductFilters   = t(`productData.${product.slug}.filters`,      { returnObjects: true, defaultValue: [] });
-  const tProductFilters    = Array.isArray(_tProductFilters) ? (_tProductFilters as Array<{ label: string; desc: string }>) : [];
-
   const [activeImg,    setActiveImg]    = useState(0);
   const [activeSize,   setActiveSize]   = useState(1);
   const [activeFilter, setActiveFilter] = useState(0);
@@ -105,7 +107,7 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
 
   const handleQuizSelect = (sizeIdx: number, filterDb: string) => {
     setActiveSize(sizeIdx);
-    const fIdx = product.filters.findIndex(f => f.db === filterDb);
+    const fIdx = genreFilters.findIndex(f => f.db === filterDb);
     setActiveFilter(fIdx >= 0 ? fIdx : 0);
     setQuizOpen(false);
     setQuizApplied(true);
@@ -117,10 +119,10 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
   const original = isKit ? product.kitOriginal : product.originalPrice;
 
   const getVariantId = () => {
-    const sizeLabel = sizes[activeSize].label;
-    const filterDb  = product.filters[activeFilter].db;
+    const sizeLabel   = sizes[activeSize].label;
+    const filter      = genreFilters[activeFilter] ?? genreFilters[0];
     const slugVariants = variantsMap[product.slug] ?? [];
-    return findVariant(slugVariants, sizeLabel, filterDb)?.id;
+    return findVariantByFilter(slugVariants, sizeLabel, filter)?.id;
   };
 
   const handleBuyNow = async () => {
@@ -139,20 +141,20 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
   };
 
   const handleAddToCart = () => {
-    const sizeLabel = sizes[activeSize].label;
-    const filterDb  = product.filters[activeFilter].db;
+    const sizeLabel   = sizes[activeSize].label;
+    const filter      = genreFilters[activeFilter] ?? genreFilters[0];
 
     // Zoek Shopify variant ID op via selectedOptions
     const slugVariants = variantsMap[product.slug] ?? [];
-    const variant = findVariant(slugVariants, sizeLabel, filterDb);
+    const variant = findVariantByFilter(slugVariants, sizeLabel, filter);
 
     const item: CartItem = {
-      id:        `${product.slug}-${sizeLabel}-${filterDb}`,
+      id:        `${product.slug}-${sizeLabel}-${filter.db}`,
       slug:      product.slug,
       name:      product.name,
       img:       product.images[0],
       size:      sizeLabel,
-      filter:    filterDb,
+      filter:    filter.db,
       price,
       qty,
       variantId: variant?.id,   // gid://shopify/ProductVariant/...
@@ -213,7 +215,7 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
               <div className={styles.priceRow}>
                 <span className={styles.price}>{fmt(price)}</span>
                 <span className={styles.original}>{fmt(original)}</span>
-                <span className={styles.badge}>{t('save', { amount: fmtSave(price, original) })}</span>
+                <span className={styles.badge}>{t('save', { amount: fmt(original - price) })}</span>
               </div>
 
               <p className={styles.desc}>{tProductDesc}</p>
@@ -295,18 +297,24 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
               <div className={styles.selectorBlock}>
                 <span className={styles.selectorLabel}>{t('filterLevel')}</span>
                 <div className={styles.filterList}>
-                  {product.filters.map((f, i) => (
+                  {genreFilters.map((f, i) => (
                     <button
-                      key={i}
-                      className={`${styles.filterBtn} ${i === activeFilter ? styles.filterBtnActive : ''}`}
+                      key={f.db}
+                      className={`${styles.filterBtn} ${i === activeFilter || genreFilters.length === 1 ? styles.filterBtnActive : ''}`}
                       onClick={() => setActiveFilter(i)}
+                      disabled={genreFilters.length === 1}
                     >
                       <span className={styles.filterDb}>{f.db}</span>
-                      <span className={styles.filterLabel}>{tProductFilters[i]?.label ?? f.label}</span>
-                      <span className={styles.filterDesc}>{tProductFilters[i]?.desc ?? f.desc}</span>
+                      <span className={styles.filterName}>{f.name}</span>
+                      <span className={styles.filterSnr}>{f.snr} | {f.description}</span>
                     </button>
                   ))}
                 </div>
+                {genreFilters.length === 1 && (
+                  <p className={styles.filterSingleNote}>
+                    {t('filterSingleNote')}
+                  </p>
+                )}
               </div>
 
               {/* Quantity */}
@@ -351,6 +359,37 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
               >
                 {buyNowLoading ? t('buyNowLoading') : t('buyNow')}
               </button>
+
+              {/* Express payment */}
+              <div className={styles.paymentRow}>
+                {/* Apple Pay — officiële zwarte knopstijl */}
+                <button className={`${styles.paymentBtn} ${styles.paymentBtnApple}`} onClick={handleBuyNow} disabled={buyNowLoading} aria-label="Apple Pay">
+                  <svg width="58" height="24" viewBox="0 0 58 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.23 4.52c.6-.74 1.01-1.77.9-2.8-.87.04-1.92.58-2.54 1.32-.56.64-1.05 1.69-.92 2.69.97.07 1.96-.49 2.56-1.21z" fill="#fff"/>
+                    <path d="M11.12 5.97c-1.42-.09-2.63.81-3.31.81-.68 0-1.72-.76-2.85-.74-1.47.02-2.83.85-3.58 2.17C-.99 10.7.03 14.8 1.6 17.09c.77 1.13 1.69 2.38 2.91 2.33 1.15-.04 1.6-.74 2.99-.74 1.4 0 1.8.74 3.01.72 1.26-.02 2.06-1.13 2.83-2.26.88-1.29 1.24-2.54 1.27-2.6-.03-.02-2.44-.95-2.46-3.76-.02-2.35 1.92-3.47 2.01-3.54-1.1-1.62-2.81-1.8-3.04-1.27z" fill="#fff"/>
+                    <text x="18" y="17" fontFamily="-apple-system,BlinkMacSystemFont,'SF Pro Text',Helvetica,sans-serif" fontSize="13" fontWeight="500" fill="#fff">Pay</text>
+                  </svg>
+                </button>
+
+                {/* PayPal — officiële wordmark kleuren */}
+                <button className={styles.paymentBtn} onClick={handleBuyNow} disabled={buyNowLoading} aria-label="PayPal">
+                  <svg width="62" height="18" viewBox="0 0 62 18" xmlns="http://www.w3.org/2000/svg">
+                    <text x="1" y="14" fontFamily="Helvetica Neue,Helvetica,Arial,sans-serif" fontSize="15" fontWeight="800" fill="#003087">Pay</text>
+                    <text x="27" y="14" fontFamily="Helvetica Neue,Helvetica,Arial,sans-serif" fontSize="15" fontWeight="800" fill="#009cde">Pal</text>
+                  </svg>
+                </button>
+
+                {/* Google Pay */}
+                <button className={styles.paymentBtn} onClick={handleBuyNow} disabled={buyNowLoading} aria-label="Google Pay">
+                  <svg width="54" height="22" viewBox="0 0 54 22" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.42 11c0-.5-.04-.97-.12-1.42H9v2.69h4.18c-.18.97-.73 1.8-1.56 2.35v1.95h2.52c1.48-1.36 2.33-3.36 2.33-5.57z" fill="#4285F4"/>
+                    <path d="M9 18c2.1 0 3.86-.69 5.15-1.88l-2.52-1.95c-.7.47-1.6.74-2.63.74-2.02 0-3.73-1.36-4.34-3.19H2.06v2.01C3.34 16.39 5.98 18 9 18z" fill="#34A853"/>
+                    <path d="M4.66 11.72A5.4 5.4 0 0 1 4.66 9.28V7.27H2.06a9 9 0 0 0 0 7.46l2.6-2.01z" fill="#FBBC05"/>
+                    <path d="M9 5.58c1.14 0 2.16.39 2.97 1.16l2.22-2.22C12.85 3.23 11.09 2.5 9 2.5 5.98 2.5 3.34 4.11 2.06 6.5l2.6 2.01C5.27 6.68 6.98 5.58 9 5.58z" fill="#EA4335"/>
+                    <text x="20" y="15" fontFamily="Google Sans,Roboto,Arial,sans-serif" fontSize="12.5" fontWeight="500" fill="#3c4043">Pay</text>
+                  </svg>
+                </button>
+              </div>
 
               {/* Trust */}
               <div className={styles.trust}>

@@ -7,7 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { Layout } from '../components/layout';
 import { CheckIcon, ArrowRightIcon, ShieldIcon } from '../components/icons';
 import { useCart } from '../context/cart';
-import { PRODUCTS, fmt } from '../lib/products';
+import { PRODUCTS } from '../lib/products';
+import { useCurrency } from '../context/currency';
 import styles from '../styles/cart.module.css';
 
 const FREE_SHIPPING_THRESHOLD = 39;
@@ -31,6 +32,7 @@ const CartIcon = () => (
 const Cart: NextPage = () => {
   const { t } = useTranslation('common');
   const { items, totalCount, setQty, removeItem, checkout, checkoutUrl } = useCart();
+  const { fmt } = useCurrency();
 
   const subtotal  = items.reduce((s, i) => s + i.price * i.qty, 0);
   const shipping  = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : SHIPPING_COST;

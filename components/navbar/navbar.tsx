@@ -7,6 +7,7 @@ import { MusicIcon, HeadphonesIcon, ToothIcon, MoonIcon, HelmetIcon, EarIcon, Ch
 import { useCart } from '../../context/cart';
 import { useAuth } from '../../context/auth';
 import { LanguageSwitcher } from '../language-switcher';
+import { useCurrency, type Currency } from '../../context/currency';
 import Image from 'next/image';
 
 export const Navbar = () => {
@@ -14,6 +15,7 @@ export const Navbar = () => {
   const { t } = useTranslation('common');
   const { totalCount, openCart } = useCart();
   const { user, openAuthDrawer } = useAuth();
+  const { currency, setCurrency } = useCurrency();
   const [scrolled, setScrolled]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [shopOpen, setShopOpen]     = useState(false);
@@ -103,7 +105,6 @@ export const Navbar = () => {
                 )}
               </li>
 
-              <li className={styles.navItem}><Link href="/blog"          className={`${styles.navLink} ${isActive('/blog') ? styles.navLinkActive : ''}`}>{t('nav.blog')}</Link></li>
               <li className={styles.navItem}><Link href="/size-finder"   className={`${styles.navLink} ${isActive('/size-finder') ? styles.navLinkActive : ''}`}>{t('nav.sizeFinder')}</Link></li>
 
               <li className={styles.navItem} ref={faqRef}>
@@ -123,12 +124,23 @@ export const Navbar = () => {
 
               <li className={styles.navItem}><Link href="/store-locator" className={`${styles.navLink} ${isActive('/store-locator') ? styles.navLinkActive : ''}`}>{t('nav.storeLocator')}</Link></li>
               <li className={styles.navItem}><Link href="/about"         className={`${styles.navLink} ${isActive('/about') ? styles.navLinkActive : ''}`}>{t('nav.about')}</Link></li>
-              <li className={styles.navItem}><Link href="/contact"       className={`${styles.navLink} ${isActive('/contact') ? styles.navLinkActive : ''}`}>{t('nav.contact')}</Link></li>
-              <li className={styles.navItem}><Link href="/affiliates"    className={`${styles.navLink} ${isActive('/affiliates') ? styles.navLinkActive : ''}`}>{t('nav.affiliates')}</Link></li>
             </ul>
           </nav>
 
           <div className={styles.actions}>
+            <div className={styles.currencySwitcher}>
+              <button
+                className={`${styles.currencyBtn} ${currency === 'EUR' ? styles.currencyBtnActive : ''}`}
+                onClick={() => setCurrency('EUR')}
+                aria-label="Switch to Euro"
+              >€</button>
+              <span className={styles.currencyDivider}>|</span>
+              <button
+                className={`${styles.currencyBtn} ${currency === 'GBP' ? styles.currencyBtnActive : ''}`}
+                onClick={() => setCurrency('GBP')}
+                aria-label="Switch to Pound Sterling"
+              >£</button>
+            </div>
             <LanguageSwitcher />
             {user ? (
               <Link href="/account" className={styles.accountBtn} aria-label={`${t('nav.about')}: ${user.firstName}`}>
@@ -156,6 +168,19 @@ export const Navbar = () => {
 
         {mobileOpen && (
           <nav className={styles.mobileMenu}>
+            {/* Currency switcher — mobile */}
+            <div className={styles.mobileCurrencySwitcher}>
+              {(['EUR', 'GBP'] as Currency[]).map(c => (
+                <button
+                  key={c}
+                  className={`${styles.mobileCurrencyBtn} ${currency === c ? styles.mobileCurrencyBtnActive : ''}`}
+                  onClick={() => setCurrency(c)}
+                >
+                  {c === 'EUR' ? '€ EUR' : '£ GBP'}
+                </button>
+              ))}
+            </div>
+
             {/* Language switcher — top of menu, prominent */}
             <div className={styles.mobileLangSwitcher}>
               {[

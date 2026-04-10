@@ -82,7 +82,9 @@
 /* Body */
 .body {
   flex: 1;
+  min-height: 0;        /* vereist voor overflow in flex-containers */
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   padding: 0 24px 16px;
 }
@@ -251,6 +253,8 @@
   flex-shrink: 0;
   border-top: 1px solid var(--color-border);
   padding: 20px 24px;
+  /* iOS safe area: checkout knop nooit achter de home indicator */
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -324,9 +328,13 @@
   text-align: center;
 }
 
-.checkoutBtn:hover {
+.checkoutBtn:hover:not(:disabled) {
   background: var(--color-accent-hover);
   transform: translateY(-1px);
+}
+.checkoutBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .viewCartBtn {
@@ -339,3 +347,24 @@
 }
 
 .viewCartBtn:hover { color: var(--color-text); }
+
+/* Kleine schermen: comprimeer footer zodat checkout knop altijd zichtbaar is */
+@media (max-height: 600px) {
+  .footer {
+    gap: 8px;
+    padding: 12px 24px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+  .totalsPrice { font-size: 20px; }
+  .shippingBar { display: none; }
+}
+
+@media (max-width: 375px) {
+  .footer {
+    padding: 16px 16px;
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+    gap: 10px;
+  }
+  .header { padding: 16px; }
+  .body   { padding: 0 16px 12px; }
+}

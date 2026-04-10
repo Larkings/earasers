@@ -1,9 +1,13 @@
 .band {
+  position: relative;   /* nooit fixed of absolute */
+  z-index: 10;          /* altijd boven de hero */
   background: var(--color-surface);
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
   overflow: hidden;
   padding: 14px 0;
+  flex-shrink: 0;       /* krimpt nooit weg in flex-containers */
+  width: 100%;
 }
 
 .track {

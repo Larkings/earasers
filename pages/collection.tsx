@@ -7,14 +7,15 @@ import { useTranslation } from 'react-i18next';
 import { Layout } from '../components/layout';
 import { StarIcon, StarEmptyIcon, ArrowRightIcon } from '../components/icons';
 import styles from '../styles/collection.module.css';
+import { useCurrency } from '../context/currency';
 
 const products = [
-  { name: 'Music Earplugs — Small',     price: '€49,95', original: '€58,00', rating: 4.7, reviews: 1024, img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasersuitgezoomd.png',           tagKey: 'ui.bestSeller' },
-  { name: 'Music Earplugs — Medium',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 876,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',    tagKey: null },
-  { name: 'Music Earplugs — Large',     price: '€49,95', original: '€58,00', rating: 4.6, reviews: 213,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasersuitgezoomd.png',           tagKey: null },
-  { name: 'S & M Starter Kit',          price: '€54,95', original: '€69,00', rating: 4.8, reviews: 542,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasers_starter_combo_kit.png',   tagKey: 'ui.recommended' },
-  { name: 'Perfect Size Kit',           price: '€54,95', original: '€69,00', rating: 4.6, reviews: 198,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasers_starter_combo_kit.png',   tagKey: null },
-  { name: 'Pro-Kit',                    price: '€79,00', original: '€99,00', rating: 4.9, reviews: 87,   img: 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',    tagKey: 'ui.premium' },
+  { name: 'Music Earplugs — Small',     price: 49.95, original: 58.00, rating: 4.7, reviews: 1024, img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasersuitgezoomd.png',           tagKey: 'ui.bestSeller' },
+  { name: 'Music Earplugs — Medium',    price: 49.95, original: 58.00, rating: 4.7, reviews: 876,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',    tagKey: null },
+  { name: 'Music Earplugs — Large',     price: 49.95, original: 58.00, rating: 4.6, reviews: 213,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasersuitgezoomd.png',           tagKey: null },
+  { name: 'S & M Starter Kit',          price: 54.95, original: 69.00, rating: 4.8, reviews: 542,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasers_starter_combo_kit.png',   tagKey: 'ui.recommended' },
+  { name: 'Perfect Size Kit',           price: 54.95, original: 69.00, rating: 4.6, reviews: 198,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasers_starter_combo_kit.png',   tagKey: null },
+  { name: 'Pro-Kit',                    price: 79.00, original: 99.00, rating: 4.9, reviews: 87,   img: 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',    tagKey: 'ui.premium' },
 ];
 
 const Stars = ({ rating }: { rating: number }) => {
@@ -29,6 +30,7 @@ const Stars = ({ rating }: { rating: number }) => {
 
 const Collection: NextPage = () => {
   const { t } = useTranslation('collection');
+  const { fmt } = useCurrency();
   const [sort, setSort] = useState(0);
 
   const sortOptions = [
@@ -40,8 +42,8 @@ const Collection: NextPage = () => {
   ];
 
   const sorted = [...products].sort((a, b) => {
-    if (sort === 1) return parseFloat(a.price.replace('€', '').replace(',', '.')) - parseFloat(b.price.replace('€', '').replace(',', '.'));
-    if (sort === 2) return parseFloat(b.price.replace('€', '').replace(',', '.')) - parseFloat(a.price.replace('€', '').replace(',', '.'));
+    if (sort === 1) return a.price - b.price;
+    if (sort === 2) return b.price - a.price;
     if (sort === 4) return b.rating - a.rating;
     return 0;
   });
@@ -93,8 +95,8 @@ const Collection: NextPage = () => {
                     <span className={styles.ratingCount}>({p.reviews})</span>
                   </div>
                   <div className={styles.priceRow}>
-                    <span className={styles.price}>{p.price}</span>
-                    <span className={styles.priceCrossed}>{p.original}</span>
+                    <span className={styles.price}>{fmt(p.price)}</span>
+                    <span className={styles.priceCrossed}>{fmt(p.original)}</span>
                   </div>
                   <span className={styles.cta}>
                     {t('ui.chooseOptions')} <ArrowRightIcon size={13} />

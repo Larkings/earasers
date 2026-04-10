@@ -8,9 +8,12 @@
   background-attachment: fixed;
   display: flex;
   align-items: center;
+  overflow: hidden;   /* voorkomt dat de achtergrond visueel buiten de hero valt */
+  z-index: 1;         /* hero altijd onder de trust-band */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  /* background-attachment: fixed is buggy op iOS en sommige Android browsers */
   .hero { background-attachment: scroll; }
 }
 

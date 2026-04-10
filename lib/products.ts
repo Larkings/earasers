@@ -1,4 +1,5 @@
 import { shopifyFetch } from './shopify'
+import type { FilterOption } from './filters'
 
 export type ProductFilter = { db: string; label: string; desc: string };
 
@@ -19,10 +20,6 @@ export type Product = {
   filters: ProductFilter[];
 };
 
-const COMFORT: ProductFilter = { db: '-19dB', label: 'Comfort',  desc: 'Light protection, max clarity. Great for smaller venues.' };
-const STANDARD: ProductFilter = { db: '-26dB', label: 'Standard', desc: 'European norm. Ideal for most live music situations.' };
-const MAX: ProductFilter      = { db: '-31dB', label: 'Max',      desc: 'Highest protection. Recommended for DJs & heavy industry.' };
-
 export const PRODUCTS: Record<string, Product> = {
   musician: {
     slug: 'musician',
@@ -42,7 +39,11 @@ export const PRODUCTS: Record<string, Product> = {
     description: 'The world\'s only award-winning HiFi earplugs. Protect your hearing without muffling the music — thanks to our patented V-Filter technology and medical grade silicone fit.',
     features: ['Patented V-Filter technology', 'Medical grade silicone — self-fitting', 'Nearly invisible in the ear', 'No specialist required', '5× MusicRadar Best Music Earplugs'],
     tag: 'Best Seller',
-    filters: [COMFORT, STANDARD, MAX],
+    filters: [
+      { db: '-19dB', label: 'SNR 14 | Light filter',  desc: '-19dB Peak — light protection, maximum sound clarity.' },
+      { db: '-26dB', label: 'SNR 20 | Medium filter', desc: '-26dB Peak — ideal for most live music situations.' },
+      { db: '-31dB', label: 'SNR 22 | Max filter',    desc: '-31dB Peak — maximum protection for loud stages.' },
+    ],
   },
   dj: {
     slug: 'dj',
@@ -62,9 +63,9 @@ export const PRODUCTS: Record<string, Product> = {
     features: ['Max -31dB protection available', 'Flat frequency response for accurate monitoring', 'Sweat-resistant medical silicone', 'Compatible with in-ear monitors', 'Endorsed by touring professionals'],
     tag: null,
     filters: [
-      COMFORT,
-      STANDARD,
-      MAX,
+      { db: '-19dB', label: 'SNR 14 | Light Filter',                       desc: '-19dB Peak — great for monitoring at lower volumes.' },
+      { db: '-26dB', label: 'SNR 20 | Best for in the DJ Booth',            desc: '-26dB Peak — recommended for booth and festival use.' },
+      { db: '-31dB', label: 'SNR 22 | If you already experience tinnitus',  desc: '-31dB Peak — maximum protection, ideal if you have tinnitus.' },
     ],
   },
   dentist: {
@@ -85,8 +86,8 @@ export const PRODUCTS: Record<string, Product> = {
     features: ['Reduces high-frequency instrument noise', 'Speech frequencies remain clear', 'Comfortable for all-day wear', 'Medical grade silicone', 'EU safety compliant'],
     tag: null,
     filters: [
-      COMFORT,
-      { ...STANDARD, desc: 'Recommended for hygienists working with ultrasonic scalers all day.' },
+      { db: '-19dB', label: 'SNR 14 | Gentle Dentist Standard filter',                          desc: '-19dB Peak — reduces drill noise while keeping speech clear.' },
+      { db: '-26dB', label: 'SNR 20 | Dentist Clinical Balance — Noise Sensitivity & Tinnitus', desc: '-26dB Peak — recommended for hygienists and tinnitus sufferers.' },
     ],
   },
   sleeping: {
@@ -107,8 +108,7 @@ export const PRODUCTS: Record<string, Product> = {
     features: ['Ultra-soft medical silicone', 'Low-profile — ideal for side sleepers', 'No pressure on ear canal', 'Reusable and washable', 'Wake-up alarm audible'],
     tag: null,
     filters: [
-      { ...COMFORT, desc: 'Muffles snoring and ambient noise — you can still hear alarms.' },
-      { db: '-36dB', label: 'Deep', desc: 'For light sleepers and noisy environments. Maximum quiet, still safe.' },
+      { db: '-36dB', label: 'SNR 22 | Peace & Quiet', desc: '-36dB Peak — maximum quiet for deep, uninterrupted sleep.' },
     ],
   },
   motorsport: {
@@ -129,8 +129,8 @@ export const PRODUCTS: Record<string, Product> = {
     features: ['Wind and engine noise attenuation', 'Fits comfortably under all helmets', 'Intercom & bluetooth compatible', 'EU CE certified', 'Reduces fatigue on long rides'],
     tag: null,
     filters: [
-      { ...STANDARD, desc: 'For road riding and track days. Reduces wind fatigue on long rides.' },
-      { ...MAX, desc: 'Recommended for circuit racing, enduro, and high-speed track use.' },
+      { db: '-19dB', label: 'SNR 14 | Closed Helmet', desc: '-19dB Peak — for full-face helmets, reduces wind & road noise.' },
+      { db: '-31dB', label: 'SNR 22 | Open Helmet',   desc: '-31dB Peak — for open-face helmets with higher wind exposure.' },
     ],
   },
   sensitivity: {
@@ -151,8 +151,10 @@ export const PRODUCTS: Record<string, Product> = {
     features: ['Gentle -19dB attenuation', 'No occlusion effect', 'Ideal for autism, ADHD, hyperacusis', 'Discreet invisible fit', 'All-day comfort without fatigue'],
     tag: null,
     filters: [
-      { ...COMFORT, desc: 'Takes the edge off busy environments without isolating you.' },
-      { ...STANDARD, desc: 'Recommended for crowded events, busy offices, and transit.' },
+      { db: '-19dB', label: 'SNR 14 | Gentle Comfort filter',     desc: '-19dB Peak — takes the edge off busy environments.' },
+      { db: '-26dB', label: 'SNR 20 | Balanced filter',           desc: '-26dB Peak — ideal for crowded events and transit.' },
+      { db: '-31dB', label: 'SNR 22 | Strong filter',             desc: '-31dB Peak — for high-stimulus environments.' },
+      { db: '-36dB', label: 'SNR 26 | Peace and Quiet filter',    desc: '-36dB Peak — maximum calm for severe sensitivity.' },
     ],
   },
 };
@@ -265,6 +267,25 @@ function matchesSize(optionValue: string, sizeLabel: string): boolean {
 function matchesFilter(optionValue: string, filterDb: string): boolean {
   // filterDb = "-26dB" → zit in "... (-26dB Peak)"
   return optionValue.toLowerCase().includes(filterDb.toLowerCase())
+}
+
+export function findVariantByFilter(
+  variants: ShopifyVariant[],
+  sizeLabel: string,
+  filter: FilterOption,
+): ShopifyVariant | undefined {
+  // Try exact match on shopifyValue first
+  const exactMatch = variants.find(v =>
+    v.selectedOptions.some(o => o.value === filter.shopifyValue)
+    && v.selectedOptions.some(o => matchesSize(o.value, sizeLabel))
+  )
+  if (exactMatch) return exactMatch
+
+  // Fallback: match on dB value string (e.g. "-19dB" in option value)
+  return variants.find(v =>
+    v.selectedOptions.some(o => o.value.toLowerCase().includes(filter.db.toLowerCase()))
+    && v.selectedOptions.some(o => matchesSize(o.value, sizeLabel))
+  )
 }
 
 export function findVariant(

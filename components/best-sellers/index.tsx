@@ -3,12 +3,13 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import styles from './best-sellers.module.css';
 import { StarIcon, StarEmptyIcon, ArrowRightIcon } from '../icons';
+import { useCurrency } from '../../context/currency';
 
 const PRODUCT_DATA = [
-  { price: '€49,95', original: '€58,00', rating: 4.7, reviews: 1024, img: '/MusicPackage.png', href: '/product?slug=musician', tagKey: 'bestSellers.bestSeller' },
-  { price: '€49,95', original: '€58,00', rating: 4.8, reviews: 312,  img: '/DJPackage.png',    href: '/product?slug=dj',       tagKey: null },
-  { price: '€54,95', original: '€69,00', rating: 4.6, reviews: 198,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasers_starter_combo_kit.png', href: '/product?slug=musician', tagKey: 'bestSellers.recommended' },
-  { price: '€79,00', original: '€99,00', rating: 4.9, reviews: 87,   img: 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png', href: '/product?slug=sensitivity', tagKey: 'bestSellers.premium' },
+  { price: 49.95, original: 58.00, rating: 4.7, reviews: 1024, img: '/MusicPackage.png', href: '/product?slug=musician', tagKey: 'bestSellers.bestSeller' },
+  { price: 49.95, original: 58.00, rating: 4.8, reviews: 312,  img: '/DJPackage.png',    href: '/product?slug=dj',       tagKey: null },
+  { price: 54.95, original: 69.00, rating: 4.6, reviews: 198,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasers_starter_combo_kit.png', href: '/product?slug=musician', tagKey: 'bestSellers.recommended' },
+  { price: 79.00, original: 99.00, rating: 4.9, reviews: 87,   img: 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png', href: '/product?slug=sensitivity', tagKey: 'bestSellers.premium' },
 ];
 
 const Stars = ({ rating }: { rating: number }) => {
@@ -24,6 +25,7 @@ const Stars = ({ rating }: { rating: number }) => {
 
 export const BestSellers = () => {
   const { t } = useTranslation('home');
+  const { fmt } = useCurrency();
   const _names = t('bestSellers.products', { returnObjects: true });
   const names: Array<{ name: string }> = Array.isArray(_names) ? (_names as Array<{ name: string }>) : [];
 
@@ -53,8 +55,8 @@ export const BestSellers = () => {
                   <span className={styles.ratingCount}>({p.reviews})</span>
                 </div>
                 <div className={styles.priceRow}>
-                  <span className={styles.price}>{p.price}</span>
-                  <span className={styles.original}>{p.original}</span>
+                  <span className={styles.price}>{fmt(p.price)}</span>
+                  <span className={styles.original}>{fmt(p.original)}</span>
                 </div>
                 <span className={styles.cta}>
                   {t('bestSellers.chooseOptions')} <ArrowRightIcon size={13} />
