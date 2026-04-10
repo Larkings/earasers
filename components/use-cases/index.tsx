@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import styles from './use-cases.module.css';
 import { MusicIcon, HeadphonesIcon, ToothIcon, MoonIcon, HelmetIcon, EarIcon, ArrowRightIcon } from '../icons';
+import { useCurrency } from '../../context/currency';
 
 const MUSIC_IMG  = '/EarasersTransparent.png';
 const DJ_IMG     = '/DJPackage.png';
@@ -11,8 +12,11 @@ const SLEEP_IMG  = '/SleepingEarplugsPackage.png';
 const MOTO_IMG   = '/MotorsportPackage.png';
 const SENSE_IMG  = '/EarasersTransparent.png';
 
+const PRICE = 49.95;
+
 export const UseCases = () => {
   const { t } = useTranslation('home');
+  const { fmt } = useCurrency();
 
   const cases = [
     {
@@ -20,7 +24,6 @@ export const UseCases = () => {
       label: t('useCases.musician'),
       sub: t('useCases.musicianSub'),
       productName: t('useCases.musicianProduct'),
-      price: '€49,95',
       slug: 'musician',
       bg: '#FDF0F0',
       img: MUSIC_IMG,
@@ -30,7 +33,6 @@ export const UseCases = () => {
       label: t('useCases.dj'),
       sub: t('useCases.djSub'),
       productName: t('useCases.djProduct'),
-      price: '€49,95',
       slug: 'dj',
       bg: '#F0F4FD',
       img: DJ_IMG,
@@ -40,7 +42,6 @@ export const UseCases = () => {
       label: t('useCases.dentist'),
       sub: t('useCases.dentistSub'),
       productName: t('useCases.dentistProduct'),
-      price: '€49,95',
       slug: 'dentist',
       bg: '#F0FDF4',
       img: DENTIST_IMG,
@@ -50,7 +51,6 @@ export const UseCases = () => {
       label: t('useCases.sleeping'),
       sub: t('useCases.sleepingSub'),
       productName: t('useCases.sleepingProduct'),
-      price: '€49,95',
       slug: 'sleeping',
       bg: '#F5F0FD',
       img: SENSE_IMG,
@@ -60,7 +60,6 @@ export const UseCases = () => {
       label: t('useCases.motorsport'),
       sub: t('useCases.motorsportSub'),
       productName: t('useCases.motorsportProduct'),
-      price: '€49,95',
       slug: 'motorsport',
       bg: '#FDF5F0',
       img: MOTO_IMG,
@@ -70,7 +69,6 @@ export const UseCases = () => {
       label: t('useCases.noiseSensitivity'),
       sub: t('useCases.noiseSensitivitySub'),
       productName: t('useCases.noiseSensitivityProduct'),
-      price: '€49,95',
       slug: 'sensitivity',
       bg: '#F0FDFD',
       img: SENSE_IMG,
@@ -101,7 +99,7 @@ export const UseCases = () => {
               <div className={styles.cardFooter}>
                 <span className={styles.productLine}>
                   <span className={styles.productName}>{c.productName}</span>
-                  <span className={styles.productPrice}>{c.price}</span>
+                  <span className={styles.productPrice}>{fmt(PRICE)}</span>
                 </span>
                 <span className={styles.arrow}><ArrowRightIcon size={18} /></span>
               </div>

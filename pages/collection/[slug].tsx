@@ -18,6 +18,7 @@ import {
 } from '../../components/icons';
 import styles from '../../styles/collection.module.css';
 import { Influencers } from '../../components/influencers';
+import { useCurrency } from '../../context/currency';
 
 /* ─── CDN shortcuts ─── */
 const CDN = 'https://earasers-eu.myshopify.com/cdn/shop/files';
@@ -100,12 +101,12 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { snr: 'SNR 20', db: '−26 dB peak', recommended: true },
     ],
     products: [
-      { slug: 'musician', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 1024, img: BASE },
-      { slug: 'musician', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 876,  img: BASE },
-      { slug: 'musician', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 213,  img: BASE },
-      { slug: 'musician', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.7, reviews: 312, img: BASE },
-      { slug: 'musician', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.8, reviews: 542, img: BASE },
-      { slug: 'musician', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.6, reviews: 198, img: BASE },
+      { slug: 'musician', size: 'S',    price: 49.95, original: 58.00, rating: 4.7, reviews: 1024, img: BASE },
+      { slug: 'musician', size: 'M',    price: 49.95, original: 58.00, rating: 4.7, reviews: 876,  img: BASE },
+      { slug: 'musician', size: 'L',    price: 49.95, original: 58.00, rating: 4.6, reviews: 213,  img: BASE },
+      { slug: 'musician', size: 'XS & S Kit', price: 54.95, original: 69.00, rating: 4.7, reviews: 312, img: BASE },
+      { slug: 'musician', size: 'S & M Kit',  price: 54.95, original: 69.00, rating: 4.8, reviews: 542, img: BASE },
+      { slug: 'musician', size: 'M & L Kit',  price: 54.95, original: 69.00, rating: 4.6, reviews: 198, img: BASE },
     ],
   },
 
@@ -134,12 +135,12 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { snr: 'SNR 22', db: '−31 dB peak' },
     ],
     products: [
-      { slug: 'dj', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.8, reviews: 312, img: DJ_MAIN },
-      { slug: 'dj', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.8, reviews: 289, img: DJ_MAIN },
-      { slug: 'dj', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 104, img: DJ_MAIN },
-      { slug: 'dj', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.8, reviews: 98,  img: DJ_MAIN },
-      { slug: 'dj', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.9, reviews: 156, img: DJ_MAIN },
-      { slug: 'dj', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.7, reviews: 72,  img: DJ_MAIN },
+      { slug: 'dj', size: 'S',    price: 49.95, original: 58.00, rating: 4.8, reviews: 312, img: DJ_MAIN },
+      { slug: 'dj', size: 'M',    price: 49.95, original: 58.00, rating: 4.8, reviews: 289, img: DJ_MAIN },
+      { slug: 'dj', size: 'L',    price: 49.95, original: 58.00, rating: 4.7, reviews: 104, img: DJ_MAIN },
+      { slug: 'dj', size: 'XS & S Kit', price: 54.95, original: 69.00, rating: 4.8, reviews: 98,  img: DJ_MAIN },
+      { slug: 'dj', size: 'S & M Kit',  price: 54.95, original: 69.00, rating: 4.9, reviews: 156, img: DJ_MAIN },
+      { slug: 'dj', size: 'M & L Kit',  price: 54.95, original: 69.00, rating: 4.7, reviews: 72,  img: DJ_MAIN },
     ],
   },
 
@@ -176,12 +177,12 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { snr: 'SNR 20', db: '−26 dB peak', recommended: true },
     ],
     products: [
-      { slug: 'dentist', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 198, img: DENT_PKG },
-      { slug: 'dentist', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 174, img: DENT_PKG },
-      { slug: 'dentist', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.5, reviews: 62,  img: DENT_PKG },
-      { slug: 'dentist', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.6, reviews: 41, img: DENT_PKG },
-      { slug: 'dentist', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.7, reviews: 89, img: DENT_PKG },
-      { slug: 'dentist', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.5, reviews: 35, img: DENT_PKG },
+      { slug: 'dentist', size: 'S',    price: 49.95, original: 58.00, rating: 4.6, reviews: 198, img: DENT_PKG },
+      { slug: 'dentist', size: 'M',    price: 49.95, original: 58.00, rating: 4.6, reviews: 174, img: DENT_PKG },
+      { slug: 'dentist', size: 'L',    price: 49.95, original: 58.00, rating: 4.5, reviews: 62,  img: DENT_PKG },
+      { slug: 'dentist', size: 'XS & S Kit', price: 54.95, original: 69.00, rating: 4.6, reviews: 41, img: DENT_PKG },
+      { slug: 'dentist', size: 'S & M Kit',  price: 54.95, original: 69.00, rating: 4.7, reviews: 89, img: DENT_PKG },
+      { slug: 'dentist', size: 'M & L Kit',  price: 54.95, original: 69.00, rating: 4.5, reviews: 35, img: DENT_PKG },
     ],
   },
 
@@ -203,12 +204,12 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { snr: 'SNR 14', db: '−19 dB peak', recommended: true },
     ],
     products: [
-      { slug: 'sleeping', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.5, reviews: 432, img: SLEEP_PKG },
-      { slug: 'sleeping', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.5, reviews: 381, img: SLEEP_PKG },
-      { slug: 'sleeping', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.4, reviews: 117, img: SLEEP_PKG },
-      { slug: 'sleeping', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.5, reviews: 94,  img: SLEEP_PKG },
-      { slug: 'sleeping', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.6, reviews: 203, img: SLEEP_PKG },
-      { slug: 'sleeping', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.4, reviews: 67,  img: SLEEP_PKG },
+      { slug: 'sleeping', size: 'S',    price: 49.95, original: 58.00, rating: 4.5, reviews: 432, img: SLEEP_PKG },
+      { slug: 'sleeping', size: 'M',    price: 49.95, original: 58.00, rating: 4.5, reviews: 381, img: SLEEP_PKG },
+      { slug: 'sleeping', size: 'L',    price: 49.95, original: 58.00, rating: 4.4, reviews: 117, img: SLEEP_PKG },
+      { slug: 'sleeping', size: 'XS & S Kit', price: 54.95, original: 69.00, rating: 4.5, reviews: 94,  img: SLEEP_PKG },
+      { slug: 'sleeping', size: 'S & M Kit',  price: 54.95, original: 69.00, rating: 4.6, reviews: 203, img: SLEEP_PKG },
+      { slug: 'sleeping', size: 'M & L Kit',  price: 54.95, original: 69.00, rating: 4.4, reviews: 67,  img: SLEEP_PKG },
     ],
   },
 
@@ -231,12 +232,12 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { snr: 'SNR 20', db: '−26 dB peak', recommended: true },
     ],
     products: [
-      { slug: 'motorsport', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 156, img: MOTO_PKG },
-      { slug: 'motorsport', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 134, img: MOTO_PKG },
-      { slug: 'motorsport', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.6, reviews: 48,  img: MOTO_PKG },
-      { slug: 'motorsport', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.7, reviews: 31, img: MOTO_PKG },
-      { slug: 'motorsport', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.8, reviews: 72, img: MOTO_PKG },
-      { slug: 'motorsport', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.6, reviews: 24, img: MOTO_PKG },
+      { slug: 'motorsport', size: 'S',    price: 49.95, original: 58.00, rating: 4.7, reviews: 156, img: MOTO_PKG },
+      { slug: 'motorsport', size: 'M',    price: 49.95, original: 58.00, rating: 4.7, reviews: 134, img: MOTO_PKG },
+      { slug: 'motorsport', size: 'L',    price: 49.95, original: 58.00, rating: 4.6, reviews: 48,  img: MOTO_PKG },
+      { slug: 'motorsport', size: 'XS & S Kit', price: 54.95, original: 69.00, rating: 4.7, reviews: 31, img: MOTO_PKG },
+      { slug: 'motorsport', size: 'S & M Kit',  price: 54.95, original: 69.00, rating: 4.8, reviews: 72, img: MOTO_PKG },
+      { slug: 'motorsport', size: 'M & L Kit',  price: 54.95, original: 69.00, rating: 4.6, reviews: 24, img: MOTO_PKG },
     ],
   },
 
@@ -258,12 +259,12 @@ const CATEGORIES: Record<string, CategoryConfig> = {
       { snr: 'SNR 14', db: '−19 dB peak', recommended: true },
     ],
     products: [
-      { slug: 'sensitivity', size: 'S',    price: '€49,95', original: '€58,00', rating: 4.8, reviews: 287, img: BASE },
-      { slug: 'sensitivity', size: 'M',    price: '€49,95', original: '€58,00', rating: 4.8, reviews: 241, img: MINK },
-      { slug: 'sensitivity', size: 'L',    price: '€49,95', original: '€58,00', rating: 4.7, reviews: 89,  img: BASE },
-      { slug: 'sensitivity', size: 'XS & S Kit', price: '€54,95', original: '€69,00', rating: 4.8, reviews: 53,  img: KIT },
-      { slug: 'sensitivity', size: 'S & M Kit',  price: '€54,95', original: '€69,00', rating: 4.9, reviews: 118, img: KIT },
-      { slug: 'sensitivity', size: 'M & L Kit',  price: '€54,95', original: '€69,00', rating: 4.7, reviews: 41,  img: KIT },
+      { slug: 'sensitivity', size: 'S',    price: 49.95, original: 58.00, rating: 4.8, reviews: 287, img: BASE },
+      { slug: 'sensitivity', size: 'M',    price: 49.95, original: 58.00, rating: 4.8, reviews: 241, img: MINK },
+      { slug: 'sensitivity', size: 'L',    price: 49.95, original: 58.00, rating: 4.7, reviews: 89,  img: BASE },
+      { slug: 'sensitivity', size: 'XS & S Kit', price: 54.95, original: 69.00, rating: 4.8, reviews: 53,  img: KIT },
+      { slug: 'sensitivity', size: 'S & M Kit',  price: 54.95, original: 69.00, rating: 4.9, reviews: 118, img: KIT },
+      { slug: 'sensitivity', size: 'M & L Kit',  price: 54.95, original: 69.00, rating: 4.7, reviews: 41,  img: KIT },
     ],
   },
 };
@@ -391,6 +392,7 @@ type PageProps = { shopifyProductImg: string | null };
 const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg }) => {
   const router = useRouter();
   const { t } = useTranslation('collection');
+  const { fmt } = useCurrency();
   const [sort, setSort] = useState(0);
 
   const slug = typeof router.query.slug === 'string' ? router.query.slug : 'musician';
@@ -424,10 +426,8 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg }) => {
   const tTechPoints  = Array.isArray(_tTechPoints)  ? (_tTechPoints  as string[])                                                 : [];
 
   const sorted = [...cat.products].sort((a, b) => {
-    const pa = parseFloat(a.price.replace('€', '').replace(',', '.'));
-    const pb = parseFloat(b.price.replace('€', '').replace(',', '.'));
-    if (sort === 1) return pa - pb;
-    if (sort === 2) return pb - pa;
+    if (sort === 1) return a.price - b.price;
+    if (sort === 2) return b.price - a.price;
     if (sort === 3) return b.rating - a.rating;
     return 0;
   });
@@ -547,8 +547,8 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg }) => {
                         <span className={styles.ratingCount}>({p.reviews})</span>
                       </div>
                       <div className={styles.priceRow}>
-                        <span className={styles.price}>{p.price}</span>
-                        <span className={styles.priceCrossed}>{p.original}</span>
+                        <span className={styles.price}>{fmt(p.price)}</span>
+                        <span className={styles.priceCrossed}>{fmt(p.original)}</span>
                       </div>
                       <span className={styles.cta}>{t('ui.chooseOptions')} <ArrowRightIcon size={13} /></span>
                     </div>
@@ -580,8 +580,8 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg }) => {
                         <span className={styles.ratingCount}>({p.reviews})</span>
                       </div>
                       <div className={styles.priceRow}>
-                        <span className={styles.price}>{p.price}</span>
-                        <span className={styles.priceCrossed}>{p.original}</span>
+                        <span className={styles.price}>{fmt(p.price)}</span>
+                        <span className={styles.priceCrossed}>{fmt(p.original)}</span>
                       </div>
                       <span className={styles.cta}>{t('ui.chooseOptions')} <ArrowRightIcon size={13} /></span>
                     </div>

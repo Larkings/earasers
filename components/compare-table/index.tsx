@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import styles from './compare-table.module.css';
 import { CheckIcon, CloseIcon, AwardIcon, ArrowRightIcon } from '../icons';
+import { useCurrency } from '../../context/currency';
 
 const Cell = ({ val }: { val: string | boolean }) => {
   if (typeof val === 'boolean') {
@@ -15,9 +16,10 @@ const Cell = ({ val }: { val: string | boolean }) => {
 
 export const CompareTable = () => {
   const { t } = useTranslation('home');
+  const { fmt } = useCurrency();
 
   const rows = [
-    { label: t('compareTable.price'),           earasers: '€49,95',                        custom: t('compareTable.priceCustom'),    cheap: t('compareTable.priceFoam') },
+    { label: t('compareTable.price'),           earasers: fmt(49.95),                      custom: t('compareTable.priceCustom'),    cheap: t('compareTable.priceFoam') },
     { label: t('compareTable.noSpecialist'),     earasers: true,                            custom: false,                             cheap: true },
     { label: t('compareTable.delivery'),         earasers: t('compareTable.deliveryEarasers'), custom: t('compareTable.deliveryCustom'), cheap: t('compareTable.deliveryFoam') },
     { label: t('compareTable.nearlyInvisible'),  earasers: true,                            custom: true,                              cheap: false },
