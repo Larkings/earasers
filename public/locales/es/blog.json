@@ -1,34 +1,34 @@
 {
   "posts": {
-    "5-time-award-winning": {
-      "title": "Earasers, 5 veces premiados!",
-      "excerpt": "Por quinto ano consecutivo, MusicRadar ha nombrado a Earasers los mejores tapones para musica del mercado.",
-      "date": "Marzo 2024",
+    "award-winning-earasers": {
+      "title": "¡Earasers, 5 veces premiados!",
+      "excerpt": "Descubre por qué Earasers sigue siendo la elección de confianza del sector para la protección auditiva entre músicos y amantes de la música.",
+      "date": "30 de enero de 2025",
       "category": "Premios"
     },
-    "trusted-by-djs": {
-      "title": "Los mejores DJs del mundo confian en Earasers",
-      "excerpt": "Desde los escenarios principales de festivales hasta las noches de club, los DJs profesionales confian en Earasers.",
-      "date": "Enero 2024",
+    "trusted-by-top-djs": {
+      "title": "Los mejores DJs del mundo confían en Earasers",
+      "excerpt": "Descubre cómo los DJs profesionales protegen su audición mientras ofrecen actuaciones increíbles en Ibiza y más allá.",
+      "date": "20 de enero de 2025",
       "category": "Artistas"
     },
-    "dijkman-amsterdam": {
-      "title": "Ya disponible en Dijkman Music Amsterdam",
-      "excerpt": "Ya puedes probar y comprar Earasers en la tienda Dijkman Music, una de las tiendas de musica mas respetadas de los Paises Bajos.",
-      "date": "Noviembre 2023",
+    "dijkman-music-amsterdam": {
+      "title": "Ahora en Dijkman Music Amsterdam",
+      "excerpt": "Visita nuestro socio minorista en Ámsterdam para probar los tapones Earasers en persona y encontrar tu talla perfecta.",
+      "date": "4 de noviembre de 2024",
       "category": "Minoristas"
     },
     "hearing-damage-explained": {
-      "title": "Como funciona realmente la perdida auditiva inducida por ruido",
-      "excerpt": "El sonido es vibracion. Demasiado, durante demasiado tiempo, y las pequenas celulas ciliadas de tu coclea comienzan a morir de forma permanente.",
+      "title": "Cómo funciona realmente la pérdida auditiva inducida por ruido",
+      "excerpt": "El sonido es vibración. Demasiado, durante demasiado tiempo, y las pequeñas células ciliadas de tu cóclea comienzan a morir de forma permanente.",
       "date": "Septiembre 2023",
-      "category": "Educacion"
+      "category": "Educación"
     }
   },
   "categories": {
     "Awards": "Premios",
     "Artists": "Artistas",
     "Retail": "Minoristas",
-    "Education": "Educacion"
+    "Education": "Educación"
   }
 }

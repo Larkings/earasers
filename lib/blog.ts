@@ -11,14 +11,14 @@ export type BlogPost = {
 
 export const POSTS: BlogPost[] = [
   {
-    slug: '5-time-award-winning',
+    slug: 'award-winning-earasers',
     title: '5-Time Award-Winning: Earasers!',
     excerpt:
-      'For the fifth year in a row, MusicRadar has named Earasers the best music earplugs on the market.',
-    date: 'March 2024',
-    dateIso: '2024-03-01',
+      "Discover why Earasers continues to be the industry's trusted choice for hearing protection among musicians and music lovers.",
+    date: 'January 30, 2025',
+    dateIso: '2025-01-30',
     category: 'Awards',
-    img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasersuitgezoomd.png',
+    img: 'https://earasers-eu.myshopify.com/cdn/shop/articles/DJ_Influencer_post_06638f29-e81c-4a6f-87fd-40af7d7ad98e.png?v=1753958362&width=1200',
     content: `
 <p>For the fifth consecutive year, <strong>MusicRadar</strong> has awarded Earasers the title of best music earplugs on the market. It&rsquo;s an honour we don&rsquo;t take lightly.</p>
 
@@ -38,14 +38,14 @@ export const POSTS: BlogPost[] = [
 `,
   },
   {
-    slug: 'trusted-by-djs',
-    title: "Earasers Trusted by the World's Top DJs",
+    slug: 'trusted-by-top-djs',
+    title: "Trusted by the World's Top DJs",
     excerpt:
-      'From festival main stages to intimate club nights — professional DJs rely on Earasers to protect their most important tool.',
-    date: 'January 2024',
-    dateIso: '2024-01-15',
+      'See how professional DJs protect their hearing while delivering incredible performances in Ibiza and beyond.',
+    date: 'January 20, 2025',
+    dateIso: '2025-01-20',
     category: 'Artists',
-    img: 'https://earasers-eu.myshopify.com/cdn/shop/files/MainProductPicDJ.png',
+    img: 'https://earasers-eu.myshopify.com/cdn/shop/articles/Wade_x_Earasers_Ibiza_adbf0643-af0e-4f87-8633-f0a6feba75f1.jpg?v=1740065316&width=1200',
     content: `
 <p>A DJ&rsquo;s ears are their most valuable instrument. Night after night, performing in environments where sound pressure levels regularly exceed 110 dB, the cumulative damage can end a career before it really begins. Yet for years, most hearing protection on the market was designed for construction workers — not artists.</p>
 
@@ -69,14 +69,14 @@ export const POSTS: BlogPost[] = [
 `,
   },
   {
-    slug: 'dijkman-amsterdam',
-    title: 'Now Available at Dijkman Music Amsterdam',
+    slug: 'dijkman-music-amsterdam',
+    title: 'Now at Dijkman Music Amsterdam',
     excerpt:
-      "You can now try and buy Earasers in-store at Dijkman Music, one of the Netherlands' most respected music stores.",
-    date: 'November 2023',
-    dateIso: '2023-11-10',
+      'Visit our retail partner in Amsterdam to try Earasers earplugs in person and find your perfect fit.',
+    date: 'November 4, 2024',
+    dateIso: '2024-11-04',
     category: 'Retail',
-    img: 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png',
+    img: 'https://earasers-eu.myshopify.com/cdn/shop/articles/1.jpg?v=1730732765&width=1200',
     content: `
 <p>We&rsquo;re excited to announce that Earasers are now available in-store at <strong>Dijkman Music Amsterdam</strong> — one of the Netherlands&rsquo; most beloved and respected music retailers.</p>
 

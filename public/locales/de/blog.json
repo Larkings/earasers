@@ -1,25 +1,25 @@
 {
   "posts": {
-    "5-time-award-winning": {
+    "award-winning-earasers": {
       "title": "5-fach ausgezeichnet: Earasers!",
-      "excerpt": "Zum funften Mal in Folge hat MusicRadar Earasers zum besten Musik-Ohrstopsel auf dem Markt gekurt.",
-      "date": "Marz 2024",
+      "excerpt": "Entdecke, warum Earasers die vertrauenswürdige Wahl für Gehörschutz bei Musikern und Musikbegeisterten bleibt.",
+      "date": "30. Januar 2025",
       "category": "Auszeichnungen"
     },
-    "trusted-by-djs": {
+    "trusted-by-top-djs": {
       "title": "Von Weltklasse-DJs vertraut",
-      "excerpt": "Von Festival-Hauptbuhnen bis zu intimen Clubnachten, professionelle DJs verlassen sich auf Earasers.",
-      "date": "Januar 2024",
-      "category": "Kunstler"
+      "excerpt": "Sieh, wie professionelle DJs ihr Gehör schützen und dabei unvergessliche Auftritte in Ibiza und darüber hinaus liefern.",
+      "date": "20. Januar 2025",
+      "category": "Künstler"
     },
-    "dijkman-amsterdam": {
-      "title": "Jetzt bei Dijkman Music Amsterdam erhaltlich",
-      "excerpt": "Probieren und kaufen Sie Earasers im Laden bei Dijkman Music, einem der angesehensten Musikgeschafte der Niederlande.",
-      "date": "November 2023",
+    "dijkman-music-amsterdam": {
+      "title": "Jetzt bei Dijkman Music Amsterdam",
+      "excerpt": "Besuche unseren Einzelhandelspartner in Amsterdam, um Earasers Ohrstöpsel persönlich auszuprobieren.",
+      "date": "4. November 2024",
       "category": "Einzelhandel"
     },
     "hearing-damage-explained": {
-      "title": "Wie larmbedingter Horverlust wirklich funktioniert",
+      "title": "Wie lärmbedingter Hörverlust wirklich funktioniert",
       "excerpt": "Schall ist Vibration. Zu viel davon, zu lange, und die kleinen Haarzellen in Ihrer Cochlea beginnen dauerhaft abzusterben.",
       "date": "September 2023",
       "category": "Bildung"
@@ -27,7 +27,7 @@
   },
   "categories": {
     "Awards": "Auszeichnungen",
-    "Artists": "Kunstler",
+    "Artists": "Künstler",
     "Retail": "Einzelhandel",
     "Education": "Bildung"
   }

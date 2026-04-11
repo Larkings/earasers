@@ -1,14 +1,19 @@
+/* =========================================
+   UseCases — redesigned category cards
+   ========================================= */
+
 .section {
-  padding: 48px 0;
+  padding: 56px 0;
   background: var(--color-surface);
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
 }
 
 @media (min-width: 768px) {
-  .section { padding: 80px 0; }
+  .section { padding: 88px 0; }
 }
 
+/* ── Section header ─────────────────────── */
 .heading {
   font-family: var(--font-display);
   font-size: clamp(32px, 5vw, 56px);
@@ -22,100 +27,148 @@
   text-align: center;
   color: var(--color-text-muted);
   font-size: 15px;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
 
 @media (min-width: 768px) {
-  .sub { font-size: 16px; margin-bottom: 48px; }
+  .sub { font-size: 16px; margin-bottom: 52px; }
 }
 
+/* ── Grid ───────────────────────────────── */
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 16px;
 }
 
 @media (min-width: 480px) {
-  .grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid { grid-template-columns: 1fr 1fr; gap: 20px; }
 }
 
-@media (min-width: 768px) {
-  .grid { grid-template-columns: repeat(3, 1fr); }
+@media (min-width: 1024px) {
+  .grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
 }
 
+/* ── Card ───────────────────────────────── */
 .card {
-  position: relative;
-  border-radius: var(--radius-lg);
-  padding: 20px 16px;
-  border: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 150px;
-  transition: transform 0.25s, border-color 0.25s;
+  border-radius: 14px;
   overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  /* shadow at rest — very subtle */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  /* min-height gives cards visual impact on mobile */
+  min-height: 320px;
+}
+
+@media (min-width: 480px) {
+  .card { min-height: 360px; }
 }
 
 @media (min-width: 768px) {
-  .card { padding: 32px 24px; min-height: 180px; }
+  .card { min-height: 420px; }
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  border-color: var(--color-accent);
-  box-shadow: 0 8px 24px rgba(240, 120, 120, 0.12);
+  transform: translateY(-6px);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.08),
+    0 20px 48px rgba(0, 0, 0, 0.06);
 }
 
-.cardImg {
+/* ── Image section ──────────────────────── */
+.imgWrap {
+  position: relative;
+  /* 3:2 gives a nice product-photo crop that fills ~55% of card height */
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: inherit; /* bleed card bg colour into padding for contain images */
+}
+
+/* Zoom the photo slightly on hover */
+.imgWrap :global(img) {
+  transition: transform 0.5s ease;
+}
+
+.card:hover .imgWrap :global(img) {
+  transform: scale(1.04);
+}
+
+/* ── Badge ──────────────────────────────── */
+.badge {
   position: absolute;
-  bottom: -4px;
-  right: -4px;
-  width: 70px;
-  height: 70px;
-  object-fit: contain;
-  opacity: 0.75;
-  transition: opacity 0.25s, transform 0.25s;
-  pointer-events: none;
-  z-index: 0;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.badge--award {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-accent);
+  border: 1px solid rgba(240, 120, 120, 0.3);
+}
+
+.badge--bestseller {
+  background: rgba(255, 255, 255, 0.92);
+  color: #111;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ── Content section ────────────────────── */
+.content {
+  flex: 1;
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
 }
 
 @media (min-width: 768px) {
-  .cardImg { width: 85px; height: 85px; }
+  .content { padding: 20px 24px 24px; }
 }
 
-.card:hover .cardImg {
-  opacity: 1;
-  transform: scale(1.06) rotate(-4deg);
-}
-
-.cardInner {
-  position: relative;
-  z-index: 1;
+.contentTop {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.icon {
+/* Coloured icon pill — colour comes from --accent CSS var on the card */
+.iconWrap {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
-  color: var(--color-accent);
-  margin-bottom: 4px;
+  justify-content: center;
+  /* background and color set via inline style using --accent */
 }
-
-/* Per-card icon kleuren */
-.card:nth-child(1) .icon { color: var(--color-accent); }
-.card:nth-child(2) .icon { color: var(--color-indigo); }
-.card:nth-child(3) .icon { color: var(--color-teal); }
-.card:nth-child(4) .icon { color: var(--color-indigo); }
-.card:nth-child(5) .icon { color: var(--color-amber); }
-.card:nth-child(6) .icon { color: var(--color-teal); }
 
 .label {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: clamp(22px, 2.5vw, 28px);
   letter-spacing: 0.04em;
   color: var(--color-text);
+  line-height: 1;
+  margin-bottom: 4px;
 }
 
 .cardSub {
@@ -124,50 +177,59 @@
   line-height: 1.4;
 }
 
-.cardFooter {
-  position: relative;
-  z-index: 1;
-  padding-right: 56px;
+/* ── Card footer ────────────────────────── */
+.footer {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  margin-top: 12px;
-}
-
-.productLine {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
 }
 
 .productName {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
-  color: var(--color-text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.07em;
+  color: var(--color-text-muted);
   line-height: 1.2;
+  margin-bottom: 3px;
 }
 
-.productPrice {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--color-text);
+.price {
   font-family: var(--font-display);
+  font-size: 22px;
   letter-spacing: 0.02em;
+  color: var(--color-text);
+  line-height: 1;
 }
 
-.arrow {
-  display: flex;
+.shopLink {
+  display: inline-flex;
   align-items: center;
-  color: var(--color-accent);
-  opacity: 0;
-  transform: translateX(-8px);
-  transition: opacity 0.25s, transform 0.25s;
-  flex-shrink: 0;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  /* colour inherits from per-card --accent via inline style on .card — fallback to brand accent */
+  color: var(--accent, var(--color-accent));
+  transition: gap 0.2s ease;
+  white-space: nowrap;
 }
 
-.card:hover .arrow {
-  opacity: 1;
-  transform: translateX(0);
+.card:hover .shopLink {
+  gap: 9px;
+}
+
+/* ── Trust strip ────────────────────────── */
+.trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 24px;
+  margin-top: 32px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.trust span {
+  white-space: nowrap;
 }
