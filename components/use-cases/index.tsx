@@ -101,7 +101,7 @@ export const UseCases = () => {
           {cases.map((c, i) => (
             <a
               key={c.slug}
-              href={`/product?slug=${c.slug}`}
+              href={`/collection/${c.slug}`}
               className={styles.card}
               style={{ background: c.bg, '--accent': c.accent } as React.CSSProperties}
               data-reveal
