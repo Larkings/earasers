@@ -20,7 +20,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'earasers-eu.myshopify.com',
-        pathname: '/cdn/shop/files/**',
+        pathname: '/cdn/shop/**',
       },
       {
         protocol: 'https',

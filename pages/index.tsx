@@ -12,7 +12,7 @@ import { HowItWorks }   from '../components/how-it-works';
 import { Reviews }      from '../components/reviews';
 import { VideoSection } from '../components/video-section';
 import { Influencers }  from '../components/influencers';
-import { BlogTeaser }   from '../components/blog-teaser';
+import { BlogSection }  from '../components/BlogSection';
 
 const Home: NextPage = () => (
   <Layout>
@@ -27,7 +27,7 @@ const Home: NextPage = () => (
     <CompareTable />
     <HowItWorks />
     <Reviews />
-    <BlogTeaser />
+    <BlogSection />
   </Layout>
 );
 

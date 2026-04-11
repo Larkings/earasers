@@ -156,6 +156,31 @@
     "heading": "Trusted by professionals",
     "sub": "Musicians, DJs and hearing experts who swear by Earasers."
   },
+  "blogSection": {
+    "heading": "From the Blog",
+    "readMore": "Read more",
+    "viewAll": "View all articles",
+    "posts": [
+      {
+        "title": "5-Time Award-Winning: Earasers!",
+        "excerpt": "Discover why Earasers continues to be the industry's trusted choice for hearing protection among musicians and music lovers.",
+        "date": "January 30, 2025",
+        "slug": "award-winning-earasers"
+      },
+      {
+        "title": "Trusted by the World's Top DJs",
+        "excerpt": "See how professional DJs protect their hearing while delivering incredible performances in Ibiza and beyond.",
+        "date": "January 20, 2025",
+        "slug": "trusted-by-top-djs"
+      },
+      {
+        "title": "Now at Dijkman Music Amsterdam",
+        "excerpt": "Visit our retail partner in Amsterdam to try Earasers earplugs in person and find your perfect fit.",
+        "date": "November 4, 2024",
+        "slug": "dijkman-music-amsterdam"
+      }
+    ]
+  },
   "blogTeaser": {
     "heading": "From the blog",
     "readMore": "Read more",

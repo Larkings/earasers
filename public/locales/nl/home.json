@@ -156,6 +156,31 @@
     "heading": "Vertrouwd door professionals",
     "sub": "Muzikanten, DJ's en gehoorexperts die zweren bij Earasers."
   },
+  "blogSection": {
+    "heading": "Van de blog",
+    "readMore": "Lees meer",
+    "viewAll": "Alle artikelen bekijken",
+    "posts": [
+      {
+        "title": "5x Bekroond: Earasers!",
+        "excerpt": "Ontdek waarom Earasers de vertrouwde keuze blijft voor gehoorbescherming onder muzikanten en muziekliefhebbers.",
+        "date": "30 januari 2025",
+        "slug": "award-winning-earasers"
+      },
+      {
+        "title": "Vertrouwd door 's werelds beste DJ's",
+        "excerpt": "Zie hoe professionele DJ's hun gehoor beschermen terwijl ze ongelooflijke optredens geven in Ibiza en daarbuiten.",
+        "date": "20 januari 2025",
+        "slug": "trusted-by-top-djs"
+      },
+      {
+        "title": "Nu bij Dijkman Music Amsterdam",
+        "excerpt": "Bezoek onze retailpartner in Amsterdam om Earasers oordoppen zelf uit te proberen en de perfecte pasvorm te vinden.",
+        "date": "4 november 2024",
+        "slug": "dijkman-music-amsterdam"
+      }
+    ]
+  },
   "blogTeaser": {
     "heading": "Van de blog",
     "readMore": "Lees meer",

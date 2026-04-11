@@ -156,6 +156,31 @@
     "heading": "Von Profis vertraut",
     "sub": "Musiker, DJs und Hörexperten, die auf Earasers schwören."
   },
+  "blogSection": {
+    "heading": "Aus dem Blog",
+    "readMore": "Mehr lesen",
+    "viewAll": "Alle Artikel ansehen",
+    "posts": [
+      {
+        "title": "5-fach ausgezeichnet: Earasers!",
+        "excerpt": "Entdecke, warum Earasers die vertrauenswürdige Wahl für Gehörschutz bei Musikern und Musikbegeisterten bleibt.",
+        "date": "30. Januar 2025",
+        "slug": "award-winning-earasers"
+      },
+      {
+        "title": "Von Weltklasse-DJs vertraut",
+        "excerpt": "Sieh, wie professionelle DJs ihr Gehör schützen und dabei unvergessliche Auftritte in Ibiza und darüber hinaus liefern.",
+        "date": "20. Januar 2025",
+        "slug": "trusted-by-top-djs"
+      },
+      {
+        "title": "Jetzt bei Dijkman Music Amsterdam",
+        "excerpt": "Besuche unseren Einzelhandelspartner in Amsterdam, um Earasers Ohrstöpsel persönlich auszuprobieren.",
+        "date": "4. November 2024",
+        "slug": "dijkman-music-amsterdam"
+      }
+    ]
+  },
   "blogTeaser": {
     "heading": "Aus dem Blog",
     "readMore": "Mehr lesen",

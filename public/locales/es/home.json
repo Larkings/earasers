@@ -156,6 +156,31 @@
     "heading": "Confiado por profesionales",
     "sub": "Músicos, DJs y expertos en audición que juran por Earasers."
   },
+  "blogSection": {
+    "heading": "Del blog",
+    "readMore": "Leer más",
+    "viewAll": "Ver todos los artículos",
+    "posts": [
+      {
+        "title": "¡Earasers, 5 veces premiados!",
+        "excerpt": "Descubre por qué Earasers sigue siendo la elección de confianza del sector para la protección auditiva entre músicos y amantes de la música.",
+        "date": "30 de enero de 2025",
+        "slug": "award-winning-earasers"
+      },
+      {
+        "title": "Los mejores DJs del mundo confían en Earasers",
+        "excerpt": "Descubre cómo los DJs profesionales protegen su audición mientras ofrecen actuaciones increíbles en Ibiza y más allá.",
+        "date": "20 de enero de 2025",
+        "slug": "trusted-by-top-djs"
+      },
+      {
+        "title": "Ahora en Dijkman Music Amsterdam",
+        "excerpt": "Visita nuestro socio minorista en Ámsterdam para probar los tapones Earasers en persona y encontrar tu talla perfecta.",
+        "date": "4 de noviembre de 2024",
+        "slug": "dijkman-music-amsterdam"
+      }
+    ]
+  },
   "blogTeaser": {
     "heading": "Del blog",
     "readMore": "Leer más",
