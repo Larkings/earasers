@@ -25,8 +25,8 @@ export const UseCases = () => {
       slug: 'musician',
       bg: '#FDF0F0',
       accent: '#F07878',
-      img: '/MusicianHero.jpg',
-      cover: true,
+      img: '/MusicPackage.png',
+      cover: false,
       badge: { label: '5× Award Winner', variant: 'award' } as Badge,
     },
     {
@@ -37,8 +37,8 @@ export const UseCases = () => {
       slug: 'dj',
       bg: '#F0F4FD',
       accent: '#5B8DEF',
-      img: '/DJHero.png',
-      cover: true,
+      img: '/DJPackage.png',
+      cover: false,
       badge: { label: 'Bestseller', variant: 'bestseller' } as Badge,
     },
     {
@@ -49,8 +49,8 @@ export const UseCases = () => {
       slug: 'dentist',
       bg: '#F0FDF4',
       accent: '#34A853',
-      img: '/DentistHero.png',
-      cover: true,
+      img: '/DentistPackage.png',
+      cover: false,
       badge: undefined,
     },
     {
@@ -61,8 +61,8 @@ export const UseCases = () => {
       slug: 'sleeping',
       bg: '#F5F0FD',
       accent: '#9B6FE0',
-      img: '/SleepingHero.png',
-      cover: true,
+      img: '/SleepingEarplugsPackage.png',
+      cover: false,
       badge: undefined,
     },
     {
