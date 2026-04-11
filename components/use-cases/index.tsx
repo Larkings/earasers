@@ -25,7 +25,7 @@ export const UseCases = () => {
       slug: 'musician',
       bg: '#FDF0F0',
       accent: '#F07878',
-      img: '/MusicPackage.png',
+      img: '/EarasersTransparent.png',
       cover: false,
       badge: { label: '5× Award Winner', variant: 'award' } as Badge,
     },
