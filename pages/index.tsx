@@ -1,18 +1,18 @@
 import type { NextPage, GetStaticProps } from 'next';
 import { serverSideTranslations } from '../lib/i18n';
-import { Layout }       from '../components/layout';
-import { Hero }         from '../components/hero';
-import { TrustBand }    from '../components/trust-band';
-import { UseCases }     from '../components/use-cases';
-import { BestSellers }  from '../components/best-sellers';
-import { SizeQuiz }     from '../components/size-quiz';
-import { AwardSection } from '../components/award-section';
-import { CompareTable } from '../components/compare-table';
-import { HowItWorks }   from '../components/how-it-works';
-import { Reviews }      from '../components/reviews';
-import { VideoSection } from '../components/video-section';
-import { Influencers }  from '../components/influencers';
-import { BlogSection }  from '../components/BlogSection';
+import { Layout }              from '../components/layout';
+import { Hero }                from '../components/hero';
+import { TrustBand }           from '../components/trust-band';
+import { UseCases }            from '../components/use-cases';
+import { BestSellers }         from '../components/best-sellers';
+import { SizeQuiz }            from '../components/size-quiz';
+import { AwardSection }        from '../components/award-section';
+import { CompareTable }        from '../components/compare-table';
+import { HowItWorks }          from '../components/how-it-works';
+import { Reviews }             from '../components/reviews';
+import { VideoSection }        from '../components/video-section';
+import { Influencers }         from '../components/influencers';
+import { BlogSection }         from '../components/BlogSection';
 
 const Home: NextPage = () => (
   <Layout>

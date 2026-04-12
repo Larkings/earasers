@@ -34,6 +34,14 @@
   .grid { grid-template-columns: 1fr 1fr; }
 }
 
+/* FBT responsive: show desktop version in gallery column, mobile version below grid */
+.fbtDesktop { display: none; margin-top: 20px; }
+.fbtMobile  { margin-bottom: 32px; }
+@media (min-width: 768px) {
+  .fbtDesktop { display: block; }
+  .fbtMobile  { display: none; }
+}
+
 /* Gallery */
 .gallery { display: flex; flex-direction: column; gap: 12px; }
 

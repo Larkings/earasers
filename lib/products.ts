@@ -251,6 +251,19 @@ export type AccessoryProduct = {
   image: ShopifyProductImage | null;
   price: number;
   compareAtPrice: number;
+  firstVariantId?: string;
+}
+
+const FBT_HANDLES = ['waterproof-keychain-carry-case', 'earasers-renewal-kit', 'metal-carrying-case', 'carry-case', 'renewal-kit'];
+
+export function filterFbtAccessories(products: AccessoryProduct[]): AccessoryProduct[] {
+  const byHandle = products.filter(p => FBT_HANDLES.some(h => p.handle.includes(h)));
+  if (byHandle.length) return byHandle.slice(0, 2);
+  const byTitle = products.filter(p => {
+    const t = p.title.toLowerCase();
+    return t.includes('case') || t.includes('renewal') || t.includes('carry');
+  });
+  return byTitle.slice(0, 2);
 }
 
 type ShopifyCollectionResponse = {
@@ -362,6 +375,9 @@ export async function getCollectionProducts(handle: string): Promise<AccessoryPr
                 compareAtPriceRange {
                   minVariantPrice { amount }
                 }
+                variants(first: 1) {
+                  edges { node { id } }
+                }
               }
             }
           }
@@ -378,6 +394,7 @@ export async function getCollectionProducts(handle: string): Promise<AccessoryPr
       image:          node.images.edges[0]?.node ?? null,
       price:          parseFloat(node.priceRange.minVariantPrice.amount),
       compareAtPrice: parseFloat(node.compareAtPriceRange.minVariantPrice.amount),
+      firstVariantId: (node as any).variants?.edges?.[0]?.node?.id,
     }))
   } catch {
     return []

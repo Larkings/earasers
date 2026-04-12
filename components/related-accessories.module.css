@@ -1,0 +1,90 @@
+.section {
+  margin-top: 32px;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+  margin-bottom: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.card:hover { border-color: rgba(240, 120, 120, 0.3); }
+
+.imgWrap {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--color-bg);
+}
+
+.info {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.3;
+  transition: color 0.2s;
+}
+
+.name:hover { color: var(--color-accent); }
+
+.price {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--color-text);
+  letter-spacing: 0.02em;
+}
+
+.addBtn {
+  margin-top: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: background 0.2s;
+}
+
+.addBtn:hover { background: var(--color-accent-hover); }
+
+.addBtnDone {
+  background: var(--color-success);
+}

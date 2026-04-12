@@ -1,6 +1,7 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import { serverSideTranslations } from '../../lib/i18n';
-import { getProductWithVariants, SLUG_TO_HANDLE } from '../../lib/products';
+import { getProductWithVariants, SLUG_TO_HANDLE, getCollectionProducts, filterFbtAccessories, type AccessoryProduct } from '../../lib/products';
+import { AccessoriesSection } from '../../components/AccessoriesSection';
 import { useTranslation } from 'react-i18next';
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
@@ -387,9 +388,9 @@ const ClinicMarquee = ({ names, label }: { names: string[]; label: string }) => 
 );
 
 /* ─── Main page ─── */
-type PageProps = { shopifyProductImg: string | null };
+type PageProps = { shopifyProductImg: string | null; accessories: AccessoryProduct[] };
 
-const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg }) => {
+const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories }) => {
   const router = useRouter();
   const { t } = useTranslation('collection');
   const { fmt } = useCurrency();
@@ -443,6 +444,11 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg }) => {
   const isKitProduct = (size: string) => size.includes('Kit');
   const singles = sortedWithText.filter(p => !isKitProduct(p.size));
   const kits    = sortedWithText.filter(p =>  isKitProduct(p.size));
+
+  const SIZE_TO_IDX: Record<string, number> = {
+    'XS': 0, 'S': 1, 'M': 2, 'L': 3, 'XL': 3,
+    'XS & S Kit': 4, 'S & M Kit': 5, 'M & L Kit': 6,
+  };
 
   const themeKitColor: Record<string, string> = {
     warm:   '#f07878',
@@ -526,37 +532,42 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg }) => {
             </div>
           </div>
 
-          {/* Individual sizes */}
-          {singles.length > 0 && (
-            <div className={styles.productGroup}>
-              <div className={styles.productGroupHeader}>
-                <h3 className={styles.productGroupTitle}>{t('ui.individualSizes')}</h3>
-                <p className={styles.productGroupSub}>{t('ui.individualSizesSub')}</p>
-              </div>
-              <div className={styles.grid}>
-                {singles.map((p, idx) => (
-                  <Link key={idx} href={`/product?slug=${p.slug}`} className={styles.card}>
+          {/* Individual sizes — consolidated into one card */}
+          {singles.length > 0 && (() => {
+            const rep = singles.find(p => p.tag) ?? singles[0];
+            const genericName = rep.name.replace(/\s*—\s*.+$/, '');
+            const totalReviews = singles.reduce((s, p) => s + p.reviews, 0);
+            const bestRating = Math.max(...singles.map(p => p.rating));
+            return (
+              <div className={styles.productGroup}>
+                <div className={styles.productGroupHeader}>
+                  <h3 className={styles.productGroupTitle}>{t('ui.individualSizes')}</h3>
+                  <p className={styles.productGroupSub}>{t('ui.individualSizesSub')}</p>
+                </div>
+                <div className={styles.grid}>
+                  <Link href={`/product?slug=${rep.slug}`} className={styles.card}>
                     <div className={styles.imgWrap}>
-                      <Image src={shopifyProductImg ?? p.img} alt={p.name} fill sizes="(max-width: 640px) 50vw, 25vw" style={{ objectFit: 'contain', padding: '8px' }} />
-                      {p.tag && <span className={styles.tag}>{p.tag}</span>}
+                      <Image src={shopifyProductImg ?? rep.img} alt={genericName} fill sizes="(max-width: 640px) 50vw, 25vw" style={{ objectFit: 'contain', padding: '8px' }} />
+                      {rep.tag && <span className={styles.tag}>{rep.tag}</span>}
+                      <span className={styles.kitBadge} style={{ background: 'var(--color-accent)' }}>{singles.length} sizes</span>
                     </div>
                     <div className={styles.info}>
-                      <p className={styles.name}>{p.name}</p>
+                      <p className={styles.name}>{genericName}</p>
                       <div className={styles.ratingRow}>
-                        <Stars rating={p.rating} />
-                        <span className={styles.ratingCount}>({p.reviews})</span>
+                        <Stars rating={bestRating} />
+                        <span className={styles.ratingCount}>({totalReviews})</span>
                       </div>
                       <div className={styles.priceRow}>
-                        <span className={styles.price}>{fmt(p.price)}</span>
-                        <span className={styles.priceCrossed}>{fmt(p.original)}</span>
+                        <span className={styles.price}>{fmt(rep.price)}</span>
+                        <span className={styles.priceCrossed}>{fmt(rep.original)}</span>
                       </div>
                       <span className={styles.cta}>{t('ui.chooseOptions')} <ArrowRightIcon size={13} /></span>
                     </div>
                   </Link>
-                ))}
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* Combo kits */}
           {kits.length > 0 && (
@@ -567,7 +578,7 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg }) => {
               </div>
               <div className={styles.grid}>
                 {kits.map((p, idx) => (
-                  <Link key={idx} href={`/product?slug=${p.slug}`} className={`${styles.card} ${styles.kitCard}`} style={{ '--kit-color': kitColor } as React.CSSProperties}>
+                  <Link key={idx} href={`/product?slug=${p.slug}&sizeIdx=${SIZE_TO_IDX[p.size] ?? 5}`} className={`${styles.card} ${styles.kitCard}`} style={{ '--kit-color': kitColor } as React.CSSProperties}>
                     <div className={styles.imgWrap}>
                       <Image src={shopifyProductImg ?? p.img} alt={p.name} fill sizes="(max-width: 640px) 50vw, 25vw" style={{ objectFit: 'contain', padding: '8px' }} />
                       {p.tag && <span className={styles.tag}>{p.tag}</span>}
@@ -591,6 +602,11 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg }) => {
             </div>
           )}
         </div>
+
+        {/* ── Accessories ── */}
+        {accessories.length > 0 && (
+          <AccessoriesSection accessories={accessories} />
+        )}
 
         {/* ── Features ── */}
         <div className={styles.features}>
@@ -790,21 +806,24 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ locale
   const slug = typeof params?.slug === 'string' ? params.slug : 'musician'
 
   let shopifyProductImg: string | null = null
+  let accessories: AccessoryProduct[] = []
   try {
     const handle = SLUG_TO_HANDLE[slug]
-    if (handle) {
-      const product = await getProductWithVariants(handle)
-      // Gebruik altijd de Shopify CDN URL als primaire afbeelding
-      shopifyProductImg = product?.images?.[0]?.url ?? null
-    }
+    const [product, acc] = await Promise.all([
+      handle ? getProductWithVariants(handle) : Promise.resolve(null),
+      getCollectionProducts('accessories').catch(() => [] as AccessoryProduct[]),
+    ])
+    shopifyProductImg = product?.images?.[0]?.url ?? null
+    accessories = filterFbtAccessories(acc)
   } catch (err) {
-    console.error('[collection] Shopify image fetch failed:', err)
+    console.error('[collection] Shopify fetch failed:', err)
   }
 
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['common', 'collection'])),
+      ...(await serverSideTranslations(locale ?? 'en', ['common', 'collection', 'home'])),
       shopifyProductImg,
+      accessories,
     },
   }
 };

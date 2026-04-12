@@ -11,6 +11,7 @@ import styles from '../styles/product.module.css';
 import {
   getProduct, PRODUCTS, type Product,
   getProductWithVariants, SLUG_TO_HANDLE, findVariantByFilter, type ShopifyVariant,
+  getCollectionProducts, filterFbtAccessories, type AccessoryProduct,
 } from '../lib/products';
 import { FILTERS_BY_GENRE } from '../lib/filters';
 import { useCart, type CartItem } from '../context/cart';
@@ -21,6 +22,7 @@ import { VideoSection } from '../components/video-section';
 import { Reviews } from '../components/reviews';
 import { AwardSection } from '../components/award-section';
 import { CompareTable } from '../components/compare-table';
+import { FrequentlyBoughtTogether } from '../components/FrequentlyBoughtTogether';
 
 // sizes and tabs are now driven by translations — see inside component
 
@@ -51,9 +53,9 @@ function useRecentlyViewed(currentSlug: string) {
   return viewed;
 }
 
-type Props = { variantsMap: Record<string, ShopifyVariant[]> }
+type Props = { variantsMap: Record<string, ShopifyVariant[]>; accessories: AccessoryProduct[] }
 
-const Product: NextPage<Props> = ({ variantsMap }) => {
+const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
   const router = useRouter();
   const { t } = useTranslation('product');
   const { addToCart, openCart } = useCart();
@@ -107,13 +109,17 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
        setAdded(false);
        setQuizOpen(false);
 
-       // Apply quiz results if coming from quiz
-       if (fromQuiz && sizeIdxParam !== null) {
+       // Apply size/filter from URL params (quiz or collection link)
+       if (sizeIdxParam !== null && !isNaN(sizeIdxParam)) {
          setActiveSize(sizeIdxParam);
-         const fIdx = genreFilters.findIndex(f => f.db === filterParam);
-         setActiveFilter(fIdx >= 0 ? fIdx : 0);
-         setQuizApplied(true);
-         setTimeout(() => setQuizApplied(false), 4000);
+         if (filterParam) {
+           const fIdx = genreFilters.findIndex(f => f.db === filterParam);
+           setActiveFilter(fIdx >= 0 ? fIdx : 0);
+           setQuizApplied(true);
+           setTimeout(() => setQuizApplied(false), 4000);
+         } else {
+           setActiveFilter(0);
+         }
        } else {
          setActiveFilter(0);
          setActiveSize(1);
@@ -214,6 +220,16 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
                   </button>
                 ))}
               </div>
+
+              {/* FBT — desktop: visible below gallery in left column */}
+              {accessories.length > 0 && (
+                <div className={styles.fbtDesktop}>
+                  <FrequentlyBoughtTogether
+                    mainProduct={{ slug: product.slug, name: product.name, img: product.images[0], price }}
+                    accessories={accessories}
+                  />
+                </div>
+              )}
             </div>
 
             {/* Info */}
@@ -382,8 +398,20 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
                 <span className={styles.trustItem}>{t('freeShipping')}</span>
                 <span className={styles.trustItem}>{t('returns')}</span>
               </div>
+
             </div>
+
           </div>
+
+          {/* FBT — mobile: below product info, full width */}
+          {accessories.length > 0 && (
+            <div className={styles.fbtMobile}>
+              <FrequentlyBoughtTogether
+                mainProduct={{ slug: product.slug, name: product.name, img: product.images[0], price }}
+                accessories={accessories}
+              />
+            </div>
+          )}
 
           {/* Tabs */}
           <div className={styles.tabs} id="reviews">
@@ -485,22 +513,25 @@ const Product: NextPage<Props> = ({ variantsMap }) => {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
-  // Haal alle product variants op via Shopify Storefront API (ISR: elke 5 min)
-  const entries = await Promise.all(
-    Object.entries(SLUG_TO_HANDLE).map(async ([slug, handle]) => {
-      try {
-        const product = await getProductWithVariants(handle)
-        return [slug, product?.variants ?? []] as [string, ShopifyVariant[]]
-      } catch {
-        return [slug, []] as [string, ShopifyVariant[]]
-      }
-    }),
-  )
+  const [entries, accessories] = await Promise.all([
+    Promise.all(
+      Object.entries(SLUG_TO_HANDLE).map(async ([slug, handle]) => {
+        try {
+          const product = await getProductWithVariants(handle)
+          return [slug, product?.variants ?? []] as [string, ShopifyVariant[]]
+        } catch {
+          return [slug, []] as [string, ShopifyVariant[]]
+        }
+      }),
+    ),
+    getCollectionProducts('accessories').catch(() => [] as AccessoryProduct[]),
+  ]);
 
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['common', 'product', 'home'])),
       variantsMap: Object.fromEntries(entries),
+      accessories: filterFbtAccessories(accessories),
     },
     revalidate: 300,
   }
