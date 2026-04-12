@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {useRouter} from 'next/router';
 import {useTranslation} from 'react-i18next';
 import {Layout} from '../../components/layout';
+import {SEO} from '../../components/seo';
 import {useAuth} from '../../context/auth';
 import {getLoginUrl} from '../../lib/customer-auth';
 import styles from '../../styles/account.module.css';
@@ -47,6 +48,7 @@ const Login: NextPage = () => {
 
   return (
     <Layout>
+      <SEO title={t('login.heading')} description={t('login.sub')} noindex />
       <div className={styles.page}>
         <div className="container">
           <div className={styles.authWrap}>

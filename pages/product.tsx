@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Layout } from '../components/layout';
+import { SEO, type StructuredData } from '../components/seo';
 import { StarIcon, StarEmptyIcon, CheckIcon, ShieldIcon } from '../components/icons';
 import styles from '../styles/product.module.css';
 import {
@@ -200,8 +201,30 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
     setTimeout(() => setAdded(false), 2000);
   };
 
+  // SEO: Product structured data voor rich results
+  const productStructuredData: StructuredData[] = [
+    {
+      type: 'Product',
+      name: tProductName,
+      description: tProductDesc,
+      image: product.images[0],
+      price: String(price),
+      currency: currency === 'GBP' ? 'GBP' : 'EUR',
+      availability: 'InStock',
+      sku: product.slug,
+      brand: 'Earasers',
+    },
+  ];
+
   return (
     <Layout>
+      <SEO
+        title={tProductName}
+        description={tProductDesc}
+        image={product.images[0]}
+        type="product"
+        structuredData={productStructuredData}
+      />
       <div className={styles.page}>
         <div className="container">
 

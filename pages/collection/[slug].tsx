@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Layout } from '../../components/layout';
+import { SEO } from '../../components/seo';
 import {
   StarIcon, StarEmptyIcon, ArrowRightIcon,
   MusicIcon, RefreshIcon,
@@ -484,8 +485,19 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
 
   const isDark = cat.theme !== 'light';
 
+  // SEO metadata per categorie
+  const seoTitle = `${t(`${slug}.title`)} — ${t(`${slug}.heading`, { defaultValue: '' }).replace(/\n/g, ' ')}`.trim();
+  const seoDescription = t(`${slug}.sub`, { defaultValue: t('ui.collectionSub') });
+  const seoImage = shopifyProductImg ?? '/og-default.png';
+
   return (
     <Layout>
+      <SEO
+        title={seoTitle}
+        description={seoDescription}
+        image={seoImage}
+        type="website"
+      />
       <div className={styles.page}>
 
         {/* ── Hero ── */}

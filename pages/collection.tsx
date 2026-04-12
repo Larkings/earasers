@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { Layout } from '../components/layout';
+import { SEO } from '../components/seo';
 import { StarIcon, StarEmptyIcon, ArrowRightIcon } from '../components/icons';
 import styles from '../styles/collection.module.css';
 import { useCurrency } from '../context/currency';
@@ -50,6 +51,11 @@ const Collection: NextPage = () => {
 
   return (
     <Layout>
+      <SEO
+        title={t('ui.collectionHeading')}
+        description={t('ui.collectionSub')}
+        type="website"
+      />
       <div className={styles.page}>
 
         {/* Hero */}

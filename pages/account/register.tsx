@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { Layout } from '../../components/layout';
+import { SEO } from '../../components/seo';
 import { useAuth } from '../../context/auth';
 import styles from '../../styles/account.module.css';
 
@@ -68,6 +69,7 @@ const Register: NextPage = () => {
 
   return (
     <Layout>
+      <SEO title={t('register.heading')} description={t('register.sub')} noindex />
       <div className={styles.page}>
         <div className="container">
           <div className={styles.authWrap}>

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { serverSideTranslations } from '../lib/i18n';
 import { Layout } from '../components/layout';
+import { SEO } from '../components/seo';
 import styles from '../styles/faq.module.css';
 
 const AccordionItem = ({ q, a }: { q: string; a: string }) => {
@@ -76,6 +77,7 @@ const Faq: NextPage = () => {
 
   return (
     <Layout>
+      <SEO title={t('heading')} description={t('sub')} type="website" />
       <div className={styles.page}>
         <div className="container">
 

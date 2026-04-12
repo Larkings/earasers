@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { serverSideTranslations } from '../lib/i18n';
 import { Layout } from '../components/layout';
+import { SEO } from '../components/seo';
 import { CheckIcon, ShieldIcon } from '../components/icons';
 import styles from '../styles/contact.module.css';
 
@@ -58,6 +59,7 @@ const Contact: NextPage = () => {
 
   return (
     <Layout>
+      <SEO title={t('heading')} description={t('sub')} type="website" />
       <div className={styles.page}>
         <div className="container">
           <div className={styles.grid}>

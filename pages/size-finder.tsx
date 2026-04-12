@@ -3,6 +3,7 @@ import { serverSideTranslations } from '../lib/i18n';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Layout }   from '../components/layout';
+import { SEO } from '../components/seo';
 import { SizeQuiz } from '../components/size-quiz';
 import styles       from './size-finder.module.css';
 
@@ -11,6 +12,11 @@ const SizeFinder: NextPage = () => {
 
   return (
     <Layout>
+      <SEO
+        title={t('sizeFinder.heading')}
+        description={t('sizeFinder.sub')}
+        type="website"
+      />
       <div className={styles.hero}>
         <span className={styles.pill}>{t('sizeFinder.pill')}</span>
         <h1 className={styles.heading}>{t('sizeFinder.heading')}</h1>

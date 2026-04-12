@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { Layout } from '../components/layout';
+import { SEO } from '../components/seo';
 import { CheckIcon, ArrowRightIcon, ShieldIcon } from '../components/icons';
 import { useCart } from '../context/cart';
 import { PRODUCTS } from '../lib/products';
@@ -58,6 +59,11 @@ const Cart: NextPage = () => {
 
   return (
     <Layout>
+      <SEO
+        title={t('cart.title')}
+        description="Je winkelwagen — Earasers HiFi earplugs"
+        noindex
+      />
       <div className={styles.page}>
         <div className="container">
 

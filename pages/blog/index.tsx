@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { Layout } from '../../components/layout';
+import { SEO } from '../../components/seo';
 import { POSTS } from '../../lib/blog';
 import styles from '../../styles/blog.module.css';
 
@@ -40,6 +41,11 @@ const Blog: NextPage = () => {
 
   return (
     <Layout>
+      <SEO
+        title={t('blog.heading')}
+        description={t('blog.sub')}
+        type="website"
+      />
       <div className={styles.page}>
         <div className="container">
 

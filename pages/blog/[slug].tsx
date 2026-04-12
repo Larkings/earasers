@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { serverSideTranslations } from '../../lib/i18n';
 import { Layout } from '../../components/layout';
+import { SEO, type StructuredData } from '../../components/seo';
 import { POSTS, getPostBySlug, type BlogPost } from '../../lib/blog';
 import { sanitizeHtml } from '../../lib/safe-html';
 import styles from '../../styles/blog.module.css';
@@ -33,8 +34,27 @@ const BlogPostPage: NextPage<Props> = ({ post, morePosts }) => {
     category: blogTranslations[p.slug]?.category ?? p.category,
   }));
 
+  const blogStructuredData: StructuredData[] = [
+    {
+      type: 'Article',
+      headline: localTitle,
+      image: post.img,
+      datePublished: post.dateIso ?? post.date,
+      author: 'Earasers',
+    },
+  ];
+
+  const description = blogTranslations[post.slug]?.excerpt ?? post.excerpt ?? localTitle;
+
   return (
     <Layout>
+      <SEO
+        title={localTitle}
+        description={description}
+        image={post.img}
+        type="article"
+        structuredData={blogStructuredData}
+      />
       <div className={styles.postPage}>
         <div className="container">
 
