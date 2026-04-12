@@ -16,6 +16,7 @@ import {
   MoonIcon, WaveIcon,
   HelmetIcon, RadioIcon, CogIcon,
   AwardIcon, HeartIcon, EyeOffIcon,
+  CheckIcon, CloseIcon,
 } from '../../components/icons';
 import styles from '../../styles/collection.module.css';
 import { Influencers } from '../../components/influencers';
@@ -605,7 +606,7 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories })
 
         {/* ── Accessories ── */}
         {accessories.length > 0 && (
-          <AccessoriesSection accessories={accessories} />
+          <AccessoriesSection accessories={accessories} variant="collection" collectionStyles={styles} />
         )}
 
         {/* ── Features ── */}
@@ -659,19 +660,19 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories })
                   <thead>
                     <tr>
                       <th></th>
-                      <th className={styles.compareColUs}>{t('compareTable.colEarasers')}</th>
+                      <th className={styles.compareColUs}><span className={styles.compareThBadge}><AwardIcon size={15} /> {t('compareTable.colEarasers')}</span></th>
                       <th>{t('compareTable.colCustom')}</th>
                       <th>{t('compareTable.colBudget')}</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr><td>{t('compareTable.rowPrice')}</td><td className={styles.compareColUs}>{t('compareTable.valEarasersPrice')}</td><td>{t('compareTable.valCustomPrice')}</td><td>{t('compareTable.valBudgetPrice')}</td></tr>
-                    <tr><td>{t('compareTable.rowAudiologist')}</td><td className={styles.compareColUs}><span className={styles.crossMark}>✗</span></td><td><span className={styles.checkMark}>✓</span></td><td><span className={styles.crossMark}>✗</span></td></tr>
+                    <tr><td>{t('compareTable.rowAudiologist')}</td><td className={styles.compareColUs}><span className={styles.crossMark}><CloseIcon size={17} /></span></td><td><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td></tr>
                     <tr><td>{t('compareTable.rowDelivery')}</td><td className={styles.compareColUs}>{t('compareTable.valEarasersDelivery')}</td><td>{t('compareTable.valCustomDelivery')}</td><td>{t('compareTable.valBudgetDelivery')}</td></tr>
-                    <tr><td>{t('compareTable.rowInvisible')}</td><td className={styles.compareColUs}><span className={styles.checkMark}>✓</span></td><td><span className={styles.crossMark}>x</span></td><td><span className={styles.crossMark}>✗</span></td></tr>
-                    <tr><td>{t('compareTable.rowClearSound')}</td><td className={styles.compareColUs}><span className={styles.checkMark}>✓</span></td><td><span className={styles.crossMark}>✗</span></td><td><span className={styles.crossMark}>✗</span></td></tr>
-                    <tr><td>{t('compareTable.rowReplaceableFilter')}</td><td className={styles.compareColUs}><span className={styles.checkMark}>✓</span></td><td><span className={styles.checkMark}>✓</span></td><td><span className={styles.crossMark}>✗</span></td></tr>
-                    <tr><td>{t('compareTable.rowAwardWinning')}</td><td className={styles.compareColUs}><span className={styles.checkMark}>✓</span></td><td><span className={styles.checkMark}>✓</span></td><td><span className={styles.crossMark}>✗</span></td></tr>
+                    <tr><td>{t('compareTable.rowInvisible')}</td><td className={styles.compareColUs}><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td></tr>
+                    <tr><td>{t('compareTable.rowClearSound')}</td><td className={styles.compareColUs}><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td></tr>
+                    <tr><td>{t('compareTable.rowReplaceableFilter')}</td><td className={styles.compareColUs}><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td></tr>
+                    <tr><td>{t('compareTable.rowAwardWinning')}</td><td className={styles.compareColUs}><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td></tr>
                   </tbody>
                 </table>
               </div>

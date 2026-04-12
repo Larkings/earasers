@@ -7,26 +7,41 @@ import { ArrowRightIcon } from './icons';
 import { useCurrency } from '../context/currency';
 import type { AccessoryProduct } from '../lib/products';
 
-type Props = { accessories: AccessoryProduct[] };
+type Props = {
+  accessories: AccessoryProduct[];
+  /** When rendered inside a collection page, use the same heading style as product groups */
+  variant?: 'default' | 'collection';
+  /** CSS module styles from the parent (collection page) for consistent heading styling */
+  collectionStyles?: Record<string, string>;
+};
 
-export const AccessoriesSection = ({ accessories }: Props) => {
+export const AccessoriesSection = ({ accessories, variant = 'default', collectionStyles }: Props) => {
   const { t } = useTranslation('home');
   const { fmt } = useCurrency();
 
   if (!accessories.length) return null;
 
+  const useCollectionHeader = variant === 'collection' && collectionStyles;
+
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className={styles.header} data-reveal>
-          <div>
-            <h2 className={styles.heading}>{t('accessories.heading', { defaultValue: 'Complete Your Setup' })}</h2>
-            <p className={styles.sub}>{t('accessories.sub', { defaultValue: 'Cases, refills and extras to keep your Earasers in top shape.' })}</p>
+        {useCollectionHeader ? (
+          <div className={collectionStyles.productGroupHeader} data-reveal>
+            <h3 className={collectionStyles.productGroupTitle}>{t('accessories.heading', { defaultValue: 'Complete Your Setup' })}</h3>
+            <p className={collectionStyles.productGroupSub}>{t('accessories.sub', { defaultValue: 'Cases, refills and extras to keep your Earasers in top shape.' })}</p>
           </div>
-          <Link href="/collection/accessories" className={styles.viewAll}>
-            {t('accessories.viewAll', { defaultValue: 'View all' })} <ArrowRightIcon size={14} />
-          </Link>
-        </div>
+        ) : (
+          <div className={styles.header} data-reveal>
+            <div>
+              <h2 className={styles.heading}>{t('accessories.heading', { defaultValue: 'Complete Your Setup' })}</h2>
+              <p className={styles.sub}>{t('accessories.sub', { defaultValue: 'Cases, refills and extras to keep your Earasers in top shape.' })}</p>
+            </div>
+            <Link href="/collection/accessories" className={styles.viewAll}>
+              {t('accessories.viewAll', { defaultValue: 'View all' })} <ArrowRightIcon size={14} />
+            </Link>
+          </div>
+        )}
 
         <div className={styles.grid}>
           {accessories.map((p, i) => (
