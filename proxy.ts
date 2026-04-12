@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server'
 // In-memory rate limit store (per serverless instantie)
 const rateLimitMap = new Map<string, { count: number; timestamp: number }>()
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   // Alleen API routes beschermen
   if (!req.nextUrl.pathname.startsWith('/api/')) {
     return NextResponse.next()

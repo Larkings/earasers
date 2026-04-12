@@ -13,9 +13,9 @@ class MyDocument extends Document<MyDocumentProps> {
 
   render() {
     return (
-      <Html lang={this.props.locale ?? 'en'}>
+      <Html lang={this.props.locale ?? 'en'} data-scroll-behavior="smooth">
         <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+          {/* Viewport tag hoort in _app.tsx of individuele pages (Next.js requirement) */}
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link

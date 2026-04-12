@@ -44,10 +44,11 @@ export const Footer = () => {
               <Image
                   src="/Test_Logo_Earasres_2.png"
                   alt="EARASERS Logo"
-                  width={150}    // Pas dit aan naar de gewenste breedte
-                  height={50}    // Pas dit aan naar de gewenste hoogte
+                  width={150}
+                  height={50}
                   priority       // Zorgt dat het logo direct geladen wordt (LCP)
                   className={styles.logoImage}
+                  style={{ width: '150px', height: 'auto' }}
               />
             </Link>
             <p className={styles.tagline}>BE EARRESPONSIBLE</p>

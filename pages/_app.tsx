@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import i18n, { type Resource, type InitOptions } from 'i18next';
@@ -121,20 +122,25 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router]);
 
   return (
-    <I18nextProvider i18n={instanceRef.current}>
-      <CurrencyProvider>
-        <AuthProvider>
-          <CartProvider>
-            <ErrorBoundary>
-              <Component {...pageProps} />
-            </ErrorBoundary>
-            <CartDrawer />
-            <AuthDrawer />
-            <CookieBanner />
-          </CartProvider>
-        </AuthProvider>
-      </CurrencyProvider>
-    </I18nextProvider>
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+      </Head>
+      <I18nextProvider i18n={instanceRef.current}>
+        <CurrencyProvider>
+          <AuthProvider>
+            <CartProvider>
+              <ErrorBoundary>
+                <Component {...pageProps} />
+              </ErrorBoundary>
+              <CartDrawer />
+              <AuthDrawer />
+              <CookieBanner />
+            </CartProvider>
+          </AuthProvider>
+        </CurrencyProvider>
+      </I18nextProvider>
+    </>
   );
 }
 
