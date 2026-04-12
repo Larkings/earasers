@@ -22,11 +22,15 @@ class MyDocument extends Document<MyDocumentProps> {
             href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap"
             rel="stylesheet"
           />
-          {/* Shopify Analytics — vereist voor Web Pixels & session tracking */}
-          <script
-            async
-            src={`https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/cdn/shop/t/1/assets/theme.js`}
-          />
+          {/*
+            Shopify Analytics / Web Pixels worden NIET via theme.js geladen.
+            Die werken via Shopify's eigen extension systeem — configureer in
+            Admin → Settings → Customer events. Events in lib/analytics.ts
+            worden automatisch opgepikt door actieve Web Pixels.
+
+            De oude Liquid theme.js (earasers-theme/) is voor de legacy
+            Shopify storefront — niet voor deze headless Next.js site.
+          */}
         </Head>
         <body>
           <Main />
