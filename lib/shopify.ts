@@ -13,19 +13,32 @@ export async function shopifyFetch<T>(
   query: string,
   variables: Record<string, unknown> = {},
 ): Promise<T> {
-  const res = await fetch(API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': TOKEN,
-    },
-    body: JSON.stringify({ query, variables }),
-  })
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 15_000)
 
-  if (!res.ok) throw new Error(`Shopify API error: ${res.status}`)
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Storefront-Access-Token': TOKEN,
+      },
+      body: JSON.stringify({ query, variables }),
+      signal: controller.signal,
+    })
 
-  const json = await res.json()
-  if (json.errors?.length) throw new Error(json.errors[0].message)
+    if (!res.ok) throw new Error(`Shopify API error: ${res.status}`)
 
-  return json.data as T
+    const json = await res.json()
+    if (json.errors?.length) throw new Error(json.errors[0].message)
+
+    return json.data as T
+  } catch (err: unknown) {
+    if (err instanceof DOMException && err.name === 'AbortError') {
+      throw new Error('Shopify API timeout — request took longer than 15 seconds')
+    }
+    throw err
+  } finally {
+    clearTimeout(timeout)
+  }
 }

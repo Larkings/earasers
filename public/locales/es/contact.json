@@ -27,6 +27,7 @@
   "required": "*",
   "validationError": "Por favor, completa todos los campos obligatorios.",
   "send": "Enviar mensaje",
+  "sending": "Enviando…",
   "successTitle": "¡Mensaje enviado!",
   "successSub": "Gracias por contactarnos. Te responderemos en pocas horas.",
   "sendAnother": "Enviar otro mensaje"

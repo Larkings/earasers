@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { serverSideTranslations } from '../../lib/i18n';
 import { Layout } from '../../components/layout';
 import { POSTS, getPostBySlug, type BlogPost } from '../../lib/blog';
+import { sanitizeHtml } from '../../lib/safe-html';
 import styles from '../../styles/blog.module.css';
 
 interface Props {
@@ -59,12 +60,12 @@ const BlogPostPage: NextPage<Props> = ({ post, morePosts }) => {
             <h1 className={styles.postTitle}>{localTitle}</h1>
 
             <div className={styles.postHeroWrap}>
-              <Image src={post.img} alt={localTitle} fill style={{ objectFit: 'cover' }} priority />
+              <Image src={post.img} alt={localTitle} fill sizes="(max-width: 768px) 100vw, 720px" style={{ objectFit: 'cover' }} priority />
             </div>
 
             <div
               className={styles.prose}
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
             />
           </div>
 
@@ -75,7 +76,7 @@ const BlogPostPage: NextPage<Props> = ({ post, morePosts }) => {
                 {localizedMore.map(p => (
                   <Link key={p.slug} href={`/blog/${p.slug}`} className={styles.card}>
                     <div className={styles.imgWrap}>
-                      <Image src={p.img} alt={p.title} fill style={{ objectFit: 'cover' }} />
+                      <Image src={p.img} alt={p.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" style={{ objectFit: 'cover' }} />
                     </div>
                     <div className={styles.cardContent}>
                       <div className={styles.meta}>

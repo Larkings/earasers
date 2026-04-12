@@ -85,7 +85,7 @@ const Collection: NextPage = () => {
             {sorted.map(p => (
               <Link key={p.name} href="/product" className={styles.card}>
                 <div className={styles.imgWrap}>
-                  <Image src={p.img} alt={p.name} fill style={{ objectFit: 'cover' }} />
+                  <Image src={p.img} alt={p.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" style={{ objectFit: 'cover' }} />
                   {p.tagKey && <span className={styles.tag}>{t(p.tagKey)}</span>}
                 </div>
                 <div className={styles.info}>

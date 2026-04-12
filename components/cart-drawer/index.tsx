@@ -54,7 +54,7 @@ const DrawerItem = ({ item }: { item: CartItem }) => {
 };
 
 const DrawerContent = () => {
-  const { items, totalCount, closeCart, checkout, checkoutUrl } = useCart();
+  const { items, totalCount, closeCart, checkout, checkoutError, checkoutSyncing } = useCart();
   const { t } = useTranslation('common');
   const { fmt } = useCurrency();
   const [checkoutLoading, setCheckoutLoading] = useState(false);
@@ -62,6 +62,10 @@ const DrawerContent = () => {
   const subtotal  = items.reduce((s, i) => s + i.price * i.qty, 0);
   const remaining = Math.max(0, FREE_SHIPPING - subtotal);
   const progress  = Math.min(100, (subtotal / FREE_SHIPPING) * 100);
+
+  // Derived: zodra er een error is, NIET meer als loading tonen.
+  // Voorkomt cascading re-renders van een setState-in-useEffect pattern.
+  const isCheckoutLoading = checkoutLoading && !checkoutError;
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') closeCart(); };
@@ -83,15 +87,17 @@ const DrawerContent = () => {
     return () => window.removeEventListener('focus', handleWindowFocus);
   }, []);
 
-  const handleCheckout = () => {
-    if (checkoutUrl) {
-      setCheckoutLoading(true);
-      window.location.href = checkoutUrl;
-      return;
-    }
-    // Fallback: use context checkout (triggers cart sync then redirect)
+  const handleCheckout = async () => {
+    if (isCheckoutLoading) return;
     setCheckoutLoading(true);
-    checkout();
+    try {
+      await checkout();
+    } finally {
+      // Als checkout() een URL heeft, is de redirect al in gang (window.location.href).
+      // Anders is er een error in context gezet — derived state `isCheckoutLoading`
+      // wordt dan automatisch false dankzij de `!checkoutError` check.
+      setCheckoutLoading(false);
+    }
   };
 
   return (
@@ -152,12 +158,21 @@ const DrawerContent = () => {
               <span className={styles.totalsPrice}>{fmt(subtotal)}</span>
             </div>
 
+            {checkoutError && (
+              <p className={styles.checkoutError}>{checkoutError}</p>
+            )}
+
             <button
               className={styles.checkoutBtn}
               onClick={handleCheckout}
-              disabled={checkoutLoading}
+              disabled={isCheckoutLoading || checkoutSyncing}
             >
-              {checkoutLoading ? t('cart.checkoutLoading') || 'Loading…' : <>{t('cart.checkout')} <ArrowRightIcon size={15} /></>}
+              {isCheckoutLoading
+                ? t('cart.checkoutLoading') || 'Laden…'
+                : checkoutSyncing
+                  ? t('cart.checkoutSyncing') || 'Synchroniseren…'
+                  : <>{t('cart.checkout')} <ArrowRightIcon size={15} /></>
+              }
             </button>
 
             <Link href="/cart" className={styles.viewCartBtn} onClick={closeCart}>

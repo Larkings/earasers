@@ -98,6 +98,7 @@
     "subtotal": "Subtotal",
     "checkout": "Pagar",
     "checkoutLoading": "Cargando…",
+    "checkoutSyncing": "Sincronizando…",
     "viewCart": "Ver carrito",
     "heading": "Carrito",
     "home": "Inicio",

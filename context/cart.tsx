@@ -73,22 +73,30 @@ type CartCtx = {
   closeCart:  () => void;
   // Shopify checkout
   checkoutUrl: string | null;
-  checkout: () => void;
+  checkoutError: string | null;
+  checkoutSyncing: boolean;
+  checkout: () => Promise<void>;
 };
 
 const CartContext = createContext<CartCtx>({
   items: [], totalCount: 0,
   addToCart: () => {}, setQty: () => {}, removeItem: () => {},
   isCartOpen: false, openCart: () => {}, closeCart: () => {},
-  checkoutUrl: null, checkout: () => {},
+  checkoutUrl: null, checkoutError: null, checkoutSyncing: false,
+  checkout: async () => {},
 });
 
 const CART_ID_KEY = 'shopify_cart_id';
+const CART_TS_KEY = 'earasers-cart-ts';
+// Cart verloopt na 30 dagen — voorkomt stale prijzen/varianten voor inactieve gebruikers
+const CART_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch]   = useReducer(reducer, { items: [], hydrated: false });
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [shopifyCart, setShopifyCart] = useState<ShopifyCart | null>(null);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [checkoutSyncing, setCheckoutSyncing] = useState(false);
   const syncingRef = useRef(false);
 
   const openCart  = () => setIsCartOpen(true);
@@ -98,7 +106,18 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     try {
       const raw = localStorage.getItem('earasers-cart');
-      dispatch({ type: 'LOAD', items: raw ? JSON.parse(raw) : [] });
+      const ts  = Number(localStorage.getItem(CART_TS_KEY) ?? 0);
+      const isStale = ts > 0 && Date.now() - ts > CART_MAX_AGE_MS;
+
+      if (isStale) {
+        // Cart verlopen — verwijder lokale state én Shopify cart ID
+        localStorage.removeItem('earasers-cart');
+        localStorage.removeItem(CART_TS_KEY);
+        localStorage.removeItem(CART_ID_KEY);
+        dispatch({ type: 'LOAD', items: [] });
+      } else {
+        dispatch({ type: 'LOAD', items: raw ? JSON.parse(raw) : [] });
+      }
     } catch {
       dispatch({ type: 'LOAD', items: [] });
     }
@@ -119,6 +138,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (!state.hydrated) return;
     localStorage.setItem('earasers-cart', JSON.stringify(state.items));
+    if (state.items.length > 0) {
+      localStorage.setItem(CART_TS_KEY, String(Date.now()));
+    } else {
+      localStorage.removeItem(CART_TS_KEY);
+    }
   }, [state.items, state.hydrated]);
 
   // Shopify cart aanmaken of ophalen
@@ -143,10 +167,12 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const addToCart = (item: CartItem) => {
     dispatch({ type: 'ADD', item });
     openCart();
+    setCheckoutError(null);
 
     // Shopify sync — alleen als variantId bekend is
     if (item.variantId && !syncingRef.current) {
       syncingRef.current = true;
+      setCheckoutSyncing(true);
       ensureShopifyCart()
         .then(cart => shopifyAddToCart(cart.id, item.variantId!, item.qty))
         .then(updated => {
@@ -160,49 +186,101 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           }
           trackAddToCart(item.variantId!, item.qty, item.price);
         })
-        .catch(() => {})
-        .finally(() => { syncingRef.current = false; });
+        .catch((err) => {
+          console.error('[cart] Shopify sync failed:', err);
+        })
+        .finally(() => { syncingRef.current = false; setCheckoutSyncing(false); });
     }
   };
 
   const setQty = (id: string, qty: number) => {
     const item = state.items.find(i => i.id === id);
+    const previousQty = item?.qty ?? 0;
+
+    // Optimistic update
     dispatch({ type: 'SET_QTY', id, qty });
+    setCheckoutError(null);
 
     if (item?.shopifyLineId && shopifyCart) {
-      if (qty <= 0) {
-        shopifyRemoveFromCart(shopifyCart.id, [item.shopifyLineId])
-          .then(setShopifyCart)
-          .catch(() => {});
-      } else {
-        shopifyUpdateLine(shopifyCart.id, item.shopifyLineId, qty)
-          .then(setShopifyCart)
-          .catch(() => {});
-      }
+      const shopifyPromise = qty <= 0
+        ? shopifyRemoveFromCart(shopifyCart.id, [item.shopifyLineId])
+        : shopifyUpdateLine(shopifyCart.id, item.shopifyLineId, qty);
+
+      shopifyPromise
+        .then(setShopifyCart)
+        .catch((err) => {
+          console.error('[cart] Shopify update failed, rolling back:', err);
+          // Rollback UI zodat lokale + Shopify cart niet uit sync raken
+          dispatch({ type: 'SET_QTY', id, qty: previousQty });
+          setCheckoutError('Kon aantal niet bijwerken. Probeer het opnieuw.');
+        });
     }
   };
 
   const removeItem = (id: string) => {
     const item = state.items.find(i => i.id === id);
-    dispatch({ type: 'REMOVE', id });
+    if (!item) return;
 
-    if (item?.shopifyLineId && shopifyCart) {
+    // Optimistic remove
+    dispatch({ type: 'REMOVE', id });
+    setCheckoutError(null);
+
+    if (item.shopifyLineId && shopifyCart) {
       shopifyRemoveFromCart(shopifyCart.id, [item.shopifyLineId])
         .then(setShopifyCart)
-        .catch(() => {});
+        .catch((err) => {
+          console.error('[cart] Shopify remove failed, rolling back:', err);
+          // Rollback: voeg item weer toe aan lokale state
+          dispatch({ type: 'ADD', item });
+          setCheckoutError('Kon artikel niet verwijderen. Probeer het opnieuw.');
+        });
     }
   };
 
   const checkoutUrl = shopifyCart?.checkoutUrl ?? null;
 
-  const checkout = () => {
-    console.log('[checkout] checkoutUrl:', checkoutUrl);
-    if (!checkoutUrl) {
-      console.warn('[checkout] Geen checkoutUrl beschikbaar — Shopify cart niet gesynchroniseerd');
+  const checkout = async () => {
+    setCheckoutError(null);
+
+    // Als we al een checkoutUrl hebben, redirect direct
+    if (checkoutUrl) {
+      trackCheckoutStarted(checkoutUrl, shopifyCart?.cost.totalAmount.amount ?? '0');
+      window.location.href = checkoutUrl;
       return;
     }
-    trackCheckoutStarted(checkoutUrl, shopifyCart?.cost.totalAmount.amount ?? '0');
-    window.location.href = checkoutUrl;
+
+    // Probeer Shopify cart (opnieuw) aan te maken met alle items
+    const itemsWithVariant = state.items.filter(i => i.variantId);
+    if (itemsWithVariant.length === 0) {
+      setCheckoutError('Geen producten met bekende variant — voeg opnieuw toe aan je winkelwagen.');
+      return;
+    }
+
+    try {
+      setCheckoutSyncing(true);
+      const cart = await ensureShopifyCart();
+
+      // Voeg items toe die nog geen shopifyLineId hebben
+      const unsynced = itemsWithVariant.filter(i => !i.shopifyLineId);
+      let updatedCart = cart;
+      for (const item of unsynced) {
+        updatedCart = await shopifyAddToCart(updatedCart.id, item.variantId!, item.qty);
+      }
+      setShopifyCart(updatedCart);
+
+      const url = updatedCart.checkoutUrl;
+      if (!url) {
+        throw new Error('Shopify cart heeft geen checkout URL');
+      }
+
+      trackCheckoutStarted(url, updatedCart.cost.totalAmount.amount ?? '0');
+      window.location.href = url;
+    } catch (err) {
+      console.error('[checkout] Failed:', err);
+      setCheckoutError('Er ging iets mis. Probeer het opnieuw.');
+    } finally {
+      setCheckoutSyncing(false);
+    }
   };
 
   return (
@@ -213,7 +291,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       setQty,
       removeItem,
       isCartOpen, openCart, closeCart,
-      checkoutUrl,
+      checkoutUrl, checkoutError, checkoutSyncing,
       checkout,
     }}>
       {children}

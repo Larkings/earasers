@@ -2,6 +2,7 @@ import type { NextPage, GetStaticProps } from 'next';
 import { serverSideTranslations } from '../../lib/i18n';
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { Layout } from '../../components/layout';
@@ -122,19 +123,21 @@ const InstructionVideosPage: NextPage = () => {
 
         {/* Insertion diagrams */}
         <div className={styles.diagrams}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="https://cdn.shopify.com/s/files/1/0254/6738/7989/files/earasers-left-blue-red-right.jpg?v=1575652241"
             alt="Earasers left (blue) and right (red) earplugs"
+            width={420}
+            height={220}
             className={styles.diagram}
-            loading="lazy"
+            sizes="(max-width: 768px) 100vw, 420px"
           />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="https://cdn.shopify.com/s/files/1/0254/6738/7989/files/earasers-back-front.jpg?v=1575652368"
             alt="Earasers back and front side"
+            width={420}
+            height={220}
             className={styles.diagram}
-            loading="lazy"
+            sizes="(max-width: 768px) 100vw, 420px"
           />
         </div>
 
@@ -148,11 +151,12 @@ const InstructionVideosPage: NextPage = () => {
               aria-label={`Play video: ${video.title}`}
             >
               <div className={styles.thumb}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={`https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg`}
                   alt={video.title}
-                  loading="lazy"
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  style={{ objectFit: 'cover' }}
                 />
                 <div className={styles.play}>
                   <svg viewBox="0 0 24 24" fill="white" width="44" height="44">

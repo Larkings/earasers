@@ -86,6 +86,7 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
   const [tooltip,      setTooltip]      = useState<number | null>(null);
   const [qty,          setQty]          = useState(1);
   const [added,        setAdded]        = useState(false);
+  const [variantError, setVariantError] = useState<string | null>(null);
   const [buyNowLoading, setBuyNowLoading] = useState(false);
   const [quizOpen,     setQuizOpen]     = useState(false);
   const [quizApplied,  setQuizApplied]  = useState(false);
@@ -149,7 +150,11 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
 
   const handleBuyNow = async () => {
     const variantId = getVariantId();
-    if (!variantId) return;
+    if (!variantId) {
+      setVariantError(t('variantUnavailable', { defaultValue: 'Deze combinatie is tijdelijk niet beschikbaar. Kies een andere maat of filter.' }));
+      return;
+    }
+    setVariantError(null);
     setBuyNowLoading(true);
     try {
       const checkoutUrl = await createDirectCheckout(variantId, qty, countryCode);
@@ -170,6 +175,14 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
     const slugVariants = variantsMap[product.slug] ?? [];
     const variant = findVariantByFilter(slugVariants, sizeLabel, filter);
 
+    // Als variant niet gevonden kan worden, NIET toevoegen — dit zou anders een
+    // "ghost item" opleveren dat nooit naar Shopify synct en onzichtbaar is in checkout.
+    if (!variant?.id) {
+      setVariantError(t('variantUnavailable', { defaultValue: 'Deze combinatie is tijdelijk niet beschikbaar. Kies een andere maat of filter.' }));
+      return;
+    }
+
+    setVariantError(null);
     const item: CartItem = {
       id:        `${product.slug}-${sizeLabel}-${filter.db}`,
       slug:      product.slug,
@@ -179,7 +192,7 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
       filter:    filter.db,
       price,
       qty,
-      variantId: variant?.id,   // gid://shopify/ProductVariant/...
+      variantId: variant.id,   // gid://shopify/ProductVariant/...
     };
     addToCart(item);
     openCart();
@@ -272,7 +285,7 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
                       <div key={i} className={styles.sizeWrap}>
                         <button
                           className={`${styles.sizeBtn} ${i === activeSize ? styles.sizeBtnActive : ''}`}
-                          onClick={() => setActiveSize(i)}
+                          onClick={() => { setActiveSize(i); setVariantError(null); }}
                           onMouseEnter={() => setTooltip(i)}
                           onMouseLeave={() => setTooltip(null)}
                         >
@@ -297,7 +310,7 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
                           <div key={i} className={styles.sizeWrap}>
                             <button
                               className={`${styles.kitBtn} ${i === activeSize ? styles.kitBtnActive : ''}`}
-                              onClick={() => setActiveSize(i)}
+                              onClick={() => { setActiveSize(i); setVariantError(null); }}
                               onMouseEnter={() => setTooltip(i)}
                               onMouseLeave={() => setTooltip(null)}
                             >
@@ -333,7 +346,7 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
                     <button
                       key={f.db}
                       className={`${styles.filterBtn} ${i === activeFilter || genreFilters.length === 1 ? styles.filterBtnActive : ''}`}
-                      onClick={() => setActiveFilter(i)}
+                      onClick={() => { setActiveFilter(i); setVariantError(null); }}
                       disabled={genreFilters.length === 1}
                     >
                       <span className={styles.filterDb}>{f.db}</span>
@@ -370,6 +383,11 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
                   </button>
                 </div>
               </div>
+
+              {/* Variant error */}
+              {variantError && (
+                <p className={styles.variantError} role="alert">{variantError}</p>
+              )}
 
               {/* CTA */}
               <button

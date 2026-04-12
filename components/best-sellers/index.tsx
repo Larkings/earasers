@@ -45,7 +45,7 @@ export const BestSellers = () => {
             return (
             <a key={idx} href={p.href} className={styles.card}>
               <div className={styles.imgWrap}>
-                <Image src={p.img} alt={name} fill style={{ objectFit: 'contain', padding: '12px' }} />
+                <Image src={p.img} alt={name} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" style={{ objectFit: 'contain', padding: '12px' }} />
                 {p.tagKey && <span className={styles.tag}>{t(p.tagKey)}</span>}
               </div>
               <div className={styles.info}>

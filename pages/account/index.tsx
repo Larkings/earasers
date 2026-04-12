@@ -4,16 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Layout } from '../../components/layout';
 import { ArrowRightIcon } from '../../components/icons';
-import { getCustomerWithOrders, type CustomerProfile, type CustomerOrder } from '../../lib/customer-api';
+import { getUnifiedCustomer, type UnifiedCustomer, type CustomerOrder } from '../../lib/unified-customer';
 import styles from '../../styles/account.module.css';
-
-// Cookie reader — geen externe dependency nodig
-function getCookie(cookieHeader: string, name: string): string | null {
-  const found = cookieHeader.split(';')
-    .map(c => c.trim())
-    .find(c => c.startsWith(`${name}=`))
-  return found ? found.slice(name.length + 1) : null
-}
 
 function fmt(amount: string, currency: string) {
   return new Intl.NumberFormat('nl-NL', { style: 'currency', currency }).format(Number(amount))
@@ -67,7 +59,7 @@ function OrderCard({ order }: { order: CustomerOrder }) {
   )
 }
 
-type Props = { customer: CustomerProfile }
+type Props = { customer: UnifiedCustomer }
 
 export default function AccountPage({ customer }: Props) {
   const quickLinks = [
@@ -78,12 +70,18 @@ export default function AccountPage({ customer }: Props) {
   ]
 
   const handleLogout = async () => {
-    // logout() importeren als client-side — dynamic import om SSR te vermijden
-    const { logout } = await import('../../lib/customer-auth')
-    await logout()
+    // Wis beide auth cookies + revoke Shopify tokens
+    await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' })
+    // OAuth users: redirect naar Shopify logout voor volledige session cleanup
+    if (customer.authType === 'oauth') {
+      const { logout } = await import('../../lib/customer-auth')
+      await logout()
+    } else {
+      window.location.href = '/'
+    }
   }
 
-  const orders = customer.orders.edges.map(e => e.node)
+  const orders = customer.orders
 
   return (
     <Layout>
@@ -95,7 +93,7 @@ export default function AccountPage({ customer }: Props) {
             <div className={styles.dashHeader}>
               <div>
                 <h1 className={styles.dashGreeting}>Hi, {customer.firstName}!</h1>
-                <p className={styles.dashSub}>{customer.emailAddress.emailAddress}</p>
+                <p className={styles.dashSub}>{customer.email}</p>
               </div>
               <button className={styles.logoutBtn} onClick={handleLogout}>
                 Uitloggen
@@ -114,7 +112,7 @@ export default function AccountPage({ customer }: Props) {
                   </div>
                   <div className={styles.infoItem}>
                     <span className={styles.infoLabel}>E-mail</span>
-                    <span className={styles.infoValue}>{customer.emailAddress.emailAddress}</span>
+                    <span className={styles.infoValue}>{customer.email}</span>
                   </div>
                 </div>
               </div>
@@ -162,19 +160,10 @@ export default function AccountPage({ customer }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
-  const token = getCookie(req.headers.cookie ?? '', 'customer_token')
-
-  if (!token) {
+  // Accepteert beide auth flows: OAuth (customer_token) of email/password (storefront_token)
+  const customer = await getUnifiedCustomer(req.headers.cookie)
+  if (!customer) {
     return { redirect: { destination: '/account/login', permanent: false } }
   }
-
-  try {
-    const customer = await getCustomerWithOrders(token)
-    if (!customer) {
-      return { redirect: { destination: '/account/login', permanent: false } }
-    }
-    return { props: { customer } }
-  } catch {
-    return { redirect: { destination: '/account/login', permanent: false } }
-  }
+  return { props: { customer } }
 }

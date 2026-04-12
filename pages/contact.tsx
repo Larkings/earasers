@@ -19,22 +19,41 @@ const Contact: NextPage = () => {
     t('subjects.other'),
   ];
 
-  const [form, setForm] = useState({ name: '', email: '', subject: subjects[0], message: '' });
+  const [form, setForm] = useState({ name: '', email: '', subject: subjects[0], message: '', company: '' });
   const [sent, setSent] = useState(false);
   const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
       setError(t('validationError'));
       return;
     }
     setError('');
-    setSent(true);
+    setSubmitting(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json().catch(() => null) as { ok?: boolean; error?: string } | null;
+      if (!res.ok || !data?.ok) {
+        setError(data?.error || t('validationError'));
+        return;
+      }
+      setSent(true);
+      setForm({ name: '', email: '', subject: subjects[0], message: '', company: '' });
+    } catch {
+      setError(t('validationError'));
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -174,7 +193,23 @@ const Contact: NextPage = () => {
 
                   {error && <p className={styles.error}>{error}</p>}
 
-                  <button type="submit" className={styles.submit}>{t('send')}</button>
+                  {/* Honeypot voor spam-bots — onzichtbaar voor echte gebruikers */}
+                  <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, overflow: 'hidden' }}>
+                    <label htmlFor="company">Company (leave empty)</label>
+                    <input
+                      id="company"
+                      name="company"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={form.company}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <button type="submit" className={styles.submit} disabled={submitting}>
+                    {submitting ? t('sending', { defaultValue: 'Versturen…' }) : t('send')}
+                  </button>
                 </form>
               )}
             </div>

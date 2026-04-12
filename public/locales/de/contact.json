@@ -27,6 +27,7 @@
   "required": "*",
   "validationError": "Bitte fülle alle Pflichtfelder aus.",
   "send": "Nachricht senden",
+  "sending": "Senden…",
   "successTitle": "Nachricht gesendet!",
   "successSub": "Danke für deine Anfrage. Wir melden uns innerhalb weniger Stunden bei dir.",
   "sendAnother": "Weitere Nachricht senden"

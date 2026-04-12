@@ -1,6 +1,6 @@
 import type { NextPage, GetStaticProps } from 'next';
 import { serverSideTranslations } from '../lib/i18n';
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
@@ -31,7 +31,20 @@ const CartIcon = () => (
 
 const Cart: NextPage = () => {
   const { t } = useTranslation('common');
-  const { items, totalCount, setQty, removeItem, checkout, checkoutUrl } = useCart();
+  const { items, totalCount, setQty, removeItem, checkout, checkoutUrl, checkoutError, checkoutSyncing } = useCart();
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+
+  const handleCheckout = async () => {
+    if (checkoutLoading) return;
+    setCheckoutLoading(true);
+    try {
+      await checkout();
+    } catch {
+      // error is al gezet in context
+    } finally {
+      setCheckoutLoading(false);
+    }
+  };
   const { fmt } = useCurrency();
 
   const subtotal  = items.reduce((s, i) => s + i.price * i.qty, 0);
@@ -162,12 +175,21 @@ const Cart: NextPage = () => {
                   <span className={styles.summaryTotalPrice}>{fmt(total)}</span>
                 </div>
 
+                {checkoutError && (
+                  <p className={styles.checkoutError}>{checkoutError}</p>
+                )}
+
                 <button
                   className={styles.checkoutBtn}
-                  onClick={checkout}
-                  disabled={!checkoutUrl}
+                  onClick={handleCheckout}
+                  disabled={checkoutLoading || checkoutSyncing}
                 >
-                  {t('cart.checkout')} <ArrowRightIcon size={15} />
+                  {checkoutLoading
+                    ? t('cart.checkoutLoading') || 'Laden…'
+                    : checkoutSyncing
+                      ? t('cart.checkoutSyncing') || 'Synchroniseren…'
+                      : <>{t('cart.checkout')} <ArrowRightIcon size={15} /></>
+                  }
                 </button>
 
                 <Link href="/collection" className={styles.continueBtn}>

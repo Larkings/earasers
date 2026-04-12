@@ -10,6 +10,7 @@ import { CurrencyProvider } from '../context/currency';
 import { CookieBanner } from '../components/cookie-banner';
 import { CartDrawer } from '../components/cart-drawer';
 import { AuthDrawer } from '../components/auth-drawer';
+import { ErrorBoundary } from '../components/error-boundary';
 
 const LOCALE_KEY = 'earasers-locale';
 const SUPPORTED = ['en', 'nl', 'de', 'es'];
@@ -124,7 +125,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <CurrencyProvider>
         <AuthProvider>
           <CartProvider>
-            <Component {...pageProps} />
+            <ErrorBoundary>
+              <Component {...pageProps} />
+            </ErrorBoundary>
             <CartDrawer />
             <AuthDrawer />
             <CookieBanner />

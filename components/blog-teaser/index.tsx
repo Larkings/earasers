@@ -28,7 +28,7 @@ export const BlogTeaser = () => {
           {posts.map((p, idx) => (
             <Link key={p.slug} href={`/blog/${p.slug}`} className={styles.card}>
               <div className={styles.imgWrap}>
-                <Image src={POST_IMAGES[idx] ?? POST_IMAGES[0]} alt={p.title} fill style={{ objectFit: 'cover' }} />
+                <Image src={POST_IMAGES[idx] ?? POST_IMAGES[0]} alt={p.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw" style={{ objectFit: 'cover' }} />
               </div>
               <div className={styles.content}>
                 <p className={styles.date}>{p.date}</p>

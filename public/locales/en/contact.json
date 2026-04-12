@@ -27,6 +27,7 @@
   "required": "*",
   "validationError": "Please fill in all required fields.",
   "send": "Send message",
+  "sending": "Sending…",
   "successTitle": "Message sent!",
   "successSub": "Thank you for reaching out. We'll get back to you within a few hours.",
   "sendAnother": "Send another message"

@@ -443,6 +443,17 @@
   line-height: 40px;
 }
 
+.variantError {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #dc2626;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
 /* CTA */
 .addBtn {
   width: 100%;

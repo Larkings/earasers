@@ -1,0 +1,12 @@
+# Earasers.shop — robots.txt
+User-agent: *
+Allow: /
+
+# Geen indexering van account-gebieden en API routes
+Disallow: /account
+Disallow: /account/
+Disallow: /api/
+Disallow: /cart
+
+# Sitemap
+Sitemap: https://www.earasers.shop/sitemap.xml

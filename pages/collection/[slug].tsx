@@ -21,6 +21,7 @@ import {
 import styles from '../../styles/collection.module.css';
 import { Influencers } from '../../components/influencers';
 import { useCurrency } from '../../context/currency';
+import { sanitizeHtml } from '../../lib/safe-html';
 
 /* ─── CDN shortcuts ─── */
 const CDN = 'https://earasers-eu.myshopify.com/cdn/shop/files';
@@ -337,7 +338,7 @@ const ReviewScroll = ({ cards }: { cards: ReviewCard[] }) => {
         {cards.map((c, i) => (
           <div key={i} className={styles.reviewCard}>
             <div className={styles.reviewCardImg}>
-              <img src={c.img} alt={c.name} loading="lazy" />
+              <Image src={c.img} alt={c.name} fill sizes="(max-width: 768px) 85vw, 340px" style={{ objectFit: 'cover' }} />
             </div>
             <div className={styles.reviewCardBody}>
               <div className={styles.reviewCardStars}>★★★★★</div>
@@ -355,7 +356,7 @@ const ReviewScroll = ({ cards }: { cards: ReviewCard[] }) => {
 const InfluencerSplit = ({ influencer, reversed }: { influencer: Influencer; reversed: boolean }) => (
   <div className={`${styles.influencerSplit} ${reversed ? styles.influencerSplitReversed : ''}`}>
     <div className={styles.influencerImg}>
-      <img src={influencer.img} alt={influencer.name} loading="lazy" style={{ objectPosition: influencer.imagePosition ?? 'center 20%' }} />
+      <Image src={influencer.img} alt={influencer.name} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover', objectPosition: influencer.imagePosition ?? 'center 20%' }} />
     </div>
     <div className={styles.influencerContent}>
       {influencer.role && <p className={styles.influencerLabel}>{influencer.role}</p>}
@@ -398,16 +399,16 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
   const [sort, setSort] = useState(0);
   const [accessories, setAccessories] = useState<AccessoryProduct[]>(ssrAccessories);
 
+  // Client-side fallback: als SSR geen accessories opleverde, fetch ze alsnog
   useEffect(() => {
-    if (ssrAccessories.length > 0) {
-      setAccessories(ssrAccessories);
-      return;
-    }
+    if (ssrAccessories.length > 0) return;
+    let cancelled = false;
     fetch('/api/accessories')
       .then(r => r.json())
-      .then((data: AccessoryProduct[]) => { if (data.length) setAccessories(data); })
+      .then((data: AccessoryProduct[]) => { if (!cancelled && data.length) setAccessories(data); })
       .catch(() => {});
-  }, [ssrAccessories]);
+    return () => { cancelled = true; };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const slug = typeof router.query.slug === 'string' ? router.query.slug : 'musician';
   const cat  = CATEGORIES[slug] ?? CATEGORIES.musician;
@@ -652,7 +653,7 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
                   </ul>
                 </div>
                 <div className={styles.attenImgWrap}>
-                  <img src={cat.chartImg} alt={t('attenSection.heading')} loading="lazy" className={styles.attenImg} />
+                  <Image src={cat.chartImg} alt={t('attenSection.heading')} width={800} height={500} className={styles.attenImg} style={{ width: '100%', height: 'auto' }} />
                 </div>
               </div>
             </div>
@@ -752,7 +753,7 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
                     loading="lazy"
                   />
                 </div>
-                <p className={styles.videoNote} dangerouslySetInnerHTML={{ __html: t('ui.videoNote') }} />
+                <p className={styles.videoNote} dangerouslySetInnerHTML={{ __html: sanitizeHtml(t('ui.videoNote')) }} />
               </div>
             </div>
           </div>

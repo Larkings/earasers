@@ -52,7 +52,7 @@ const AccessoriesPage: NextPage<Props> = ({ products }) => {
                 <Link key={p.id} href={`/accessory/${p.handle}`} className={styles.card}>
                   <div className={styles.imgWrap}>
                     {p.image ? (
-                      <Image src={p.image.url} alt={p.image.altText ?? p.title} fill style={{ objectFit: 'cover' }} />
+                      <Image src={p.image.url} alt={p.image.altText ?? p.title} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" style={{ objectFit: 'cover' }} />
                     ) : (
                       <div className={accStyles.imgPlaceholder} />
                     )}

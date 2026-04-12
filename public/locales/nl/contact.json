@@ -27,6 +27,7 @@
   "required": "*",
   "validationError": "Vul alle verplichte velden in.",
   "send": "Bericht versturen",
+  "sending": "Versturen…",
   "successTitle": "Bericht verzonden!",
   "successSub": "Bedankt voor je bericht. We nemen binnen een paar uur contact met je op.",
   "sendAnother": "Nog een bericht sturen"

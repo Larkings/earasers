@@ -73,7 +73,7 @@ const Blog: NextPage = () => {
               {filtered.map(post => (
                 <Link key={post.slug} href={`/blog/${post.slug}`} className={styles.card}>
                   <div className={styles.imgWrap}>
-                    <Image src={post.img} alt={post.title} fill style={{ objectFit: 'cover' }} />
+                    <Image src={post.img} alt={post.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" style={{ objectFit: 'cover' }} />
                   </div>
                   <div className={styles.cardContent}>
                     <div className={styles.meta}>

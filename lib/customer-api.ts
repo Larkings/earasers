@@ -26,7 +26,7 @@ export type CustomerOrder = {
       node: {
         title:    string
         quantity: number
-        image:    { url: string; altText: string } | null
+        image:    { url: string; altText: string | null } | null
         price:    { amount: string; currencyCode: string }
       }
     }>
