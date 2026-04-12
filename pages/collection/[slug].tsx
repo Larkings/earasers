@@ -21,7 +21,8 @@ import {
 import styles from '../../styles/collection.module.css';
 import { Influencers } from '../../components/influencers';
 import { useCurrency } from '../../context/currency';
-import { sanitizeHtml } from '../../lib/safe-html';
+// videoNote is statische i18n content die we zelf controleren — geen sanitize nodig.
+// Blog content gebruikt wel sanitizeHtml via lib/safe-html.
 
 /* ─── CDN shortcuts ─── */
 const CDN = 'https://earasers-eu.myshopify.com/cdn/shop/files';
@@ -753,7 +754,7 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
                     loading="lazy"
                   />
                 </div>
-                <p className={styles.videoNote} dangerouslySetInnerHTML={{ __html: sanitizeHtml(t('ui.videoNote')) }} />
+                <p className={styles.videoNote} dangerouslySetInnerHTML={{ __html: t('ui.videoNote') }} />
               </div>
             </div>
           </div>
