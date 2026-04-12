@@ -819,26 +819,59 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
   );
 };
 
-export const getServerSideProps: GetServerSideProps<PageProps> = async ({ locale, params }) => {
+export const getServerSideProps: GetServerSideProps<PageProps> = async ({ locale, params, res }) => {
   const slug = typeof params?.slug === 'string' ? params.slug : 'musician'
 
+  // CDN cache: 5 min browser, 10 min shared — daarna stale-while-revalidate 1h.
+  // Maakt deze dynamic SSR route effectief statisch voor herhaalde requests.
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=600, stale-while-revalidate=3600',
+  )
+
+  // Alle Shopify calls zijn defensief: elke failure levert een default,
+  // zodat een trage of falende Shopify API NOOIT een 500 kan veroorzaken.
   let shopifyProductImg: string | null = null
   let accessories: AccessoryProduct[] = []
   try {
     const handle = SLUG_TO_HANDLE[slug]
     const [product, acc] = await Promise.all([
-      handle ? getProductWithVariants(handle) : Promise.resolve(null),
-      getCollectionProducts('accessories').catch(() => [] as AccessoryProduct[]),
+      handle
+        ? getProductWithVariants(handle).catch((err) => {
+            console.error('[collection] getProductWithVariants failed:', err)
+            return null
+          })
+        : Promise.resolve(null),
+      getCollectionProducts('accessories').catch((err) => {
+        console.error('[collection] getCollectionProducts failed:', err)
+        return [] as AccessoryProduct[]
+      }),
     ])
     shopifyProductImg = product?.images?.[0]?.url ?? null
     accessories = filterFbtAccessories(acc)
   } catch (err) {
-    console.error('[collection] Shopify fetch failed:', err)
+    console.error('[collection] unexpected error in Shopify fetch:', err)
+  }
+
+  // Translations defensief: als een namespace faalt, val terug op Engelse versie.
+  let translationProps: Record<string, unknown> = {}
+  try {
+    translationProps = await serverSideTranslations(
+      locale ?? 'en',
+      ['common', 'collection', 'home'],
+    )
+  } catch (err) {
+    console.error('[collection] translation load failed, falling back to en:', err)
+    try {
+      translationProps = await serverSideTranslations('en', ['common', 'collection', 'home'])
+    } catch (err2) {
+      console.error('[collection] english fallback also failed:', err2)
+    }
   }
 
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['common', 'collection', 'home'])),
+      ...translationProps,
       shopifyProductImg,
       accessories,
     },

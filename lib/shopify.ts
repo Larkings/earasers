@@ -14,7 +14,9 @@ export async function shopifyFetch<T>(
   variables: Record<string, unknown> = {},
 ): Promise<T> {
   const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), 15_000)
+  // 8s timeout: veilig onder Vercel Hobby plan's 10s serverless function limit.
+  // Een trage Shopify-respons mag geen 500 veroorzaken op productie.
+  const timeout = setTimeout(() => controller.abort(), 8_000)
 
   try {
     const res = await fetch(API_URL, {
@@ -35,7 +37,7 @@ export async function shopifyFetch<T>(
     return json.data as T
   } catch (err: unknown) {
     if (err instanceof DOMException && err.name === 'AbortError') {
-      throw new Error('Shopify API timeout — request took longer than 15 seconds')
+      throw new Error('Shopify API timeout — request took longer than 8 seconds')
     }
     throw err
   } finally {
