@@ -391,11 +391,23 @@ const ClinicMarquee = ({ names, label }: { names: string[]; label: string }) => 
 /* ─── Main page ─── */
 type PageProps = { shopifyProductImg: string | null; accessories: AccessoryProduct[] };
 
-const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories }) => {
+const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: ssrAccessories }) => {
   const router = useRouter();
   const { t } = useTranslation('collection');
   const { fmt } = useCurrency();
   const [sort, setSort] = useState(0);
+  const [accessories, setAccessories] = useState<AccessoryProduct[]>(ssrAccessories);
+
+  useEffect(() => {
+    if (ssrAccessories.length > 0) {
+      setAccessories(ssrAccessories);
+      return;
+    }
+    fetch('/api/accessories')
+      .then(r => r.json())
+      .then((data: AccessoryProduct[]) => { if (data.length) setAccessories(data); })
+      .catch(() => {});
+  }, [ssrAccessories]);
 
   const slug = typeof router.query.slug === 'string' ? router.query.slug : 'musician';
   const cat  = CATEGORIES[slug] ?? CATEGORIES.musician;
@@ -649,35 +661,38 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories })
 
         {/* ── Compare table (musician) ── */}
         {cat.showCompareTable && (
-          <div className={styles.compareSection}>
+          <section className={styles.compareSection}>
             <div className="container">
-              <div className={styles.compareSectionHead}>
-                <h2 className={styles.compareHeading}>{t('compareTable.heading')}</h2>
-                <p className={styles.compareSub}>{t('compareTable.sub')}</p>
-              </div>
-              <div className={styles.compareTableWrap}>
+              <h2 className={styles.compareHeading} data-reveal>{t('compareTable.heading')}</h2>
+              <p className={styles.compareSub} data-reveal data-delay="1">{t('compareTable.sub')}</p>
+            </div>
+
+            <div className={styles.compareTableContainer}>
+              <div className={styles.compareTableWrap} data-reveal data-delay="2">
                 <table className={styles.compareTable}>
                   <thead>
                     <tr>
-                      <th></th>
-                      <th className={styles.compareColUs}><span className={styles.compareThBadge}><AwardIcon size={15} /> {t('compareTable.colEarasers')}</span></th>
-                      <th>{t('compareTable.colCustom')}</th>
-                      <th>{t('compareTable.colBudget')}</th>
+                      <th className={styles.compareThEmpty} />
+                      <th className={styles.compareThEarasers}>
+                        <span className={styles.compareThBadge}><AwardIcon size={15} /> {t('compareTable.colEarasers')}</span>
+                      </th>
+                      <th className={styles.compareTh}>{t('compareTable.colCustom')}</th>
+                      <th className={styles.compareTh}>{t('compareTable.colBudget')}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr><td>{t('compareTable.rowPrice')}</td><td className={styles.compareColUs}>{t('compareTable.valEarasersPrice')}</td><td>{t('compareTable.valCustomPrice')}</td><td>{t('compareTable.valBudgetPrice')}</td></tr>
-                    <tr><td>{t('compareTable.rowAudiologist')}</td><td className={styles.compareColUs}><span className={styles.crossMark}><CloseIcon size={17} /></span></td><td><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td></tr>
-                    <tr><td>{t('compareTable.rowDelivery')}</td><td className={styles.compareColUs}>{t('compareTable.valEarasersDelivery')}</td><td>{t('compareTable.valCustomDelivery')}</td><td>{t('compareTable.valBudgetDelivery')}</td></tr>
-                    <tr><td>{t('compareTable.rowInvisible')}</td><td className={styles.compareColUs}><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td></tr>
-                    <tr><td>{t('compareTable.rowClearSound')}</td><td className={styles.compareColUs}><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td></tr>
-                    <tr><td>{t('compareTable.rowReplaceableFilter')}</td><td className={styles.compareColUs}><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td></tr>
-                    <tr><td>{t('compareTable.rowAwardWinning')}</td><td className={styles.compareColUs}><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.checkMark}><CheckIcon size={17} /></span></td><td><span className={styles.crossMark}><CloseIcon size={17} /></span></td></tr>
+                    <tr className={styles.compareRow}><td className={styles.compareTdLabel}>{t('compareTable.rowPrice')}</td><td className={styles.compareTdEarasers}>{t('compareTable.valEarasersPrice')}</td><td className={styles.compareTd}>{t('compareTable.valCustomPrice')}</td><td className={styles.compareTd}>{t('compareTable.valBudgetPrice')}</td></tr>
+                    <tr className={styles.compareRow}><td className={styles.compareTdLabel}>{t('compareTable.rowAudiologist')}</td><td className={styles.compareTdEarasers}><span className={styles.compareNo}><CloseIcon size={17} /></span></td><td className={styles.compareTd}><span className={styles.compareYes}><CheckIcon size={17} /></span></td><td className={styles.compareTd}><span className={styles.compareNo}><CloseIcon size={17} /></span></td></tr>
+                    <tr className={styles.compareRow}><td className={styles.compareTdLabel}>{t('compareTable.rowDelivery')}</td><td className={styles.compareTdEarasers}>{t('compareTable.valEarasersDelivery')}</td><td className={styles.compareTd}>{t('compareTable.valCustomDelivery')}</td><td className={styles.compareTd}>{t('compareTable.valBudgetDelivery')}</td></tr>
+                    <tr className={styles.compareRow}><td className={styles.compareTdLabel}>{t('compareTable.rowInvisible')}</td><td className={styles.compareTdEarasers}><span className={styles.compareYes}><CheckIcon size={17} /></span></td><td className={styles.compareTd}><span className={styles.compareNo}><CloseIcon size={17} /></span></td><td className={styles.compareTd}><span className={styles.compareNo}><CloseIcon size={17} /></span></td></tr>
+                    <tr className={styles.compareRow}><td className={styles.compareTdLabel}>{t('compareTable.rowClearSound')}</td><td className={styles.compareTdEarasers}><span className={styles.compareYes}><CheckIcon size={17} /></span></td><td className={styles.compareTd}><span className={styles.compareNo}><CloseIcon size={17} /></span></td><td className={styles.compareTd}><span className={styles.compareNo}><CloseIcon size={17} /></span></td></tr>
+                    <tr className={styles.compareRow}><td className={styles.compareTdLabel}>{t('compareTable.rowReplaceableFilter')}</td><td className={styles.compareTdEarasers}><span className={styles.compareYes}><CheckIcon size={17} /></span></td><td className={styles.compareTd}><span className={styles.compareYes}><CheckIcon size={17} /></span></td><td className={styles.compareTd}><span className={styles.compareNo}><CloseIcon size={17} /></span></td></tr>
+                    <tr className={styles.compareRow}><td className={styles.compareTdLabel}>{t('compareTable.rowAwardWinning')}</td><td className={styles.compareTdEarasers}><span className={styles.compareYes}><CheckIcon size={17} /></span></td><td className={styles.compareTd}><span className={styles.compareYes}><CheckIcon size={17} /></span></td><td className={styles.compareTd}><span className={styles.compareNo}><CloseIcon size={17} /></span></td></tr>
                   </tbody>
                 </table>
               </div>
             </div>
-          </div>
+          </section>
         )}
 
         {/* ── Technology section ── */}
