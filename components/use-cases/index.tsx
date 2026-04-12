@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import styles from './use-cases.module.css';
 import {
@@ -99,7 +100,7 @@ export const UseCases = () => {
 
         <div className={styles.grid}>
           {cases.map((c, i) => (
-            <a
+            <Link
               key={c.slug}
               href={`/collection/${c.slug}`}
               className={styles.card}
@@ -148,7 +149,7 @@ export const UseCases = () => {
                   </span>
                 </div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
 
