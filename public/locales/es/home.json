@@ -193,20 +193,20 @@
     "viewAll": "Ver todos los artículos",
     "posts": [
       {
-        "title": "Earasers, 5 veces premiados!",
-        "excerpt": "Por quinto ano consecutivo, MusicRadar ha nombrado a Earasers los mejores tapones para musica del mercado.",
+        "title": "¡Earasers, 5 veces premiados!",
+        "excerpt": "Por quinto año consecutivo, MusicRadar ha nombrado a Earasers los mejores tapones para música del mercado.",
         "date": "Marzo 2024",
         "slug": "5-time-award-winning"
       },
       {
-        "title": "Los mejores DJs del mundo confian en Earasers",
-        "excerpt": "Desde los escenarios principales de festivales hasta las noches de club, los DJs profesionales confian en Earasers.",
+        "title": "Los mejores DJs del mundo confían en Earasers",
+        "excerpt": "Desde los escenarios principales de festivales hasta las noches de club, los DJs profesionales confían en Earasers.",
         "date": "Enero 2024",
         "slug": "trusted-by-djs"
       },
       {
         "title": "Ya disponible en Dijkman Music Amsterdam",
-        "excerpt": "Ya puedes probar y comprar Earasers en la tienda Dijkman Music, una de las tiendas de musica mas respetadas de los Paises Bajos.",
+        "excerpt": "Ya puedes probar y comprar Earasers en la tienda Dijkman Music, una de las tiendas de música más respetadas de los Países Bajos.",
         "date": "Noviembre 2023",
         "slug": "dijkman-amsterdam"
       }

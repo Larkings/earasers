@@ -38,13 +38,13 @@
     "premium": "Premium",
     "products": [
       {
-        "name": "Musik-Ohrstopsel"
+        "name": "Musik-Ohrstöpsel"
       },
       {
-        "name": "DJ-Ohrstopsel"
+        "name": "DJ-Ohrstöpsel"
       },
       {
-        "name": "Perfektes Grossenset"
+        "name": "Perfektes Größenset"
       },
       {
         "name": "Earasers Pro-Kit"
@@ -194,19 +194,19 @@
     "posts": [
       {
         "title": "5-fach ausgezeichnet: Earasers!",
-        "excerpt": "Zum funften Mal in Folge hat MusicRadar Earasers zum besten Musik-Ohrstopsel gekurt.",
-        "date": "Marz 2024",
+        "excerpt": "Zum fünften Mal in Folge hat MusicRadar Earasers zum besten Musik-Ohrstöpsel gekürt.",
+        "date": "März 2024",
         "slug": "5-time-award-winning"
       },
       {
         "title": "Von Weltklasse-DJs vertraut",
-        "excerpt": "Von Festival-Hauptbuhnen bis zu intimen Clubnachten, professionelle DJs verlassen sich auf Earasers.",
+        "excerpt": "Von Festival-Hauptbühnen bis zu intimen Clubnächten, professionelle DJs verlassen sich auf Earasers.",
         "date": "Januar 2024",
         "slug": "trusted-by-djs"
       },
       {
-        "title": "Jetzt bei Dijkman Music Amsterdam erhaltlich",
-        "excerpt": "Probieren und kaufen Sie Earasers im Laden bei Dijkman Music, einem der angesehensten Musikgeschafte der Niederlande.",
+        "title": "Jetzt bei Dijkman Music Amsterdam erhältlich",
+        "excerpt": "Probieren und kaufen Sie Earasers im Laden bei Dijkman Music, einem der angesehensten Musikgeschäfte der Niederlande.",
         "date": "November 2023",
         "slug": "dijkman-amsterdam"
       }
