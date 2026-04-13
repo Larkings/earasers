@@ -508,7 +508,8 @@
   gap: 8px;
 }
 
-.addBtn:hover { background: var(--color-accent-hover); transform: translateY(-1px); }
+.addBtn:hover:not(:disabled) { background: var(--color-accent-hover); transform: translateY(-1px); }
+.addBtn:disabled { opacity: 0.4; cursor: not-allowed; }
 .addBtnDone   { background: var(--color-success); }
 
 .buyNowBtn {
