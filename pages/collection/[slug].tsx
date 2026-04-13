@@ -531,7 +531,16 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
                 <a href="#products" className={styles.heroBtn}>{t('ui.shopNow')}</a>
               </div>
               <div className={styles.heroImgWrap}>
-                <Image src={cat.heroImg} alt={t(`${slug}.title`)} width={400} height={400} className={styles.heroImg} />
+                <Image
+                  src={cat.heroImg}
+                  alt={t(`${slug}.title`)}
+                  width={400}
+                  height={400}
+                  priority
+                  sizes="(max-width: 767px) 80vw, 380px"
+                  className={styles.heroImg}
+                  style={{ width: '100%', height: 'auto' }}
+                />
               </div>
             </div>
           </div>
