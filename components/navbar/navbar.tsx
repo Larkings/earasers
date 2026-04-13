@@ -83,7 +83,7 @@ export const Navbar = () => {
                 width={200}
                 height={200}
                 priority
-                sizes="(max-width: 767px) 130px, (max-width: 1023px) 150px, 170px"
+                sizes="(max-width: 479px) 170px, (max-width: 767px) 200px, 230px"
                 className={styles.logoImage}
                 style={{ height: 'auto' }}
             />

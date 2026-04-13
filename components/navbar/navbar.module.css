@@ -81,16 +81,16 @@
 .logo:hover { color: var(--color-accent); }
 
 .logoImage {
-  width: 130px;
+  width: 170px;
   height: auto;
 }
 
 @media (min-width: 480px) {
-  .logoImage { width: 150px; }
+  .logoImage { width: 200px; }
 }
 
 @media (min-width: 768px) {
-  .logoImage { width: 170px; }
+  .logoImage { width: 230px; }
 }
 
 /* Desktop nav */
