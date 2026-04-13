@@ -400,7 +400,7 @@ const ClinicMarquee = ({ names, label }: { names: string[]; label: string }) => 
   </div>
 );
 
-/* ─── Main page ─── */
+/* ─── Main page ───- */
 type PageProps = { shopifyProductImg: string | null; accessories: AccessoryProduct[] };
 
 const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: ssrAccessories }) => {
