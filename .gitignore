@@ -37,3 +37,7 @@ next-env.d.ts
 
 # large raw video files (use compressed versions only)
 public/Earasers - with logo.mp4
+
+# Shopify CSV exports (kunnen prijzen/voorraad bevatten)
+allproducts.csv
+*.shopify.csv

@@ -11,7 +11,7 @@ import { StarIcon, StarEmptyIcon, CheckIcon, ShieldIcon } from '../components/ic
 import styles from '../styles/product.module.css';
 import {
   getProduct, PRODUCTS, type Product,
-  getProductWithVariants, SLUG_TO_HANDLE, findVariantByFilter, hasVariantForSize, type ShopifyVariant,
+  getProductWithVariants, SLUG_TO_HANDLE, findVariantByFilter, hasVariantForSize, matchesSize, type ShopifyVariant,
   getCollectionProducts, filterFbtAccessories, type AccessoryProduct,
   STARTER_KIT_HANDLE, PRO_KIT_HANDLE, getKitProductData, type KitProductData,
 } from '../lib/products';
@@ -248,6 +248,29 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, accessories }) => {
     if (!variantId) {
       setVariantError(t('variantUnavailable'));
       return;
+    }
+
+    // SAFETY: verifieer dat de gevonden variant daadwerkelijk de geselecteerde
+    // size/filter bevat. Voorkomt dat een mismatch tussen UI en Shopify data
+    // ervoor zorgt dat customers een verkeerde variant geleverd krijgen.
+    const chosenVariant = activeVariants.find(v => v.id === variantId);
+    if (chosenVariant) {
+      const opts = chosenVariant.selectedOptions;
+      const sizeOk   = opts.some(o => matchesSize(o.value, sizeLabel));
+      const dbMatch  = opts.some(o => {
+        const m = o.value.toLowerCase().match(/-(\d+)\s*db/);
+        return m ? `-${m[1]}db` === filter.db.toLowerCase() : false;
+      });
+      const hasFilterOpt = opts.some(o => /-\d+db/i.test(o.value));
+      if (!sizeOk || (hasFilterOpt && !dbMatch)) {
+        console.error('[cart] variant mismatch', {
+          selectedSize: sizeLabel,
+          selectedFilter: filter.db,
+          variant: chosenVariant,
+        });
+        setVariantError(t('variantUnavailable'));
+        return;
+      }
     }
 
     setVariantError(null);

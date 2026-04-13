@@ -333,6 +333,27 @@ export type AccessoryProduct = {
 
 const FBT_HANDLES = ['waterproof-keychain-carry-case', 'earasers-renewal-kit', 'metal-carrying-case', 'carry-case', 'renewal-kit'];
 
+/**
+ * Backstop: sommige Shopify-collections (m.n. "accessories") bevatten InEarz-
+ * producten die per ongeluk gepubliceerd of aan de collection toegevoegd zijn.
+ * Die horen NIET op earasers.shop. Totdat Shopify-admin is opgeschoond
+ * excluden we hier op basis van het handle-patroon.
+ *
+ * Matcht: inearz-*, *faceplate*, left-/right-shell-color, swim-plugs*,
+ * silicone-tips-for-zen*, universal-inearz*, wireless-in-ear-monitor-system,
+ * lanyard (exact), in-line-volume-control (exact), en producten met een
+ * InEarz-typisch handle-token.
+ */
+const INEARZ_HANDLE_RE = /^(?:inearz-|universal-inearz|wireless-in-ear-monitor-system$|lanyard$|in-line-volume-control$|swim-plugs|silicone-tips-for-zen)|faceplate|shell-color/i;
+
+export function isInearzHandle(handle: string): boolean {
+  return INEARZ_HANDLE_RE.test(handle);
+}
+
+export function isEarasersProduct(p: { handle: string }): boolean {
+  return !isInearzHandle(p.handle);
+}
+
 export function filterFbtAccessories(products: AccessoryProduct[]): AccessoryProduct[] {
   const byHandle = products.filter(p => FBT_HANDLES.some(h => p.handle.includes(h)));
   if (byHandle.length) return byHandle.slice(0, 2);
@@ -390,6 +411,8 @@ type AccessoryProductResponse = {
 }
 
 export async function getAccessoryProduct(handle: string): Promise<AccessoryProductDetail | null> {
+  // Backstop: InEarz-producten mogen niet als Earasers-accessoire renderen
+  if (isInearzHandle(handle)) return null;
   try {
     const data = await shopifyFetch<AccessoryProductResponse>(`
       query AccessoryByHandle($handle: String!) {
@@ -463,16 +486,18 @@ export async function getCollectionProducts(handle: string): Promise<AccessoryPr
     `, { handle })
 
     if (!data.collection) return []
-    return data.collection.products.edges.map(({ node }) => ({
-      id:             node.id,
-      title:          node.title,
-      handle:         node.handle,
-      onlineStoreUrl: node.onlineStoreUrl,
-      image:          node.images.edges[0]?.node ?? null,
-      price:          parseFloat(node.priceRange.minVariantPrice.amount),
-      compareAtPrice: parseFloat(node.compareAtPriceRange.minVariantPrice.amount),
-      firstVariantId: (node as any).variants?.edges?.[0]?.node?.id,
-    }))
+    return data.collection.products.edges
+      .filter(({ node }) => isEarasersProduct(node))
+      .map(({ node }) => ({
+        id:             node.id,
+        title:          node.title,
+        handle:         node.handle,
+        onlineStoreUrl: node.onlineStoreUrl,
+        image:          node.images.edges[0]?.node ?? null,
+        price:          parseFloat(node.priceRange.minVariantPrice.amount),
+        compareAtPrice: parseFloat(node.compareAtPriceRange.minVariantPrice.amount),
+        firstVariantId: (node as any).variants?.edges?.[0]?.node?.id,
+      }))
   } catch {
     return []
   }
@@ -516,7 +541,7 @@ const SIZE_PREFIX: Record<string, string> = {
  */
 const COMBO_RE = /\b(extra small|small|medium|large)\s*&\s*(extra small|small|medium|large)\b/i
 
-function matchesSize(optionValue: string, sizeLabel: string): boolean {
+export function matchesSize(optionValue: string, sizeLabel: string): boolean {
   const v       = optionValue.toLowerCase().trim()
   const label   = sizeLabel.toLowerCase().trim()
   const isCombo = COMBO_RE.test(v)
@@ -554,23 +579,66 @@ export function hasVariantForSize(variants: ShopifyVariant[], sizeLabel: string)
   )
 }
 
+/**
+ * Zoekt de variant die BEIDE criteria matcht: geselecteerde maat én geselecteerd
+ * filter. Essentieel: size-match en filter-match MOETEN op ÉÉN zelfde variant
+ * zitten, zodat een customer nooit per ongeluk een andere variant (bv. default
+ * M / -19dB) krijgt dan wat ie in de UI had geselecteerd.
+ *
+ * Als het product maar één variant-optie heeft (bv. alleen Size voor sommige
+ * kit-SKU's), dan wordt de filter-check overgeslagen — dat is by design
+ * omdat er dan geen filter-keuze is. De product page toont dan ook maar één
+ * filter-knop.
+ */
 export function findVariantByFilter(
   variants: ShopifyVariant[],
   sizeLabel: string,
   filter: FilterOption,
 ): ShopifyVariant | undefined {
-  // Try exact match on shopifyValue first
-  const exactMatch = variants.find(v =>
-    v.selectedOptions.some(o => o.value === filter.shopifyValue)
-    && v.selectedOptions.some(o => matchesSize(o.value, sizeLabel))
-  )
-  if (exactMatch) return exactMatch
+  const filterDb = filter.db.toLowerCase()
+  const filterShopify = filter.shopifyValue
 
-  // Fallback: match on dB value string (e.g. "-19dB" in option value)
-  return variants.find(v =>
-    v.selectedOptions.some(o => o.value.toLowerCase().includes(filter.db.toLowerCase()))
-    && v.selectedOptions.some(o => matchesSize(o.value, sizeLabel))
-  )
+  // Een variant "heeft" een filter-optie als een van de selectedOptions iets
+  // met een dB-waarde bevat OF exact overeenkomt met de verwachte Shopify-string.
+  const hasFilterOption = (v: ShopifyVariant) =>
+    v.selectedOptions.some(o =>
+      /-\d+db/i.test(o.value) || o.value === filterShopify,
+    )
+
+  const sizeMatches = (v: ShopifyVariant) =>
+    v.selectedOptions.some(o => matchesSize(o.value, sizeLabel))
+
+  const filterMatches = (v: ShopifyVariant) => {
+    // Exacte match op de bekende Shopify-string
+    if (v.selectedOptions.some(o => o.value === filterShopify)) return true
+    // Anders: zoek dB-waarde in de optie-waarden, maar vergelijk strikt op
+    // hetzelfde dB-getal (voorkomt dat "-19dB" matcht op "-190dB" of iets
+    // met alleen een losse "-26dB peak" zin in een andere optie).
+    return v.selectedOptions.some(o => {
+      const m = o.value.toLowerCase().match(/-(\d+)\s*db/)
+      if (!m) return false
+      const db = `-${m[1]}db`
+      return db === filterDb
+    })
+  }
+
+  // 1) Strikt: maat én filter matchen op dezelfde variant
+  const strict = variants.find(v => sizeMatches(v) && filterMatches(v))
+  if (strict) return strict
+
+  // 2) Product heeft geen filter-optie (single-filter SKU): match alleen op
+  //    size. Belangrijk: alléén deze fallback als GEEN enkele variant een
+  //    filter-optie heeft, anders zou hier een verkeerd filter weggeslopen
+  //    kunnen worden.
+  const anyHasFilter = variants.some(hasFilterOption)
+  if (!anyHasFilter) {
+    return variants.find(sizeMatches)
+  }
+
+  // 3) Geen match gevonden: returnen als undefined zodat de caller een
+  //    variantError kan tonen i.p.v. stilletjes een verkeerde variant te
+  //    verschepen.
+  return undefined
 }
 
 export function findVariant(
