@@ -2,9 +2,17 @@
 .backdrop {
   position: fixed;
   inset: 0;
+  /* iOS Safari: inset:0 is gebaseerd op large viewport — expliciete svh
+     voorkomt witruimte onderaan als de adresbalk verschijnt. */
+  height: 100vh;
+  height: 100svh;
   background: rgba(0, 0, 0, 0.45);
   z-index: 400;
   animation: fadeIn 0.2s ease;
+  /* Voorkom scroll-chaining: tap/swipe op backdrop mag onderliggende
+     pagina niet bewegen. */
+  touch-action: none;
+  overscroll-behavior: contain;
 }
 
 @keyframes fadeIn {
@@ -19,15 +27,21 @@
   right: 0;
   width: 420px;
   max-width: 100vw;
+  /* Hoogte fallback chain:
+       1) 100vh   — alle browsers (kan op iOS te groot zijn)
+       2) 100svh  — stabiel op kleinste viewport, GEEN jump bij adresbalk
+     We kiezen bewust svh boven dvh om layout-shifts tijdens scroll
+     (waarbij iOS de balk laat verschijnen/verdwijnen) te vermijden. */
   height: 100vh;
-  height: 100dvh;
+  height: 100svh;
   max-height: 100vh;
-  max-height: 100dvh;
+  max-height: 100svh;
   background: var(--color-bg);
   z-index: 401;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  overscroll-behavior: contain;
   box-shadow: -4px 0 32px rgba(0, 0, 0, 0.12);
   animation: slideIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
