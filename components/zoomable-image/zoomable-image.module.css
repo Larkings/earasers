@@ -43,17 +43,17 @@
   .hint { opacity: 0; }
 }
 
+/* ── Fullscreen lightbox ─────────────────────────────── */
 .lightbox {
   position: fixed;
   inset: 0;
   z-index: 1100;
-  background: rgba(0, 0, 0, 0.88);
+  background: #000;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  cursor: zoom-out;
+  flex-direction: column;
   animation: fadeIn 0.18s ease;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 @keyframes fadeIn {
@@ -63,37 +63,94 @@
 
 .close {
   position: absolute;
-  top: max(12px, env(safe-area-inset-top, 0px));
-  right: max(12px, env(safe-area-inset-right, 0px));
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  right: calc(12px + env(safe-area-inset-right, 0px));
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  z-index: 3;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.close:hover,
+.close:active { background: rgba(0, 0, 0, 0.8); }
+
+.zoomBar {
+  position: absolute;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  z-index: 3;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.zoomBtn {
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  background: rgba(0, 0, 0, 0.45);
+  background: transparent;
   border: none;
   border-radius: 50%;
-  cursor: pointer;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1;
-  z-index: 2;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
 }
 
-.close:hover { background: rgba(0, 0, 0, 0.7); }
+.zoomBtn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.12); }
+.zoomBtn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.zoomLevel {
+  min-width: 52px;
+  text-align: center;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+.scrollArea {
+  flex: 1;
+  width: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-x pan-y pinch-zoom;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 12px 88px;
+  cursor: zoom-out;
+}
 
 .lightboxImg {
-  max-width: 100%;
-  max-height: 90vh;
-  width: auto;
+  display: block;
   height: auto;
-  object-fit: contain;
-  border-radius: var(--radius-md);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
-  cursor: default;
-}
-
-@media (max-width: 767px) {
-  .lightbox { padding: 8px; }
-  .lightboxImg { max-height: 85vh; }
+  user-select: none;
+  -webkit-user-drag: none;
+  transition: width 0.2s ease;
+  cursor: zoom-in;
+  image-rendering: -webkit-optimize-contrast;
 }
