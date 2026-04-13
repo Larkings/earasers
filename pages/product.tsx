@@ -215,16 +215,63 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, accessories }) => {
     ? parseFloat(selectedVariant?.compareAtPrice?.amount ?? String(kitData.originalPrice))
     : isKit ? product.kitOriginal : product.originalPrice;
 
-  const handleBuyNow = async () => {
+  /**
+   * Verifieer dat de gekozen Shopify variant EXACT overeenkomt met de
+   * geselecteerde size + filter in de UI. Gebruikt door zowel handleAddToCart
+   * als handleBuyNow zodat *geen* checkout-pad een verkeerde variant kan
+   * doorlaten.
+   *
+   * Returnt `null` bij ongeldige selectie, anders de gevalideerde variant +
+   * size/filter context voor cart-toevoeging.
+   */
+  type ResolvedSelection = { variantId: string; sizeLabel: string; filter: (typeof genreFilters)[number]; chosenVariant: ShopifyVariant | undefined };
+  const resolveSelectedVariant = (context: 'add' | 'buyNow'): ResolvedSelection | null => {
+    const sizeLabel = sizes[activeSize]?.label;
+    if (!sizeLabel) {
+      setVariantError(t('variantUnavailable'));
+      return null;
+    }
+    const filter = genreFilters[activeFilter] ?? genreFilters[0];
     const variantId = getVariantId();
     if (!variantId) {
       setVariantError(t('variantUnavailable'));
-      return;
+      return null;
     }
+
+    // Sanity: verifieer dat de gevonden variant daadwerkelijk de geselecteerde
+    // size/filter bevat. Voorkomt dat een UI/data-mismatch ertoe leidt dat
+    // customers een verkeerde variant geleverd krijgen — óók via Buy Now.
+    const chosenVariant = activeVariants.find(v => v.id === variantId);
+    if (chosenVariant) {
+      const opts = chosenVariant.selectedOptions;
+      const sizeOk      = opts.some(o => matchesSize(o.value, sizeLabel));
+      const hasFilterOpt = opts.some(o => /-\d+db/i.test(o.value));
+      const dbMatch     = opts.some(o => {
+        const m = o.value.toLowerCase().match(/-(\d+)\s*db/);
+        return m ? `-${m[1]}db` === filter.db.toLowerCase() : false;
+      });
+      if (!sizeOk || (hasFilterOpt && !dbMatch)) {
+        console.error('[cart] variant mismatch', {
+          context,
+          selectedSize: sizeLabel,
+          selectedFilter: filter.db,
+          variant: chosenVariant,
+        });
+        setVariantError(t('variantUnavailable'));
+        return null;
+      }
+    }
+
+    return { variantId, sizeLabel, filter, chosenVariant };
+  };
+
+  const handleBuyNow = async () => {
+    const resolved = resolveSelectedVariant('buyNow');
+    if (!resolved) return;
     setVariantError(null);
     setBuyNowLoading(true);
     try {
-      const checkoutUrl = await createDirectCheckout(variantId, qty, countryCode);
+      const checkoutUrl = await createDirectCheckout(resolved.variantId, qty, countryCode);
       window.location.href = checkoutUrl;
     } catch {
       // Fallback: voeg toe aan normale cart en open cart drawer
@@ -235,43 +282,9 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, accessories }) => {
   };
 
   const handleAddToCart = () => {
-    const sizeLabel   = sizes[activeSize]?.label;
-    if (!sizeLabel) {
-      setVariantError(t('variantUnavailable'));
-      return;
-    }
-    const filter      = genreFilters[activeFilter] ?? genreFilters[0];
-
-    // Zoek Shopify variant ID — kit mode gebruikt kitData, anders main product
-    const variantId = getVariantId();
-
-    if (!variantId) {
-      setVariantError(t('variantUnavailable'));
-      return;
-    }
-
-    // SAFETY: verifieer dat de gevonden variant daadwerkelijk de geselecteerde
-    // size/filter bevat. Voorkomt dat een mismatch tussen UI en Shopify data
-    // ervoor zorgt dat customers een verkeerde variant geleverd krijgen.
-    const chosenVariant = activeVariants.find(v => v.id === variantId);
-    if (chosenVariant) {
-      const opts = chosenVariant.selectedOptions;
-      const sizeOk   = opts.some(o => matchesSize(o.value, sizeLabel));
-      const dbMatch  = opts.some(o => {
-        const m = o.value.toLowerCase().match(/-(\d+)\s*db/);
-        return m ? `-${m[1]}db` === filter.db.toLowerCase() : false;
-      });
-      const hasFilterOpt = opts.some(o => /-\d+db/i.test(o.value));
-      if (!sizeOk || (hasFilterOpt && !dbMatch)) {
-        console.error('[cart] variant mismatch', {
-          selectedSize: sizeLabel,
-          selectedFilter: filter.db,
-          variant: chosenVariant,
-        });
-        setVariantError(t('variantUnavailable'));
-        return;
-      }
-    }
+    const resolved = resolveSelectedVariant('add');
+    if (!resolved) return;
+    const { variantId, sizeLabel, filter } = resolved;
 
     setVariantError(null);
     const itemImg  = kitData?.images[0] ?? product.images[0];
