@@ -260,10 +260,21 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, accessories }) => {
         setVariantError(t('variantUnavailable'));
         return null;
       }
+      // Stock check: blokkeer toevoegen als Shopify de variant als out-of-stock
+      // markeert. Voorkomt verkoop van product dat niet op voorraad is.
+      if (!chosenVariant.availableForSale) {
+        setVariantError(t('soldOut'));
+        return null;
+      }
     }
 
     return { variantId, sizeLabel, filter, chosenVariant };
   };
+
+  // Stock check voor button-disabled state: alleen blokkeren als we een
+  // variant hebben gevonden én Shopify expliciet zegt dat ie niet beschikbaar
+  // is. Bij een onbekende variant tonen we de "variantUnavailable" flow elders.
+  const selectionSoldOut = selectedVariant ? !selectedVariant.availableForSale : false;
 
   const handleBuyNow = async () => {
     const resolved = resolveSelectedVariant('buyNow');
@@ -540,19 +551,22 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, accessories }) => {
               <button
                 className={`${styles.addBtn} ${added ? styles.addBtnDone : ''}`}
                 onClick={handleAddToCart}
+                disabled={selectionSoldOut}
               >
-                {added
-                  ? <><CheckIcon size={16} /> {t('addedToCart')}</>
-                  : qty > 1
-                    ? t('addToCart', { qty: String(qty), price: fmt(price * qty) })
-                    : t('addToCartSingle', { price: fmt(price) })
+                {selectionSoldOut
+                  ? t('soldOut')
+                  : added
+                    ? <><CheckIcon size={16} /> {t('addedToCart')}</>
+                    : qty > 1
+                      ? t('addToCart', { qty: String(qty), price: fmt(price * qty) })
+                      : t('addToCartSingle', { price: fmt(price) })
                 }
               </button>
 
               <button
                 className={styles.buyNowBtn}
                 onClick={handleBuyNow}
-                disabled={buyNowLoading}
+                disabled={buyNowLoading || selectionSoldOut}
               >
                 {buyNowLoading ? t('buyNowLoading') : t('buyNow')}
               </button>
