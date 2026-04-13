@@ -48,11 +48,11 @@
 .item:hover { background: rgba(0, 0, 0, 0.02); }
 
 .itemMain {
-  cursor: default;
+  cursor: pointer;
   background: var(--color-accent-light);
 }
 
-.itemMain:hover { background: var(--color-accent-light); }
+.itemMain:hover { background: rgba(240, 120, 120, 0.15); }
 
 .checkbox {
   flex-shrink: 0;
@@ -67,7 +67,13 @@
   color: #fff;
 }
 
+/* Main product checkbox: default uit (gewone border), active wordt gestuurd door .checkboxActive */
 .itemMain .checkbox {
+  border-color: var(--color-border);
+  background: transparent;
+}
+
+.itemMain .checkboxActive {
   border-color: var(--color-accent);
   background: var(--color-accent);
 }
@@ -156,9 +162,16 @@
   white-space: nowrap;
 }
 
-.addBtn:hover {
+.addBtn:hover:not(:disabled) {
   background: var(--color-accent-hover);
   transform: translateY(-1px);
+}
+
+.addBtn:disabled {
+  background: var(--color-border, #d4d4d4);
+  color: var(--color-text-muted, #888);
+  cursor: not-allowed;
+  opacity: 0.75;
 }
 
 .addBtnDone {

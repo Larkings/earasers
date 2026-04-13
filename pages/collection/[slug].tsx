@@ -1,6 +1,14 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import { serverSideTranslations } from '../../lib/i18n';
-import { getProductWithVariants, SLUG_TO_HANDLE, getCollectionProducts, filterFbtAccessories, type AccessoryProduct } from '../../lib/products';
+import {
+  getProductWithVariants,
+  SLUG_TO_HANDLE,
+  STARTER_KIT_HANDLE,
+  PRO_KIT_HANDLE,
+  getCollectionProducts,
+  filterFbtAccessories,
+  type AccessoryProduct,
+} from '../../lib/products';
 import { AccessoriesSection } from '../../components/AccessoriesSection';
 import { useTranslation } from 'react-i18next';
 import React, { useState, useRef, useEffect } from 'react';
@@ -596,38 +604,101 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
             );
           })()}
 
-          {/* Combo kits */}
-          {kits.length > 0 && (
-            <div className={styles.productGroup}>
-              <div className={styles.productGroupHeader}>
-                <h3 className={styles.productGroupTitle}>{t('ui.comboKits')}</h3>
-                <p className={styles.productGroupSub}>{t('ui.comboKitsSub')}</p>
-              </div>
-              <div className={styles.grid}>
-                {kits.map((p, idx) => (
-                  <Link key={idx} href={`/product?slug=${p.slug}&sizeIdx=${SIZE_TO_IDX[p.size] ?? 5}`} className={`${styles.card} ${styles.kitCard}`} style={{ '--kit-color': kitColor } as React.CSSProperties}>
-                    <div className={styles.imgWrap}>
-                      <Image src={shopifyProductImg ?? p.img} alt={p.name} fill sizes="(max-width: 640px) 50vw, 25vw" style={{ objectFit: 'contain', padding: '8px' }} />
-                      {p.tag && <span className={styles.tag}>{p.tag}</span>}
-                      <span className={styles.kitBadge}>{t('ui.kit')}</span>
-                    </div>
-                    <div className={styles.info}>
-                      <p className={styles.name}>{p.name}</p>
-                      <div className={styles.ratingRow}>
-                        <Stars rating={p.rating} />
-                        <span className={styles.ratingCount}>({p.reviews})</span>
+          {/* Kits — Starter Kit + Pro Kit (aparte Shopify producten, niet voor alle categorieën beschikbaar) */}
+          {(() => {
+            const starterHandle = STARTER_KIT_HANDLE[slug];
+            const proHandle     = PRO_KIT_HANDLE[slug];
+            if (!starterHandle && !proHandle) return null;
+
+            // Review-metrics uit de bestaande kit-varianten als indicatieve waarden
+            const starterReviews = kits.reduce((s, p) => s + p.reviews, 0);
+            const starterRating  = kits.length ? Math.max(...kits.map(p => p.rating)) : 4.7;
+            const starterPrice     = kits[0]?.price    ?? 54.95;
+            const starterOriginal  = kits[0]?.original ?? 69.00;
+            const starterImg       = kits[0]?.img
+              ?? 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasers_starter_combo_kit.png';
+
+            // Pro Kit prijs indicatief — echte prijs wordt op /accessory/earasers-pro-kit getoond
+            const proImg = 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png';
+
+            return (
+              <div className={styles.productGroup}>
+                <div className={styles.productGroupHeader}>
+                  <h3 className={styles.productGroupTitle}>{t('ui.kitsHeading')}</h3>
+                  <p className={styles.productGroupSub}>{t('ui.kitsSub')}</p>
+                </div>
+                <div className={styles.grid}>
+                  {/* Starter Kit — apart Shopify product per categorie, maar rendert in rijke product page layout */}
+                  {starterHandle && (
+                    <Link
+                      href={`/product?slug=${slug}&kit=starter`}
+                      className={`${styles.card} ${styles.kitCard}`}
+                      style={{ '--kit-color': kitColor } as React.CSSProperties}
+                    >
+                      <div className={styles.imgWrap}>
+                        <Image
+                          src={starterImg}
+                          alt={t('ui.starterKitName')}
+                          fill
+                          sizes="(max-width: 640px) 50vw, 25vw"
+                          style={{ objectFit: 'contain', padding: '8px' }}
+                        />
+                        <span className={styles.kitBadge}>{t('ui.kit')}</span>
                       </div>
-                      <div className={styles.priceRow}>
-                        <span className={styles.price}>{fmt(p.price)}</span>
-                        <span className={styles.priceCrossed}>{fmt(p.original)}</span>
+                      <div className={styles.info}>
+                        <p className={styles.name}>{t('ui.starterKitName')}</p>
+                        <p className={styles.kitSubline}>{t('ui.starterKitSub')}</p>
+                        <div className={styles.ratingRow}>
+                          <Stars rating={starterRating} />
+                          <span className={styles.ratingCount}>({starterReviews})</span>
+                        </div>
+                        <div className={styles.priceRow}>
+                          <span className={styles.price}>{fmt(starterPrice)}</span>
+                          <span className={styles.priceCrossed}>{fmt(starterOriginal)}</span>
+                        </div>
+                        <span className={styles.cta}>{t('ui.chooseOptions')} <ArrowRightIcon size={13} /></span>
                       </div>
-                      <span className={styles.cta}>{t('ui.chooseOptions')} <ArrowRightIcon size={13} /></span>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  )}
+
+                  {/* Pro Kit — apart Shopify product, gerendered met category content in product page layout */}
+                  {proHandle && (
+                    <Link
+                      href={`/product?slug=${slug}&kit=pro`}
+                      className={`${styles.card} ${styles.kitCard}`}
+                      style={{ '--kit-color': kitColor } as React.CSSProperties}
+                    >
+                      <div className={styles.imgWrap}>
+                        <Image
+                          src={proImg}
+                          alt={t('ui.proKitName')}
+                          fill
+                          sizes="(max-width: 640px) 50vw, 25vw"
+                          style={{ objectFit: 'contain', padding: '8px' }}
+                        />
+                        <span className={styles.kitBadge} style={{ background: 'var(--color-text)' }}>
+                          {t('ui.proKitBadge')}
+                        </span>
+                      </div>
+                      <div className={styles.info}>
+                        <p className={styles.name}>{t('ui.proKitName')}</p>
+                        <p className={styles.kitSubline}>{t('ui.proKitSub')}</p>
+                        <div className={styles.ratingRow}>
+                          <Stars rating={4.9} />
+                          <span className={styles.ratingCount}>(87)</span>
+                        </div>
+                        <div className={styles.priceRow}>
+                          <span className={styles.price}>{fmt(79.00)}</span>
+                          <span className={styles.priceCrossed}>{fmt(99.00)}</span>
+                        </div>
+                        <span className={styles.cta}>{t('ui.chooseOptions')} <ArrowRightIcon size={13} /></span>
+                      </div>
+                    </Link>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
         </div>
 
         {/* ── Accessories ── */}
@@ -834,6 +905,11 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async ({ locale, params, res }) => {
   const slug = typeof params?.slug === 'string' ? params.slug : 'musician'
+
+  // Onbekende slug → proper 404 in plaats van silently fallback naar musician
+  if (!CATEGORIES[slug]) {
+    return { notFound: true }
+  }
 
   // CDN cache: 5 min browser, 10 min shared — daarna stale-while-revalidate 1h.
   // Maakt deze dynamic SSR route effectief statisch voor herhaalde requests.

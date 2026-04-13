@@ -56,6 +56,16 @@
   "addedToCart": "Added to cart",
   "buyNow": "Buy now — checkout directly →",
   "buyNowLoading": "Loading...",
+  "variantUnavailable": "This combination is temporarily unavailable. Please choose a different size or filter.",
+  "proKitUnavailable": "Pro Kit is coming soon. Contact us at info@earasers.shop to pre-order.",
+  "fbt": {
+    "heading": "Frequently Bought Together",
+    "subtitle": "Complete your setup",
+    "total": "Total",
+    "added": "Added!",
+    "addSelected": "Add selected to cart",
+    "selectAtLeastOne": "Select at least one item"
+  },
   "securePayment": "Secure payment",
   "freeShipping": "Free shipping from €39",
   "returns": "30-day returns",
@@ -81,5 +91,6 @@
     }
   ],
   "orComboKit": "or choose a combo kit",
+  "sizeNotInKit": "Not included in this kit",
   "filterSingleNote": "This earplug comes with one optimized filter level."
 }

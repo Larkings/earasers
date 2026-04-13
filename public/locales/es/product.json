@@ -56,6 +56,16 @@
   "addedToCart": "Añadido al carrito",
   "buyNow": "Comprar ahora — ir directo al pago →",
   "buyNowLoading": "Cargando...",
+  "variantUnavailable": "Esta combinación no está disponible temporalmente. Elige otra talla o filtro.",
+  "proKitUnavailable": "El Pro Kit estará disponible próximamente. Contacta con info@earasers.shop para reservar.",
+  "fbt": {
+    "heading": "Comprado junto con",
+    "subtitle": "Completa tu configuración",
+    "total": "Total",
+    "added": "¡Añadido!",
+    "addSelected": "Añadir selección al carrito",
+    "selectAtLeastOne": "Selecciona al menos un artículo"
+  },
   "securePayment": "Pago seguro",
   "freeShipping": "Envío gratis desde €39",
   "returns": "Devoluciones en 30 días",
@@ -81,6 +91,7 @@
     }
   ],
   "orComboKit": "o elige un kit combinado",
+  "sizeNotInKit": "No incluido en este kit",
   "filterSingleNote": "Este tapón viene con un único nivel de filtro optimizado.",
   "productData": {
     "musician": {

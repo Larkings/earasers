@@ -796,6 +796,13 @@
 
 .name { font-size: 14px; font-weight: 500; color: var(--color-text); }
 
+.kitSubline {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+  margin: 2px 0 4px;
+}
+
 .ratingRow { display: flex; align-items: center; gap: 6px; }
 
 .stars    { display: flex; gap: 2px; }

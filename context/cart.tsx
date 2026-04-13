@@ -68,6 +68,7 @@ type CartCtx = {
   addToCart: (item: CartItem) => void;
   setQty: (id: string, qty: number) => void;
   removeItem: (id: string) => void;
+  clearCart: () => Promise<void>;
   isCartOpen: boolean;
   openCart:   () => void;
   closeCart:  () => void;
@@ -81,6 +82,7 @@ type CartCtx = {
 const CartContext = createContext<CartCtx>({
   items: [], totalCount: 0,
   addToCart: () => {}, setQty: () => {}, removeItem: () => {},
+  clearCart: async () => {},
   isCartOpen: false, openCart: () => {}, closeCart: () => {},
   checkoutUrl: null, checkoutError: null, checkoutSyncing: false,
   checkout: async () => {},
@@ -97,7 +99,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [shopifyCart, setShopifyCart] = useState<ShopifyCart | null>(null);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [checkoutSyncing, setCheckoutSyncing] = useState(false);
-  const syncingRef = useRef(false);
+  // Actieve Shopify sync count — alleen voor UI "syncing" state, blokkeert niet meer.
+  const activeSyncCount = useRef(0);
+  // Cached promise voor ensureShopifyCart — voorkomt dubbele cartCreate calls
+  // wanneer meerdere addToCart parallel gebeuren (bv. via FBT).
+  const ensureCartPromise = useRef<Promise<ShopifyCart> | null>(null);
 
   const openCart  = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
@@ -145,23 +151,32 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [state.items, state.hydrated]);
 
-  // Shopify cart aanmaken of ophalen
+  // Shopify cart aanmaken of ophalen — met promise lock zodat parallelle calls
+  // niet in 2 aparte cartCreate's resulteren.
   async function ensureShopifyCart(): Promise<ShopifyCart> {
     if (shopifyCart) return shopifyCart;
-    const cartId = localStorage.getItem(CART_ID_KEY);
-    if (cartId) {
-      const existing = await getCart(cartId);
-      if (existing) {
-        setShopifyCart(existing);
-        return existing;
+    if (ensureCartPromise.current) return ensureCartPromise.current;
+
+    const promise = (async () => {
+      const cartId = localStorage.getItem(CART_ID_KEY);
+      if (cartId) {
+        const existing = await getCart(cartId);
+        if (existing) {
+          setShopifyCart(existing);
+          return existing;
+        }
       }
-    }
-    const savedCurrency = typeof window !== 'undefined' ? localStorage.getItem('earasers-currency') : null;
-    const countryCode = savedCurrency === 'GBP' ? 'GB' : 'NL';
-    const newCart = await createCart(countryCode);
-    localStorage.setItem(CART_ID_KEY, newCart.id);
-    setShopifyCart(newCart);
-    return newCart;
+      const savedCurrency = typeof window !== 'undefined' ? localStorage.getItem('earasers-currency') : null;
+      const countryCode = savedCurrency === 'GBP' ? 'GB' : 'NL';
+      const newCart = await createCart(countryCode);
+      localStorage.setItem(CART_ID_KEY, newCart.id);
+      setShopifyCart(newCart);
+      return newCart;
+    })();
+
+    ensureCartPromise.current = promise;
+    promise.finally(() => { ensureCartPromise.current = null; });
+    return promise;
   }
 
   const addToCart = (item: CartItem) => {
@@ -169,9 +184,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     openCart();
     setCheckoutError(null);
 
-    // Shopify sync — alleen als variantId bekend is
-    if (item.variantId && !syncingRef.current) {
-      syncingRef.current = true;
+    // Shopify sync — alleen als variantId bekend is. Geen guard meer: elke add
+    // triggert zijn eigen sync zodat meerdere FBT items allemaal naar Shopify
+    // worden toegevoegd (niet alleen de eerste).
+    if (item.variantId) {
+      activeSyncCount.current += 1;
       setCheckoutSyncing(true);
       ensureShopifyCart()
         .then(cart => shopifyAddToCart(cart.id, item.variantId!, item.qty))
@@ -189,7 +206,31 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         .catch((err) => {
           console.error('[cart] Shopify sync failed:', err);
         })
-        .finally(() => { syncingRef.current = false; setCheckoutSyncing(false); });
+        .finally(() => {
+          activeSyncCount.current = Math.max(0, activeSyncCount.current - 1);
+          if (activeSyncCount.current === 0) setCheckoutSyncing(false);
+        });
+    }
+  };
+
+  const clearCart = async () => {
+    // Optimistische UI-clear eerst
+    const previousItems = state.items;
+    dispatch({ type: 'LOAD', items: [] });
+    setCheckoutError(null);
+
+    // Shopify cart legen: verwijder alle bekende line IDs
+    const lineIds = previousItems.map(i => i.shopifyLineId).filter((x): x is string => !!x);
+    if (shopifyCart && lineIds.length > 0) {
+      try {
+        const updated = await shopifyRemoveFromCart(shopifyCart.id, lineIds);
+        setShopifyCart(updated);
+      } catch (err) {
+        console.error('[cart] Shopify clear failed:', err);
+        // Rollback UI bij fout
+        dispatch({ type: 'LOAD', items: previousItems });
+        setCheckoutError('Kon winkelwagen niet legen. Probeer het opnieuw.');
+      }
     }
   };
 
@@ -290,6 +331,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       addToCart,
       setQty,
       removeItem,
+      clearCart,
       isCartOpen, openCart, closeCart,
       checkoutUrl, checkoutError, checkoutSyncing,
       checkout,

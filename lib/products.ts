@@ -183,6 +183,83 @@ export const SLUG_TO_HANDLE: Record<string, string> = {
   accessories: 'accessories',
 };
 
+/**
+ * Starter Kit ("The Perfect Size Kit") is een APART Shopify product per categorie.
+ * Niet beschikbaar voor dj en sensitivity.
+ */
+export const STARTER_KIT_HANDLE: Record<string, string | null> = {
+  musician:    'starter-kit',
+  dentist:     'dentist-hygienists-starter-kit',
+  sleeping:    'copy-of-the-perfect-size-kit-starter-kit-for-sleeping',
+  motorsport:  'starter-kit-motorsports-hi-fi-for-sizing',
+  dj:          null,
+  sensitivity: null,
+  accessories: null,
+};
+
+/**
+ * Earasers Pro-Kit is één apart Shopify product dat toegesneden is op:
+ * musician, dentist, dj, sensitivity. Niet beschikbaar voor motorsport en sleeping.
+ */
+export const PRO_KIT_HANDLE: Record<string, string | null> = {
+  musician:    'earasers-pro-kit',
+  dentist:     'earasers-pro-kit',
+  dj:          'earasers-pro-kit',
+  sensitivity: 'earasers-pro-kit',
+  motorsport:  null,
+  sleeping:    null,
+  accessories: null,
+};
+
+/** Compacte kit product data — gebruikt op de product page bij ?kit=... */
+export type KitProductData = {
+  handle: string;
+  title: string;
+  images: string[];
+  variants: ShopifyVariant[];
+  /** Startprijs (laagste) in EUR */
+  price: number;
+  /** Origineel (compareAt) prijs voor strikethrough */
+  originalPrice: number;
+  /** Unieke Size options uit de variants */
+  sizes: string[];
+}
+
+export async function getKitProductData(handle: string): Promise<KitProductData | null> {
+  try {
+    const product = await getProductWithVariants(handle)
+    if (!product || product.variants.length === 0) return null
+
+    const prices    = product.variants.map(v => parseFloat(v.price.amount)).filter(n => !Number.isNaN(n))
+    const compareAt = product.variants.map(v => parseFloat(v.compareAtPrice?.amount ?? '0')).filter(n => n > 0)
+    const price         = prices.length ? Math.min(...prices) : 0
+    const originalPrice = compareAt.length ? Math.max(...compareAt) : price
+
+    // Unieke Size opties in volgorde van eerste voorkomen
+    const seen = new Set<string>()
+    const sizes: string[] = []
+    for (const v of product.variants) {
+      const sizeOpt = v.selectedOptions.find(o => o.name.toLowerCase().includes('size'))
+      if (sizeOpt && !seen.has(sizeOpt.value)) {
+        seen.add(sizeOpt.value)
+        sizes.push(sizeOpt.value)
+      }
+    }
+
+    return {
+      handle,
+      title: product.title,
+      images: product.images.map(i => i.url),
+      variants: product.variants,
+      price,
+      originalPrice,
+      sizes,
+    }
+  } catch {
+    return null
+  }
+}
+
 export type ShopifyVariant = {
   id: string;
   title: string;
@@ -419,8 +496,48 @@ const SIZE_PREFIX: Record<string, string> = {
   XL:  'extra large',
 }
 
+/**
+ * Match een Shopify option value tegen een lokale size label.
+ *
+ * Shopify gebruikt lange strings:
+ *   Single: "Small (75% Woman & Young Adults)"
+ *   Kit:    "Combo Kit: Small & Medium"
+ *
+ * Lokaal gebruiken we korte labels: "S", "M", "L", "S & M Kit", "Pro Kit", etc.
+ */
+/**
+ * Detecteert of een Shopify variant value een "kit combo" is — d.w.z. twee
+ * size-keywords gescheiden door `&`. Bijvoorbeeld "Small & Medium (90% of
+ * users)" of "Combo Kit: Extra Small & Small".
+ *
+ * Let op: matcht NIET een gewone single size met een losse `&` in de tip
+ * (bv. "Small (75% Woman & Young Adults)") — want daar volgt na `&` geen
+ * sizekeyword.
+ */
+const COMBO_RE = /\b(extra small|small|medium|large)\s*&\s*(extra small|small|medium|large)\b/i
+
 function matchesSize(optionValue: string, sizeLabel: string): boolean {
-  const v       = optionValue.toLowerCase()
+  const v       = optionValue.toLowerCase().trim()
+  const label   = sizeLabel.toLowerCase().trim()
+  const isCombo = COMBO_RE.test(v)
+
+  // Kit varianten: label eindigt op "kit"
+  if (label.endsWith('kit')) {
+    // Marker dat de Shopify waarde een kit-variant is:
+    //   - "combo kit: ..." of bevat letterlijk "kit" (main product combo kits)
+    //   - Een kit-combo pattern ("X & Y" met 2 size keywords)
+    if (!v.includes('combo') && !v.includes('kit') && !isCombo) return false
+
+    // Split "xs & s" → ['xs', 's'] → expand via SIZE_PREFIX → ['extra small', 'small']
+    const parts = label.replace(/\s*kit\s*$/, '').split(/\s*&\s*/).map(p => p.trim()).filter(Boolean)
+    if (parts.length === 0) return false
+
+    const expanded = parts.map(p => SIZE_PREFIX[p.toUpperCase()] ?? p)
+    return expanded.every(word => v.includes(word))
+  }
+
+  // Single size: prefix match, maar kit-combos moeten uitgesloten worden.
+  if (isCombo) return false
   const keyword = SIZE_PREFIX[sizeLabel.toUpperCase()] ?? sizeLabel.toLowerCase()
   return v.startsWith(keyword)
 }
@@ -428,6 +545,13 @@ function matchesSize(optionValue: string, sizeLabel: string): boolean {
 function matchesFilter(optionValue: string, filterDb: string): boolean {
   // filterDb = "-26dB" → zit in "... (-26dB Peak)"
   return optionValue.toLowerCase().includes(filterDb.toLowerCase())
+}
+
+/** Returnt true als er enig variant is met deze size label */
+export function hasVariantForSize(variants: ShopifyVariant[], sizeLabel: string): boolean {
+  return variants.some(v =>
+    v.selectedOptions.some(o => o.name.toLowerCase().includes('size') && matchesSize(o.value, sizeLabel)),
+  )
 }
 
 export function findVariantByFilter(

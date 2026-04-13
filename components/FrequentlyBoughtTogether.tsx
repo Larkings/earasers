@@ -17,6 +17,8 @@ export const FrequentlyBoughtTogether = ({ mainProduct, accessories, className }
   const { t } = useTranslation('product');
   const { addToCart } = useCart();
   const { fmt } = useCurrency();
+  // Main product is default UIT — user kiest zelf wat ie toevoegt
+  const [mainSelected, setMainSelected] = useState(false);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [added, setAdded] = useState(false);
 
@@ -25,7 +27,11 @@ export const FrequentlyBoughtTogether = ({ mainProduct, accessories, className }
     [accessories, selected],
   );
 
-  const total = mainProduct.price + selectedAccessories.reduce((s, a) => s + a.price, 0);
+  const total =
+    (mainSelected ? mainProduct.price : 0) +
+    selectedAccessories.reduce((s, a) => s + a.price, 0);
+
+  const hasSelection = mainSelected || selectedAccessories.length > 0;
 
   const toggle = (handle: string) => {
     setSelected(prev => {
@@ -37,18 +43,24 @@ export const FrequentlyBoughtTogether = ({ mainProduct, accessories, className }
   };
 
   const handleAddAll = () => {
-    const mainItem: CartItem = {
-      id: `${mainProduct.slug}-fbt`,
-      slug: mainProduct.slug,
-      name: mainProduct.name,
-      img: mainProduct.img,
-      size: '',
-      filter: '',
-      price: mainProduct.price,
-      qty: 1,
-      variantId: mainProduct.variantId,
-    };
-    addToCart(mainItem);
+    if (!hasSelection) return;
+
+    // Main product alleen toevoegen als checkbox aan staat EN een variant bekend is
+    // (zonder variantId zou het een ghost cart item worden)
+    if (mainSelected && mainProduct.variantId) {
+      const mainItem: CartItem = {
+        id: `${mainProduct.slug}-fbt`,
+        slug: mainProduct.slug,
+        name: mainProduct.name,
+        img: mainProduct.img,
+        size: '',
+        filter: '',
+        price: mainProduct.price,
+        qty: 1,
+        variantId: mainProduct.variantId,
+      };
+      addToCart(mainItem);
+    }
 
     for (const acc of selectedAccessories) {
       const item: CartItem = {
@@ -73,18 +85,26 @@ export const FrequentlyBoughtTogether = ({ mainProduct, accessories, className }
 
   return (
     <div className={`${styles.section} ${className ?? ''}`} data-reveal>
-      <h3 className={styles.heading}>
-        {t('fbt.heading', { defaultValue: 'Frequently Bought Together' })}
-      </h3>
-      <p className={styles.subtitle}>
-        {t('fbt.subtitle', { defaultValue: 'Complete your setup' })}
-      </p>
+      <h3 className={styles.heading}>{t('fbt.heading')}</h3>
+      <p className={styles.subtitle}>{t('fbt.subtitle')}</p>
 
       <div className={styles.list}>
-        {/* Main product — always checked */}
-        <div className={`${styles.item} ${styles.itemMain}`}>
-          <span className={styles.checkbox}>
-            <CheckIcon size={13} />
+        {/* Main product — interactieve checkbox, default uit */}
+        <div
+          className={`${styles.item} ${styles.itemMain}`}
+          role="checkbox"
+          aria-checked={mainSelected}
+          tabIndex={0}
+          onClick={() => setMainSelected(v => !v)}
+          onKeyDown={e => {
+            if (e.key === ' ' || e.key === 'Enter') {
+              e.preventDefault();
+              setMainSelected(v => !v);
+            }
+          }}
+        >
+          <span className={`${styles.checkbox} ${mainSelected ? styles.checkboxActive : ''}`}>
+            {mainSelected && <CheckIcon size={13} />}
           </span>
           <span className={styles.itemImg}>
             <Image src={mainProduct.img} alt={mainProduct.name} width={60} height={60} style={{ objectFit: 'contain' }} />
@@ -123,16 +143,20 @@ export const FrequentlyBoughtTogether = ({ mainProduct, accessories, className }
 
       <div className={styles.footer}>
         <div className={styles.total}>
-          <span className={styles.totalLabel}>{t('fbt.total', { defaultValue: 'Total' })}</span>
+          <span className={styles.totalLabel}>{t('fbt.total')}</span>
           <span className={styles.totalPrice}>{fmt(total)}</span>
         </div>
         <button
           className={`${styles.addBtn} ${added ? styles.addBtnDone : ''}`}
           onClick={handleAddAll}
+          disabled={!hasSelection}
+          aria-disabled={!hasSelection}
         >
           {added
-            ? <><CheckIcon size={15} /> {t('fbt.added', { defaultValue: 'Added!' })}</>
-            : <>{t('fbt.addSelected', { defaultValue: 'Add selected to cart' })} <ArrowRightIcon size={14} /></>
+            ? <><CheckIcon size={15} /> {t('fbt.added')}</>
+            : !hasSelection
+              ? t('fbt.selectAtLeastOne')
+              : <>{t('fbt.addSelected')} <ArrowRightIcon size={14} /></>
           }
         </button>
       </div>

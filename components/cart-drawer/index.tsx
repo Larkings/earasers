@@ -54,10 +54,11 @@ const DrawerItem = ({ item }: { item: CartItem }) => {
 };
 
 const DrawerContent = () => {
-  const { items, totalCount, closeCart, checkout, checkoutError, checkoutSyncing } = useCart();
+  const { items, totalCount, closeCart, checkout, checkoutError, checkoutSyncing, clearCart } = useCart();
   const { t } = useTranslation('common');
   const { fmt } = useCurrency();
   const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [confirmClear, setConfirmClear] = useState(false);
 
   const subtotal  = items.reduce((s, i) => s + i.price * i.qty, 0);
   const remaining = Math.max(0, FREE_SHIPPING - subtotal);
@@ -111,9 +112,40 @@ const DrawerContent = () => {
             {t('cart.title')}
             {totalCount > 0 && <span className={styles.count}>({totalCount})</span>}
           </p>
-          <button className={styles.closeBtn} onClick={closeCart} aria-label={t('cart.closeCart')}>
-            <CloseIcon size={20} />
-          </button>
+          <div className={styles.headerActions}>
+            {items.length > 0 && (
+              confirmClear ? (
+                <div className={styles.clearConfirm}>
+                  <button
+                    className={styles.clearConfirmYes}
+                    onClick={async () => {
+                      setConfirmClear(false);
+                      await clearCart();
+                    }}
+                  >
+                    {t('cart.clearConfirm')}
+                  </button>
+                  <button
+                    className={styles.clearConfirmNo}
+                    onClick={() => setConfirmClear(false)}
+                  >
+                    {t('cart.clearCancel')}
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className={styles.clearBtn}
+                  onClick={() => setConfirmClear(true)}
+                  aria-label={t('cart.clearCart')}
+                >
+                  {t('cart.clearCart')}
+                </button>
+              )
+            )}
+            <button className={styles.closeBtn} onClick={closeCart} aria-label={t('cart.closeCart')}>
+              <CloseIcon size={20} />
+            </button>
+          </div>
         </div>
 
         <div className={styles.body}>

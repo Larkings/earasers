@@ -56,6 +56,16 @@
   "addedToCart": "Toegevoegd aan winkelwagen",
   "buyNow": "Koop nu — direct afrekenen →",
   "buyNowLoading": "Laden...",
+  "variantUnavailable": "Deze combinatie is tijdelijk niet beschikbaar. Kies een andere maat of filter.",
+  "proKitUnavailable": "De Pro Kit is binnenkort beschikbaar. Neem contact op via info@earasers.shop om voor te bestellen.",
+  "fbt": {
+    "heading": "Vaak samen gekocht",
+    "subtitle": "Compleet je setup",
+    "total": "Totaal",
+    "added": "Toegevoegd!",
+    "addSelected": "Geselecteerde toevoegen aan winkelwagen",
+    "selectAtLeastOne": "Selecteer minimaal één artikel"
+  },
   "securePayment": "Veilige betaling",
   "freeShipping": "Gratis verzending vanaf €39",
   "returns": "30 dagen retourrecht",
@@ -81,6 +91,7 @@
     }
   ],
   "orComboKit": "of kies een combi-kit",
+  "sizeNotInKit": "Niet inbegrepen in deze kit",
   "filterSingleNote": "Deze oordop wordt geleverd met één geoptimaliseerd filterniveau.",
   "productData": {
     "musician": {

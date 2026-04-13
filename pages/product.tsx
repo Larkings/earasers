@@ -11,8 +11,9 @@ import { StarIcon, StarEmptyIcon, CheckIcon, ShieldIcon } from '../components/ic
 import styles from '../styles/product.module.css';
 import {
   getProduct, PRODUCTS, type Product,
-  getProductWithVariants, SLUG_TO_HANDLE, findVariantByFilter, type ShopifyVariant,
+  getProductWithVariants, SLUG_TO_HANDLE, findVariantByFilter, hasVariantForSize, type ShopifyVariant,
   getCollectionProducts, filterFbtAccessories, type AccessoryProduct,
+  STARTER_KIT_HANDLE, PRO_KIT_HANDLE, getKitProductData, type KitProductData,
 } from '../lib/products';
 import { FILTERS_BY_GENRE } from '../lib/filters';
 import { useCart, type CartItem } from '../context/cart';
@@ -54,28 +55,40 @@ function useRecentlyViewed(currentSlug: string) {
   return viewed;
 }
 
-type Props = { variantsMap: Record<string, ShopifyVariant[]>; accessories: AccessoryProduct[] }
+type Props = {
+  variantsMap: Record<string, ShopifyVariant[]>;
+  /** Extra Shopify producten voor Starter Kit / Pro Kit — key: "starter:<slug>" of "pro:<slug>" */
+  kitMap: Record<string, KitProductData>;
+  accessories: AccessoryProduct[];
+}
 
-const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
+const Product: NextPage<Props> = ({ variantsMap, kitMap, accessories }) => {
   const router = useRouter();
   const { t } = useTranslation('product');
-  const { addToCart, openCart } = useCart();
+  const { addToCart, openCart, items: cartItems } = useCart();
   const { fmt, currency } = useCurrency();
   const countryCode = currency === 'GBP' ? 'GB' : 'NL';
 
   const _sizes       = t('sizes',   { returnObjects: true });
   const _tabs        = t('tabs',    { returnObjects: true });
   const _reviewsList = t('reviews', { returnObjects: true });
-  const sizes       = Array.isArray(_sizes)       ? (_sizes       as Array<{ label: string; tip: string; kit?: boolean }>) : [];
+  const i18nSizes   = Array.isArray(_sizes)       ? (_sizes       as Array<{ label: string; tip: string; kit?: boolean }>) : [];
   const tabs        = Array.isArray(_tabs)        ? (_tabs        as string[])                                   : [];
   const reviewsList = Array.isArray(_reviewsList) ? (_reviewsList as Array<{ name: string; text: string }>)      : [];
 
   const [product, setProduct] = useState<Product>(getProduct('musician'));
 
+  // Kit mode: ?kit=starter of ?kit=pro → toont kit-product data op de product page
+  const kitType = typeof router.query.kit === 'string' && (router.query.kit === 'starter' || router.query.kit === 'pro')
+    ? (router.query.kit as 'starter' | 'pro')
+    : null;
+  const kitKey = kitType ? `${kitType}:${product.slug}` : null;
+  const kitData: KitProductData | null = kitKey ? (kitMap[kitKey] ?? null) : null;
+
   const genreFilters = FILTERS_BY_GENRE[product.slug] ?? FILTERS_BY_GENRE['musician'];
 
   // Product-specific translations (after product state is declared)
-  const tProductName       = t(`productData.${product.slug}.name`,        { defaultValue: product.name });
+  const tProductName       = kitData?.title ?? t(`productData.${product.slug}.name`,        { defaultValue: product.name });
   const tProductCollection = t(`productData.${product.slug}.collection`,   { defaultValue: product.collection });
   const tProductDesc       = t(`productData.${product.slug}.description`,  { defaultValue: product.description });
   const _tProductFeatures  = t(`productData.${product.slug}.features`,     { returnObjects: true, defaultValue: product.features });
@@ -94,6 +107,20 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
 
   const recentlyViewed = useRecentlyViewed(product.slug);
 
+  // Reset variantError bij size/filter change én zodra user elders iets aan de cart
+  // toevoegt (bijv. via FBT) — de oude foutmelding is dan niet meer relevant.
+  useEffect(() => {
+    if (variantError) setVariantError(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeSize, activeFilter, cartItems.length]);
+
+  // Auto-dismiss variantError na 6 seconden
+  useEffect(() => {
+    if (!variantError) return;
+    const id = setTimeout(() => setVariantError(null), 6000);
+    return () => clearTimeout(id);
+  }, [variantError]);
+
    useEffect(() => {
      if (!router.isReady) return;
      const p = getProduct(router.query.slug as string);
@@ -102,6 +129,22 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
      const sizeIdxParam = router.query.sizeIdx ? parseInt(router.query.sizeIdx as string, 10) : null;
      const filterParam = router.query.filter as string | undefined;
      const fromQuiz = sizeIdxParam !== null && filterParam;
+
+     // Kies een default size die ook daadwerkelijk beschikbaar is in de huidige
+     // (kit of main) variants. Belangrijk voor kit pagina's waar bv. XS mist.
+     const pickDefaultSize = (): number => {
+       // Prefer M, dan S, dan XS, dan eerste beschikbare
+       const preferences = [2, 1, 0, 3, 5, 4, 6];
+       for (const idx of preferences) {
+         const s = i18nSizes[idx];
+         if (s && hasVariantForSize(activeVariants, s.label)) return idx;
+       }
+       // Fallback: eerste beschikbare
+       for (let i = 0; i < i18nSizes.length; i++) {
+         if (hasVariantForSize(activeVariants, i18nSizes[i].label)) return i;
+       }
+       return 1;
+     };
 
      startTransition(() => {
        setActiveImg(0);
@@ -113,7 +156,9 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
 
        // Apply size/filter from URL params (quiz or collection link)
        if (sizeIdxParam !== null && !isNaN(sizeIdxParam)) {
-         setActiveSize(sizeIdxParam);
+         const s = i18nSizes[sizeIdxParam];
+         const available = s && hasVariantForSize(activeVariants, s.label);
+         setActiveSize(available ? sizeIdxParam : pickDefaultSize());
          if (filterParam) {
            const fIdx = genreFilters.findIndex(f => f.db === filterParam);
            setActiveFilter(fIdx >= 0 ? fIdx : 0);
@@ -124,10 +169,11 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
          }
        } else {
          setActiveFilter(0);
-         setActiveSize(1);
+         setActiveSize(pickDefaultSize());
        }
      });
-   }, [router.isReady, router.query.slug, router.query.sizeIdx, router.query.filter]);
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [router.isReady, router.query.slug, router.query.sizeIdx, router.query.filter, router.query.kit]);
 
   const handleQuizSelect = (sizeIdx: number, filterDb: string) => {
     setActiveSize(sizeIdx);
@@ -138,21 +184,40 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
     setTimeout(() => setQuizApplied(false), 4000);
   };
 
-  const isKit  = sizes[activeSize]?.kit ?? activeSize >= 4;
-  const price    = isKit ? product.kitPrice    : product.price;
-  const original = isKit ? product.kitOriginal : product.originalPrice;
+  // Sizes array: altijd i18n (XS/S/M/L + combo kits). Op kit pages worden sizes
+  // die in dat kit-product niet bestaan getoond als disabled.
+  const sizes = i18nSizes;
+
+  // Welke variants zijn er voor deze page (kit of main)? Gebruikt voor size-availability.
+  const activeVariants: ShopifyVariant[] = kitData?.variants ?? (variantsMap[product.slug] ?? []);
+
+  const isSizeAvailable = (label: string) => hasVariantForSize(activeVariants, label);
+
+  const isKit  = kitData ? true : (sizes[activeSize]?.kit ?? activeSize >= 4);
 
   const getVariantId = () => {
-    const sizeLabel   = sizes[activeSize].label;
+    const sizeLabel   = sizes[activeSize]?.label;
+    if (!sizeLabel) return undefined;
     const filter      = genreFilters[activeFilter] ?? genreFilters[0];
-    const slugVariants = variantsMap[product.slug] ?? [];
-    return findVariantByFilter(slugVariants, sizeLabel, filter)?.id;
+    return findVariantByFilter(activeVariants, sizeLabel, filter)?.id;
   };
+
+  // Prijs: in kit mode uit de geselecteerde kit variant, anders uit de PRODUCTS data
+  const selectedVariant = getVariantId()
+    ? activeVariants.find(v => v.id === getVariantId())
+    : undefined;
+
+  const price    = kitData
+    ? parseFloat(selectedVariant?.price.amount ?? String(kitData.price))
+    : isKit ? product.kitPrice : product.price;
+  const original = kitData
+    ? parseFloat(selectedVariant?.compareAtPrice?.amount ?? String(kitData.originalPrice))
+    : isKit ? product.kitOriginal : product.originalPrice;
 
   const handleBuyNow = async () => {
     const variantId = getVariantId();
     if (!variantId) {
-      setVariantError(t('variantUnavailable', { defaultValue: 'Deze combinatie is tijdelijk niet beschikbaar. Kies een andere maat of filter.' }));
+      setVariantError(t('variantUnavailable'));
       return;
     }
     setVariantError(null);
@@ -169,31 +234,34 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
   };
 
   const handleAddToCart = () => {
-    const sizeLabel   = sizes[activeSize].label;
+    const sizeLabel   = sizes[activeSize]?.label;
+    if (!sizeLabel) {
+      setVariantError(t('variantUnavailable'));
+      return;
+    }
     const filter      = genreFilters[activeFilter] ?? genreFilters[0];
 
-    // Zoek Shopify variant ID op via selectedOptions
-    const slugVariants = variantsMap[product.slug] ?? [];
-    const variant = findVariantByFilter(slugVariants, sizeLabel, filter);
+    // Zoek Shopify variant ID — kit mode gebruikt kitData, anders main product
+    const variantId = getVariantId();
 
-    // Als variant niet gevonden kan worden, NIET toevoegen — dit zou anders een
-    // "ghost item" opleveren dat nooit naar Shopify synct en onzichtbaar is in checkout.
-    if (!variant?.id) {
-      setVariantError(t('variantUnavailable', { defaultValue: 'Deze combinatie is tijdelijk niet beschikbaar. Kies een andere maat of filter.' }));
+    if (!variantId) {
+      setVariantError(t('variantUnavailable'));
       return;
     }
 
     setVariantError(null);
+    const itemImg  = kitData?.images[0] ?? product.images[0];
+    const itemName = tProductName;
     const item: CartItem = {
-      id:        `${product.slug}-${sizeLabel}-${filter.db}`,
+      id:        `${product.slug}${kitType ? `-${kitType}` : ''}-${sizeLabel}-${filter.db}`,
       slug:      product.slug,
-      name:      product.name,
-      img:       product.images[0],
+      name:      itemName,
+      img:       itemImg,
       size:      sizeLabel,
       filter:    filter.db,
       price,
       qty,
-      variantId: variant.id,   // gid://shopify/ProductVariant/...
+      variantId,
     };
     addToCart(item);
     openCart();
@@ -207,11 +275,11 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
       type: 'Product',
       name: tProductName,
       description: tProductDesc,
-      image: product.images[0],
+      image: (kitData?.images[0] ?? product.images[0]),
       price: String(price),
       currency: currency === 'GBP' ? 'GBP' : 'EUR',
       availability: 'InStock',
-      sku: product.slug,
+      sku: kitData?.handle ?? product.slug,
       brand: 'Earasers',
     },
   ];
@@ -221,7 +289,7 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
       <SEO
         title={tProductName}
         description={tProductDesc}
-        image={product.images[0]}
+        image={(kitData?.images[0] ?? product.images[0])}
         type="product"
         structuredData={productStructuredData}
       />
@@ -239,14 +307,17 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
 
           <div className={styles.grid}>
 
-            {/* Gallery */}
+            {/* Gallery — kit mode toont kit images, anders de categorie product images */}
+            {(() => {
+              const galleryImages = kitData && kitData.images.length > 0 ? kitData.images : product.images;
+              return (
             <div className={styles.gallery}>
               <div className={styles.mainImg}>
-                <Image src={product.images[activeImg]} alt={tProductName} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
-                {product.tag && <span className={styles.galleryTag}>{product.tag}</span>}
+                <Image src={galleryImages[Math.min(activeImg, galleryImages.length - 1)] ?? galleryImages[0]} alt={tProductName} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
+                {product.tag && !kitData && <span className={styles.galleryTag}>{product.tag}</span>}
               </div>
               <div className={styles.thumbs}>
-                {product.images.map((src, i) => (
+                {galleryImages.map((src, i) => (
                   <button
                     key={i}
                     className={`${styles.thumb} ${i === activeImg ? styles.thumbActive : ''}`}
@@ -261,12 +332,20 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
               {accessories.length > 0 && (
                 <div className={styles.fbtDesktop}>
                   <FrequentlyBoughtTogether
-                    mainProduct={{ slug: product.slug, name: product.name, img: product.images[0], price }}
+                    mainProduct={{
+                      slug: product.slug,
+                      name: tProductName,
+                      img: (kitData?.images[0] ?? product.images[0]),
+                      price,
+                      variantId: getVariantId(),
+                    }}
                     accessories={accessories}
                   />
                 </div>
               )}
             </div>
+              );
+            })()}
 
             {/* Info */}
             <div className={styles.info}>
@@ -302,19 +381,23 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
 
                 {/* Individual sizes */}
                 <div className={styles.sizeGrid}>
-                  {sizes.filter(s => !s.kit).map((s, _, arr) => {
+                  {sizes.filter(s => !s.kit).map((s) => {
                     const i = sizes.indexOf(s);
+                    const available = isSizeAvailable(s.label);
+                    const disabledTip = available ? s.tip : t('sizeNotInKit', { defaultValue: 'Not included in this kit' });
                     return (
                       <div key={i} className={styles.sizeWrap}>
                         <button
                           className={`${styles.sizeBtn} ${i === activeSize ? styles.sizeBtnActive : ''}`}
-                          onClick={() => { setActiveSize(i); setVariantError(null); }}
+                          onClick={() => { if (available) { setActiveSize(i); setVariantError(null); } }}
                           onMouseEnter={() => setTooltip(i)}
                           onMouseLeave={() => setTooltip(null)}
+                          disabled={!available}
+                          aria-disabled={!available}
                         >
                           {s.label}
                         </button>
-                        {tooltip === i && <div className={styles.tooltip}>{s.tip}</div>}
+                        {tooltip === i && <div className={styles.tooltip}>{disabledTip}</div>}
                       </div>
                     );
                   })}
@@ -329,18 +412,22 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
                     <div className={styles.kitGrid}>
                       {sizes.filter(s => s.kit).map((s) => {
                         const i = sizes.indexOf(s);
+                        const available = isSizeAvailable(s.label);
+                        const disabledTip = available ? s.tip : t('sizeNotInKit', { defaultValue: 'Not included in this kit' });
                         return (
                           <div key={i} className={styles.sizeWrap}>
                             <button
                               className={`${styles.kitBtn} ${i === activeSize ? styles.kitBtnActive : ''}`}
-                              onClick={() => { setActiveSize(i); setVariantError(null); }}
+                              onClick={() => { if (available) { setActiveSize(i); setVariantError(null); } }}
                               onMouseEnter={() => setTooltip(i)}
                               onMouseLeave={() => setTooltip(null)}
+                              disabled={!available}
+                              aria-disabled={!available}
                             >
                               <span className={styles.kitBtnLabel}>{s.label}</span>
                               <span className={styles.kitBtnTip}>{s.tip}</span>
                             </button>
-                            {tooltip === i && <div className={styles.tooltip}>{s.tip}</div>}
+                            {tooltip === i && <div className={styles.tooltip}>{disabledTip}</div>}
                           </div>
                         );
                       })}
@@ -448,7 +535,13 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
           {accessories.length > 0 && (
             <div className={styles.fbtMobile}>
               <FrequentlyBoughtTogether
-                mainProduct={{ slug: product.slug, name: product.name, img: product.images[0], price }}
+                mainProduct={{
+                  slug: product.slug,
+                  name: tProductName,
+                  img: (kitData?.images[0] ?? product.images[0]),
+                  price,
+                  variantId: getVariantId(),
+                }}
                 accessories={accessories}
               />
             </div>
@@ -554,7 +647,16 @@ const Product: NextPage<Props> = ({ variantsMap, accessories }) => {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
-  const [entries, accessories] = await Promise.all([
+  // Verzamel alle kit tasks (starter + pro per slug) waarvoor een handle is
+  const kitTasks: Array<{ key: string; handle: string }> = []
+  for (const [slug, handle] of Object.entries(STARTER_KIT_HANDLE)) {
+    if (handle) kitTasks.push({ key: `starter:${slug}`, handle })
+  }
+  for (const [slug, handle] of Object.entries(PRO_KIT_HANDLE)) {
+    if (handle) kitTasks.push({ key: `pro:${slug}`, handle })
+  }
+
+  const [entries, accessories, kitResults] = await Promise.all([
     Promise.all(
       Object.entries(SLUG_TO_HANDLE).map(async ([slug, handle]) => {
         try {
@@ -566,12 +668,24 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
       }),
     ),
     getCollectionProducts('accessories').catch(() => [] as AccessoryProduct[]),
+    Promise.all(
+      kitTasks.map(async ({ key, handle }) => {
+        const data = await getKitProductData(handle)
+        return [key, data] as [string, KitProductData | null]
+      }),
+    ),
   ]);
+
+  const kitMap: Record<string, KitProductData> = {}
+  for (const [key, data] of kitResults) {
+    if (data) kitMap[key] = data
+  }
 
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['common', 'product', 'home'])),
       variantsMap: Object.fromEntries(entries),
+      kitMap,
       accessories: filterFbtAccessories(accessories),
     },
     revalidate: 300,

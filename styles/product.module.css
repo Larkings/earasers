@@ -249,7 +249,16 @@
   transition: border-color 0.2s, background 0.2s;
 }
 
-.kitBtn:hover { border-color: var(--color-accent); }
+.kitBtn:hover:not(:disabled) { border-color: var(--color-accent); }
+
+.kitBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.kitBtn:disabled .kitBtnLabel {
+  text-decoration: line-through;
+}
 
 .kitBtnActive {
   border-color: var(--color-accent);
@@ -284,7 +293,13 @@
   white-space: nowrap;
 }
 
-.sizeBtn:hover { border-color: var(--color-accent); }
+.sizeBtn:hover:not(:disabled) { border-color: var(--color-accent); }
+
+.sizeBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
 
 .sizeBtnActive {
   border-color: var(--color-accent);
