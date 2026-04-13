@@ -1,0 +1,16 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "earasers.shop"
+        }
+      ],
+      "destination": "https://www.earasers.shop/:path*",
+      "permanent": true,
+      "statusCode": 308
+    }
+  ]
+}
