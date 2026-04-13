@@ -1,4 +1,5 @@
 import { shopifyFetch } from './shopify'
+import { cachedRead } from './shopify-cache'
 import type { FilterOption } from './filters'
 
 export type ProductFilter = { db: string; label: string; desc: string };
@@ -285,37 +286,39 @@ type ShopifyProductResponse = {
 };
 
 export async function getProductWithVariants(handle: string) {
-  const data = await shopifyFetch<ShopifyProductResponse>(`
-    query ProductByHandle($handle: String!) {
-      product(handle: $handle) {
-        id
-        title
-        handle
-        images(first: 2) {
-          edges { node { url altText } }
-        }
-        variants(first: 30) {
-          edges {
-            node {
-              id
-              title
-              availableForSale
-              price { amount currencyCode }
-              compareAtPrice { amount currencyCode }
-              selectedOptions { name value }
+  return cachedRead(`product:${handle}`, async () => {
+    const data = await shopifyFetch<ShopifyProductResponse>(`
+      query ProductByHandle($handle: String!) {
+        product(handle: $handle) {
+          id
+          title
+          handle
+          images(first: 2) {
+            edges { node { url altText } }
+          }
+          variants(first: 30) {
+            edges {
+              node {
+                id
+                title
+                availableForSale
+                price { amount currencyCode }
+                compareAtPrice { amount currencyCode }
+                selectedOptions { name value }
+              }
             }
           }
         }
       }
-    }
-  `, { handle })
+    `, { handle })
 
-  if (!data.product) return null
-  return {
-    ...data.product,
-    images:   data.product.images.edges.map(e => e.node),
-    variants: data.product.variants.edges.map(e => e.node),
-  }
+    if (!data.product) return null
+    return {
+      ...data.product,
+      images:   data.product.images.edges.map(e => e.node),
+      variants: data.product.variants.edges.map(e => e.node),
+    }
+  }, 60_000)
 }
 
 // ─── Collection products (used for Accessories page) ─────────────────────────
@@ -413,6 +416,10 @@ type AccessoryProductResponse = {
 export async function getAccessoryProduct(handle: string): Promise<AccessoryProductDetail | null> {
   // Backstop: InEarz-producten mogen niet als Earasers-accessoire renderen
   if (isInearzHandle(handle)) return null;
+  return cachedRead(`accessory:${handle}`, () => fetchAccessoryProduct(handle), 60_000)
+}
+
+async function fetchAccessoryProduct(handle: string): Promise<AccessoryProductDetail | null> {
   try {
     const data = await shopifyFetch<AccessoryProductResponse>(`
       query AccessoryByHandle($handle: String!) {
@@ -452,6 +459,10 @@ export async function getAccessoryProduct(handle: string): Promise<AccessoryProd
 }
 
 export async function getCollectionProducts(handle: string): Promise<AccessoryProduct[]> {
+  return cachedRead(`collection:${handle}`, () => fetchCollectionProducts(handle), 60_000)
+}
+
+async function fetchCollectionProducts(handle: string): Promise<AccessoryProduct[]> {
   try {
     const data = await shopifyFetch<ShopifyCollectionResponse>(`
       query CollectionByHandle($handle: String!) {

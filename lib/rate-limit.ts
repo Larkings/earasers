@@ -1,18 +1,20 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 /**
- * Simpele IP-gebaseerde rate limiter met sliding window in-memory.
+ * Rate limiter met sliding window. Gebruikt Upstash Redis (REST API) als
+ * `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` zijn geconfigureerd —
+ * dat geeft cross-instance bescherming op Vercel serverless. Anders fallback
+ * naar in-memory per-instance bucket (single-instance bescherming).
  *
- * Werkt voor één Node.js instance. Op Vercel (serverless) heeft elke warm
- * instance zijn eigen memory — niet perfect, maar biedt basis-bescherming
- * tegen burst-abuse van één client. Voor productie op schaal: Upstash Redis.
+ * Onder piek (Black Friday): zonder Upstash kan een attacker requests over
+ * meerdere warm instances spreiden en de limiet effectief omzeilen. Met
+ * Upstash is de limiet écht globaal.
  */
 
 type Bucket = { count: number; resetAt: number }
 
 const buckets = new Map<string, Bucket>()
 
-// Periodieke opschoning om memory leaks te voorkomen
 let cleanupTimer: NodeJS.Timeout | null = null
 function scheduleCleanup() {
   if (cleanupTimer) return
@@ -22,7 +24,6 @@ function scheduleCleanup() {
       if (bucket.resetAt < now) buckets.delete(key)
     }
   }, 60_000)
-  // Zorg dat timer Node.js niet in leven houdt
   if (cleanupTimer.unref) cleanupTimer.unref()
 }
 
@@ -36,44 +37,92 @@ export function getClientIp(req: NextApiRequest): string {
 }
 
 export type RateLimitOptions = {
-  /** Max requests binnen het window */
   limit: number
-  /** Window in milliseconden */
   windowMs: number
-  /** Unieke namespace voor de route (voorkomt cross-route leaks) */
   name: string
 }
 
+const UPSTASH_URL   = process.env.UPSTASH_REDIS_REST_URL
+const UPSTASH_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN
+
 /**
- * Checkt of deze IP de limiet overschrijdt. Zet 429 + headers als dat zo is.
- * Returnt `true` als request doorgelaten moet worden, `false` als geblokkeerd.
+ * Upstash pipeline: INCR + PEXPIRE NX. Returnt {count, resetMs} of null bij fout.
+ * NX zorgt dat de TTL alleen wordt gezet bij de eerste increment van het window —
+ * dat geeft een echte fixed-window limit i.p.v. een rolling expire.
  */
-export function rateLimit(
+async function upstashIncrement(
+  key: string,
+  windowMs: number,
+): Promise<{ count: number; ttlMs: number } | null> {
+  if (!UPSTASH_URL || !UPSTASH_TOKEN) return null
+  try {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 1500)
+    const res = await fetch(`${UPSTASH_URL}/pipeline`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${UPSTASH_TOKEN}`,
+      },
+      body: JSON.stringify([
+        ['INCR', key],
+        ['PEXPIRE', key, String(windowMs), 'NX'],
+        ['PTTL', key],
+      ]),
+      signal: controller.signal,
+    }).finally(() => clearTimeout(timeout))
+
+    if (!res.ok) return null
+    const json = (await res.json()) as Array<{ result?: number; error?: string }>
+    if (!Array.isArray(json) || json.length < 3) return null
+    const count = typeof json[0]?.result === 'number' ? json[0].result : null
+    const ttl   = typeof json[2]?.result === 'number' ? json[2].result : null
+    if (count === null) return null
+    // PTTL kan -1 (geen TTL) of -2 (key bestaat niet meer) returnen; in beide
+    // gevallen vallen we terug op het volledige window.
+    const ttlMs = ttl !== null && ttl > 0 ? ttl : windowMs
+    return { count, ttlMs }
+  } catch {
+    return null
+  }
+}
+
+export async function rateLimit(
   req: NextApiRequest,
   res: NextApiResponse,
   opts: RateLimitOptions,
-): boolean {
-  scheduleCleanup()
-
+): Promise<boolean> {
   const ip = getClientIp(req)
-  const key = `${opts.name}:${ip}`
+  const key = `rl:${opts.name}:${ip}`
   const now = Date.now()
 
-  let bucket = buckets.get(key)
-  if (!bucket || bucket.resetAt < now) {
-    bucket = { count: 0, resetAt: now + opts.windowMs }
-    buckets.set(key, bucket)
+  let count: number
+  let resetAt: number
+
+  const upstash = await upstashIncrement(key, opts.windowMs)
+  if (upstash) {
+    count   = upstash.count
+    resetAt = now + upstash.ttlMs
+  } else {
+    // Fallback: in-memory per instance
+    scheduleCleanup()
+    let bucket = buckets.get(key)
+    if (!bucket || bucket.resetAt < now) {
+      bucket = { count: 0, resetAt: now + opts.windowMs }
+      buckets.set(key, bucket)
+    }
+    bucket.count += 1
+    count   = bucket.count
+    resetAt = bucket.resetAt
   }
 
-  bucket.count += 1
-  const remaining = Math.max(0, opts.limit - bucket.count)
-
+  const remaining = Math.max(0, opts.limit - count)
   res.setHeader('X-RateLimit-Limit', String(opts.limit))
   res.setHeader('X-RateLimit-Remaining', String(remaining))
-  res.setHeader('X-RateLimit-Reset', String(Math.ceil(bucket.resetAt / 1000)))
+  res.setHeader('X-RateLimit-Reset', String(Math.ceil(resetAt / 1000)))
 
-  if (bucket.count > opts.limit) {
-    const retryAfter = Math.ceil((bucket.resetAt - now) / 1000)
+  if (count > opts.limit) {
+    const retryAfter = Math.max(1, Math.ceil((resetAt - now) / 1000))
     res.setHeader('Retry-After', String(retryAfter))
     res.status(429).json({ error: 'Too many requests. Probeer het later opnieuw.' })
     return false

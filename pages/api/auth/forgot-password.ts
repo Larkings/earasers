@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!checkOrigin(req, res)) return
 
   // Max 3 resets per IP per 10 min
-  if (!rateLimit(req, res, { limit: 3, windowMs: 10 * 60_000, name: 'auth-forgot' })) return
+  if (!(await rateLimit(req, res, { limit: 3, windowMs: 10 * 60_000, name: 'auth-forgot' }))) return
 
   const body = req.body as { email?: unknown }
   const email = typeof body?.email === 'string' ? body.email.trim().toLowerCase() : ''

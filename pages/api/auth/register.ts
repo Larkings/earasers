@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!checkOrigin(req, res)) return
 
   // Max 5 registraties per IP per 15 min — mitigeert spam-accounts
-  if (!rateLimit(req, res, { limit: 5, windowMs: 15 * 60_000, name: 'auth-register' })) return
+  if (!(await rateLimit(req, res, { limit: 5, windowMs: 15 * 60_000, name: 'auth-register' }))) return
 
   const body = req.body as {
     firstName?: unknown

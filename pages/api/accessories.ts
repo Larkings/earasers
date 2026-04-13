@@ -4,7 +4,7 @@ import { rateLimit } from '../../lib/rate-limit'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Max 60 requests per IP per minuut — ruim genoeg voor normale client fallback
-  if (!rateLimit(req, res, { limit: 60, windowMs: 60_000, name: 'accessories' })) return
+  if (!(await rateLimit(req, res, { limit: 60, windowMs: 60_000, name: 'accessories' }))) return
 
   try {
     const all = await getCollectionProducts('accessories')

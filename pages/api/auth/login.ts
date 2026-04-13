@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!checkOrigin(req, res)) return
 
   // Max 10 login-pogingen per IP per minuut — mitigeert credential stuffing
-  if (!rateLimit(req, res, { limit: 10, windowMs: 60_000, name: 'auth-login' })) return
+  if (!(await rateLimit(req, res, { limit: 10, windowMs: 60_000, name: 'auth-login' }))) return
 
   const body = req.body as { email?: unknown; password?: unknown }
   const email    = typeof body?.email    === 'string' ? body.email.trim().toLowerCase() : ''

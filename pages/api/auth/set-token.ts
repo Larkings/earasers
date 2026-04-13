@@ -8,12 +8,12 @@ const TOKEN_PATTERN = /^[A-Za-z0-9._\-]{16,1024}$/
 const MAX_EXPIRES_IN = 60 * 60 * 24 * 30 // 30 dagen
 const DEFAULT_EXPIRES_IN = 60 * 60 * 24 // 1 dag
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).end()
   if (!checkOrigin(req, res)) return
 
   // Max 20 set-token calls per IP per 5 min — legitieme OAuth callbacks komen 1×
-  if (!rateLimit(req, res, { limit: 20, windowMs: 5 * 60_000, name: 'auth-set-token' })) return
+  if (!(await rateLimit(req, res, { limit: 20, windowMs: 5 * 60_000, name: 'auth-set-token' }))) return
 
   const body = req.body as { access_token?: unknown; expires_in?: unknown }
   const access_token = typeof body?.access_token === 'string' ? body.access_token : ''

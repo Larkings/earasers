@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!checkOrigin(req, res)) return
 
   // Max 3 form submissions per IP per 10 min — mitigeert spam
-  if (!rateLimit(req, res, { limit: 3, windowMs: 10 * 60_000, name: 'contact' })) return
+  if (!(await rateLimit(req, res, { limit: 3, windowMs: 10 * 60_000, name: 'contact' }))) return
 
   if (!SHOP_DOMAIN) {
     console.error('[api/contact] SHOPIFY_STORE_DOMAIN niet geconfigureerd')
