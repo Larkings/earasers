@@ -32,7 +32,7 @@
   flex-wrap: wrap;
 }
 
-.text { flex: 1; min-width: 240px; }
+.text { flex: 1; min-width: 200px; }
 
 .title {
   font-family: var(--font-display);
@@ -75,7 +75,6 @@
   letter-spacing: 0.04em;
   border-radius: var(--radius-sm);
   transition: background 0.2s;
-  white-space: nowrap;
 }
 
 .btnAll:hover { background: var(--color-accent-hover); }
@@ -90,7 +89,6 @@
   font-weight: 500;
   border-radius: var(--radius-sm);
   transition: border-color 0.15s, color 0.15s;
-  white-space: nowrap;
 }
 
 .btnNecessary:hover { border-color: var(--color-text); }
@@ -101,7 +99,6 @@
   text-decoration: underline;
   text-underline-offset: 2px;
   transition: color 0.15s;
-  white-space: nowrap;
 }
 
 .btnCustomize:hover { color: var(--color-text); }

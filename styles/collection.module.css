@@ -211,13 +211,14 @@
 
 .heroImgWrap {
   flex-shrink: 0;
-  width: 260px;
-  height: 260px;
+  width: min(260px, 80vw);
+  height: auto;
+  aspect-ratio: 1;
   position: relative;
   /* No border-radius on hero image per user request */
 }
 
-@media (min-width: 768px) { .heroImgWrap { width: 380px; height: 380px; } }
+@media (min-width: 768px) { .heroImgWrap { width: 380px; height: 380px; aspect-ratio: auto; } }
 
 /* hero image — dark themes get a soft glow */
 .heroDark .heroImgWrap,
