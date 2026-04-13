@@ -18,6 +18,7 @@ import {
 import { FILTERS_BY_GENRE } from '../lib/filters';
 import { useCart, type CartItem } from '../context/cart';
 import { createDirectCheckout } from '../lib/shopify-cart';
+import { trackProductView } from '../lib/analytics';
 import { useCurrency } from '../context/currency';
 import { SizeQuiz } from '../components/size-quiz';
 import { VideoSection } from '../components/video-section';
@@ -207,6 +208,21 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, accessories }) => {
   const selectedVariant = getVariantId()
     ? activeVariants.find(v => v.id === getVariantId())
     : undefined;
+
+  // Pixel: view_item — vuurt één keer per product/variant combinatie. Dependency
+  // op variant ID zodat een filter/size switch een nieuwe variant pixel triggert.
+  useEffect(() => {
+    if (!selectedVariant) return;
+    trackProductView(
+      { id: product.slug, title: tProductName, handle: product.slug },
+      {
+        id: selectedVariant.id,
+        title: selectedVariant.title,
+        price: selectedVariant.price,
+      },
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedVariant?.id]);
 
   const price    = kitData
     ? parseFloat(selectedVariant?.price.amount ?? String(kitData.price))

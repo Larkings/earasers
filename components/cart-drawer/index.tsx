@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './cartDrawer.module.css';
 import { useCart, type CartItem } from '../../context/cart';
 import { useCurrency } from '../../context/currency';
+import { trackViewCart } from '../../lib/analytics';
 import { CloseIcon, CheckIcon, ArrowRightIcon } from '../icons';
 
 const FREE_SHIPPING = 39;
@@ -73,6 +74,18 @@ const DrawerContent = () => {
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
   }, [closeCart]);
+
+  // Pixel: view_cart — vuurt één keer bij open van drawer. Items array bevroren
+  // op moment van openen zodat we geen duplicate events krijgen bij qty-changes.
+  useEffect(() => {
+    if (items.length === 0) return;
+    trackViewCart(items.filter(i => i.variantId).map(i => ({
+      variantId: i.variantId!,
+      price: i.price,
+      qty: i.qty,
+    })));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Body scroll lock — iOS Safari proof.
   // `overflow: hidden` op body is niet voldoende op iOS: touch-scroll gaat

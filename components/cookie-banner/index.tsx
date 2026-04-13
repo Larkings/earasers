@@ -2,29 +2,23 @@ import React, { useEffect, useState, startTransition } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import styles from './cookieBanner.module.css';
-
-type Consent = 'all' | 'necessary' | null;
-
-const STORAGE_KEY = 'earasers-cookie-consent';
+import { useConsent } from '../../context/consent';
 
 export const CookieBanner = () => {
   const { t } = useTranslation('common');
+  const { consent, setConsent } = useConsent();
   const [visible,   setVisible]   = useState(false);
   const [expanded,  setExpanded]  = useState(false);
   const [analytics, setAnalytics] = useState(true);
   const [marketing, setMarketing] = useState(true);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      startTransition(() => setVisible(!stored));
-    } catch {
-      startTransition(() => setVisible(true));
-    }
-  }, []);
+    // Verberg banner als consent al gegeven is (uit context, gelezen uit localStorage).
+    startTransition(() => setVisible(consent === null));
+  }, [consent]);
 
-  const accept = (type: Consent) => {
-    try { localStorage.setItem(STORAGE_KEY, type ?? 'necessary'); } catch {}
+  const accept = (type: 'all' | 'necessary') => {
+    setConsent(type);
     setVisible(false);
   };
 

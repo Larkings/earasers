@@ -8,10 +8,13 @@ import { initReactI18next, I18nextProvider } from 'react-i18next';
 import { CartProvider } from '../context/cart';
 import { AuthProvider } from '../context/auth';
 import { CurrencyProvider } from '../context/currency';
+import { ConsentProvider } from '../context/consent';
 import { CookieBanner } from '../components/cookie-banner';
 import { CartDrawer } from '../components/cart-drawer';
 import { AuthDrawer } from '../components/auth-drawer';
 import { ErrorBoundary } from '../components/error-boundary';
+import { AnalyticsScripts } from '../components/analytics/scripts';
+import { trackPageView } from '../lib/analytics';
 
 const LOCALE_KEY = 'earasers-locale';
 const SUPPORTED = ['en', 'nl', 'de', 'es'];
@@ -94,6 +97,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Page view tracking — vuurt op elke route change. GA4 config staat op
+  // `send_page_view: false` zodat we het hier handmatig doen (consistent met
+  // de Meta + Shopify dispatch).
+  useEffect(() => {
+    const handler = (url: string) => trackPageView(url);
+    router.events.on('routeChangeComplete', handler);
+    return () => { router.events.off('routeChangeComplete', handler); };
+  }, [router.events]);
+
   // Scroll-reveal observer
   useEffect(() => {
     const init = () => {
@@ -127,18 +139,21 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
       </Head>
       <I18nextProvider i18n={instanceRef.current}>
-        <CurrencyProvider>
-          <AuthProvider>
-            <CartProvider>
-              <ErrorBoundary>
-                <Component {...pageProps} />
-              </ErrorBoundary>
-              <CartDrawer />
-              <AuthDrawer />
-              <CookieBanner />
-            </CartProvider>
-          </AuthProvider>
-        </CurrencyProvider>
+        <ConsentProvider>
+          <CurrencyProvider>
+            <AuthProvider>
+              <CartProvider>
+                <ErrorBoundary>
+                  <Component {...pageProps} />
+                </ErrorBoundary>
+                <CartDrawer />
+                <AuthDrawer />
+                <CookieBanner />
+                <AnalyticsScripts />
+              </CartProvider>
+            </AuthProvider>
+          </CurrencyProvider>
+        </ConsentProvider>
       </I18nextProvider>
     </>
   );
