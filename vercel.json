@@ -9,7 +9,6 @@
         }
       ],
       "destination": "https://www.earasers.shop/:path*",
-      "permanent": true,
       "statusCode": 308
     }
   ]
