@@ -1,6 +1,8 @@
 {
   "bar": "FREE SHIPPING ON ORDERS FROM €39",
   "language": "Language",
+  "zoomImage": "Tap to enlarge",
+  "close": "Close",
   "nav": {
     "shop": "Shop",
     "faq": "FAQ",

@@ -1,6 +1,8 @@
 {
   "bar": "ENVÍO GRATUITO EN PEDIDOS DESDE €39",
   "language": "Idioma",
+  "zoomImage": "Toca para ampliar",
+  "close": "Cerrar",
   "nav": {
     "shop": "Tienda",
     "faq": "FAQ",

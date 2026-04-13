@@ -1,6 +1,8 @@
 {
   "bar": "KOSTENLOSER VERSAND AB €39",
   "language": "Sprache",
+  "zoomImage": "Zum Vergrößern tippen",
+  "close": "Schließen",
   "nav": {
     "shop": "Shop",
     "faq": "FAQ",

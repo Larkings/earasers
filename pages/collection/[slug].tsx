@@ -29,6 +29,7 @@ import {
 } from '../../components/icons';
 import styles from '../../styles/collection.module.css';
 import { Influencers } from '../../components/influencers';
+import { ZoomableImage } from '../../components/zoomable-image';
 import { useCurrency } from '../../context/currency';
 // videoNote is statische i18n content die we zelf controleren — geen sanitize nodig.
 // Blog content gebruikt wel sanitizeHtml via lib/safe-html.
@@ -737,7 +738,7 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
                   </ul>
                 </div>
                 <div className={styles.attenImgWrap}>
-                  <Image src={cat.chartImg} alt={t('attenSection.heading')} width={800} height={500} className={styles.attenImg} style={{ width: '100%', height: 'auto' }} />
+                  <ZoomableImage src={cat.chartImg} alt={t('attenSection.heading')} width={800} height={500} className={styles.attenImg} />
                 </div>
               </div>
             </div>

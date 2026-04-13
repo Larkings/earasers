@@ -25,6 +25,7 @@ import { Reviews } from '../components/reviews';
 import { AwardSection } from '../components/award-section';
 import { CompareTable } from '../components/compare-table';
 import { FrequentlyBoughtTogether } from '../components/FrequentlyBoughtTogether';
+import { ZoomableImage } from '../components/zoomable-image';
 
 // sizes and tabs are now driven by translations — see inside component
 
@@ -577,7 +578,7 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, accessories }) => {
               <div className={styles.tabContent}>
                 <h3>{t('specsHeading')}</h3>
                 <p>{t('specsBody')}</p>
-                <Image
+                <ZoomableImage
                   src="https://earasers-eu.myshopify.com/cdn/shop/files/EARASERS_attenuation_tables.png"
                   alt={t('specsImgAlt')}
                   width={1200}

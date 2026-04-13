@@ -39,13 +39,36 @@ const AccessoryPage: NextPage<Props> = ({ product }) => {
   // Single-variant products have title "Default Title" — hide selector in that case
   const showVariants = product.variants.length > 1;
 
+  // Vertaal option name ("Color"/"Colour"/"Size"/...) en value ("Black" → "Zwart")
+  const translateOptionLabel = (name: string): string => {
+    const key = name.trim().toLowerCase();
+    const translated = t(`optionLabels.${key}`, { defaultValue: '' });
+    return translated || name;
+  };
+  const translateOptionValue = (value: string): string => {
+    const key = value.trim().toLowerCase();
+    const translated = t(`optionValues.${key}`, { defaultValue: '' });
+    return translated || value;
+  };
+
+  // Bepaal de primaire option van de variants (bv. "Color" of "Size"). Als
+  // het Shopify default "Title" is (enkele optie zonder echte naam) val terug
+  // op een generieke "Option" label.
+  const primaryOptionName = product.variants[0]?.selectedOptions?.[0]?.name ?? 'Title';
+  const variantLabel = translateOptionLabel(primaryOptionName);
+  const getVariantDisplay = (v: ShopifyVariant): string => {
+    const opt = v.selectedOptions?.[0];
+    if (!opt) return v.title;
+    return translateOptionValue(opt.value);
+  };
+
   const handleAddToCart = () => {
     const item: CartItem = {
       id:        `${product.handle}-${selectedVariant.id}`,
       slug:      product.handle,
       name:      product.title,
       img:       product.images[0]?.url ?? '',
-      size:      showVariants ? selectedVariant.title : '',
+      size:      showVariants ? getVariantDisplay(selectedVariant) : '',
       filter:    '',
       price,
       qty,
@@ -136,7 +159,7 @@ const AccessoryPage: NextPage<Props> = ({ product }) => {
               {/* Variant selector */}
               {showVariants && (
                 <div className={styles.selectorBlock}>
-                  <span className={styles.selectorLabel}>{t('size')}</span>
+                  <span className={styles.selectorLabel}>{variantLabel}</span>
                   <div className={styles.sizeGrid}>
                     {product.variants.map(v => (
                       <button
@@ -146,7 +169,7 @@ const AccessoryPage: NextPage<Props> = ({ product }) => {
                         disabled={!v.availableForSale}
                         style={!v.availableForSale ? { opacity: 0.4, cursor: 'not-allowed' } : undefined}
                       >
-                        {v.title}
+                        {getVariantDisplay(v)}
                       </button>
                     ))}
                   </div>
