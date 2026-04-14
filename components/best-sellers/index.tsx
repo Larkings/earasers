@@ -7,7 +7,7 @@ import { useCurrency } from '../../context/currency';
 
 const PRODUCT_DATA = [
   { price: 49.95, original: 58.00, rating: 4.7, reviews: 1024, img: '/MusicPackage.png', href: '/product?slug=musician', tagKey: 'bestSellers.bestSeller' },
-  { price: 49.95, original: 58.00, rating: 4.8, reviews: 312,  img: '/DJPackage.png',    href: '/product?slug=dj',       tagKey: null },
+  { price: 9.95,  original: 9.95,  rating: 4.8, reviews: 156,  img: 'https://cdn.shopify.com/s/files/1/0254/6738/7989/products/Untitleddesign_20_fc8cd73d-d6d0-4a67-a282-624e7bde6b5b.png?v=1678606108', href: '/accessory/waterproof-keychain-carry-case', tagKey: null },
   { price: 54.95, original: 69.00, rating: 4.6, reviews: 198,  img: 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasers_starter_combo_kit.png', href: '/product?slug=musician', tagKey: 'bestSellers.recommended' },
   { price: 79.00, original: 99.00, rating: 4.9, reviews: 87,   img: 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png', href: '/product?slug=sensitivity', tagKey: 'bestSellers.premium' },
 ];
@@ -56,7 +56,9 @@ export const BestSellers = () => {
                 </div>
                 <div className={styles.priceRow}>
                   <span className={styles.price}>{fmt(p.price)}</span>
-                  <span className={styles.original}>{fmt(p.original)}</span>
+                  {p.original > p.price && (
+                    <span className={styles.original}>{fmt(p.original)}</span>
+                  )}
                 </div>
                 <span className={styles.cta}>
                   {t('bestSellers.chooseOptions')} <ArrowRightIcon size={13} />
