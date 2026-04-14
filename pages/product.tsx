@@ -375,10 +375,21 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, accessories 
 
           <div className={styles.grid}>
 
-            {/* Gallery — kit mode toont kit images, anders hardcoded hero images + Shopify media (deduped) */}
+            {/* Gallery — kit mode toont kit images, anders hardcoded hero images + Shopify media (deduped op bestandsnaam) */}
             {(() => {
               const shopifyImgs = imagesMap[product.slug] ?? [];
-              const mergedCategoryImgs = Array.from(new Set([...product.images, ...shopifyImgs]));
+              const fileKey = (url: string) => {
+                try { return new URL(url, 'https://x').pathname.split('/').pop()?.toLowerCase() ?? url; }
+                catch { return url; }
+              };
+              const seen = new Set<string>();
+              const mergedCategoryImgs: string[] = [];
+              for (const src of [...product.images, ...shopifyImgs]) {
+                const key = fileKey(src);
+                if (seen.has(key)) continue;
+                seen.add(key);
+                mergedCategoryImgs.push(src);
+              }
               const galleryImages = kitData && kitData.images.length > 0 ? kitData.images : mergedCategoryImgs;
               return (
             <div className={styles.gallery}>
