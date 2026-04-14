@@ -97,6 +97,16 @@ overscroll-behavior: contain;
 ```
 Without `overscroll-behavior`, scrolling inside a drawer/menu chains to the underlying page.
 
+### Rule 8: Grid/flex items default `min-width: auto` blows out `1fr` columns
+When a grid item contains a horizontally scrollable child (e.g. a thumbs row), the default `min-width: auto` makes the grid column refuse to shrink below the child's intrinsic width. Result: `grid-template-columns: 1fr 1fr` becomes lopsided the moment the scroller has many items.
+
+Fix: `min-width: 0` on the offending grid/flex item. Lets the column respect `1fr`; the child's own `overflow-x: auto` then handles scrolling.
+
+Hit this when bumping `images(first: 5 → 20)` on the accessory gallery — the 2-column product layout collapsed. The gallery component wasn't broken; the thumb row's intrinsic width just outgrew the column.
+
+### Rule 9: Inline `style={}` on `<Image>` beats CSS module class rules
+`<Image className={styles.thumb} style={{ objectFit: 'cover' }} />` — inline wins. If you're trying to change `object-fit` via CSS and nothing happens, check the JSX for an inline override.
+
 ---
 
 ## Analytics & Pixel Integration
@@ -171,6 +181,16 @@ Product page + accessory page check `availableForSale` before add-to-cart and bu
 - Each has `slug`, `name`, `price`, `originalPrice`, `kitPrice`, `images[]`, `filters[]`, `features[]`, `rating`, `reviews`
 - **No database** — products are static; variants fetched from Shopify at runtime
 - Use product slug for URL routing: `/product?slug=musician`
+- `SLUG_TO_HANDLE` maps category slug → Shopify product handle (authoritative — don't recreate a separate mapping)
+
+### Product Gallery & Media
+- Galleries live on `pages/product.tsx` (category) and `pages/accessory/[handle].tsx`. Both use `styles/product.module.css` — changes there hit both pages.
+- **Category pages = hybrid**: hardcoded hero images (`PRODUCTS[slug].images`) merged with Shopify media via `new Set([...hardcoded, ...shopify])`. Hardcoded first for hero positioning; Shopify fetch failure → gallery falls back to hardcoded only.
+- **Accessory pages = pure Shopify** via `getAccessoryProduct(handle)`.
+- Shopify image queries use `images(first: 20)` in `getProductWithVariants` and `fetchAccessoryProduct`. Raise the limit, don't add a separate query — images come back on the same call used for variants, so no extra Shopify round-trip.
+- **`object-fit: contain`** on `.mainImg img` (not `cover`) — galleries mix square product photos with wide infographics (comparison charts ~12:5). `cover` crops the charts; `contain` letterboxes with the container background (`--color-surface-2`) and preserves both aspect ratios.
+- **Click-to-zoom lightbox**: `<ImageLightbox src alt open onClose />` in `components/zoomable-image/lightbox.tsx`. Wraps the main gallery image in a `<button className={styles.mainImg}>` that toggles `lightboxOpen` state. Lightbox supplies fullscreen view, 100/200/300% zoom, ESC close, body scroll-lock, safe-area insets. Separate from `<ZoomableImage>` which is a self-contained trigger+lightbox unit used in the specs tab.
+- **Shopify content freshness**: `cachedRead` TTL (60s) + ISR `revalidate: 300` → Shopify media updates propagate in ~5–6 min. This is intentional so the shop owner can self-edit media without a redeploy.
 
 ### Cart Item Structure (`context/cart.tsx`)
 ```typescript
@@ -277,6 +297,10 @@ npx tsc --noEmit    # Type check (no emit)
 10. **GA4 without initial `page_view` fire** — `send_page_view: false` means you must fire on mount AND on routeChangeComplete, not just routeChangeComplete.
 11. **Meta Pixel double-firing `InitiateCheckout`** — Next.js fires on checkout click AND Shopify Customer Event fires on checkout page load. Accept small overcount or use `event_id` dedup.
 12. **Missing `availableForSale` check** — customers can buy out-of-stock. Check before add-to-cart AND buy-now flows.
+13. **`images(first: N)` limits too low** — Shopify silently returns only N media items. Default queries used 2/5; bumped to 20. Check query before assuming Shopify "doesn't have" more media.
+14. **Grid columns collapsing after adding more gallery items** — `min-width: auto` default. Add `min-width: 0` to the gallery column (see Viewport Rule 8).
+15. **Inline `style={{ objectFit }}` silently beats CSS module** — strip the inline prop if you want CSS to win (see Viewport Rule 9).
+16. **Recreating `SLUG_TO_HANDLE`** — the mapping already exists in `lib/products.ts`. Don't maintain two.
 
 ---
 
@@ -304,4 +328,4 @@ When a mobile bug appears, work through these in order:
 
 ---
 
-**Last updated: April 2026** — updated after shipping analytics integration, CSP, distributed rate limiting, and hardening the mobile viewport / fixed-positioning story end-to-end.
+**Last updated: April 2026** — added product gallery hybrid pattern (hardcoded hero + Shopify media), `<ImageLightbox>` click-to-zoom, `min-width: 0` grid rule, `object-fit: contain` for mixed-aspect galleries, and the inline-style-vs-CSS-module gotcha after expanding Shopify media from `first: 5` to `first: 20`.

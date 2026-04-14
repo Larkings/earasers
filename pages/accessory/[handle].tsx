@@ -16,6 +16,7 @@ import {
 import { useCart, type CartItem } from '../../context/cart';
 import { createDirectCheckout } from '../../lib/shopify-cart';
 import { useCurrency } from '../../context/currency';
+import { ImageLightbox } from '../../components/zoomable-image/lightbox';
 
 type Props = { product: AccessoryProductDetail }
 
@@ -31,6 +32,7 @@ const AccessoryPage: NextPage<Props> = ({ product }) => {
   const [qty,            setQty]            = useState(1);
   const [added,          setAdded]          = useState(false);
   const [buyNowLoading,  setBuyNowLoading]  = useState(false);
+  const [lightboxOpen,   setLightboxOpen]   = useState(false);
 
   const price       = parseFloat(selectedVariant?.price?.amount ?? '0');
   const compareAt   = parseFloat(selectedVariant?.compareAtPrice?.amount ?? '0');
@@ -111,17 +113,30 @@ const AccessoryPage: NextPage<Props> = ({ product }) => {
 
             {/* Gallery */}
             <div className={styles.gallery}>
-              <div className={styles.mainImg}>
+              <button
+                type="button"
+                className={styles.mainImg}
+                onClick={() => setLightboxOpen(true)}
+                aria-label={tc('zoomImage', { defaultValue: 'Tap to enlarge' })}
+              >
                 {product.images[activeImg] && (
                   <Image
                     src={product.images[activeImg].url}
                     alt={product.images[activeImg].altText ?? product.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    style={{ objectFit: 'cover' }}
                   />
                 )}
-              </div>
+                <span className={styles.galleryHint} aria-hidden="true">🔍 {tc('zoomImage', { defaultValue: 'Tap to enlarge' })}</span>
+              </button>
+              {product.images[activeImg] && (
+                <ImageLightbox
+                  src={product.images[activeImg].url}
+                  alt={product.images[activeImg].altText ?? product.title}
+                  open={lightboxOpen}
+                  onClose={() => setLightboxOpen(false)}
+                />
+              )}
               {product.images.length > 1 && (
                 <div className={styles.thumbs}>
                   {product.images.map((img, i) => (

@@ -27,6 +27,7 @@ import { AwardSection } from '../components/award-section';
 import { CompareTable } from '../components/compare-table';
 import { FrequentlyBoughtTogether } from '../components/FrequentlyBoughtTogether';
 import { ZoomableImage } from '../components/zoomable-image';
+import { ImageLightbox } from '../components/zoomable-image/lightbox';
 
 // sizes and tabs are now driven by translations — see inside component
 
@@ -61,10 +62,12 @@ type Props = {
   variantsMap: Record<string, ShopifyVariant[]>;
   /** Extra Shopify producten voor Starter Kit / Pro Kit — key: "starter:<slug>" of "pro:<slug>" */
   kitMap: Record<string, KitProductData>;
+  /** Shopify media per categorie-slug — gemerged met hardcoded images in de gallery */
+  imagesMap: Record<string, string[]>;
   accessories: AccessoryProduct[];
 }
 
-const Product: NextPage<Props> = ({ variantsMap, kitMap, accessories }) => {
+const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, accessories }) => {
   const router = useRouter();
   const { t } = useTranslation('product');
   const { addToCart, openCart, items: cartItems } = useCart();
@@ -106,6 +109,7 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, accessories }) => {
   const [buyNowLoading, setBuyNowLoading] = useState(false);
   const [quizOpen,     setQuizOpen]     = useState(false);
   const [quizApplied,  setQuizApplied]  = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const recentlyViewed = useRecentlyViewed(product.slug);
 
@@ -371,15 +375,29 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, accessories }) => {
 
           <div className={styles.grid}>
 
-            {/* Gallery — kit mode toont kit images, anders de categorie product images */}
+            {/* Gallery — kit mode toont kit images, anders hardcoded hero images + Shopify media (deduped) */}
             {(() => {
-              const galleryImages = kitData && kitData.images.length > 0 ? kitData.images : product.images;
+              const shopifyImgs = imagesMap[product.slug] ?? [];
+              const mergedCategoryImgs = Array.from(new Set([...product.images, ...shopifyImgs]));
+              const galleryImages = kitData && kitData.images.length > 0 ? kitData.images : mergedCategoryImgs;
               return (
             <div className={styles.gallery}>
-              <div className={styles.mainImg}>
-                <Image src={galleryImages[Math.min(activeImg, galleryImages.length - 1)] ?? galleryImages[0]} alt={tProductName} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
+              <button
+                type="button"
+                className={styles.mainImg}
+                onClick={() => setLightboxOpen(true)}
+                aria-label={t('zoomImage', { defaultValue: 'Tap to enlarge' })}
+              >
+                <Image src={galleryImages[Math.min(activeImg, galleryImages.length - 1)] ?? galleryImages[0]} alt={tProductName} fill sizes="(max-width: 768px) 100vw, 50vw" />
                 {product.tag && !kitData && <span className={styles.galleryTag}>{product.tag}</span>}
-              </div>
+                <span className={styles.galleryHint} aria-hidden="true">🔍 {t('zoomImage', { defaultValue: 'Tap to enlarge' })}</span>
+              </button>
+              <ImageLightbox
+                src={galleryImages[Math.min(activeImg, galleryImages.length - 1)] ?? galleryImages[0]}
+                alt={tProductName}
+                open={lightboxOpen}
+                onClose={() => setLightboxOpen(false)}
+              />
               <div className={styles.thumbs}>
                 {galleryImages.map((src, i) => (
                   <button
@@ -728,9 +746,9 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
       Object.entries(SLUG_TO_HANDLE).map(async ([slug, handle]) => {
         try {
           const product = await getProductWithVariants(handle)
-          return [slug, product?.variants ?? []] as [string, ShopifyVariant[]]
+          return [slug, product] as [string, Awaited<ReturnType<typeof getProductWithVariants>>]
         } catch {
-          return [slug, []] as [string, ShopifyVariant[]]
+          return [slug, null] as [string, null]
         }
       }),
     ),
@@ -748,11 +766,19 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
     if (data) kitMap[key] = data
   }
 
+  const variantsMap: Record<string, ShopifyVariant[]> = {}
+  const imagesMap: Record<string, string[]> = {}
+  for (const [slug, product] of entries) {
+    variantsMap[slug] = product?.variants ?? []
+    imagesMap[slug] = (product?.images ?? []).map(i => i.url)
+  }
+
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['common', 'product', 'home'])),
-      variantsMap: Object.fromEntries(entries),
+      variantsMap,
       kitMap,
+      imagesMap,
       accessories: filterFbtAccessories(accessories),
     },
     revalidate: 300,

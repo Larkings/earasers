@@ -293,7 +293,7 @@ export async function getProductWithVariants(handle: string) {
           id
           title
           handle
-          images(first: 2) {
+          images(first: 20) {
             edges { node { url altText } }
           }
           variants(first: 30) {
@@ -428,7 +428,7 @@ async function fetchAccessoryProduct(handle: string): Promise<AccessoryProductDe
           title
           handle
           description
-          images(first: 5) {
+          images(first: 20) {
             edges { node { url altText } }
           }
           variants(first: 20) {
