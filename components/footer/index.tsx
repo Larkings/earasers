@@ -4,6 +4,55 @@ import { useTranslation } from 'react-i18next';
 import styles from './footer.module.css';
 import Image from "next/image";
 
+/**
+ * Payment method badges. Vijf card/PayPal logos zijn echte SVGs (MIT licensed,
+ * aaronfagan/svg-credit-card-payment-icons). De EU-bank methods (iDEAL,
+ * Bancontact etc.) hebben geen open-source SVG set die ze allemaal dekt; daar
+ * gebruiken we tekst-badges met brand-colors. Alle badges hebben dezelfde
+ * card-afmetingen voor visueel ritme.
+ */
+type SvgBadge  = { kind: 'svg';  src: string; alt: string; title: string }
+type TextBadge = { kind: 'text'; label: string; title: string; bg: string; fg: string }
+type Badge = SvgBadge | TextBadge
+
+const PAYMENT_BADGES: Badge[] = [
+  { kind: 'svg',  src: '/payment-icons/visa.svg',       alt: 'Visa',              title: 'Visa' },
+  { kind: 'svg',  src: '/payment-icons/mastercard.svg', alt: 'Mastercard',        title: 'Mastercard' },
+  { kind: 'svg',  src: '/payment-icons/amex.svg',       alt: 'American Express',  title: 'American Express' },
+  { kind: 'svg',  src: '/payment-icons/maestro.svg',    alt: 'Maestro',           title: 'Maestro' },
+  { kind: 'svg',  src: '/payment-icons/paypal.svg',     alt: 'PayPal',            title: 'PayPal' },
+  { kind: 'text', label: 'iDEAL',  title: 'iDEAL',                bg: '#CC0066', fg: '#fff' },
+  { kind: 'text', label: 'BC',     title: 'Bancontact',           bg: '#005498', fg: '#FFD800' },
+  { kind: 'text', label: 'SEPA',   title: 'SEPA Bank Transfer',   bg: '#10298E', fg: '#fff' },
+  { kind: 'text', label: 'P24',    title: 'Przelewy24',           bg: '#D31E2A', fg: '#fff' },
+  { kind: 'text', label: 'EPS',    title: 'EPS',                  bg: '#E41E2D', fg: '#fff' },
+  { kind: 'text', label: 'KBC',    title: 'KBC/CBC',              bg: '#003D7C', fg: '#fff' },
+  { kind: 'text', label: 'BELF',   title: 'Belfius',              bg: '#D7282F', fg: '#fff' },
+  { kind: 'text', label: 'SOFORT', title: 'SOFORT',               bg: '#EE7F00', fg: '#fff' },
+  { kind: 'text', label: 'giro',   title: 'giropay',              bg: '#0F3F86', fg: '#fff' },
+  { kind: 'text', label: 'in3',    title: 'iDEAL in3 (Riverty)',  bg: '#FF6900', fg: '#fff' },
+]
+
+const PaymentBadges = ({ aria }: { aria: string }) => (
+  <div className={styles.payments} role="list" aria-label={aria}>
+    {PAYMENT_BADGES.map(b => b.kind === 'svg' ? (
+      <span key={b.alt} className={styles.payBadge} title={b.title} role="listitem">
+        <Image src={b.src} alt={b.alt} width={36} height={24} className={styles.payBadgeImg} unoptimized />
+      </span>
+    ) : (
+      <span
+        key={b.title}
+        className={`${styles.payBadge} ${styles.payBadgeText}`}
+        style={{ background: b.bg, color: b.fg }}
+        title={b.title}
+        role="listitem"
+      >
+        {b.label}
+      </span>
+    ))}
+  </div>
+)
+
 export const Footer = () => {
   const { t } = useTranslation('common');
 
@@ -95,27 +144,7 @@ export const Footer = () => {
                 <li key={l.href + l.label}><Link href={l.href} className={styles.link}>{l.label}</Link></li>
               ))}
             </ul>
-            <div className={styles.payments} aria-label={t('footer.paymentsAria')}>
-              {[
-                { label: 'Visa',        title: 'Visa' },
-                { label: 'Mastercard',  title: 'Mastercard' },
-                { label: 'Amex',        title: 'American Express' },
-                { label: 'Maestro',     title: 'Maestro' },
-                { label: 'PayPal',      title: 'PayPal' },
-                { label: 'iDEAL',       title: 'iDEAL' },
-                { label: 'Bancontact',  title: 'Bancontact' },
-                { label: 'SEPA',        title: 'SEPA Bank Transfer' },
-                { label: 'Przelewy24',  title: 'Przelewy24' },
-                { label: 'EPS',         title: 'EPS' },
-                { label: 'KBC/CBC',     title: 'KBC/CBC' },
-                { label: 'Belfius',     title: 'Belfius' },
-                { label: 'SOFORT',      title: 'SOFORT' },
-                { label: 'giropay',     title: 'giropay' },
-                { label: 'in3',         title: 'iDEAL in3 (Riverty)' },
-              ].map(p => (
-                <span key={p.label} className={styles.payIcon} title={p.title}>{p.label}</span>
-              ))}
-            </div>
+            <PaymentBadges aria={t('footer.paymentsAria')} />
           </div>
         </div>
 
