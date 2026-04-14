@@ -52,7 +52,12 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  /* `overflow-x: hidden` breekt position:fixed op iOS Safari (WebKit bug:
+     elke overflow-waarde behalve `visible` creëert een scroll-container,
+     en fixed elements daarin gedragen zich als `absolute` — navbar gaat
+     stotteren/verspringen tijdens scroll). `clip` doet hetzelfde visuele
+     effect zonder scroll-context te maken. Safari 16+, Chrome 90+. */
+  overflow-x: clip;
 }
 
 body {
@@ -62,8 +67,8 @@ body {
   font-size: clamp(14px, 1.5vw, 16px);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-  max-width: 100vw;
+  /* Zie comment op html — clip i.p.v. hidden zodat fixed navbar niet breekt. */
+  overflow-x: clip;
 }
 
 /* ── Global typography scaling ───────────── */
