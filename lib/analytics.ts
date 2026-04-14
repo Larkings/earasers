@@ -36,7 +36,13 @@ declare global {
 }
 
 const SHOPIFY_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN ?? ''
-const SHOP_ID        = process.env.NEXT_PUBLIC_SHOPIFY_SHOP_ID ?? ''
+const SHOP_ID_RAW    = process.env.NEXT_PUBLIC_SHOPIFY_SHOP_ID ?? ''
+// hydrogen-react's sendShopifyAnalytics roept intern parseGid() aan op shopId
+// en verwacht GID-formaat. Puur nummer → parseGid returnt {id: undefined} →
+// NaN → JSON null → Shopify monorail weigert event met 400.
+const SHOP_ID = SHOP_ID_RAW
+  ? (SHOP_ID_RAW.startsWith('gid://') ? SHOP_ID_RAW : `gid://shopify/Shop/${SHOP_ID_RAW}`)
+  : ''
 const DEFAULT_CURRENCY = 'EUR' as const
 
 const UNIQUE_TOKEN_KEY = 'earasers-shopify-unique-token'
