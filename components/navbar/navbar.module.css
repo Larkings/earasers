@@ -49,9 +49,23 @@
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s, background 0.3s;
-  /* Safe area: when bar is dismissed and header is at top:0, stay below notch */
+  /* Safe area: left/right voor landscape notch; top wordt door .headerNoBar
+     gezet wanneer de announcement bar dicht is. */
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
+  /* iOS Safari: backdrop-filter op een fixed element flikkert tijdens scroll
+     omdat het compositing layer constant herberekend wordt. translateZ(0) +
+     will-change forceert een eigen GPU layer → geen flicker meer. */
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Wanneer bar dismissed is, zit header aan top:0 → moet zelf de notch klaren. */
+.headerNoBar {
+  padding-top: env(safe-area-inset-top, 0px);
+  height: calc(var(--nav-height) + env(safe-area-inset-top, 0px));
 }
 
 .scrolled {
@@ -355,9 +369,17 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  max-height: calc(100dvh - var(--nav-height));
+  /* Default: bar is dismissed → header sits at top:0, menu kan tot bottom van viewport */
+  max-height: calc(100svh - var(--nav-height));
   padding-bottom: max(24px, var(--safe-bottom));
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Met announcement bar zichtbaar: menu start lager → moet ook minder hoog worden */
+.mobileMenuWithBar {
+  max-height: calc(100svh - var(--nav-height) - var(--bar-height));
 }
 
 @media (min-width: 1024px) { .mobileMenu { display: none; } }

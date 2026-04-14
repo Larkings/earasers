@@ -73,7 +73,10 @@ export const Navbar = () => {
         </div>
       )}
 
-      <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`} style={{ top: barVisible ? 'var(--bar-height)' : 0 }}>
+      <header
+        className={`${styles.header} ${scrolled ? styles.scrolled : ''} ${barVisible ? '' : styles.headerNoBar}`}
+        style={{ top: barVisible ? 'var(--bar-height)' : 0 }}
+      >
         <div className={`container ${styles.inner}`}>
 
           <Link href="/" className={styles.logo}>
@@ -173,7 +176,7 @@ export const Navbar = () => {
         </div>
 
         {mobileOpen && (
-          <nav className={styles.mobileMenu}>
+          <nav className={`${styles.mobileMenu} ${barVisible ? styles.mobileMenuWithBar : ''}`}>
             {/* Currency switcher — mobile */}
             <div className={styles.mobileCurrencySwitcher}>
               {(['EUR', 'GBP'] as Currency[]).map(c => (
@@ -237,7 +240,17 @@ export const Navbar = () => {
         )}
       </header>
 
-      <div style={{ height: barVisible ? 'calc(var(--bar-height) + var(--nav-height))' : 'var(--nav-height)' }} />
+      <div
+        aria-hidden="true"
+        style={{
+          // Spacer matcht rendered header hoogte. Wanneer bar dismissed is
+          // claimt de header zelf de safe-area-inset-top, dus die moet ook
+          // hier — anders krijg je content onder de notch.
+          height: barVisible
+            ? 'calc(var(--bar-height) + var(--nav-height))'
+            : 'calc(var(--nav-height) + env(safe-area-inset-top, 0px))',
+        }}
+      />
     </>
   );
 };
