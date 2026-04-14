@@ -201,7 +201,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           if (line) {
             dispatch({ type: 'SET_LINE_ID', id: item.id, shopifyLineId: line.node.id });
           }
-          trackAddToCart(item.variantId!, item.qty, item.price);
+          trackAddToCart(item.variantId!, item.qty, item.price, item.name);
         })
         .catch((err) => {
           console.error('[cart] Shopify sync failed:', err);

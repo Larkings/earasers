@@ -1,16 +1,26 @@
+import {
+  AnalyticsEventName,
+  sendShopifyAnalytics,
+  type ShopifyAddToCartPayload,
+  type ShopifyAnalyticsProduct,
+  type ShopifyPageViewPayload,
+} from '@shopify/hydrogen-react'
 import { readConsent } from '../context/consent'
 
 /**
  * Analytics layer voor Earasers.
  *
- * Drie targets per event:
+ * Vier targets per event:
  *   1) Shopify Customer Events  — via `window.dispatchEvent('shopify:*')`,
  *      opgevangen door een Custom Web Pixel in Shopify Admin → Settings →
- *      Customer events. Voor purchase tracking zit Shopify aan het stuur
- *      (checkout gebeurt op shopify.com), de Pixel daar moet de Meta/GA4
- *      events doorsturen.
- *   2) Meta Pixel               — `fbq('track', ...)`
- *   3) Google Analytics 4 / Ads — `gtag('event', ...)`
+ *      Customer events (optioneel; voor eigen doorstuurlogica).
+ *   2) Shopify monorail         — `sendShopifyAnalytics()` post naar
+ *      monorail-edge.shopifysvc.com zodat het native Analytics dashboard
+ *      van deze headless Next.js storefront óók frontend-traffic ziet
+ *      (pageviews, product views, add-to-cart). Checkout/purchase vuurt
+ *      Shopify zelf vanuit de hosted checkout.
+ *   3) Meta Pixel               — `fbq('track', ...)`
+ *   4) Google Analytics 4 / Ads — `gtag('event', ...)`
  *
  * Alle pixel-calls zijn cookie-consent gated. Zonder 'all' consent gaan
  * alleen Shopify dispatch events door (die zijn 1st-party + nodig voor
@@ -25,12 +35,77 @@ declare global {
   }
 }
 
+const SHOPIFY_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN ?? ''
+const SHOP_ID        = process.env.NEXT_PUBLIC_SHOPIFY_SHOP_ID ?? ''
+const DEFAULT_CURRENCY = 'EUR' as const
+
+const UNIQUE_TOKEN_KEY = 'earasers-shopify-unique-token'
+const VISIT_TOKEN_KEY  = 'earasers-shopify-visit-token'
+
+function uuid(): string {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID()
+  return Math.random().toString(36).slice(2) + Date.now().toString(36)
+}
+
+function getOrCreate(storage: Storage, key: string): string {
+  let v = storage.getItem(key)
+  if (!v) { v = uuid(); storage.setItem(key, v) }
+  return v
+}
+
+function shopifyBase(): Omit<ShopifyPageViewPayload, 'pageType'> | null {
+  if (typeof window === 'undefined') return null
+  if (!SHOPIFY_DOMAIN || !SHOP_ID) return null
+  return {
+    shopifySalesChannel: 'headless',
+    shopId: SHOP_ID,
+    currency: DEFAULT_CURRENCY,
+    acceptedLanguage: (navigator.language?.slice(0, 2).toUpperCase() || 'EN') as ShopifyPageViewPayload['acceptedLanguage'],
+    hasUserConsent: readConsent().analytics,
+    url: window.location.href,
+    path: window.location.pathname,
+    search: window.location.search,
+    referrer: document.referrer,
+    title: document.title,
+    navigationType: 'navigate',
+    navigationApi: 'PerformanceNavigationTiming',
+    userAgent: navigator.userAgent,
+    uniqueToken: getOrCreate(window.localStorage, UNIQUE_TOKEN_KEY),
+    visitToken:  getOrCreate(window.sessionStorage, VISIT_TOKEN_KEY),
+  }
+}
+
+function sendToShopify(eventName: string, payload: Record<string, unknown>) {
+  const base = shopifyBase()
+  if (!base) return
+  void sendShopifyAnalytics({
+    eventName,
+    payload: { ...base, ...payload } as ShopifyPageViewPayload | ShopifyAddToCartPayload,
+  })
+}
+
 function dispatch(eventName: string, data: Record<string, unknown>) {
   if (typeof window === 'undefined') return
   window.dispatchEvent(new CustomEvent(`shopify:${eventName}`, { detail: data }))
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line no-console
     console.log(`[analytics] ${eventName}`, data)
+  }
+}
+
+function toShopifyProduct(
+  product: { id: string; title: string },
+  variant: { id: string; title: string; price: { amount: string; currencyCode: string } },
+  quantity = 1,
+): ShopifyAnalyticsProduct {
+  return {
+    productGid: product.id,
+    variantGid: variant.id,
+    name: product.title,
+    variantName: variant.title,
+    brand: 'Earasers',
+    price: variant.price.amount,
+    quantity,
   }
 }
 
@@ -52,6 +127,7 @@ function fbqTrack(name: string, params?: Record<string, unknown>) {
 
 export function trackPageView(url: string) {
   dispatch('page_viewed', { url })
+  sendToShopify(AnalyticsEventName.PAGE_VIEW, { pageType: 'page' })
   gtagEvent('page_view', { page_path: url })
   fbqTrack('PageView')
 }
@@ -70,6 +146,13 @@ export function trackProductView(
       price: variant.price,
       product: { id: product.id, title: product.title, vendor: 'Earasers' },
     },
+  })
+
+  sendToShopify(AnalyticsEventName.PRODUCT_VIEW, {
+    pageType: 'product',
+    resourceId: product.id,
+    products: [toShopifyProduct(product, variant)],
+    totalValue: value,
   })
 
   gtagEvent('view_item', {
@@ -93,7 +176,12 @@ export function trackProductView(
   })
 }
 
-export function trackAddToCart(variantId: string, quantity: number, price: number) {
+export function trackAddToCart(
+  variantId: string,
+  quantity: number,
+  price: number,
+  productName?: string,
+) {
   dispatch('product_added_to_cart', {
     cartLine: {
       merchandise: { id: variantId },
@@ -103,6 +191,19 @@ export function trackAddToCart(variantId: string, quantity: number, price: numbe
   })
 
   const value = price * quantity
+
+  sendToShopify(AnalyticsEventName.ADD_TO_CART, {
+    cartId: variantId,
+    totalValue: value,
+    products: [{
+      productGid: variantId,
+      variantGid: variantId,
+      name: productName ?? 'Product',
+      brand: 'Earasers',
+      price: String(price),
+      quantity,
+    }],
+  })
 
   gtagEvent('add_to_cart', {
     currency: 'EUR',
