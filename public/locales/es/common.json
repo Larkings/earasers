@@ -66,7 +66,8 @@
     "blog": "Blog",
     "copyright": "© 2026 Earasers. Todos los derechos reservados.",
     "privacy": "Política de privacidad",
-    "terms": "Términos de servicio"
+    "terms": "Términos de servicio",
+    "paymentsAria": "Métodos de pago aceptados"
   },
   "cookie": {
     "ariaLabel": "Preferencias de cookies",

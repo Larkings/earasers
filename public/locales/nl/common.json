@@ -66,7 +66,8 @@
     "blog": "Blog",
     "copyright": "© 2026 Earasers. Alle rechten voorbehouden.",
     "privacy": "Privacybeleid",
-    "terms": "Algemene voorwaarden"
+    "terms": "Algemene voorwaarden",
+    "paymentsAria": "Geaccepteerde betaalmethodes"
   },
   "cookie": {
     "ariaLabel": "Cookie-instellingen",

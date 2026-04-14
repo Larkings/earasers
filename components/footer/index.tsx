@@ -95,9 +95,25 @@ export const Footer = () => {
                 <li key={l.href + l.label}><Link href={l.href} className={styles.link}>{l.label}</Link></li>
               ))}
             </ul>
-            <div className={styles.payments}>
-              {['VISA', 'MC', 'AMEX', 'PayPal'].map(p => (
-                <span key={p} className={styles.payIcon}>{p}</span>
+            <div className={styles.payments} aria-label={t('footer.paymentsAria')}>
+              {[
+                { label: 'Visa',        title: 'Visa' },
+                { label: 'Mastercard',  title: 'Mastercard' },
+                { label: 'Amex',        title: 'American Express' },
+                { label: 'Maestro',     title: 'Maestro' },
+                { label: 'PayPal',      title: 'PayPal' },
+                { label: 'iDEAL',       title: 'iDEAL' },
+                { label: 'Bancontact',  title: 'Bancontact' },
+                { label: 'SEPA',        title: 'SEPA Bank Transfer' },
+                { label: 'Przelewy24',  title: 'Przelewy24' },
+                { label: 'EPS',         title: 'EPS' },
+                { label: 'KBC/CBC',     title: 'KBC/CBC' },
+                { label: 'Belfius',     title: 'Belfius' },
+                { label: 'SOFORT',      title: 'SOFORT' },
+                { label: 'giropay',     title: 'giropay' },
+                { label: 'in3',         title: 'iDEAL in3 (Riverty)' },
+              ].map(p => (
+                <span key={p.label} className={styles.payIcon} title={p.title}>{p.label}</span>
               ))}
             </div>
           </div>
