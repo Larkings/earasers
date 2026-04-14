@@ -130,6 +130,17 @@ Hit this when bumping `images(first: 5 → 20)` on the accessory gallery — the
   - `NEXT_PUBLIC_GA4_MEASUREMENT_ID`
   - `NEXT_PUBLIC_GOOGLE_ADS_ID`
   - `NEXT_PUBLIC_GOAFFPRO_TOKEN` + `NEXT_PUBLIC_GOAFFPRO_SHOP`
+  - `NEXT_PUBLIC_SHOPIFY_SHOP_ID` — **numeric Shopify shop ID** (get via Admin API `{ shop { id } }`, extract last segment of the returned GID). Code wraps it in `gid://shopify/Shop/<id>` before passing to hydrogen-react.
+  - `NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN` — myshopify domain
+  - `NEXT_PUBLIC_SHOPIFY_SHOP_ID` (numeric) is REQUIRED for Shopify Analytics dashboard to show headless traffic
+
+### Shopify monorail / Analytics dashboard gotchas
+- `sendShopifyAnalytics` from `@shopify/hydrogen-react` calls `parseGid()` internally on `shopId`. If you pass a raw number (e.g. `"25467387989"`), parseGid returns `{id: undefined}` → `parseInt(undefined)` → `NaN` → JSON serializes as `null` → monorail rejects batch with **400 "shopId: no value provided for required field"** → Shopify Analytics dashboard stays empty.
+- **Fix** (already applied in `lib/analytics.ts:39-44`): wrap raw env var in `gid://shopify/Shop/${raw}` before assigning to `SHOP_ID`. Accepts already-GID values too (idempotent).
+- **Verify** after deploy: DevTools Network → filter `monorail` → `produce_batch` should return **200 OK with empty body** (not 207 Multi-Status). Response body `[{"status":200}]` = success.
+- **Dashboard propagation delay**: headless traffic takes **6-24 hours** to appear in Shopify Analytics. Don't panic if the dashboard is empty right after a fix.
+- **`NEXT_PUBLIC_*` build-time inlining**: adding/changing these in Vercel does NOT auto-redeploy. Must trigger redeploy (and uncheck "Use existing Build Cache" if values seem stale). Verify a value is actually in the bundle with: `curl -s https://<site>/_next/static/chunks/<chunk>.js | grep <value>`.
+- **Consent gating caveat**: if user hasn't clicked "Accept all", `hasUserConsent: false` is sent. Shopify may filter these events from the dashboard regardless of monorail accepting them.
 
 ### Event helpers (`lib/analytics.ts`)
 - `trackPageView` — fires on mount AND `routeChangeComplete` (GA4 has `send_page_view: false` so manual firing is required; without the mount fire, initial landing pages would be missed)
