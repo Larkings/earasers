@@ -97,14 +97,17 @@ function MyApp({ Component, pageProps }: AppProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Page view tracking — vuurt op elke route change. GA4 config staat op
-  // `send_page_view: false` zodat we het hier handmatig doen (consistent met
-  // de Meta + Shopify dispatch).
+  // Page view tracking — vuurt op elke route change EN op initial mount.
+  // GA4 config staat op `send_page_view: false` zodat we hier handmatig vuren.
+  // routeChangeComplete fires alleen bij subsequent navigaties, dus zonder de
+  // initial fire mist GA4 elke landing page.
   useEffect(() => {
+    trackPageView(router.asPath);
     const handler = (url: string) => trackPageView(url);
     router.events.on('routeChangeComplete', handler);
     return () => { router.events.off('routeChangeComplete', handler); };
-  }, [router.events]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Scroll-reveal observer
   useEffect(() => {

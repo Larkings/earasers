@@ -7,7 +7,7 @@ import {
   removeFromCart as shopifyRemoveFromCart,
   type ShopifyCart,
 } from '../lib/shopify-cart';
-import { trackAddToCart, trackCheckoutStarted } from '../lib/analytics';
+import { trackAddToCart, trackCheckoutStarted, trackRemoveFromCart } from '../lib/analytics';
 
 export type CartItem = {
   id: string;      // slug + size + filter
@@ -265,6 +265,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     // Optimistic remove
     dispatch({ type: 'REMOVE', id });
     setCheckoutError(null);
+
+    if (item.variantId) {
+      trackRemoveFromCart(item.variantId, item.qty, item.price);
+    }
 
     if (item.shopifyLineId && shopifyCart) {
       shopifyRemoveFromCart(shopifyCart.id, [item.shopifyLineId])

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Layout } from '../../components/layout';
 import { SEO } from '../../components/seo';
 import { useAuth } from '../../context/auth';
+import { trackSignUp } from '../../lib/analytics';
 import styles from '../../styles/account.module.css';
 
 const EyeIcon = ({ open }: { open: boolean }) => open ? (
@@ -64,6 +65,7 @@ const Register: NextPage = () => {
       acceptsMarketing: form.acceptsMarketing,
     });
     if (err) { setApiError(err); return; }
+    trackSignUp('email');
     router.push('/account');
   };
 

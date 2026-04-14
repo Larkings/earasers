@@ -94,11 +94,12 @@ const Privacy: NextPage = () => {
               <section className={styles.section}>
                 <p className={styles.sectionLabel}>05 — Third parties</p>
                 <h2>Third parties we share data with</h2>
-                <p>We share your data only with parties necessary to fulfil your order:</p>
+                <p>We share your data only with parties necessary to fulfil your order or to operate the website:</p>
                 <ul>
                   <li><strong>Shopify</strong> — our e-commerce platform and payment processor</li>
                   <li><strong>Shipping carriers</strong> — PostNL, DHL or equivalent, to deliver your order</li>
                   <li><strong>Email providers</strong> — for transactional and support emails</li>
+                  <li><strong>Vercel</strong> — hosting infrastructure for the website</li>
                 </ul>
                 <p>
                   All third parties are contractually bound to process your data only for the purposes
@@ -107,19 +108,50 @@ const Privacy: NextPage = () => {
               </section>
 
               <section className={styles.section}>
-                <p className={styles.sectionLabel}>06 — Cookies</p>
-                <h2>Cookies</h2>
+                <p className={styles.sectionLabel}>06 — Cookies &amp; tracking</p>
+                <h2>Cookies and tracking technologies</h2>
                 <p>
-                  Our website uses cookies to make the site function correctly and to understand how
-                  visitors use our site. These include:
+                  Our website uses cookies and similar technologies to make the site function, to
+                  understand how visitors use our site, and — with your consent — to measure the
+                  effectiveness of our advertising. You control which categories are active via the
+                  cookie banner shown on your first visit.
                 </p>
+                <h3>Essential (always active)</h3>
                 <ul>
-                  <li><strong>Essential cookies</strong> — required for the shopping cart and checkout to work</li>
-                  <li><strong>Analytics cookies</strong> — anonymised data about page visits (e.g. Google Analytics)</li>
+                  <li>Shopping cart, checkout and authentication cookies</li>
+                  <li>Cookie consent preference itself</li>
+                  <li>Security and CSRF protection</li>
+                </ul>
+                <h3>Analytics (opt-in)</h3>
+                <ul>
+                  <li>
+                    <strong>Google Analytics 4</strong> — anonymised page-view and interaction data.
+                    Provider: Google Ireland Ltd. See{' '}
+                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google&apos;s privacy policy</a>.
+                  </li>
+                </ul>
+                <h3>Marketing (opt-in)</h3>
+                <ul>
+                  <li>
+                    <strong>Meta Pixel (Facebook / Instagram)</strong> — measures conversions and
+                    enables retargeting on Meta platforms. Provider: Meta Platforms Ireland Ltd. See{' '}
+                    <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer">Meta&apos;s privacy policy</a>.
+                  </li>
+                  <li>
+                    <strong>Google Ads conversion tracking</strong> — measures the effectiveness of
+                    Google Ads campaigns. Provider: Google Ireland Ltd.
+                  </li>
+                  <li>
+                    <strong>GoAffPro</strong> — affiliate referral tracking. Provider: Goaffpro
+                    Technologies. See{' '}
+                    <a href="https://goaffpro.com/privacy" target="_blank" rel="noopener noreferrer">GoAffPro&apos;s privacy policy</a>.
+                  </li>
                 </ul>
                 <p>
-                  You can disable non-essential cookies in your browser settings at any time. This will
-                  not affect your ability to browse the site or complete a purchase.
+                  You can change or withdraw your consent at any time by clearing the
+                  <code> earasers-cookie-consent </code> entry from your browser&apos;s site data, or
+                  by using your browser&apos;s privacy settings. Withdrawal does not affect the
+                  lawfulness of any processing carried out before you withdrew consent.
                 </p>
               </section>
 

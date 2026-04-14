@@ -6,7 +6,7 @@ import { useConsent } from '../../context/consent';
 
 export const CookieBanner = () => {
   const { t } = useTranslation('common');
-  const { consent, setConsent } = useConsent();
+  const { consent, setConsent, acceptAll, rejectAll } = useConsent();
   const [visible,   setVisible]   = useState(false);
   const [expanded,  setExpanded]  = useState(false);
   const [analytics, setAnalytics] = useState(true);
@@ -17,14 +17,19 @@ export const CookieBanner = () => {
     startTransition(() => setVisible(consent === null));
   }, [consent]);
 
-  const accept = (type: 'all' | 'necessary') => {
-    setConsent(type);
+  const handleAcceptAll = () => {
+    acceptAll();
+    setVisible(false);
+  };
+
+  const handleRejectAll = () => {
+    rejectAll();
     setVisible(false);
   };
 
   const acceptCustom = () => {
-    const type = (analytics || marketing) ? 'all' : 'necessary';
-    accept(type);
+    setConsent({ analytics, marketing });
+    setVisible(false);
   };
 
   if (!visible) return null;
@@ -43,10 +48,10 @@ export const CookieBanner = () => {
           </div>
 
           <div className={styles.btns}>
-            <button className={styles.btnAll} onClick={() => accept('all')}>
+            <button className={styles.btnAll} onClick={handleAcceptAll}>
               {t('cookie.acceptAll')}
             </button>
-            <button className={styles.btnNecessary} onClick={() => accept('necessary')}>
+            <button className={styles.btnNecessary} onClick={handleRejectAll}>
               {t('cookie.necessaryOnly')}
             </button>
             <button

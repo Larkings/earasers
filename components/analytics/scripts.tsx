@@ -30,13 +30,21 @@ const GOOGLE_ADS_ID = GOOGLE_ADS_ID_RAW
   : null
 
 export function AnalyticsScripts() {
-  const { marketingAllowed } = useConsent()
-  if (!marketingAllowed) return null
+  const { analyticsAllowed, marketingAllowed } = useConsent()
+
+  // GA4 = analytics; Google Ads + GoAffPro + Meta = marketing.
+  // gtag.js loader nodig zodra ÉÉN van de twee Google producten geladen mag worden.
+  const loadGA4    = analyticsAllowed && Boolean(GA4_ID)
+  const loadAds    = marketingAllowed && Boolean(GOOGLE_ADS_ID)
+  const loadGtag   = loadGA4 || loadAds
+  const loadMeta   = marketingAllowed && Boolean(META_PIXEL_ID)
+  const loadGoAff  = marketingAllowed && Boolean(GOAFFPRO_TOKEN && GOAFFPRO_SHOP)
+
+  if (!loadGtag && !loadMeta && !loadGoAff) return null
 
   return (
     <>
-      {/* Google: GA4 + Google Ads delen dezelfde gtag.js loader */}
-      {(GA4_ID || GOOGLE_ADS_ID) && (
+      {loadGtag && (
         <>
           <Script
             id="gtag-loader"
@@ -48,14 +56,14 @@ export function AnalyticsScripts() {
 function gtag(){dataLayer.push(arguments);}
 window.gtag = gtag;
 gtag('js', new Date());
-${GA4_ID ? `gtag('config', '${GA4_ID}', { send_page_view: false });` : ''}
-${GOOGLE_ADS_ID ? `gtag('config', '${GOOGLE_ADS_ID}');` : ''}`}
+${loadGA4 ? `gtag('config', '${GA4_ID}', { send_page_view: false });` : ''}
+${loadAds ? `gtag('config', '${GOOGLE_ADS_ID}');` : ''}`}
           </Script>
         </>
       )}
 
       {/* Meta Pixel */}
-      {META_PIXEL_ID && (
+      {loadMeta && (
         <Script id="meta-pixel" strategy="afterInteractive">
           {`!function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -71,10 +79,10 @@ fbq('track', 'PageView');`}
       )}
 
       {/* GoAffPro affiliate tracker */}
-      {GOAFFPRO_TOKEN && GOAFFPRO_SHOP && (
+      {loadGoAff && (
         <Script
           id="goaffpro-loader"
-          src={`https://api.goaffpro.com/loader.js?shop=${encodeURIComponent(GOAFFPRO_SHOP)}`}
+          src={`https://api.goaffpro.com/loader.js?shop=${encodeURIComponent(GOAFFPRO_SHOP!)}`}
           data-public-token={GOAFFPRO_TOKEN}
           strategy="afterInteractive"
         />

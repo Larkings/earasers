@@ -25,8 +25,6 @@ declare global {
   }
 }
 
-const isMarketingAllowed = () => readConsent() === 'all'
-
 function dispatch(eventName: string, data: Record<string, unknown>) {
   if (typeof window === 'undefined') return
   window.dispatchEvent(new CustomEvent(`shopify:${eventName}`, { detail: data }))
@@ -36,13 +34,17 @@ function dispatch(eventName: string, data: Record<string, unknown>) {
   }
 }
 
+/** GA4: gegated op analytics consent (anonieme stats). */
 function gtagEvent(name: string, params?: Record<string, unknown>) {
-  if (typeof window === 'undefined' || !isMarketingAllowed()) return
+  if (typeof window === 'undefined') return
+  if (!readConsent().analytics) return
   window.gtag?.('event', name, params ?? {})
 }
 
+/** Meta Pixel: gegated op marketing consent. */
 function fbqTrack(name: string, params?: Record<string, unknown>) {
-  if (typeof window === 'undefined' || !isMarketingAllowed()) return
+  if (typeof window === 'undefined') return
+  if (!readConsent().marketing) return
   window.fbq?.('track', name, params ?? {})
 }
 
@@ -132,6 +134,39 @@ export function trackViewCart(items: Array<{ variantId: string; price: number; q
     value,
     currency: 'EUR',
   })
+}
+
+export function trackRemoveFromCart(variantId: string, quantity: number, price: number) {
+  const value = price * quantity
+
+  dispatch('product_removed_from_cart', {
+    cartLine: {
+      merchandise: { id: variantId },
+      quantity,
+      cost: { totalAmount: { amount: String(value), currencyCode: 'EUR' } },
+    },
+  })
+
+  gtagEvent('remove_from_cart', {
+    currency: 'EUR',
+    value,
+    items: [{ item_id: variantId, price, quantity }],
+  })
+
+  // Meta heeft geen native RemoveFromCart standard event; gebruik custom event
+  if (typeof window !== 'undefined' && readConsent().marketing) {
+    window.fbq?.('trackCustom', 'RemoveFromCart', {
+      content_ids: [variantId],
+      value,
+      currency: 'EUR',
+    })
+  }
+}
+
+export function trackSignUp(method: 'email' | 'oauth' = 'email') {
+  dispatch('customer_signup', { method })
+  gtagEvent('sign_up', { method })
+  fbqTrack('CompleteRegistration', { content_name: method })
 }
 
 export function trackCheckoutStarted(checkoutUrl: string, totalAmount: string) {
