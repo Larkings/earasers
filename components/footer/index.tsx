@@ -114,6 +114,7 @@ export const Footer = () => {
                 <FacebookIcon />
               </a>
             </div>
+            <PaymentBadges aria={t('footer.paymentsAria')} />
           </div>
 
           {/* Shop */}
@@ -144,7 +145,6 @@ export const Footer = () => {
                 <li key={l.href + l.label}><Link href={l.href} className={styles.link}>{l.label}</Link></li>
               ))}
             </ul>
-            <PaymentBadges aria={t('footer.paymentsAria')} />
           </div>
         </div>
 
