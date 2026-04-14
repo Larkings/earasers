@@ -87,12 +87,16 @@ const DrawerContent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Body scroll lock — iOS Safari proof.
+  // Body scroll lock — iOS Safari proof + BFCache proof.
   // `overflow: hidden` op body is niet voldoende op iOS: touch-scroll gaat
   // er doorheen, triggert de adresbalk show/hide en verandert de viewport
-  // hoogte → layout shift / witruimte onderaan de drawer. De gangbare fix:
-  // body op `position: fixed` zetten met behoud van scroll-positie, en die
-  // bij sluiten exact terugzetten (zonder scroll-restore-jump).
+  // hoogte → layout shift. Daarom body op `position: fixed`.
+  //
+  // BFCache: bij navigatie naar Shopify checkout via window.location.href
+  // krijgt React geen tijd voor unmount cleanup. De browser snapshot bevat
+  // dan een locked body, en bij BACK uit Shopify wordt die snapshot terug-
+  // geladen → page is niet meer scrollbaar. Fix: `pagehide` listener vuurt
+  // vóór de snapshot, daar runnen we de cleanup defensief.
   useEffect(() => {
     const scrollY = window.scrollY;
     const body = document.body;
@@ -112,17 +116,38 @@ const DrawerContent = () => {
     body.style.width    = '100%';
     body.style.overflow = 'hidden';
 
-    return () => {
+    let unlocked = false;
+    const unlock = () => {
+      if (unlocked) return;
+      unlocked = true;
       body.style.position = prev.position;
       body.style.top      = prev.top;
       body.style.left     = prev.left;
       body.style.right    = prev.right;
       body.style.width    = prev.width;
       body.style.overflow = prev.overflow;
-      // Restore zonder smooth-scroll animatie, anders ziet user de jump.
       window.scrollTo(0, scrollY);
     };
+
+    // Voor BFCache snapshot — garandeert clean body in cache
+    window.addEventListener('pagehide', unlock);
+
+    return () => {
+      window.removeEventListener('pagehide', unlock);
+      unlock();
+    };
   }, []);
+
+  // Restored uit BFCache (BACK uit Shopify checkout): cart drawer wordt
+  // weer getoond met cached state, maar user wil hier waarschijnlijk niet
+  // meer zijn. Sluit defensief zodat de page in een schone state is.
+  useEffect(() => {
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) closeCart();
+    };
+    window.addEventListener('pageshow', onPageShow);
+    return () => window.removeEventListener('pageshow', onPageShow);
+  }, [closeCart]);
 
   // Reset checkout loading when user returns from checkout (window gets focus)
   useEffect(() => {
