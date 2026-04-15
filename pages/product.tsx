@@ -779,17 +779,17 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
     Promise.all(
       Object.entries(SLUG_TO_HANDLE).map(async ([slug, handle]) => {
         try {
-          const product = await getProductWithVariants(handle)
+          const product = await getProductWithVariants(handle, locale)
           return [slug, product] as [string, Awaited<ReturnType<typeof getProductWithVariants>>]
         } catch {
           return [slug, null] as [string, null]
         }
       }),
     ),
-    getCollectionProducts('accessories').catch(() => [] as AccessoryProduct[]),
+    getCollectionProducts('accessories', locale).catch(() => [] as AccessoryProduct[]),
     Promise.all(
       kitTasks.map(async ({ key, handle }) => {
-        const data = await getKitProductData(handle)
+        const data = await getKitProductData(handle, locale)
         return [key, data] as [string, KitProductData | null]
       }),
     ),

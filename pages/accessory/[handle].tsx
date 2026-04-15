@@ -248,7 +248,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<Props> = async ({ locale, params }) => {
   const handle = params?.handle as string;
-  const product = await getAccessoryProduct(handle);
+  const product = await getAccessoryProduct(handle, locale);
   if (!product) return { notFound: true };
   return {
     props: {

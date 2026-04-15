@@ -414,7 +414,7 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
   useEffect(() => {
     if (ssrAccessories.length > 0) return;
     let cancelled = false;
-    fetch('/api/accessories')
+    fetch(`/api/accessories?locale=${router.locale ?? 'en'}`)
       .then(r => r.json())
       .then((data: AccessoryProduct[]) => { if (!cancelled && data.length) setAccessories(data); })
       .catch(() => {});
@@ -936,12 +936,12 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ locale
     const handle = SLUG_TO_HANDLE[slug]
     const [product, acc] = await Promise.all([
       handle
-        ? getProductWithVariants(handle).catch((err) => {
+        ? getProductWithVariants(handle, locale).catch((err) => {
             console.error('[collection] getProductWithVariants failed:', err)
             return null
           })
         : Promise.resolve(null),
-      getCollectionProducts('accessories').catch((err) => {
+      getCollectionProducts('accessories', locale).catch((err) => {
         console.error('[collection] getCollectionProducts failed:', err)
         return [] as AccessoryProduct[]
       }),

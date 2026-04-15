@@ -2,6 +2,20 @@ import { shopifyFetch } from './shopify'
 import { cachedRead } from './shopify-cache'
 import type { FilterOption } from './filters'
 
+/**
+ * Storefront API @inContext directive verwacht een LanguageCode enum (EN, NL,
+ * DE, ES). Next.js locales zijn lowercase (en, nl, de, es) — hier normaliseren.
+ * Fallback EN als niets is meegegeven. Zonder deze directive retourneert de
+ * Storefront API default-taal strings en krijg je Engelse product titels op
+ * NL/DE/ES pagina's.
+ */
+function langCode(locale?: string): string {
+  const code = (locale ?? 'en').toUpperCase()
+  // Whitelist: alleen talen waarvan we weten dat Shopify translations bevat.
+  // Overige locales → EN, zodat GraphQL niet faalt op een onbekende enum.
+  return ['EN', 'NL', 'DE', 'ES'].includes(code) ? code : 'EN'
+}
+
 export type ProductFilter = { db: string; label: string; desc: string };
 
 export type Product = {
@@ -219,9 +233,9 @@ export type KitProductData = {
   sizes: string[];
 }
 
-export async function getKitProductData(handle: string): Promise<KitProductData | null> {
+export async function getKitProductData(handle: string, locale?: string): Promise<KitProductData | null> {
   try {
-    const product = await getProductWithVariants(handle)
+    const product = await getProductWithVariants(handle, locale)
     if (!product || product.variants.length === 0) return null
 
     const prices    = product.variants.map(v => parseFloat(v.price.amount)).filter(n => !Number.isNaN(n))
@@ -278,10 +292,11 @@ type ShopifyProductResponse = {
   } | null;
 };
 
-export async function getProductWithVariants(handle: string) {
-  return cachedRead(`product:${handle}`, async () => {
+export async function getProductWithVariants(handle: string, locale?: string) {
+  const lang = langCode(locale)
+  return cachedRead(`product:${handle}:${lang}`, async () => {
     const data = await shopifyFetch<ShopifyProductResponse>(`
-      query ProductByHandle($handle: String!) {
+      query ProductByHandle($handle: String!, $language: LanguageCode!) @inContext(language: $language) {
         product(handle: $handle) {
           id
           title
@@ -303,7 +318,7 @@ export async function getProductWithVariants(handle: string) {
           }
         }
       }
-    `, { handle })
+    `, { handle, language: lang })
 
     if (!data.product) return null
     return {
@@ -406,16 +421,17 @@ type AccessoryProductResponse = {
   } | null;
 }
 
-export async function getAccessoryProduct(handle: string): Promise<AccessoryProductDetail | null> {
+export async function getAccessoryProduct(handle: string, locale?: string): Promise<AccessoryProductDetail | null> {
   // Backstop: InEarz-producten mogen niet als Earasers-accessoire renderen
   if (isInearzHandle(handle)) return null;
-  return cachedRead(`accessory:${handle}`, () => fetchAccessoryProduct(handle), 60_000)
+  const lang = langCode(locale)
+  return cachedRead(`accessory:${handle}:${lang}`, () => fetchAccessoryProduct(handle, lang), 60_000)
 }
 
-async function fetchAccessoryProduct(handle: string): Promise<AccessoryProductDetail | null> {
+async function fetchAccessoryProduct(handle: string, lang: string): Promise<AccessoryProductDetail | null> {
   try {
     const data = await shopifyFetch<AccessoryProductResponse>(`
-      query AccessoryByHandle($handle: String!) {
+      query AccessoryByHandle($handle: String!, $language: LanguageCode!) @inContext(language: $language) {
         product(handle: $handle) {
           id
           title
@@ -438,7 +454,7 @@ async function fetchAccessoryProduct(handle: string): Promise<AccessoryProductDe
           }
         }
       }
-    `, { handle })
+    `, { handle, language: lang })
 
     if (!data.product) return null
     return {
@@ -451,14 +467,15 @@ async function fetchAccessoryProduct(handle: string): Promise<AccessoryProductDe
   }
 }
 
-export async function getCollectionProducts(handle: string): Promise<AccessoryProduct[]> {
-  return cachedRead(`collection:${handle}`, () => fetchCollectionProducts(handle), 60_000)
+export async function getCollectionProducts(handle: string, locale?: string): Promise<AccessoryProduct[]> {
+  const lang = langCode(locale)
+  return cachedRead(`collection:${handle}:${lang}`, () => fetchCollectionProducts(handle, lang), 60_000)
 }
 
-async function fetchCollectionProducts(handle: string): Promise<AccessoryProduct[]> {
+async function fetchCollectionProducts(handle: string, lang: string): Promise<AccessoryProduct[]> {
   try {
     const data = await shopifyFetch<ShopifyCollectionResponse>(`
-      query CollectionByHandle($handle: String!) {
+      query CollectionByHandle($handle: String!, $language: LanguageCode!) @inContext(language: $language) {
         collection(handle: $handle) {
           id
           title
@@ -487,7 +504,7 @@ async function fetchCollectionProducts(handle: string): Promise<AccessoryProduct
           }
         }
       }
-    `, { handle })
+    `, { handle, language: lang })
 
     if (!data.collection) return []
     return data.collection.products.edges

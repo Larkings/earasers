@@ -91,7 +91,7 @@ const AccessoriesPage: NextPage<Props> = ({ products }) => {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
-  const products = await getCollectionProducts('accessories');
+  const products = await getCollectionProducts('accessories', locale);
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['common', 'collection'])),
