@@ -266,9 +266,11 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, accessories 
       const opts = chosenVariant.selectedOptions;
       const sizeOk      = opts.some(o => matchesSize(o.value, sizeLabel));
       const hasFilterOpt = opts.some(o => /-\d+db/i.test(o.value));
+      // Pro-Kit varianten kunnen meerdere dB-waarden in één optie-string
+      // hebben (combo). Check ALLE dB-waarden, niet alleen de eerste.
       const dbMatch     = opts.some(o => {
-        const m = o.value.toLowerCase().match(/-(\d+)\s*db/);
-        return m ? `-${m[1]}db` === filter.db.toLowerCase() : false;
+        const all = [...o.value.toLowerCase().matchAll(/-(\d+)\s*db/g)];
+        return all.some(m => `-${m[1]}db` === filter.db.toLowerCase());
       });
       if (!sizeOk || (hasFilterOpt && !dbMatch)) {
         console.error('[cart] variant mismatch', {
@@ -447,7 +449,23 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, accessories 
 
               <div className={styles.ratingRow}>
                 <Stars count={product.rating} />
-                <a href="#reviews" className={styles.ratingLink}>
+                <a
+                  href="#reviews"
+                  className={styles.ratingLink}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveTab(2);
+                    // Timeout zodat React eerst de reviews-tab rendert
+                    // (activeTab=2) voordat we scrollen — anders scroll je
+                    // naar de tab-bar maar de content eronder is nog leeg.
+                    setTimeout(() => {
+                      document.getElementById('reviews')?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                      });
+                    }, 0);
+                  }}
+                >
                   {product.rating} · {t('reviewsCount', { count: product.reviews.toLocaleString('en-GB') })}
                 </a>
               </div>
@@ -721,13 +739,18 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, accessories 
               <div className={styles.recentGrid}>
                 {recentlyViewed.map(slug => {
                   const p = getProduct(slug);
+                  // Product data (PRODUCTS) heeft Engelse hardcoded namen —
+                  // hier uitdrukkelijk i18n-lookup met fallback, zodat Recently
+                  // Viewed niet Engels blijft op NL/DE/ES locales.
+                  const rName       = t(`productData.${slug}.name`,       { defaultValue: p.name });
+                  const rCollection = t(`productData.${slug}.collection`, { defaultValue: p.collection });
                   return (
                     <Link key={slug} href={`/product?slug=${slug}`} className={styles.recentCard}>
                       <div className={styles.recentImg}>
-                        <Image src={p.images[0]} alt={p.name} fill sizes="(max-width: 640px) 50vw, 200px" style={{ objectFit: 'cover' }} />
+                        <Image src={p.images[0]} alt={rName} fill sizes="(max-width: 640px) 50vw, 200px" style={{ objectFit: 'cover' }} />
                       </div>
-                      <p className={styles.recentCollection}>{p.collection}</p>
-                      <p className={styles.recentName}>{p.name}</p>
+                      <p className={styles.recentCollection}>{rCollection}</p>
+                      <p className={styles.recentName}>{rName}</p>
                       <p className={styles.recentPrice}>{fmt(p.price)}</p>
                     </Link>
                   );

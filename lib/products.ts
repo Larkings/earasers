@@ -615,14 +615,16 @@ export function findVariantByFilter(
   const filterMatches = (v: ShopifyVariant) => {
     // Exacte match op de bekende Shopify-string
     if (v.selectedOptions.some(o => o.value === filterShopify)) return true
-    // Anders: zoek dB-waarde in de optie-waarden, maar vergelijk strikt op
-    // hetzelfde dB-getal (voorkomt dat "-19dB" matcht op "-190dB" of iets
-    // met alleen een losse "-26dB peak" zin in een andere optie).
+    // Anders: zoek ALLE dB-waarden in de optie-waarden. Pro-Kit varianten
+    // zijn combinaties zoals "Comfort (-19dB | SNR 14) and Safety (-31dB |
+    // SNR 22)" — één variant-string bevat twee dB-waarden. `.match()` pakt
+    // alleen de eerste, dus -31dB matchte nooit op combo-varianten. Met
+    // matchAll checken we of de geselecteerde filter.db in de set van alle
+    // dB-waarden in die optie voorkomt.
     return v.selectedOptions.some(o => {
-      const m = o.value.toLowerCase().match(/-(\d+)\s*db/)
-      if (!m) return false
-      const db = `-${m[1]}db`
-      return db === filterDb
+      const matches = [...o.value.toLowerCase().matchAll(/-(\d+)\s*db/g)]
+      if (matches.length === 0) return false
+      return matches.some(m => `-${m[1]}db` === filterDb)
     })
   }
 
