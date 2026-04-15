@@ -115,18 +115,66 @@ function toShopifyProduct(
   }
 }
 
+/**
+ * Pending queues. De consent-gated Script tags in components/analytics/scripts.tsx
+ * mounten pas nadat ConsentProvider zijn useEffect heeft gedraaid (consent start
+ * als null voor SSR-safety). trackPageView fired intussen al vanuit _app.tsx,
+ * dus window.fbq / window.gtag bestaan de eerste ~tientallen ms nog niet →
+ * events worden stilletjes gedropt. We queueen die calls en flushen zodra het
+ * globale object aanwezig is.
+ */
+type PendingFbq  = [string, Record<string, unknown>]
+type PendingGtag = [string, Record<string, unknown>]
+const pendingFbq:  PendingFbq[]  = []
+const pendingGtag: PendingGtag[] = []
+let flushTimer: ReturnType<typeof setInterval> | null = null
+
+function ensureFlushLoop() {
+  if (typeof window === 'undefined') return
+  if (flushTimer) return
+  let attempts = 0
+  flushTimer = setInterval(() => {
+    attempts++
+    if (window.fbq && pendingFbq.length) {
+      for (const [n, p] of pendingFbq.splice(0)) window.fbq('track', n, p)
+    }
+    if (window.gtag && pendingGtag.length) {
+      for (const [n, p] of pendingGtag.splice(0)) window.gtag('event', n, p)
+    }
+    const nothingLeft = !pendingFbq.length && !pendingGtag.length
+    const bothReady   = !!window.fbq && !!window.gtag
+    // Stop zodra queues leeg zijn OF beide globals zijn er (nieuwe events
+    // kunnen dan direct fired). Hard cap op 40 * 250ms = 10s om geen
+    // eeuwige timer te laten draaien als een pixel nooit laadt (geen consent).
+    if ((nothingLeft && bothReady) || attempts >= 40) {
+      clearInterval(flushTimer!)
+      flushTimer = null
+    }
+  }, 250)
+}
+
 /** GA4: gegated op analytics consent (anonieme stats). */
 function gtagEvent(name: string, params?: Record<string, unknown>) {
   if (typeof window === 'undefined') return
   if (!readConsent().analytics) return
-  window.gtag?.('event', name, params ?? {})
+  if (window.gtag) {
+    window.gtag('event', name, params ?? {})
+    return
+  }
+  pendingGtag.push([name, params ?? {}])
+  ensureFlushLoop()
 }
 
 /** Meta Pixel: gegated op marketing consent. */
 function fbqTrack(name: string, params?: Record<string, unknown>) {
   if (typeof window === 'undefined') return
   if (!readConsent().marketing) return
-  window.fbq?.('track', name, params ?? {})
+  if (window.fbq) {
+    window.fbq('track', name, params ?? {})
+    return
+  }
+  pendingFbq.push([name, params ?? {}])
+  ensureFlushLoop()
 }
 
 // ─── Public API ──────────────────────────────────────────────────────────────
