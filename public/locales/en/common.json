@@ -15,7 +15,8 @@
     "shopNow": "Shop Now",
     "signIn": "Sign in",
     "openCart": "Open cart",
-    "toggleMenu": "Toggle menu"
+    "toggleMenu": "Toggle menu",
+    "home": "Home"
   },
   "shopCategories": {
     "music": "Music Earplugs",
@@ -161,5 +162,10 @@
     "badge": "SUPPORT",
     "title": "Instructional Videos",
     "subtitle": "Everything you need to know about using, inserting and maintaining your Earasers."
+  },
+  "ui": {
+    "sale": "Sale",
+    "viewProduct": "View product",
+    "noProducts": "No products found."
   }
 }

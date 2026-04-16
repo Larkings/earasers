@@ -15,7 +15,8 @@
     "shopNow": "Jetzt kaufen",
     "signIn": "Anmelden",
     "openCart": "Warenkorb öffnen",
-    "toggleMenu": "Menü öffnen"
+    "toggleMenu": "Menü öffnen",
+    "home": "Startseite"
   },
   "shopCategories": {
     "music": "Musik-Ohrstöpsel",
@@ -161,5 +162,10 @@
     "badge": "SUPPORT",
     "title": "Anleitungsvideos",
     "subtitle": "Alles, was Sie über die Verwendung, das Einsetzen und die Pflege Ihrer Earasers wissen müssen."
+  },
+  "ui": {
+    "sale": "Angebot",
+    "viewProduct": "Produkt ansehen",
+    "noProducts": "Keine Produkte gefunden."
   }
 }

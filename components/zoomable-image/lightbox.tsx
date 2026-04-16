@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './zoomable-image.module.css';
+import { useBodyScrollLock } from '../../lib/use-body-scroll-lock';
 
 type Props = {
   src: string;
@@ -19,16 +20,13 @@ export const ImageLightbox: React.FC<Props> = ({ src, alt, open, onClose }) => {
     onClose();
   }, [onClose]);
 
+  useBodyScrollLock(open, 'overflow-only');
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') handleClose(); };
     document.addEventListener('keydown', onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prevOverflow;
-    };
+    return () => document.removeEventListener('keydown', onKey);
   }, [open, handleClose]);
 
   if (!open) return null;

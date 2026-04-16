@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import styles from './zoomable-image.module.css';
+import { useBodyScrollLock } from '../../lib/use-body-scroll-lock';
 
 type Props = {
   src: string;
@@ -17,16 +18,13 @@ export const ZoomableImage: React.FC<Props> = ({ src, alt, width = 1200, height 
   const [zoom, setZoom] = useState(1);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  useBodyScrollLock(open, 'overflow-only');
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
     document.addEventListener('keydown', onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prevOverflow;
-    };
+    return () => document.removeEventListener('keydown', onKey);
   }, [open]);
 
   const zoomHint = t('zoomImage', { defaultValue: 'Tap to enlarge' });

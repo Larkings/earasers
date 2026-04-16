@@ -564,17 +564,11 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
         <div className="container" id="products" style={{ paddingTop: '56px', paddingBottom: '56px' }}>
           <div className={styles.toolbar}>
             <p className={styles.count}>{t('ui.productsCount', { count: cat.products.length })}</p>
-            <div className={styles.sortWrap}>
-              <label htmlFor="sort" className={styles.sortLabel}>{t('ui.sortBy')}</label>
-              <select
-                id="sort"
-                className={styles.sortSelect}
-                value={sort}
-                onChange={e => setSort(Number(e.target.value))}
-              >
-                {sortOptions.map((o, i) => <option key={i} value={i}>{o}</option>)}
-              </select>
-            </div>
+            {/* Sort dropdown is bewust verwijderd op deze categorie-pagina's.
+               Singles van dezelfde categorie (4 sizes van bv. DJ Earplugs)
+               worden geconsolideerd tot één representative card plus kit-
+               cards — er is geen variatie om op te sorteren. Dropdown was
+               visueel aanwezig maar had geen effect → verwarrend voor users. */}
           </div>
 
           {/* Individual sizes — consolidated into one card */}

@@ -123,5 +123,12 @@
   ],
   "orComboKit": "or choose a combo kit",
   "sizeNotInKit": "Not included in this kit",
-  "filterSingleNote": "This earplug comes with one optimized filter level."
+  "filterSingleNote": "This earplug comes with one optimized filter level.",
+  "related": {
+    "heading": "You Might Also Need",
+    "added": "Added",
+    "addToCart": "Add to cart"
+  },
+  "zoomImage": "Tap to enlarge",
+  "close": "Close"
 }

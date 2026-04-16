@@ -7,6 +7,7 @@ import styles from './cartDrawer.module.css';
 import { useCart, type CartItem } from '../../context/cart';
 import { useCurrency } from '../../context/currency';
 import { trackViewCart } from '../../lib/analytics';
+import { useBodyScrollLock } from '../../lib/use-body-scroll-lock';
 import { CloseIcon, CheckIcon, ArrowRightIcon } from '../icons';
 
 const FREE_SHIPPING = 39;
@@ -87,56 +88,9 @@ const DrawerContent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Body scroll lock — iOS Safari proof + BFCache proof.
-  // `overflow: hidden` op body is niet voldoende op iOS: touch-scroll gaat
-  // er doorheen, triggert de adresbalk show/hide en verandert de viewport
-  // hoogte → layout shift. Daarom body op `position: fixed`.
-  //
-  // BFCache: bij navigatie naar Shopify checkout via window.location.href
-  // krijgt React geen tijd voor unmount cleanup. De browser snapshot bevat
-  // dan een locked body, en bij BACK uit Shopify wordt die snapshot terug-
-  // geladen → page is niet meer scrollbaar. Fix: `pagehide` listener vuurt
-  // vóór de snapshot, daar runnen we de cleanup defensief.
-  useEffect(() => {
-    const scrollY = window.scrollY;
-    const body = document.body;
-    const prev = {
-      position: body.style.position,
-      top:      body.style.top,
-      left:     body.style.left,
-      right:    body.style.right,
-      width:    body.style.width,
-      overflow: body.style.overflow,
-    };
-
-    body.style.position = 'fixed';
-    body.style.top      = `-${scrollY}px`;
-    body.style.left     = '0';
-    body.style.right    = '0';
-    body.style.width    = '100%';
-    body.style.overflow = 'hidden';
-
-    let unlocked = false;
-    const unlock = () => {
-      if (unlocked) return;
-      unlocked = true;
-      body.style.position = prev.position;
-      body.style.top      = prev.top;
-      body.style.left     = prev.left;
-      body.style.right    = prev.right;
-      body.style.width    = prev.width;
-      body.style.overflow = prev.overflow;
-      window.scrollTo(0, scrollY);
-    };
-
-    // Voor BFCache snapshot — garandeert clean body in cache
-    window.addEventListener('pagehide', unlock);
-
-    return () => {
-      window.removeEventListener('pagehide', unlock);
-      unlock();
-    };
-  }, []);
+  // Body scroll lock — via gedeelde ref-counted hook zodat meerdere drawers/
+  // modals die tegelijk open (kunnen) staan elkaar niet stuk-snapshotten.
+  useBodyScrollLock(true, 'full');
 
   // Restored uit BFCache (BACK uit Shopify checkout): cart drawer wordt
   // weer getoond met cached state, maar user wil hier waarschijnlijk niet

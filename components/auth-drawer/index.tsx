@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import styles from './authDrawer.module.css';
+import { useBodyScrollLock } from '../../lib/use-body-scroll-lock';
 import { useAuth, type RegisterData } from '../../context/auth';
 import { getLoginUrl } from '../../lib/customer-auth';
 import { CloseIcon } from '../icons';
@@ -242,10 +243,7 @@ const DrawerContent = () => {
     return () => document.removeEventListener('keydown', handler);
   }, [closeAuthDrawer]);
 
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
-  }, []);
+  useBodyScrollLock(true, 'full');
 
   const title = view === 'login' ? t('login.heading') : view === 'register' ? t('register.heading') : t('forgot.heading');
 

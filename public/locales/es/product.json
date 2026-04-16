@@ -129,70 +129,158 @@
       "name": "Tapones para Músicos",
       "collection": "Colección HiFi Música",
       "description": "Los únicos tapones HiFi premiados del mundo. Protege tu oído sin amortiguar la música — gracias a nuestra tecnología V-Filter patentada y ajuste de silicona médica.",
-      "features": ["Tecnología V-Filter patentada", "Silicona médica — autoajustable", "Prácticamente invisible en el oído", "No requiere especialista", "5× Premio MusicRadar Mejores Tapones Musicales"],
+      "features": [
+        "Tecnología V-Filter patentada",
+        "Silicona médica — autoajustable",
+        "Prácticamente invisible en el oído",
+        "No requiere especialista",
+        "5× Premio MusicRadar Mejores Tapones Musicales"
+      ],
       "tag": "Más vendido",
       "filters": [
-        { "label": "SNR 14 | Filtro ligero",   "desc": "-19dB Peak — protección ligera, máxima claridad sonora." },
-        { "label": "SNR 20 | Filtro medio",    "desc": "-26dB Peak — ideal para la mayoría de situaciones de música en vivo." },
-        { "label": "SNR 22 | Filtro máximo",   "desc": "-31dB Peak — máxima protección para escenarios muy ruidosos." }
+        {
+          "label": "SNR 14 | Filtro ligero",
+          "desc": "-19dB Peak — protección ligera, máxima claridad sonora."
+        },
+        {
+          "label": "SNR 20 | Filtro medio",
+          "desc": "-26dB Peak — ideal para la mayoría de situaciones de música en vivo."
+        },
+        {
+          "label": "SNR 22 | Filtro máximo",
+          "desc": "-31dB Peak — máxima protección para escenarios muy ruidosos."
+        }
       ]
     },
     "dj": {
       "name": "Tapones para DJ",
       "collection": "Colección DJ",
       "description": "Diseñados para monitores de cabina y volúmenes de festival. Máxima protección con reproducción de sonido cristalino — de confianza entre DJs profesionales de toda Europa.",
-      "features": ["Protección máxima de -31dB disponible", "Respuesta plana en frecuencia para monitorización precisa", "Silicona médica resistente al sudor", "Compatible con monitores in-ear", "Avalado por profesionales en gira"],
+      "features": [
+        "Protección máxima de -31dB disponible",
+        "Respuesta plana en frecuencia para monitorización precisa",
+        "Silicona médica resistente al sudor",
+        "Compatible con monitores in-ear",
+        "Avalado por profesionales en gira"
+      ],
       "tag": null,
       "filters": [
-        { "label": "SNR 14 | Filtro ligero",                              "desc": "-19dB Peak — ideal para monitorización a volúmenes bajos." },
-        { "label": "SNR 20 | Best for in the DJ Booth",                   "desc": "-26dB Peak — recomendado para cabina y uso en festivales." },
-        { "label": "SNR 22 | Si ya tienes tinnitus",                      "desc": "-31dB Peak — máxima protección ante tinnitus existente." }
+        {
+          "label": "SNR 14 | Filtro ligero",
+          "desc": "-19dB Peak — ideal para monitorización a volúmenes bajos."
+        },
+        {
+          "label": "SNR 20 | Best for in the DJ Booth",
+          "desc": "-26dB Peak — recomendado para cabina y uso en festivales."
+        },
+        {
+          "label": "SNR 22 | Si ya tienes tinnitus",
+          "desc": "-31dB Peak — máxima protección ante tinnitus existente."
+        }
       ]
     },
     "dentist": {
       "name": "Tapones para Dentistas e Higienistas",
       "collection": "Colección Profesional",
       "description": "Bloquea el ruido del torno y el scaler mientras escuchas la comunicación del paciente con claridad. Utilizados por profesionales dentales en toda Europa durante toda la jornada laboral.",
-      "features": ["Reduce el ruido de instrumentos de alta frecuencia", "Las frecuencias del habla permanecen claras", "Cómodos para llevar todo el día", "Silicona médica", "Conformidad de seguridad de la UE"],
+      "features": [
+        "Reduce el ruido de instrumentos de alta frecuencia",
+        "Las frecuencias del habla permanecen claras",
+        "Cómodos para llevar todo el día",
+        "Silicona médica",
+        "Conformidad de seguridad de la UE"
+      ],
       "tag": null,
       "filters": [
-        { "label": "SNR 14 | Filtro Estándar Suave para Dentista",                                 "desc": "-19dB Peak — reduce el ruido del torno sin perder la comunicación." },
-        { "label": "SNR 20 | Balance Clínico para Dentista — Sensibilidad al Ruido y Tinnitus",   "desc": "-26dB Peak — recomendado para higienistas y personas con tinnitus." }
+        {
+          "label": "SNR 14 | Filtro Estándar Suave para Dentista",
+          "desc": "-19dB Peak — reduce el ruido del torno sin perder la comunicación."
+        },
+        {
+          "label": "SNR 20 | Balance Clínico para Dentista — Sensibilidad al Ruido y Tinnitus",
+          "desc": "-26dB Peak — recomendado para higienistas y personas con tinnitus."
+        }
       ]
     },
     "sleeping": {
       "name": "Tapones para Dormir",
       "collection": "Colección Paz y Silencio",
       "description": "Silenciosos, cómodos y apenas perceptibles. Duerme más profundamente sin la presión e incomodidad de los tapones de espuma tradicionales.",
-      "features": ["Silicona médica ultra suave", "Perfil bajo — ideal para quienes duermen de lado", "Sin presión en el canal auditivo", "Reutilizables y lavables", "Alarma de despertador audible"],
+      "features": [
+        "Silicona médica ultra suave",
+        "Perfil bajo — ideal para quienes duermen de lado",
+        "Sin presión en el canal auditivo",
+        "Reutilizables y lavables",
+        "Alarma de despertador audible"
+      ],
       "tag": null,
       "filters": [
-        { "label": "SNR 22 | Paz y Silencio", "desc": "-36dB Peak — máximo silencio para un sueño profundo e ininterrumpido." }
+        {
+          "label": "SNR 22 | Paz y Silencio",
+          "desc": "-36dB Peak — máximo silencio para un sueño profundo e ininterrumpido."
+        }
       ]
     },
     "motorsport": {
       "name": "Tapones para Motorsport",
       "collection": "Colección Moto HiFi",
       "description": "Protégete del ruido del viento y del motor mientras la comunicación del casco, las instrucciones del GPS y las conversaciones del copiloto siguen siendo cristalinas.",
-      "features": ["Atenuación de ruido de viento y motor", "Cabe cómodamente bajo cualquier casco", "Compatible con intercom y bluetooth", "Certificado EU CE", "Reduce la fatiga en viajes largos"],
+      "features": [
+        "Atenuación de ruido de viento y motor",
+        "Cabe cómodamente bajo cualquier casco",
+        "Compatible con intercom y bluetooth",
+        "Certificado EU CE",
+        "Reduce la fatiga en viajes largos"
+      ],
       "tag": null,
       "filters": [
-        { "label": "SNR 14 | Casco cerrado", "desc": "-19dB Peak — para cascos integrales, reduce ruido de viento y carretera." },
-        { "label": "SNR 22 | Casco abierto", "desc": "-31dB Peak — para cascos jet con mayor exposición al viento." }
+        {
+          "label": "SNR 14 | Casco cerrado",
+          "desc": "-19dB Peak — para cascos integrales, reduce ruido de viento y carretera."
+        },
+        {
+          "label": "SNR 22 | Casco abierto",
+          "desc": "-31dB Peak — para cascos jet con mayor exposición al viento."
+        }
       ]
     },
     "sensitivity": {
       "name": "Tapones para Sensibilidad al Ruido",
       "collection": "Colección Calma",
       "description": "Calma tus sentidos y gestiona la sobrecarga sensorial sin perder la conciencia de tu entorno — ideal para autismo, TDAH, hiperacusia y misofonía.",
-      "features": ["Atenuación suave de -19dB", "Sin efecto de oclusión", "Ideal para autismo, TDAH, hiperacusia", "Ajuste discreto e invisible", "Comodidad durante todo el día sin fatiga"],
+      "features": [
+        "Atenuación suave de -19dB",
+        "Sin efecto de oclusión",
+        "Ideal para autismo, TDAH, hiperacusia",
+        "Ajuste discreto e invisible",
+        "Comodidad durante todo el día sin fatiga"
+      ],
       "tag": null,
       "filters": [
-        { "label": "SNR 14 | Filtro de confort suave",    "desc": "-19dB Peak — reduce la intensidad de entornos ruidosos." },
-        { "label": "SNR 20 | Filtro equilibrado",         "desc": "-26dB Peak — ideal para eventos concurridos y transporte público." },
-        { "label": "SNR 22 | Filtro fuerte",              "desc": "-31dB Peak — para entornos de alta estimulación sensorial." },
-        { "label": "SNR 26 | Filtro de paz y silencio",   "desc": "-36dB Peak — máxima calma para sensibilidad severa." }
+        {
+          "label": "SNR 14 | Filtro de confort suave",
+          "desc": "-19dB Peak — reduce la intensidad de entornos ruidosos."
+        },
+        {
+          "label": "SNR 20 | Filtro equilibrado",
+          "desc": "-26dB Peak — ideal para eventos concurridos y transporte público."
+        },
+        {
+          "label": "SNR 22 | Filtro fuerte",
+          "desc": "-31dB Peak — para entornos de alta estimulación sensorial."
+        },
+        {
+          "label": "SNR 26 | Filtro de paz y silencio",
+          "desc": "-36dB Peak — máxima calma para sensibilidad severa."
+        }
       ]
     }
-  }
+  },
+  "related": {
+    "heading": "También podrías necesitar",
+    "added": "Añadido",
+    "addToCart": "Añadir al carrito"
+  },
+  "zoomImage": "Toca para ampliar",
+  "close": "Cerrar"
 }

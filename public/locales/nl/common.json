@@ -15,7 +15,8 @@
     "shopNow": "Bestel nu",
     "signIn": "Inloggen",
     "openCart": "Winkelwagen openen",
-    "toggleMenu": "Menu openen"
+    "toggleMenu": "Menu openen",
+    "home": "Home"
   },
   "shopCategories": {
     "music": "Muziek oordoppen",
@@ -161,5 +162,10 @@
     "badge": "SUPPORT",
     "title": "Instructievideo's",
     "subtitle": "Alles wat je moet weten over het gebruik, inbrengen en onderhouden van je Earasers."
+  },
+  "ui": {
+    "sale": "Aanbieding",
+    "viewProduct": "Bekijk product",
+    "noProducts": "Geen producten gevonden."
   }
 }

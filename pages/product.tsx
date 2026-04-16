@@ -393,12 +393,52 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, accessories 
                 mergedCategoryImgs.push(src);
               }
               const galleryImages = kitData && kitData.images.length > 0 ? kitData.images : mergedCategoryImgs;
+              // Swipe-state staat in een ref zodat een touch-gesture de React
+              // re-render cyclus niet triggert tot we hem echt willen committen.
+              let touchStartX = 0;
+              let touchStartY = 0;
+              let touchMoved  = false;
+              const SWIPE_THRESHOLD = 40;    // px minimaal om als swipe te tellen
+              const VERTICAL_GUARD  = 60;    // verticale drift → niet swipen
+              const handleTouchStart = (e: React.TouchEvent) => {
+                const t0 = e.touches[0];
+                touchStartX = t0.clientX;
+                touchStartY = t0.clientY;
+                touchMoved  = false;
+              };
+              const handleTouchMove = (e: React.TouchEvent) => {
+                const t0 = e.touches[0];
+                if (Math.abs(t0.clientX - touchStartX) > 8) touchMoved = true;
+              };
+              const handleTouchEnd = (e: React.TouchEvent) => {
+                const t0 = e.changedTouches[0];
+                const dx = t0.clientX - touchStartX;
+                const dy = t0.clientY - touchStartY;
+                if (Math.abs(dy) > VERTICAL_GUARD) return;
+                if (Math.abs(dx) < SWIPE_THRESHOLD) return;
+                // Horizontale swipe gedetecteerd → navigeer, en voorkom dat
+                // het onClick-pad alsnog de lightbox opent.
+                const len = galleryImages.length;
+                if (len < 2) return;
+                if (dx < 0) setActiveImg(i => (i + 1) % len);
+                else        setActiveImg(i => (i - 1 + len) % len);
+                touchMoved = true;
+              };
+              const handleClick = () => {
+                // Als de user net heeft geswiped, negeer de synthetische click
+                // die iOS erna genereert. Anders opent de lightbox bij elke swipe.
+                if (touchMoved) { touchMoved = false; return; }
+                setLightboxOpen(true);
+              };
               return (
             <div className={styles.gallery}>
               <button
                 type="button"
                 className={styles.mainImg}
-                onClick={() => setLightboxOpen(true)}
+                onClick={handleClick}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
                 aria-label={t('zoomImage', { defaultValue: 'Tap to enlarge' })}
               >
                 <Image src={galleryImages[Math.min(activeImg, galleryImages.length - 1)] ?? galleryImages[0]} alt={tProductName} fill sizes="(max-width: 768px) 100vw, 50vw" />

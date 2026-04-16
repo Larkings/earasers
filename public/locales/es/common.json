@@ -15,7 +15,8 @@
     "shopNow": "Comprar ahora",
     "signIn": "Iniciar sesión",
     "openCart": "Abrir carrito",
-    "toggleMenu": "Abrir menú"
+    "toggleMenu": "Abrir menú",
+    "home": "Inicio"
   },
   "shopCategories": {
     "music": "Tapones para música",
@@ -161,5 +162,10 @@
     "badge": "SOPORTE",
     "title": "Vídeos de instrucciones",
     "subtitle": "Todo lo que necesitas saber sobre el uso, la inserción y el mantenimiento de tus Earasers."
+  },
+  "ui": {
+    "sale": "Oferta",
+    "viewProduct": "Ver producto",
+    "noProducts": "No se encontraron productos."
   }
 }

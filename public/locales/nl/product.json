@@ -129,70 +129,158 @@
       "name": "Muziek Oordoppen",
       "collection": "HiFi Muziek Collectie",
       "description": "De enige bekroonde HiFi oordoppen ter wereld. Bescherm je gehoor zonder de muziek te dempen — dankzij onze gepatenteerde V-Filter technologie en medisch siliconen pasvorm.",
-      "features": ["Gepatenteerde V-Filter technologie", "Medisch silicone — zelfpassend", "Vrijwel onzichtbaar in het oor", "Geen specialist nodig", "5× MusicRadar Beste Muziek Oordoppen"],
+      "features": [
+        "Gepatenteerde V-Filter technologie",
+        "Medisch silicone — zelfpassend",
+        "Vrijwel onzichtbaar in het oor",
+        "Geen specialist nodig",
+        "5× MusicRadar Beste Muziek Oordoppen"
+      ],
       "tag": "Bestseller",
       "filters": [
-        { "label": "SNR 14 | Licht filter",   "desc": "-19dB Peak — lichte bescherming, maximale geluidshelderheid." },
-        { "label": "SNR 20 | Medium filter",   "desc": "-26dB Peak — ideaal voor de meeste livemuziek situaties." },
-        { "label": "SNR 22 | Max filter",      "desc": "-31dB Peak — maximale bescherming voor luide podia." }
+        {
+          "label": "SNR 14 | Licht filter",
+          "desc": "-19dB Peak — lichte bescherming, maximale geluidshelderheid."
+        },
+        {
+          "label": "SNR 20 | Medium filter",
+          "desc": "-26dB Peak — ideaal voor de meeste livemuziek situaties."
+        },
+        {
+          "label": "SNR 22 | Max filter",
+          "desc": "-31dB Peak — maximale bescherming voor luide podia."
+        }
       ]
     },
     "dj": {
       "name": "DJ Oordoppen",
       "collection": "DJ Collectie",
       "description": "Gebouwd voor booth monitors en festivalvolumes. Maximale bescherming met kristalhelder geluid — vertrouwd door professionele DJ's in heel Europa.",
-      "features": ["Max -31dB bescherming beschikbaar", "Vlakke frequentierespons voor nauwkeurig monitoring", "Zweetbestendig medisch silicone", "Compatibel met in-ear monitors", "Aanbevolen door tourende professionals"],
+      "features": [
+        "Max -31dB bescherming beschikbaar",
+        "Vlakke frequentierespons voor nauwkeurig monitoring",
+        "Zweetbestendig medisch silicone",
+        "Compatibel met in-ear monitors",
+        "Aanbevolen door tourende professionals"
+      ],
       "tag": null,
       "filters": [
-        { "label": "SNR 14 | Light Filter",                              "desc": "-19dB Peak — goed voor monitoren op lagere volumes." },
-        { "label": "SNR 20 | Best for in the DJ Booth",                  "desc": "-26dB Peak — aanbevolen voor booth en festivalgebruik." },
-        { "label": "SNR 22 | Als je al tinnitus ervaart",                "desc": "-31dB Peak — maximale bescherming bij bestaand tinnitus." }
+        {
+          "label": "SNR 14 | Light Filter",
+          "desc": "-19dB Peak — goed voor monitoren op lagere volumes."
+        },
+        {
+          "label": "SNR 20 | Best for in the DJ Booth",
+          "desc": "-26dB Peak — aanbevolen voor booth en festivalgebruik."
+        },
+        {
+          "label": "SNR 22 | Als je al tinnitus ervaart",
+          "desc": "-31dB Peak — maximale bescherming bij bestaand tinnitus."
+        }
       ]
     },
     "dentist": {
       "name": "Tandarts & Mondhygiënist Oordoppen",
       "collection": "Professionele Collectie",
       "description": "Blokkeer het geluid van de boor en scaler terwijl u patiëntcommunicatie duidelijk hoort. Gedragen door tandheelkundige professionals in heel Europa gedurende de volledige werkdag.",
-      "features": ["Vermindert hoge frequentie instrumentgeluid", "Spraakfrequenties blijven duidelijk", "Comfortabel voor de hele dag", "Medisch silicone", "EU veiligheidscertificering"],
+      "features": [
+        "Vermindert hoge frequentie instrumentgeluid",
+        "Spraakfrequenties blijven duidelijk",
+        "Comfortabel voor de hele dag",
+        "Medisch silicone",
+        "EU veiligheidscertificering"
+      ],
       "tag": null,
       "filters": [
-        { "label": "SNR 14 | Zachte Tandarts Standaard filter",                              "desc": "-19dB Peak — dempt boorgeluid terwijl patiëntcommunicatie helder blijft." },
-        { "label": "SNR 20 | Tandarts Klinische Balans — Geluidsovergevoeligheid & Tinnitus", "desc": "-26dB Peak — aanbevolen voor mondhygiënisten en tinnituspatiënten." }
+        {
+          "label": "SNR 14 | Zachte Tandarts Standaard filter",
+          "desc": "-19dB Peak — dempt boorgeluid terwijl patiëntcommunicatie helder blijft."
+        },
+        {
+          "label": "SNR 20 | Tandarts Klinische Balans — Geluidsovergevoeligheid & Tinnitus",
+          "desc": "-26dB Peak — aanbevolen voor mondhygiënisten en tinnituspatiënten."
+        }
       ]
     },
     "sleeping": {
       "name": "Slaap Oordoppen",
       "collection": "Rust & Stilte Collectie",
       "description": "Stil, comfortabel en nauwelijks merkbaar. Slaap dieper zonder de druk en het ongemak van traditionele schuim oordoppen.",
-      "features": ["Ultra-zacht medisch silicone", "Laag profiel — ideaal voor zijslapers", "Geen druk op het gehoorkanaal", "Herbruikbaar en wasbaar", "Wekker alarm hoorbaar"],
+      "features": [
+        "Ultra-zacht medisch silicone",
+        "Laag profiel — ideaal voor zijslapers",
+        "Geen druk op het gehoorkanaal",
+        "Herbruikbaar en wasbaar",
+        "Wekker alarm hoorbaar"
+      ],
       "tag": null,
       "filters": [
-        { "label": "SNR 22 | Rust & Stilte", "desc": "-36dB Peak — maximale stilte voor een diepe, ononderbroken slaap." }
+        {
+          "label": "SNR 22 | Rust & Stilte",
+          "desc": "-36dB Peak — maximale stilte voor een diepe, ononderbroken slaap."
+        }
       ]
     },
     "motorsport": {
       "name": "Motorsport Oordoppen",
       "collection": "Moto HiFi Collectie",
       "description": "Bescherm tegen windgeluid en motorlawaai terwijl helmcommunicatie, GPS-instructies en co-piloot gesprekken kristalhelder blijven.",
-      "features": ["Wind- en motorgeluid demping", "Past comfortabel onder alle helmen", "Intercom & bluetooth compatibel", "EU CE gecertificeerd", "Vermindert vermoeidheid op lange ritten"],
+      "features": [
+        "Wind- en motorgeluid demping",
+        "Past comfortabel onder alle helmen",
+        "Intercom & bluetooth compatibel",
+        "EU CE gecertificeerd",
+        "Vermindert vermoeidheid op lange ritten"
+      ],
       "tag": null,
       "filters": [
-        { "label": "SNR 14 | Gesloten Helm", "desc": "-19dB Peak — voor integraalhelmen, dempt wind- en weggeluid." },
-        { "label": "SNR 22 | Open Helm",     "desc": "-31dB Peak — voor jethelmen met hogere windblootstelling." }
+        {
+          "label": "SNR 14 | Gesloten Helm",
+          "desc": "-19dB Peak — voor integraalhelmen, dempt wind- en weggeluid."
+        },
+        {
+          "label": "SNR 22 | Open Helm",
+          "desc": "-31dB Peak — voor jethelmen met hogere windblootstelling."
+        }
       ]
     },
     "sensitivity": {
       "name": "Geluidsovergevoeligheid Oordoppen",
       "collection": "Rust Collectie",
       "description": "Kalmeer uw zintuigen en beheers sensorische overprikkeling zonder bewustzijn van uw omgeving te verliezen — ideaal voor autisme, ADHD, hyperacusis en misofonie.",
-      "features": ["Zachte -19dB demping", "Geen occlusie effect", "Ideaal voor autisme, ADHD, hyperacusis", "Discrete onzichtbare pasvorm", "Hele dag comfort zonder vermoeidheid"],
+      "features": [
+        "Zachte -19dB demping",
+        "Geen occlusie effect",
+        "Ideaal voor autisme, ADHD, hyperacusis",
+        "Discrete onzichtbare pasvorm",
+        "Hele dag comfort zonder vermoeidheid"
+      ],
       "tag": null,
       "filters": [
-        { "label": "SNR 14 | Zachte Comfort filter",  "desc": "-19dB Peak — neemt de scherpte weg van drukke omgevingen." },
-        { "label": "SNR 20 | Gebalanceerd filter",    "desc": "-26dB Peak — ideaal voor drukke evenementen en openbaar vervoer." },
-        { "label": "SNR 22 | Sterk filter",           "desc": "-31dB Peak — voor sterk prikkelende omgevingen." },
-        { "label": "SNR 26 | Rust en Stilte filter",  "desc": "-36dB Peak — maximale kalmte bij ernstige overgevoeligheid." }
+        {
+          "label": "SNR 14 | Zachte Comfort filter",
+          "desc": "-19dB Peak — neemt de scherpte weg van drukke omgevingen."
+        },
+        {
+          "label": "SNR 20 | Gebalanceerd filter",
+          "desc": "-26dB Peak — ideaal voor drukke evenementen en openbaar vervoer."
+        },
+        {
+          "label": "SNR 22 | Sterk filter",
+          "desc": "-31dB Peak — voor sterk prikkelende omgevingen."
+        },
+        {
+          "label": "SNR 26 | Rust en Stilte filter",
+          "desc": "-36dB Peak — maximale kalmte bij ernstige overgevoeligheid."
+        }
       ]
     }
-  }
+  },
+  "related": {
+    "heading": "Misschien heb je dit ook nodig",
+    "added": "Toegevoegd",
+    "addToCart": "Toevoegen aan winkelwagen"
+  },
+  "zoomImage": "Tik om te vergroten",
+  "close": "Sluiten"
 }

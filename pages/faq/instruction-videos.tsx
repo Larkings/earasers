@@ -1,5 +1,6 @@
 import type { NextPage, GetStaticProps } from 'next';
 import { serverSideTranslations } from '../../lib/i18n';
+import { useBodyScrollLock } from '../../lib/use-body-scroll-lock';
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -90,11 +91,7 @@ const InstructionVideosPage: NextPage = () => {
     return () => document.removeEventListener('keydown', onKey);
   }, [activeVideo]);
 
-  // Prevent body scroll when modal is open
-  useEffect(() => {
-    document.body.style.overflow = activeVideo ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [activeVideo]);
+  useBodyScrollLock(activeVideo !== null, 'overflow-only');
 
   return (
     <Layout>
