@@ -120,7 +120,9 @@
     "freeShippingFrom": "Free shipping from €39",
     "youMightAlsoLike": "You might also like",
     "discoverCollection": "Discover our collection",
-    "size": "Size"
+    "size": "Size",
+    "eachPrice": "{{price}} each",
+    "seoDescription": "Your cart — Earasers HiFi earplugs"
   },
   "blog": {
     "heading": "From the Blog",

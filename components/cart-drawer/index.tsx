@@ -34,7 +34,7 @@ const DrawerItem = ({ item }: { item: CartItem }) => {
           {item.name}
         </Link>
         <div className={styles.itemMeta}>
-          <span className={styles.itemPill}>Size {item.size}</span>
+          <span className={styles.itemPill}>{t('cart.size')} {item.size}</span>
           <span className={styles.itemPill}>{item.filter}</span>
         </div>
         <div className={styles.itemFooter}>

@@ -120,7 +120,9 @@
     "freeShippingFrom": "Envío gratuito a partir de €39",
     "youMightAlsoLike": "También te puede gustar",
     "discoverCollection": "Descubre nuestra colección",
-    "size": "Talla"
+    "size": "Talla",
+    "eachPrice": "{{price}} cada uno",
+    "seoDescription": "Tu carrito — Tapones HiFi Earasers"
   },
   "blog": {
     "heading": "Del blog",

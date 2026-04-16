@@ -32,6 +32,9 @@ const CartIcon = () => (
 
 const Cart: NextPage = () => {
   const { t } = useTranslation('common');
+  // Product namespace nodig voor productData.<slug>.name/collection — hardcoded
+  // Engelse namen uit PRODUCTS zijn anders niet vertaald in de cross-sell.
+  const { t: tp } = useTranslation('product');
   const { items, totalCount, setQty, removeItem, checkout, checkoutUrl, checkoutError, checkoutSyncing } = useCart();
   const [checkoutLoading, setCheckoutLoading] = useState(false);
 
@@ -61,7 +64,7 @@ const Cart: NextPage = () => {
     <Layout>
       <SEO
         title={t('cart.title')}
-        description="Je winkelwagen — Earasers HiFi earplugs"
+        description={t('cart.seoDescription')}
         noindex
       />
       <div className={styles.page}>
@@ -110,7 +113,7 @@ const Cart: NextPage = () => {
                           {fmt(item.price * item.qty)}
                           {item.qty > 1 && (
                             <> <small style={{ fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 400, color: 'var(--color-text-muted)' }}>
-                              ({fmt(item.price)} each)
+                              ({t('cart.eachPrice', { price: fmt(item.price) })})
                             </small></>
                           )}
                         </span>
@@ -220,18 +223,27 @@ const Cart: NextPage = () => {
                 {items.length === 0 ? t('cart.discoverCollection') : t('cart.youMightAlsoLike')}
               </h2>
               <div className={styles.crossGrid}>
-                {crossSell.map(p => (
+                {crossSell.map(p => {
+                  // PRODUCTS data heeft Engelse hardcoded namen — hier
+                  // uitdrukkelijk i18n-lookup zodat cross-sell kaartjes
+                  // niet Engels blijven op NL/DE/ES locales. Namespace
+                  // 'product' is hier niet geladen; we gebruiken fallback
+                  // op p.name/p.collection als de key ontbreekt.
+                  const crossName       = tp(`productData.${p.slug}.name`,       { defaultValue: p.name });
+                  const crossCollection = tp(`productData.${p.slug}.collection`, { defaultValue: p.collection });
+                  return (
                   <Link key={p.slug} href={`/product?slug=${p.slug}`} className={styles.crossCard}>
                     <div className={styles.crossImg}>
-                      <Image src={p.images[0]} alt={p.name} fill sizes="(max-width: 640px) 50vw, 200px" style={{ objectFit: 'cover' }} />
+                      <Image src={p.images[0]} alt={crossName} fill sizes="(max-width: 640px) 50vw, 200px" style={{ objectFit: 'cover' }} />
                     </div>
                     <div className={styles.crossInfo}>
-                      <p className={styles.crossCollection}>{p.collection}</p>
-                      <p className={styles.crossName}>{p.name}</p>
+                      <p className={styles.crossCollection}>{crossCollection}</p>
+                      <p className={styles.crossName}>{crossName}</p>
                       <p className={styles.crossPrice}>{fmt(p.price)}</p>
                     </div>
                   </Link>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
@@ -244,7 +256,7 @@ const Cart: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'product'])),
   },
 });
 
