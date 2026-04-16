@@ -39,7 +39,7 @@ export const Reviews = () => {
           <div className={styles.score} data-reveal data-delay="1">
             <Stars count={5} />
             <span className={styles.scoreText}>{t('reviews.sub')}</span>
-            <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" className={styles.trustpilot}>
+            <a href="https://ca.trustpilot.com/review/earasers.shop?page=5" target="_blank" rel="noopener noreferrer" className={styles.trustpilot}>
               {t('reviews.trustpilot')} <ExternalLinkIcon size={12} />
             </a>
           </div>

@@ -490,7 +490,7 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, accessories 
               <div className={styles.ratingRow}>
                 <Stars count={product.rating} />
                 <a
-                  href="https://www.trustpilot.com/review/earasers.shop"
+                  href="https://ca.trustpilot.com/review/earasers.shop?page=5"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.ratingLink}
