@@ -490,21 +490,10 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, accessories 
               <div className={styles.ratingRow}>
                 <Stars count={product.rating} />
                 <a
-                  href="#reviews"
+                  href="https://www.trustpilot.com/review/earasers.shop"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={styles.ratingLink}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveTab(2);
-                    // Timeout zodat React eerst de reviews-tab rendert
-                    // (activeTab=2) voordat we scrollen — anders scroll je
-                    // naar de tab-bar maar de content eronder is nog leeg.
-                    setTimeout(() => {
-                      document.getElementById('reviews')?.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start',
-                      });
-                    }, 0);
-                  }}
                 >
                   {product.rating} · {t('reviewsCount', { count: product.reviews.toLocaleString('en-GB') })}
                 </a>
