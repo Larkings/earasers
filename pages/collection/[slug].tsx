@@ -401,13 +401,17 @@ const ClinicMarquee = ({ names, label }: { names: string[]; label: string }) => 
 );
 
 /* ─── Main page ───- */
-type PageProps = { shopifyProductImg: string | null; accessories: AccessoryProduct[] };
+type PageProps = {
+  shopifyProductImg: string | null;
+  accessories: AccessoryProduct[];
+  starterKitImg: string | null;
+  proKitImg: string | null;
+};
 
-const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: ssrAccessories }) => {
+const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: ssrAccessories, starterKitImg, proKitImg }) => {
   const router = useRouter();
   const { t } = useTranslation('collection');
   const { fmt } = useCurrency();
-  const [sort, setSort] = useState(0);
   const [accessories, setAccessories] = useState<AccessoryProduct[]>(ssrAccessories);
 
   // Client-side fallback: als SSR geen accessories opleverde, fetch ze alsnog
@@ -423,13 +427,6 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
 
   const slug = typeof router.query.slug === 'string' ? router.query.slug : 'musician';
   const cat  = CATEGORIES[slug] ?? CATEGORIES.musician;
-
-  const sortOptions = [
-    t('ui.featured'),
-    t('ui.priceLow'),
-    t('ui.priceHigh'),
-    t('ui.bestRated'),
-  ];
 
   const _tStats    = t(`${slug}.stats`,    { returnObjects: true });
   const _tFeatures = t(`${slug}.features`, { returnObjects: true });
@@ -451,24 +448,16 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
   const tAttenPoints = Array.isArray(_tAttenPoints) ? (_tAttenPoints as string[])                                                 : [];
   const tTechPoints  = Array.isArray(_tTechPoints)  ? (_tTechPoints  as string[])                                                 : [];
 
-  const sorted = [...cat.products].sort((a, b) => {
-    if (sort === 1) return a.price - b.price;
-    if (sort === 2) return b.price - a.price;
-    if (sort === 3) return b.rating - a.rating;
-    return 0;
-  });
-
-  // Merge translation data back into sorted products for rendering
+  // Merge translation data into products for rendering
   const tProductsMap = new Map(tProducts.map((p, i) => [i, p]));
-  const sortedWithText = sorted.map(p => {
-    const origIdx = cat.products.indexOf(p);
-    const tp = tProductsMap.get(origIdx);
+  const productsWithText = cat.products.map((p, i) => {
+    const tp = tProductsMap.get(i);
     return { ...p, name: tp?.name ?? '', tag: tp?.tag ?? null };
   });
 
   const isKitProduct = (size: string) => size.includes('Kit');
-  const singles = sortedWithText.filter(p => !isKitProduct(p.size));
-  const kits    = sortedWithText.filter(p =>  isKitProduct(p.size));
+  const singles = productsWithText.filter(p => !isKitProduct(p.size));
+  const kits    = productsWithText.filter(p =>  isKitProduct(p.size));
 
   const SIZE_TO_IDX: Record<string, number> = {
     'XS': 0, 'S': 1, 'M': 2, 'L': 3, 'XL': 3,
@@ -619,11 +608,12 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
             const starterRating  = kits.length ? Math.max(...kits.map(p => p.rating)) : 4.7;
             const starterPrice     = kits[0]?.price    ?? 54.95;
             const starterOriginal  = kits[0]?.original ?? 69.00;
-            const starterImg       = kits[0]?.img
+            // Eerste afbeelding uit Shopify product data (opgehaald in SSR).
+            // Fallback op kits[0]?.img (hardcoded PRODUCTS data) als SSR faalt.
+            const starterImgFinal  = starterKitImg ?? kits[0]?.img
               ?? 'https://earasers-eu.myshopify.com/cdn/shop/files/Earasers_starter_combo_kit.png';
-
-            // Pro Kit prijs indicatief — echte prijs wordt op /accessory/earasers-pro-kit getoond
-            const proImg = 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png';
+            const proImgFinal      = proKitImg
+              ?? 'https://earasers-eu.myshopify.com/cdn/shop/files/EarasersmodelsMinkvierkant.png';
 
             return (
               <div className={styles.productGroup}>
@@ -641,7 +631,7 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
                     >
                       <div className={styles.imgWrap}>
                         <Image
-                          src={starterImg}
+                          src={starterImgFinal}
                           alt={t('ui.starterKitName')}
                           fill
                           sizes="(max-width: 640px) 50vw, 25vw"
@@ -674,7 +664,7 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
                     >
                       <div className={styles.imgWrap}>
                         <Image
-                          src={proImg}
+                          src={proImgFinal}
                           alt={t('ui.proKitName')}
                           fill
                           sizes="(max-width: 640px) 50vw, 25vw"
@@ -925,10 +915,14 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ locale
   // Alle Shopify calls zijn defensief: elke failure levert een default,
   // zodat een trage of falende Shopify API NOOIT een 500 kan veroorzaken.
   let shopifyProductImg: string | null = null
+  let starterKitImg: string | null = null
+  let proKitImg: string | null = null
   let accessories: AccessoryProduct[] = []
   try {
     const handle = SLUG_TO_HANDLE[slug]
-    const [product, acc] = await Promise.all([
+    const sKitHandle = STARTER_KIT_HANDLE[slug]
+    const pKitHandle = PRO_KIT_HANDLE[slug]
+    const [product, acc, sKit, pKit] = await Promise.all([
       handle
         ? getProductWithVariants(handle, locale).catch((err) => {
             console.error('[collection] getProductWithVariants failed:', err)
@@ -939,8 +933,16 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ locale
         console.error('[collection] getCollectionProducts failed:', err)
         return [] as AccessoryProduct[]
       }),
+      sKitHandle
+        ? getProductWithVariants(sKitHandle, locale).catch(() => null)
+        : Promise.resolve(null),
+      pKitHandle
+        ? getProductWithVariants(pKitHandle, locale).catch(() => null)
+        : Promise.resolve(null),
     ])
     shopifyProductImg = product?.images?.[0]?.url ?? null
+    starterKitImg = sKit?.images?.[0]?.url ?? null
+    proKitImg = pKit?.images?.[0]?.url ?? null
     accessories = filterFbtAccessories(acc)
   } catch (err) {
     console.error('[collection] unexpected error in Shopify fetch:', err)
@@ -966,6 +968,8 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ locale
     props: {
       ...translationProps,
       shopifyProductImg,
+      starterKitImg,
+      proKitImg,
       accessories,
     },
   }
