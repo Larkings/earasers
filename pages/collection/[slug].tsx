@@ -12,6 +12,7 @@ import {
 import { AccessoriesSection } from '../../components/AccessoriesSection';
 import { useTranslation } from 'react-i18next';
 import React, { useState, useRef, useEffect } from 'react';
+import { trackCollectionView } from '../../lib/analytics';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -428,6 +429,12 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
   const slug = typeof router.query.slug === 'string' ? router.query.slug : 'musician';
   const cat  = CATEGORIES[slug] ?? CATEGORIES.musician;
 
+  // Shopify Analytics: collection_viewed event zodat het dashboard
+  // collection-pagina's correct classificeert in de conversiefunnel.
+  useEffect(() => {
+    trackCollectionView(slug);
+  }, [slug]);
+
   const _tStats    = t(`${slug}.stats`,    { returnObjects: true });
   const _tFeatures = t(`${slug}.features`, { returnObjects: true });
   const _tFilters  = t(`${slug}.filters`,  { returnObjects: true });
@@ -458,11 +465,6 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
   const isKitProduct = (size: string) => size.includes('Kit');
   const singles = productsWithText.filter(p => !isKitProduct(p.size));
   const kits    = productsWithText.filter(p =>  isKitProduct(p.size));
-
-  const SIZE_TO_IDX: Record<string, number> = {
-    'XS': 0, 'S': 1, 'M': 2, 'L': 3, 'XL': 3,
-    'XS & S Kit': 4, 'S & M Kit': 5, 'M & L Kit': 6,
-  };
 
   const themeKitColor: Record<string, string> = {
     warm:   '#f07878',

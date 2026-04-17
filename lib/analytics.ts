@@ -232,17 +232,48 @@ function fbqTrack(name: string, params?: Record<string, unknown>) {
 
 // ─── Public API ──────────────────────────────────────────────────────────────
 
+/**
+ * Bepaalt het Shopify AnalyticsPageType op basis van de Next.js URL.
+ * Shopify Analytics gebruikt dit om pagina's te classificeren in het
+ * dashboard ("Sessies per landingspagina") en om de conversiefunnel
+ * te vullen. Zonder correct pageType → alles toont als "Geen" →
+ * funnel breekt op "Checkout bereikt" / "Checkout voltooid".
+ */
+function resolvePageType(url: string): string {
+  const path = url.split('?')[0].replace(/^\/(en|nl|de|es)/, '')
+  if (path === '/' || path === '') return 'index'
+  if (path === '/product' || path.startsWith('/product/')) return 'product'
+  if (path === '/collection') return 'list-collections'
+  if (path.startsWith('/collection/')) return 'collection'
+  if (path === '/cart') return 'cart'
+  if (path === '/blog') return 'blog'
+  if (path.startsWith('/blog/')) return 'article'
+  if (path === '/search' || path.startsWith('/search')) return 'search'
+  if (path.startsWith('/account')) return 'customers/account'
+  if (path.startsWith('/accessory/')) return 'product'
+  return 'page'
+}
+
 export function trackPageView(url: string) {
   dispatch('page_viewed', { url })
+  const pageType = resolvePageType(url)
   // Wacht tot Shopify Customer Privacy API consent heeft ontvangen
   // VÓÓR de eerste monorail pageview. Zonder dit negeert Shopify de
   // sessie en toont het dashboard 0% conversie. De wait is non-blocking
   // voor pixels (GA4/Meta) — alleen de Shopify monorail call wacht.
   void waitForConsentSync().then(() => {
-    sendToShopify(AnalyticsEventName.PAGE_VIEW, { pageType: 'page' })
+    sendToShopify(AnalyticsEventName.PAGE_VIEW, { pageType })
   })
   gtagEvent('page_view', { page_path: url })
   fbqTrack('PageView')
+}
+
+export function trackCollectionView(collectionHandle: string) {
+  dispatch('collection_viewed', { handle: collectionHandle })
+  sendToShopify(AnalyticsEventName.COLLECTION_VIEW, {
+    pageType: 'collection',
+    collectionHandle,
+  })
 }
 
 export function trackProductView(
@@ -392,6 +423,13 @@ export function trackCheckoutStarted(checkoutUrl: string, totalAmount: string) {
   })
 
   const value = parseFloat(totalAmount) || 0
+
+  // Shopify monorail: stuur een page_viewed met pageType 'cart' zodat
+  // Shopify Analytics de funnel-stap "Checkout bereikt" kan koppelen.
+  // De hosted checkout op checkout.earasers.shop genereert zijn eigen
+  // checkout events, maar Shopify moet weten dat de sessie van onze
+  // frontend daarheen is gegaan.
+  sendToShopify(AnalyticsEventName.PAGE_VIEW, { pageType: 'cart' })
 
   gtagEvent('begin_checkout', {
     currency: 'EUR',
