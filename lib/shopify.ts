@@ -7,7 +7,7 @@ if (!process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN) {
 
 const DOMAIN  = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN
 const TOKEN   = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN
-const API_URL = `https://${DOMAIN}/api/2025-01/graphql.json`
+const API_URL = `https://${DOMAIN}/api/2025-07/graphql.json`
 
 const MAX_ATTEMPTS = 3       // 1 initial + 2 retries
 const BASE_BACKOFF = 200     // ms — 200, 600 (exp factor 3, snel onder Vercel 10s budget)

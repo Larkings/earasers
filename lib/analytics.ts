@@ -5,7 +5,7 @@ import {
   type ShopifyAnalyticsProduct,
   type ShopifyPageViewPayload,
 } from '@shopify/hydrogen-react'
-import { readConsent } from '../context/consent'
+import { readConsent, waitForConsentSync } from '../context/consent'
 
 /**
  * Analytics layer voor Earasers.
@@ -234,7 +234,13 @@ function fbqTrack(name: string, params?: Record<string, unknown>) {
 
 export function trackPageView(url: string) {
   dispatch('page_viewed', { url })
-  sendToShopify(AnalyticsEventName.PAGE_VIEW, { pageType: 'page' })
+  // Wacht tot Shopify Customer Privacy API consent heeft ontvangen
+  // VÓÓR de eerste monorail pageview. Zonder dit negeert Shopify de
+  // sessie en toont het dashboard 0% conversie. De wait is non-blocking
+  // voor pixels (GA4/Meta) — alleen de Shopify monorail call wacht.
+  void waitForConsentSync().then(() => {
+    sendToShopify(AnalyticsEventName.PAGE_VIEW, { pageType: 'page' })
+  })
   gtagEvent('page_view', { page_path: url })
   fbqTrack('PageView')
 }
