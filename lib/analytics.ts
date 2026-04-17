@@ -424,12 +424,10 @@ export function trackCheckoutStarted(checkoutUrl: string, totalAmount: string) {
 
   const value = parseFloat(totalAmount) || 0
 
-  // Shopify monorail: stuur een page_viewed met pageType 'cart' zodat
-  // Shopify Analytics de funnel-stap "Checkout bereikt" kan koppelen.
-  // De hosted checkout op checkout.earasers.shop genereert zijn eigen
-  // checkout events, maar Shopify moet weten dat de sessie van onze
-  // frontend daarheen is gegaan.
-  sendToShopify(AnalyticsEventName.PAGE_VIEW, { pageType: 'cart' })
+  // "Checkout bereikt" in Shopify Analytics wordt gevuld door de hosted
+  // checkout zelf (checkout.earasers.shop), niet door onze frontend.
+  // Sessie-koppeling loopt via _shopify_y/_shopify_s cookies die met
+  // domain=.earasers.shop gedeeld worden + URL params als fallback.
 
   gtagEvent('begin_checkout', {
     currency: 'EUR',
