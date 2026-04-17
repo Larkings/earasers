@@ -70,6 +70,29 @@ export function ConsentProvider({ children }: { children: ReactNode }) {
   const setConsent = (next: ConsentState) => {
     try { localStorage.setItem(STORAGE_KEY, serialize(next)) } catch {}
     setConsentState(next)
+
+    // Shopify Customer Privacy API — officiële manier om consent door te
+    // geven aan Shopify's pixel/analytics systeem. Zonder dit weet Shopify
+    // niet dat een user consent heeft gegeven en worden Customer Events
+    // (App-pixels voor Meta, Google, GoAffPro) niet correct gefired.
+    try {
+      const w = window as unknown as {
+        Shopify?: {
+          customerPrivacy?: {
+            setTrackingConsent: (
+              consent: Record<string, boolean>,
+              callback: () => void,
+            ) => void
+          }
+        }
+      }
+      w.Shopify?.customerPrivacy?.setTrackingConsent({
+        analytics: next.analytics,
+        marketing: next.marketing,
+        preferences: next.analytics,
+        sale_of_data: next.marketing,
+      }, () => {})
+    } catch {}
   }
 
   const acceptAll = () => setConsent({ analytics: true,  marketing: true  })

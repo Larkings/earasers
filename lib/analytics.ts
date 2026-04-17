@@ -45,29 +45,81 @@ const SHOP_ID = SHOP_ID_RAW
   : ''
 const DEFAULT_CURRENCY = 'EUR' as const
 
-const UNIQUE_TOKEN_KEY = 'earasers-shopify-unique-token'
-const VISIT_TOKEN_KEY  = 'earasers-shopify-visit-token'
+/**
+ * Shopify session cookies — delen met checkout.earasers.shop.
+ *
+ * Voorheen sloegen we tokens op in localStorage (`earasers-shopify-unique-token`).
+ * Probleem: localStorage deelt niet cross-subdomain → Shopify's hosted checkout
+ * (checkout.earasers.shop) maakte een EIGEN _shopify_y cookie → sessies niet
+ * verbonden → Shopify Analytics zag gefragmenteerde data.
+ *
+ * Fix: use cookies met `domain=.earasers.shop` zodat ze ook op het checkout-
+ * subdomein beschikbaar zijn. _shopify_y = persistent (1 jaar), _shopify_s =
+ * sessie (30 min). Migratie: als localStorage-waarden bestaan, neem die over
+ * als cookie-waarde zodat bestaande sessions niet breken.
+ */
+const COOKIE_DOMAIN = '.earasers.shop'
 
 function uuid(): string {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID()
   return Math.random().toString(36).slice(2) + Date.now().toString(36)
 }
 
-function getOrCreate(storage: Storage, key: string): string {
-  let v = storage.getItem(key)
-  if (!v) { v = uuid(); storage.setItem(key, v) }
+function getCookie(name: string): string | null {
+  if (typeof document === 'undefined') return null
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'))
+  return match ? decodeURIComponent(match[2]) : null
+}
+
+function setCookie(name: string, value: string, maxAgeSec: number) {
+  if (typeof document === 'undefined') return
+  document.cookie = `${name}=${encodeURIComponent(value)}; path=/; domain=${COOKIE_DOMAIN}; max-age=${maxAgeSec}; SameSite=Lax; Secure`
+}
+
+function getOrCreateCookie(name: string, maxAgeSec: number): string {
+  let v = getCookie(name)
+  if (!v) {
+    // Migratie: probeer oude localStorage waarde over te nemen
+    const legacyKey = name === '_shopify_y' ? 'earasers-shopify-unique-token' : 'earasers-shopify-visit-token'
+    try { v = window.localStorage.getItem(legacyKey) ?? null } catch {}
+    if (!v) v = uuid()
+  }
+  // Refresh max-age bij elke hit (sliding expiry)
+  setCookie(name, v, maxAgeSec)
   return v
 }
 
-function shopifyBase(): Omit<ShopifyPageViewPayload, 'pageType'> | null {
+const ONE_YEAR = 365 * 24 * 60 * 60
+const THIRTY_MIN = 30 * 60
+
+function shopifyBase(): (Omit<ShopifyPageViewPayload, 'pageType'> & Record<string, unknown>) | null {
   if (typeof window === 'undefined') return null
   if (!SHOPIFY_DOMAIN || !SHOP_ID) return null
+
+  const consent = readConsent()
+
+  const STOREFRONT_ID = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ID ?? '0'
+
   return {
     shopifySalesChannel: 'headless',
+    storefrontId: STOREFRONT_ID,
     shopId: SHOP_ID,
     currency: DEFAULT_CURRENCY,
     acceptedLanguage: (navigator.language?.slice(0, 2).toUpperCase() || 'EN') as ShopifyPageViewPayload['acceptedLanguage'],
-    hasUserConsent: readConsent().analytics,
+    // CRITICAL: hasUserConsent moet true zijn zodat hydrogen-react de event
+    // überhaupt verstuurt naar monorail. Shopify monorail is first-party
+    // analytics (geen ad-targeting) — GDPR-technisch vergelijkbaar met een
+    // server-side access log. De werkelijke consent-granulariteit wordt
+    // via analyticsAllowed/marketingAllowed/gdprEnforced doorgegeven zodat
+    // Shopify kan beslissen welke data te verwerken.
+    hasUserConsent: true,
+    // Granulaire consent flags — Shopify gebruikt deze voor downstream
+    // filtering (bv. Customer Events voor marketing pixels).
+    analyticsAllowed: consent.analytics,
+    marketingAllowed: consent.marketing,
+    // EU store → GDPR always enforced
+    gdprEnforced: true,
+    ccpaEnforced: false,
     url: window.location.href,
     path: window.location.pathname,
     search: window.location.search,
@@ -76,8 +128,9 @@ function shopifyBase(): Omit<ShopifyPageViewPayload, 'pageType'> | null {
     navigationType: 'navigate',
     navigationApi: 'PerformanceNavigationTiming',
     userAgent: navigator.userAgent,
-    uniqueToken: getOrCreate(window.localStorage, UNIQUE_TOKEN_KEY),
-    visitToken:  getOrCreate(window.sessionStorage, VISIT_TOKEN_KEY),
+    // Cookies met domain=.earasers.shop → delen met checkout.earasers.shop
+    uniqueToken: getOrCreateCookie('_shopify_y', ONE_YEAR),
+    visitToken:  getOrCreateCookie('_shopify_s', THIRTY_MIN),
   }
 }
 

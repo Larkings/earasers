@@ -136,6 +136,32 @@ export async function removeFromCart(
  * Beïnvloedt de bestaande cart van de gebruiker NIET.
  * Geeft de checkoutUrl terug om direct naartoe te redirecten.
  */
+/**
+ * Hangt attributen (key/value pairs) aan een bestaande cart. Shopify forwardt
+ * cart-attributes ongewijzigd als `order.note_attributes` op de gemaakte order
+ * — we gebruiken dit om Meta tracking data (fbp/fbc cookies, user_agent,
+ * client_ip, event_id) mee te nemen naar de webhook zodat onze Conversions
+ * API call de match kan maken met de originele ad-klik.
+ *
+ * Attributen worden IDEMPOTENT geüpdatet: bestaande keys worden overschreven,
+ * nieuwe toegevoegd, andere blijven. Shopify's `cartAttributesUpdate` doet
+ * precies dit gedrag (vervangt de meegegeven keys, behoudt de rest).
+ */
+export async function updateCartAttributes(
+  cartId: string,
+  attributes: Array<{ key: string; value: string }>,
+): Promise<void> {
+  if (attributes.length === 0) return
+  await shopifyFetch(`
+    mutation UpdateCartAttributes($cartId: ID!, $attributes: [AttributeInput!]!) {
+      cartAttributesUpdate(cartId: $cartId, attributes: $attributes) {
+        cart { id }
+        userErrors { message }
+      }
+    }
+  `, { cartId, attributes })
+}
+
 export async function createDirectCheckout(
   variantId: string,
   quantity: number = 1,

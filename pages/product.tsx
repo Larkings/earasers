@@ -1,7 +1,7 @@
 import type { NextPage, GetStaticProps } from 'next';
 import { serverSideTranslations } from '../lib/i18n';
 import { useTranslation } from 'react-i18next';
-import React, { useState, useEffect, startTransition } from 'react';
+import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -15,7 +15,7 @@ import {
   getCollectionProducts, filterFbtAccessories, type AccessoryProduct,
   STARTER_KIT_HANDLE, PRO_KIT_HANDLE, getKitProductData, type KitProductData,
 } from '../lib/products';
-import { FILTERS_BY_GENRE } from '../lib/filters';
+import { FILTERS_BY_GENRE, type FilterOption } from '../lib/filters';
 import { useCart, type CartItem } from '../context/cart';
 import { createDirectCheckout } from '../lib/shopify-cart';
 import { trackProductView } from '../lib/analytics';
@@ -90,7 +90,41 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, accessories 
   const kitKey = kitType ? `${kitType}:${product.slug}` : null;
   const kitData: KitProductData | null = kitKey ? (kitMap[kitKey] ?? null) : null;
 
-  const genreFilters = FILTERS_BY_GENRE[product.slug] ?? FILTERS_BY_GENRE['musician'];
+  // Pro Kit heeft combo-filters ("Comfort + Euro", "Euro + Safety", etc.)
+  // die niet in FILTERS_BY_GENRE staan. In kit-mode extracten we de filter-
+  // opties dynamisch uit de echte Shopify variants zodat de UI precies toont
+  // wat Shopify heeft, niet wat we hardcoded hebben voor de categorie.
+  const genreFilters = useMemo(() => {
+    if (kitType === 'pro' && kitData?.variants.length) {
+      const seen = new Map<string, FilterOption>();
+      for (const v of kitData.variants) {
+        const filterOpt = v.selectedOptions.find(o =>
+          o.name.toLowerCase().includes('filter'),
+        );
+        if (filterOpt && !seen.has(filterOpt.value)) {
+          // Parse combo naam: "Comfort (-19dB | SNR14) and Euro (-26dB | SNR 20)"
+          // → name: "Comfort + Euro", db: extract alle dB waarden
+          const parts = filterOpt.value.split(/\s+and\s+/i);
+          const name = parts.map(p => p.match(/^(\w+)/)?.[1] ?? '').join(' + ');
+          const dbMatches = [...filterOpt.value.matchAll(/-(\d+)\s*dB/gi)];
+          const dbStr = dbMatches.map(m => `-${m[1]}dB`).join(' / ');
+          const snrMatches = [...filterOpt.value.matchAll(/SNR\s*(\d+)/gi)];
+          const snrStr = snrMatches.map(m => `SNR ${m[1]}`).join(' + ');
+
+          seen.set(filterOpt.value, {
+            db: dbStr || filterOpt.value,
+            snr: snrStr,
+            name,
+            description: name,
+            shopifyValue: filterOpt.value,
+          });
+        }
+      }
+      const result = Array.from(seen.values());
+      if (result.length > 0) return result;
+    }
+    return FILTERS_BY_GENRE[product.slug] ?? FILTERS_BY_GENRE['musician'];
+  }, [kitType, kitData?.variants, product.slug]);
 
   // Product-specific translations (after product state is declared)
   const tProductName       = kitData?.title ?? t(`productData.${product.slug}.name`,        { defaultValue: product.name });

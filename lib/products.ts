@@ -187,7 +187,7 @@ export const SLUG_TO_HANDLE: Record<string, string> = {
   dentist:     'earasers-dentists-hygienists',
   sensitivity: 'earasers-sensory-reduction-hyperacusis',
   sleeping:    'earasers-sleeping-earplugs',
-  motorsport:  'earasers-motorsport-earplugs',
+  motorsport:  'moto-hi-fi-earplugs',
   accessories: 'accessories',
 };
 
