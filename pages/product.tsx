@@ -18,7 +18,7 @@ import {
 import { FILTERS_BY_GENRE, type FilterOption } from '../lib/filters';
 import { useCart, type CartItem } from '../context/cart';
 import { createDirectCheckout } from '../lib/shopify-cart';
-import { trackProductView } from '../lib/analytics';
+import { trackPageView, trackProductView } from '../lib/analytics';
 import { useCurrency } from '../context/currency';
 import { SizeQuiz } from '../components/size-quiz';
 import { VideoSection } from '../components/video-section';
@@ -64,10 +64,12 @@ type Props = {
   kitMap: Record<string, KitProductData>;
   /** Shopify media per categorie-slug — gemerged met hardcoded images in de gallery */
   imagesMap: Record<string, string[]>;
+  /** Shopify product GIDs per slug — nodig voor correcte monorail product_gid */
+  productGidMap: Record<string, string>;
   accessories: AccessoryProduct[];
 }
 
-const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, accessories }) => {
+const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, productGidMap, accessories }) => {
   const router = useRouter();
   const { t } = useTranslation('product');
   const { addToCart, openCart, items: cartItems } = useCart();
@@ -249,10 +251,26 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, accessories 
 
   // Pixel: view_item — vuurt één keer per product/variant combinatie. Dependency
   // op variant ID zodat een filter/size switch een nieuwe variant pixel triggert.
+  // Shopify product GID — nodig voor correcte product_gid in monorail payload.
+  // Zonder dit stuurt trackProductView de slug ("dj") i.p.v. een echte GID
+  // → Shopify kan de pagina niet classificeren als "Product" in Analytics.
+  const shopifyProductGid = productGidMap[product.slug] ?? product.slug;
+
+  // Stuur een PAGE_VIEW met resourceId zodra de Shopify product GID
+  // beschikbaar is. De eerste PAGE_VIEW vanuit _app.tsx heeft geen
+  // resourceId (want die kent het product nog niet). Deze aanvullende
+  // call zorgt dat Shopify de pagina correct classificeert in het
+  // trekkie schema.
+  useEffect(() => {
+    if (!shopifyProductGid || shopifyProductGid === product.slug) return;
+    trackPageView(router.asPath, shopifyProductGid);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shopifyProductGid]);
+
   useEffect(() => {
     if (!selectedVariant) return;
     trackProductView(
-      { id: product.slug, title: tProductName, handle: product.slug },
+      { id: shopifyProductGid, title: tProductName, handle: product.slug },
       {
         id: selectedVariant.id,
         title: selectedVariant.title,
@@ -865,9 +883,11 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
 
   const variantsMap: Record<string, ShopifyVariant[]> = {}
   const imagesMap: Record<string, string[]> = {}
+  const productGidMap: Record<string, string> = {}
   for (const [slug, product] of entries) {
     variantsMap[slug] = product?.variants ?? []
     imagesMap[slug] = (product?.images ?? []).map(i => i.url)
+    if (product?.id) productGidMap[slug] = product.id
   }
 
   return {
@@ -876,6 +896,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
       variantsMap,
       kitMap,
       imagesMap,
+      productGidMap,
       accessories: filterFbtAccessories(accessories),
     },
     revalidate: 300,

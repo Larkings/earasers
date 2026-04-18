@@ -239,6 +239,14 @@ function fbqTrack(name: string, params?: Record<string, unknown>) {
  * te vullen. Zonder correct pageType → alles toont als "Geen" →
  * funnel breekt op "Checkout bereikt" / "Checkout voltooid".
  */
+/**
+ * Bepaalt het Shopify AnalyticsPageType op basis van de Next.js URL.
+ *
+ * Product/collection retourneren het correcte type zodat Shopify
+ * Analytics de pagina kan classificeren. De bijbehorende PRODUCT_VIEW
+ * en COLLECTION_VIEW events (met volledige product data + GID) worden
+ * apart gestuurd door trackProductView/trackCollectionView.
+ */
 function resolvePageType(url: string): string {
   const path = url.split('?')[0].replace(/^\/(en|nl|de|es)/, '')
   if (path === '/' || path === '') return 'index'
@@ -254,7 +262,14 @@ function resolvePageType(url: string): string {
   return 'page'
 }
 
-export function trackPageView(url: string) {
+/**
+ * @param resourceId — optionele Shopify GID (gid://shopify/Product/xxx of
+ *   gid://shopify/Collection/xxx). Als meegegeven, wordt dit als resourceId
+ *   in de trekkie payload gezet zodat Shopify de pagina kan classificeren
+ *   in het Analytics dashboard. Zonder resourceId valt Shopify terug op
+ *   URL-pattern matching (werkt alleen voor standaard /products/[handle] URLs).
+ */
+export function trackPageView(url: string, resourceId?: string) {
   dispatch('page_viewed', { url })
   const pageType = resolvePageType(url)
   // Wacht tot Shopify Customer Privacy API consent heeft ontvangen
@@ -262,7 +277,9 @@ export function trackPageView(url: string) {
   // sessie en toont het dashboard 0% conversie. De wait is non-blocking
   // voor pixels (GA4/Meta) — alleen de Shopify monorail call wacht.
   void waitForConsentSync().then(() => {
-    sendToShopify(AnalyticsEventName.PAGE_VIEW, { pageType })
+    const payload: Record<string, unknown> = { pageType }
+    if (resourceId) payload.resourceId = resourceId
+    sendToShopify(AnalyticsEventName.PAGE_VIEW, payload)
   })
   gtagEvent('page_view', { page_path: url })
   fbqTrack('PageView')
