@@ -277,7 +277,19 @@ export function trackPageView(url: string, resourceId?: string) {
   // sessie en toont het dashboard 0% conversie. De wait is non-blocking
   // voor pixels (GA4/Meta) — alleen de Shopify monorail call wacht.
   void waitForConsentSync().then(() => {
-    const payload: Record<string, unknown> = { pageType }
+    // Als pageType 'product' of 'collection' is maar er is geen resourceId
+    // meegegeven, val terug op 'page'. Reden: hydrogen-react vuurt bij
+    // pageType 'product' automatisch een product_page_rendered event.
+    // Zonder resourceId bevat dat event resourceId: NaN + resourceType:
+    // undefined → Shopify classificeert als "Geen" en negeert het latere
+    // event dat WEL data heeft. Door 'page' te sturen vuurt alleen een
+    // generieke page_rendered, en de product-specifieke events komen via
+    // de aparte trackProductView/trackCollectionView calls die wél
+    // resourceId meegeven.
+    const effectivePageType = (pageType === 'product' || pageType === 'collection') && !resourceId
+      ? 'page'
+      : pageType
+    const payload: Record<string, unknown> = { pageType: effectivePageType }
     if (resourceId) payload.resourceId = resourceId
     sendToShopify(AnalyticsEventName.PAGE_VIEW, payload)
   })
