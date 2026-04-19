@@ -263,13 +263,48 @@ function resolvePageType(url: string): string {
 }
 
 /**
+ * Fallback-timer voor /product pageviews. _app.tsx skipt de initial PAGE_VIEW
+ * voor product-paden zodat product.tsx zelf fired met resourceId + products
+ * (één event ipv twee). Als product.tsx door een fout of trage load binnen
+ * `delayMs` geen PAGE_VIEW heeft gestuurd, vuurt deze fallback alsnog een
+ * 'page'-type event zodat we sessies niet verliezen. Wordt gecancelled zodra
+ * trackPageView met resourceId wordt aangeroepen.
+ */
+let fallbackPageViewTimer: ReturnType<typeof setTimeout> | null = null
+
+function clearPageViewFallback() {
+  if (fallbackPageViewTimer) {
+    clearTimeout(fallbackPageViewTimer)
+    fallbackPageViewTimer = null
+  }
+}
+
+export function schedulePageViewFallback(url: string, delayMs = 3000) {
+  clearPageViewFallback()
+  fallbackPageViewTimer = setTimeout(() => {
+    fallbackPageViewTimer = null
+    trackPageView(url)
+  }, delayMs)
+}
+
+/**
  * @param resourceId — optionele Shopify GID (gid://shopify/Product/xxx of
  *   gid://shopify/Collection/xxx). Als meegegeven, wordt dit als resourceId
  *   in de trekkie payload gezet zodat Shopify de pagina kan classificeren
  *   in het Analytics dashboard. Zonder resourceId valt Shopify terug op
  *   URL-pattern matching (werkt alleen voor standaard /products/[handle] URLs).
+ * @param products — optionele Shopify product data. Zonder dit stuurt
+ *   hydrogen-react's interne product_page_rendered event met lege
+ *   product_gid/product_id. Met products ingevuld bevat het automatische
+ *   event wel de correcte GIDs, wat Shopify Analytics gebruikt voor
+ *   product-classificatie in het funnel-rapport.
  */
-export function trackPageView(url: string, resourceId?: string) {
+export function trackPageView(
+  url: string,
+  resourceId?: string,
+  products?: ShopifyAnalyticsProduct[],
+) {
+  if (resourceId) clearPageViewFallback()
   dispatch('page_viewed', { url })
   const pageType = resolvePageType(url)
   // Wacht tot Shopify Customer Privacy API consent heeft ontvangen
@@ -291,6 +326,7 @@ export function trackPageView(url: string, resourceId?: string) {
       : pageType
     const payload: Record<string, unknown> = { pageType: effectivePageType }
     if (resourceId) payload.resourceId = resourceId
+    if (products && products.length) payload.products = products
     sendToShopify(AnalyticsEventName.PAGE_VIEW, payload)
   })
   gtagEvent('page_view', { page_path: url })

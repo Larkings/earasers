@@ -1,7 +1,7 @@
 import type { NextPage, GetStaticProps } from 'next';
 import { serverSideTranslations } from '../lib/i18n';
 import { useTranslation } from 'react-i18next';
-import React, { useState, useEffect, useMemo, startTransition } from 'react';
+import React, { useState, useEffect, useMemo, useRef, startTransition } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -256,16 +256,30 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, productGidMa
   // → Shopify kan de pagina niet classificeren als "Product" in Analytics.
   const shopifyProductGid = productGidMap[product.slug] ?? product.slug;
 
-  // Stuur een PAGE_VIEW met resourceId zodra de Shopify product GID
-  // beschikbaar is. De eerste PAGE_VIEW vanuit _app.tsx heeft geen
-  // resourceId (want die kent het product nog niet). Deze aanvullende
-  // call zorgt dat Shopify de pagina correct classificeert in het
-  // trekkie schema.
+  // Eén PAGE_VIEW per slug met volledige product-data (resourceId + products).
+  // _app.tsx skipt de initial PAGE_VIEW voor product-paden zodat deze call
+  // de eerste (en enige) is. Daarmee krijgt Shopify monorail direct
+  // pageType='product' + resourceId, conform Shopify's eigen Hydrogen-pattern.
+  // Een ref tracked welke slug al gevuurd is zodat variant-switch geen
+  // dubbele PAGE_VIEW triggert — maar slug-wijziging (andere productkeuze
+  // zonder route-change) wel.
+  const pageViewedForSlugRef = useRef<string | null>(null);
   useEffect(() => {
     if (!shopifyProductGid || shopifyProductGid === product.slug) return;
-    trackPageView(router.asPath, shopifyProductGid);
+    if (!selectedVariant) return;
+    if (pageViewedForSlugRef.current === product.slug) return;
+    pageViewedForSlugRef.current = product.slug;
+    trackPageView(router.asPath, shopifyProductGid, [{
+      productGid: shopifyProductGid,
+      variantGid: selectedVariant.id,
+      name: tProductName,
+      variantName: selectedVariant.title,
+      brand: 'Earasers',
+      price: selectedVariant.price.amount,
+      quantity: 1,
+    }]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shopifyProductGid]);
+  }, [shopifyProductGid, selectedVariant?.id, product.slug]);
 
   useEffect(() => {
     if (!selectedVariant) return;

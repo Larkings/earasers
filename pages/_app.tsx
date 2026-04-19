@@ -14,7 +14,18 @@ import { CartDrawer } from '../components/cart-drawer';
 import { AuthDrawer } from '../components/auth-drawer';
 import { ErrorBoundary } from '../components/error-boundary';
 import { AnalyticsScripts } from '../components/analytics/scripts';
-import { trackPageView } from '../lib/analytics';
+import { trackPageView, schedulePageViewFallback } from '../lib/analytics';
+
+/**
+ * Product-paden worden door product.tsx zelf getracked (met resourceId +
+ * products), zodat Shopify Analytics één PAGE_VIEW krijgt met volledige
+ * data — conform Shopify's eigen Hydrogen pattern. _app.tsx skipt hier om
+ * te voorkomen dat er een eerste 'page'-fallback PAGE_VIEW vooraf gaat.
+ */
+function isProductPath(url: string): boolean {
+  const path = url.split('?')[0].replace(/^\/(en|nl|de|es)/, '');
+  return path === '/product' || path.startsWith('/product/');
+}
 
 const LOCALE_KEY = 'earasers-locale';
 const SUPPORTED = ['en', 'nl', 'de', 'es'];
@@ -101,11 +112,22 @@ function MyApp({ Component, pageProps }: AppProps) {
   // GA4 config staat op `send_page_view: false` zodat we hier handmatig vuren.
   // routeChangeComplete fires alleen bij subsequent navigaties, dus zonder de
   // initial fire mist GA4 elke landing page.
+  //
+  // Uitzondering: product-paden — product.tsx stuurt zelf één PAGE_VIEW met
+  // resourceId + products zodra de Shopify GID beschikbaar is. We schedulen
+  // een fallback van 3s die alsnog een 'page'-type PAGE_VIEW stuurt als
+  // product.tsx niet op tijd klaar is (trage load, ontbrekende GID).
   useEffect(() => {
-    trackPageView(router.asPath);
-    const handler = (url: string) => trackPageView(url);
-    router.events.on('routeChangeComplete', handler);
-    return () => { router.events.off('routeChangeComplete', handler); };
+    const fire = (url: string) => {
+      if (isProductPath(url)) {
+        schedulePageViewFallback(url);
+      } else {
+        trackPageView(url);
+      }
+    };
+    fire(router.asPath);
+    router.events.on('routeChangeComplete', fire);
+    return () => { router.events.off('routeChangeComplete', fire); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
