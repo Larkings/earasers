@@ -143,12 +143,31 @@ Hit this when bumping `images(first: 5 → 20)` on the accessory gallery — the
 - **Consent gating caveat**: if user hasn't clicked "Accept all", `hasUserConsent: false` is sent. Shopify may filter these events from the dashboard regardless of monorail accepting them.
 
 ### Event helpers (`lib/analytics.ts`)
-- `trackPageView` — fires on mount AND `routeChangeComplete` (GA4 has `send_page_view: false` so manual firing is required; without the mount fire, initial landing pages would be missed)
+- `trackPageView(url, resourceId?, products?)` — fires on mount AND `routeChangeComplete`. For product landings (both `/product?slug=X` and `/collection/{productLandingSlug}`), the landing page itself passes `resourceId` (Shopify GID) + `products` so the Analytics classifier categorizes as "Product". Without those, `resolvePageType` + NaN-fallback degrades `pageType` to 'page' safely (prevents `resourceId: NaN → null → monorail 400`).
+- `schedulePageViewFallback(url, delayMs)` — `_app.tsx` calls this instead of `trackPageView` for paths where the page is going to fire the authoritative event itself (see `isProductPath`). If the page-useEffect never fires (data missing, crash), the 3 s timer fires a generic `pageType='page'` beacon so the session isn't lost. **Race-guard**: module-level `lastFullPageViewUrl` in `lib/analytics.ts` — `trackPageView` with `resourceId` sets it, the scheduler skips when it matches. Ordering-independent: SPA nav's `routeChangeComplete` vs. the new page's `useEffect` can run in either order without producing a duplicate beacon.
 - `trackProductView` / `view_item` — on product page variant mount
+- `trackCollectionView` — on `/collection/accessories` (real multi-product collection) and as fallback when `getServerSideProps` couldn't fetch the product GID
 - `trackAddToCart` / `trackRemoveFromCart` — in cart context mutations
 - `trackViewCart` — on cart drawer open
 - `trackCheckoutStarted` / `begin_checkout` — before redirect to Shopify
 - `trackSignUp` / `CompleteRegistration` — on successful register
+
+### Landing-page classification (the URL-pattern trap)
+
+Shopify Analytics' landing-page classifier primarily pattern-matches URLs: `/products/[handle]` → "Product", `/collections/[handle]` → "Collection". A correct `resourceId` is **not** sufficient if the URL doesn't match — the dashboard's "Sessies per landingspagina" report shows "Geen" and conversion funnels break. Headless storefronts whose routes don't follow Shopify's convention hit this.
+
+**Our three-layer fix (commits `22c8c03` / `a680f28` / `666af0e`, April 2026):**
+
+1. **`shopifyCompatPath(pathname, search)`** in `lib/analytics.ts` — rewrites only the monorail payload's `path` + `url` fields to Shopify convention. Browser URL, Next.js routes, canonicals, sitemap, inbound links: all unchanged. Locale-aware (strips `/en|nl|de|es` prefix before matching). Safe-default: unknown paths return unchanged.
+2. **`PRODUCT_LANDING_SLUGS`** in `lib/products.ts` — single source of truth for slugs under `/collection/*` that semantically render a single-product landing (breadcrumb + hero + one product), not a multi-product browse. Consumed by three call sites:
+   - `shopifyCompatPath` → rewrites to `/products/{handle}`
+   - `resolvePageType` → returns `'product'` (not `'collection'`)
+   - `pages/_app.tsx` `isProductPath` → schedules fallback instead of firing the immediate generic PAGE_VIEW
+3. **The landing page fires the authoritative PAGE_VIEW itself** (see `pages/collection/[slug].tsx` and `pages/product.tsx`), with `resourceId` + `products` from `getServerSideProps` / `getStaticProps`. Ref-guarded per slug so variant-switch doesn't duplicate, and so SPA nav `musician → dj` still fires a new one.
+
+Four classifier signals must agree: `path`, `pageType`, `resourceId`, `products[0].productGid` — all pointing at the same product, all derived from the same `SLUG_TO_HANDLE[slug]` keying.
+
+**`products` in the payload**: hydrogen-react splits these across two schemas. `trekkie_storefront_page_view/1.4` does **not** carry `products`. `custom_storefront_customer_tracking/1.2` event `product_page_rendered` does — as a JSON-stringified array. When debugging an "empty products" claim, always inspect both schemas in the monorail batch.
 
 ---
 
@@ -312,6 +331,10 @@ npx tsc --noEmit    # Type check (no emit)
 14. **Grid columns collapsing after adding more gallery items** — `min-width: auto` default. Add `min-width: 0` to the gallery column (see Viewport Rule 8).
 15. **Inline `style={{ objectFit }}` silently beats CSS module** — strip the inline prop if you want CSS to win (see Viewport Rule 9).
 16. **Recreating `SLUG_TO_HANDLE`** — the mapping already exists in `lib/products.ts`. Don't maintain two.
+17. **Classifying `/collection/{slug}` as a collection when it renders a product landing** — Shopify Analytics cares about intent, not URL literal. Product-family landings under `/collection/*` must fire PAGE_VIEW with `pageType='product'` + `resourceId` from the page itself, not just `trackCollectionView`. See `PRODUCT_LANDING_SLUGS` in `lib/products.ts`.
+18. **Relying on `clearPageViewFallback()` call order in SPA nav** — `_app.tsx`'s `routeChangeComplete` and the new page's `useEffect` interleave unpredictably. If useEffect runs first, it has no timer to clear; the scheduler then fires the fallback unopposed. Always use the URL-keyed `lastFullPageViewUrl` flag, not call ordering.
+19. **Assuming `products` is missing when it's not in the first schema** — hydrogen-react puts `products` into `custom_storefront_customer_tracking/1.2` as a JSON-string, not into `trekkie_storefront_page_view/1.4`. Check both schemas in the monorail batch before declaring a regression.
+20. **Rewriting the browser URL instead of just the monorail payload** — changing Next.js routes or `history.replaceState` to please Shopify's classifier breaks SEO, canonicals, inbound links, ads URLs. `shopifyCompatPath` only mutates the monorail POST body; the user-visible URL stays exactly as the route handler serves it.
 
 ---
 
@@ -339,4 +362,4 @@ When a mobile bug appears, work through these in order:
 
 ---
 
-**Last updated: April 2026** — added product gallery hybrid pattern (hardcoded hero + Shopify media), `<ImageLightbox>` click-to-zoom, `min-width: 0` grid rule, `object-fit: contain` for mixed-aspect galleries, and the inline-style-vs-CSS-module gotcha after expanding Shopify media from `first: 5` to `first: 20`.
+**Last updated: April 2026** — added product gallery hybrid pattern (hardcoded hero + Shopify media), `<ImageLightbox>` click-to-zoom, `min-width: 0` grid rule, `object-fit: contain` for mixed-aspect galleries, and the inline-style-vs-CSS-module gotcha after expanding Shopify media from `first: 5` to `first: 20`. Analytics fixes C+D+E (`22c8c03`/`a680f28`/`666af0e`): `shopifyCompatPath()` monorail-only URL rewrite, `PRODUCT_LANDING_SLUGS` single source of truth for `/collection/{slug}` product landings, and `lastFullPageViewUrl` race-guard for the `routeChangeComplete` vs `useEffect` ordering problem on SPA nav.
