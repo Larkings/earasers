@@ -1,6 +1,7 @@
 import type { NextPage, GetStaticProps } from 'next';
 import { serverSideTranslations } from '../../lib/i18n';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
@@ -8,14 +9,40 @@ import { Layout } from '../../components/layout';
 import { ArrowRightIcon } from '../../components/icons';
 import styles from '../../styles/collection.module.css';
 import accStyles from '../../styles/accessories.module.css';
-import { getCollectionProducts, type AccessoryProduct } from '../../lib/products';
+import { getCollection, type AccessoryProduct } from '../../lib/products';
 import { useCurrency } from '../../context/currency';
+import { trackPageView } from '../../lib/analytics';
 
-type Props = { products: AccessoryProduct[] }
+type Props = {
+  products: AccessoryProduct[];
+  /** Shopify collection GID ("gid://shopify/Collection/..."). Null als Shopify-fetch faalde. */
+  shopifyCollectionGid: string | null;
+}
 
-const AccessoriesPage: NextPage<Props> = ({ products }) => {
+const AccessoriesPage: NextPage<Props> = ({ products, shopifyCollectionGid }) => {
+  const router = useRouter();
   const { t } = useTranslation('common');
   const { fmt } = useCurrency();
+
+  // Shopify Analytics PAGE_VIEW met echte collection resourceId zodat
+  // /collection/accessories als "Collection" classificeert in het dashboard.
+  // _app.tsx's pageHandlesOwnPageView herkent dit path en schedulet een 3s
+  // fallback; deze useEffect fired de authoritative PAGE_VIEW én zet
+  // `lastFullPageViewUrl` (via trackPageView) zodat de race-guard de
+  // fallback overslaat ongeacht de event-volgorde.
+  //
+  // router.isReady guard: voorkomt dat hydration-renders (waar router.query
+  // nog niet parsed is) een beacon met stale state triggeren — consistent
+  // met het pattern in pages/product.tsx. Ref-guard op asPath voorkomt
+  // dubbele fires als deps opnieuw wijzigen binnen dezelfde pagina.
+  const pageViewedForPathRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (!shopifyCollectionGid) return;
+    if (pageViewedForPathRef.current === router.asPath) return;
+    pageViewedForPathRef.current = router.asPath;
+    trackPageView(router.asPath, shopifyCollectionGid, []);
+  }, [router.isReady, router.asPath, shopifyCollectionGid]);
 
   return (
     <Layout>
@@ -91,11 +118,12 @@ const AccessoriesPage: NextPage<Props> = ({ products }) => {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
-  const products = await getCollectionProducts('accessories', locale);
+  const collection = await getCollection('accessories', locale);
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['common', 'collection'])),
-      products,
+      products: collection?.products ?? [],
+      shopifyCollectionGid: collection?.id ?? null,
     },
     revalidate: 300,
   };

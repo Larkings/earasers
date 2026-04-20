@@ -263,8 +263,22 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, productGidMa
   // Een ref tracked welke slug al gevuurd is zodat variant-switch geen
   // dubbele PAGE_VIEW triggert — maar slug-wijziging (andere productkeuze
   // zonder route-change) wel.
+  //
+  // Router-sync guards:
+  //   1. `router.isReady` — Next.js vult router.query voor ?slug=X routes
+  //      pas na eerste render. Zonder guard fired useEffect op de eerste
+  //      render met useState-init (product='musician'), daarna nogmaals
+  //      na setProduct(actualSlug). Dubbele PAGE_VIEW met eerste beacon
+  //      resourceId=music-GID ook op /product?slug=dj.
+  //   2. `product.slug === expectedSlug` — product-state wordt door de
+  //      setProduct-useEffect (line 166) via startTransition bijgewerkt,
+  //      wat een vertraagde commit geeft. Tot de local state met de URL
+  //      gesynct is moeten we NIET fired, anders beacon met stale GID.
   const pageViewedForSlugRef = useRef<string | null>(null);
   useEffect(() => {
+    if (!router.isReady) return;
+    const expectedSlug = typeof router.query.slug === 'string' ? router.query.slug : 'musician';
+    if (product.slug !== expectedSlug) return;
     if (!shopifyProductGid || shopifyProductGid === product.slug) return;
     if (!selectedVariant) return;
     if (pageViewedForSlugRef.current === product.slug) return;
@@ -279,7 +293,7 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, productGidMa
       quantity: 1,
     }]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shopifyProductGid, selectedVariant?.id, product.slug]);
+  }, [router.isReady, router.query.slug, shopifyProductGid, selectedVariant?.id, product.slug]);
 
   useEffect(() => {
     if (!selectedVariant) return;

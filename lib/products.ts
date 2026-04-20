@@ -490,12 +490,30 @@ async function fetchAccessoryProduct(handle: string, lang: string): Promise<Acce
   }
 }
 
-export async function getCollectionProducts(handle: string, locale?: string): Promise<AccessoryProduct[]> {
-  const lang = langCode(locale)
-  return cachedRead(`collection:${handle}:${lang}`, () => fetchCollectionProducts(handle, lang), 60_000)
+export type CollectionData = {
+  /** Shopify collection GID — nodig als `resourceId` voor Analytics PAGE_VIEW. */
+  id: string;
+  title: string;
+  products: AccessoryProduct[];
 }
 
-async function fetchCollectionProducts(handle: string, lang: string): Promise<AccessoryProduct[]> {
+export async function getCollection(handle: string, locale?: string): Promise<CollectionData | null> {
+  const lang = langCode(locale)
+  return cachedRead(`collection-full:${handle}:${lang}`, () => fetchCollection(handle, lang), 60_000)
+}
+
+/**
+ * Backwards-compat wrapper: returnt alleen producten (oude signature).
+ * Bestaande call-sites (pages/product.tsx, pages/collection/[slug].tsx,
+ * pages/collection/accessories.tsx voor de grid) blijven werken zonder
+ * wijziging. Nieuwe call-sites die ook de collection-id nodig hebben
+ * (bv. voor Analytics resourceId) gebruiken `getCollection()`.
+ */
+export async function getCollectionProducts(handle: string, locale?: string): Promise<AccessoryProduct[]> {
+  return (await getCollection(handle, locale))?.products ?? []
+}
+
+async function fetchCollection(handle: string, lang: string): Promise<CollectionData | null> {
   try {
     const data = await shopifyFetch<ShopifyCollectionResponse>(`
       query CollectionByHandle($handle: String!, $language: LanguageCode!) @inContext(language: $language) {
@@ -529,8 +547,8 @@ async function fetchCollectionProducts(handle: string, lang: string): Promise<Ac
       }
     `, { handle, language: lang })
 
-    if (!data.collection) return []
-    return data.collection.products.edges
+    if (!data.collection) return null
+    const products = data.collection.products.edges
       .filter(({ node }) => isEarasersProduct(node))
       .map(({ node }) => ({
         id:             node.id,
@@ -542,8 +560,13 @@ async function fetchCollectionProducts(handle: string, lang: string): Promise<Ac
         compareAtPrice: parseFloat(node.compareAtPriceRange.minVariantPrice.amount),
         firstVariantId: (node as any).variants?.edges?.[0]?.node?.id,
       }))
+    return {
+      id: data.collection.id,
+      title: data.collection.title,
+      products,
+    }
   } catch {
-    return []
+    return null
   }
 }
 

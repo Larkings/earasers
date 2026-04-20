@@ -18,23 +18,30 @@ import { trackPageView, schedulePageViewFallback } from '../lib/analytics';
 import { isProductLandingSlug } from '../lib/products';
 
 /**
- * Product-paden worden door de pagina zelf getracked (met resourceId + products),
- * zodat Shopify Analytics één PAGE_VIEW krijgt met volledige data — conform
- * Shopify's eigen Hydrogen pattern. _app.tsx skipt hier om te voorkomen dat
- * er een eerste 'page'-fallback PAGE_VIEW vooraf gaat.
+ * Paden waar de pagina zelf de authoritative `trackPageView(url, resourceId, products)`
+ * fired. _app.tsx skipt hier de directe call en schedulet een 3s fallback, zodat:
+ *   - als de pagina-useEffect op tijd runt → één correcte PAGE_VIEW met volledige
+ *     classifier-signalen (path + pageType + resourceId + products)
+ *   - als de pagina-useEffect faalt of niet op tijd runt → fallback stuurt een
+ *     generieke 'page'-PAGE_VIEW zodat de sessie niet verloren gaat
  *
- * Twee route-vormen tellen als "product":
- *   1. /product (met optionele ?slug=X)     — `pages/product.tsx`
- *   2. /collection/{productLandingSlug}     — `pages/collection/[slug].tsx`
- *      (breadcrumb/hero tonen één product-familie; Shopify-Analytics-wise
- *       is dit een product-landing, niet een echte collection-browse)
+ * De `lastFullPageViewUrl` race-guard in `lib/analytics.ts` zorgt dat de pagina
+ * en de scheduler niet per ongeluk dubbel firen, ongeacht welke eerst runt.
  *
- * De slug-set komt uit `lib/products.ts` — één bron van waarheid, gedeeld
- * met `shopifyCompatPath` en `resolvePageType` in `lib/analytics.ts`.
+ * Drie route-vormen matchen:
+ *   1. `/product(?slug=X)`                   → pages/product.tsx
+ *   2. `/collection/{productLandingSlug}`    → pages/collection/[slug].tsx
+ *      (breadcrumb/hero tonen één product-familie; Analytics-wise een product)
+ *   3. `/collection/accessories`             → pages/collection/accessories.tsx
+ *      (echte multi-product Shopify-collection met eigen collection-GID)
+ *
+ * `PRODUCT_LANDING_SLUGS` uit `lib/products.ts` is de single source of truth voor
+ * #2, gedeeld met `shopifyCompatPath` en `resolvePageType` in `lib/analytics.ts`.
  */
-function isProductPath(url: string): boolean {
+function pageHandlesOwnPageView(url: string): boolean {
   const path = url.split('?')[0].replace(/^\/(en|nl|de|es)/, '');
   if (path === '/product' || path.startsWith('/product/')) return true;
+  if (path === '/collection/accessories') return true;
   const collMatch = /^\/collection\/([^/]+)\/?$/.exec(path);
   if (collMatch && isProductLandingSlug(collMatch[1])) return true;
   return false;
@@ -132,7 +139,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   // product.tsx niet op tijd klaar is (trage load, ontbrekende GID).
   useEffect(() => {
     const fire = (url: string) => {
-      if (isProductPath(url)) {
+      if (pageHandlesOwnPageView(url)) {
         schedulePageViewFallback(url);
       } else {
         trackPageView(url);

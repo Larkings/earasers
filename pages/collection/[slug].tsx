@@ -457,6 +457,11 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, shopifyProduct
   // het pattern in pages/product.tsx:266-271.
   const pageViewedForSlugRef = useRef<string | null>(null);
   useEffect(() => {
+    // router.isReady guard: belt-and-braces tegen hydration-race. Dynamische
+    // path-routes (/collection/[slug]) populaten router.query normaal op de
+    // eerste render, maar we gebruiken dezelfde guard als pages/product.tsx
+    // voor consistentie en zekerheid onder alle Next.js versies.
+    if (!router.isReady) return;
     if (pageViewedForSlugRef.current === slug) return;
     if (isProductLandingSlug(slug)) {
       if (!shopifyProductGid || !analyticsProduct) return; // wacht op SSR data
@@ -466,7 +471,7 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, shopifyProduct
       pageViewedForSlugRef.current = slug;
       trackCollectionView(slug);
     }
-  }, [slug, shopifyProductGid, analyticsProduct, router.asPath]);
+  }, [router.isReady, slug, shopifyProductGid, analyticsProduct, router.asPath]);
 
   const _tStats    = t(`${slug}.stats`,    { returnObjects: true });
   const _tFeatures = t(`${slug}.features`, { returnObjects: true });
