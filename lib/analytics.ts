@@ -370,14 +370,29 @@ function resolvePageType(url: string): string {
 }
 
 /**
- * Fallback-timer voor /product pageviews. _app.tsx skipt de initial PAGE_VIEW
- * voor product-paden zodat product.tsx zelf fired met resourceId + products
- * (één event ipv twee). Als product.tsx door een fout of trage load binnen
- * `delayMs` geen PAGE_VIEW heeft gestuurd, vuurt deze fallback alsnog een
- * 'page'-type event zodat we sessies niet verliezen. Wordt gecancelled zodra
- * trackPageView met resourceId wordt aangeroepen.
+ * Fallback-timer voor product-paden en /collection/{productLandingSlug}
+ * landings. _app.tsx skipt de initial PAGE_VIEW voor die paden zodat de
+ * pagina-useEffect zelf een trackPageView met resourceId + products stuurt
+ * (één event ipv twee). Deze fallback vuurt na `delayMs` een generieke
+ * 'page'-type PAGE_VIEW als de page-useEffect geen volledig event heeft
+ * kunnen afleveren (bv. data-fetch faalde).
+ *
+ * Race-guard via `lastFullPageViewUrl`:
+ *   Tijdens SPA-navigatie kan de volgorde van `router.events.routeChangeComplete`
+ *   (die schedulePageViewFallback aanroept) en de useEffect van de nieuwe pagina
+ *   (die trackPageView met resourceId aanroept) omgewisseld zijn. Zonder deze
+ *   guard werkt `clearPageViewFallback()` alleen als de useEffect NA
+ *   `routeChangeComplete` draait. Met de guard is de volgorde niet meer kritisch:
+ *
+ *     - useEffect eerst → lastFullPageViewUrl = url → schedulePageViewFallback
+ *       checkt match → skipt scheduling.
+ *     - routeChangeComplete eerst → timer gepland → useEffect trackPageView
+ *       cancelt de timer + zet lastFullPageViewUrl.
+ *     - useEffect nooit (data missing) → timer fired na delayMs, race-check
+ *       zou nog steeds kunnen matchen, anders generieke 'page' fallback.
  */
 let fallbackPageViewTimer: ReturnType<typeof setTimeout> | null = null
+let lastFullPageViewUrl: string | null = null
 
 function clearPageViewFallback() {
   if (fallbackPageViewTimer) {
@@ -387,9 +402,14 @@ function clearPageViewFallback() {
 }
 
 export function schedulePageViewFallback(url: string, delayMs = 3000) {
+  // Pagina heeft deze URL al afgedekt met een volledige PAGE_VIEW → skip.
+  if (lastFullPageViewUrl === url) return
   clearPageViewFallback()
   fallbackPageViewTimer = setTimeout(() => {
     fallbackPageViewTimer = null
+    // Race protection: als tussentijds alsnog een volledige PAGE_VIEW voor
+    // deze URL is gestuurd, geen duplicaat 'page'-fallback afvuren.
+    if (lastFullPageViewUrl === url) return
     trackPageView(url)
   }, delayMs)
 }
@@ -411,7 +431,12 @@ export function trackPageView(
   resourceId?: string,
   products?: ShopifyAnalyticsProduct[],
 ) {
-  if (resourceId) clearPageViewFallback()
+  if (resourceId) {
+    // Markeer deze URL als volledig afgedekt zodat een (mogelijk later
+    // plaatsvindende) schedulePageViewFallback voor dezelfde URL skipt.
+    lastFullPageViewUrl = url
+    clearPageViewFallback()
+  }
   dispatch('page_viewed', { url })
   const pageType = resolvePageType(url)
   // Wacht tot Shopify Customer Privacy API consent heeft ontvangen
