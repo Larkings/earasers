@@ -6,6 +6,7 @@ import {
   type ShopifyPageViewPayload,
 } from '@shopify/hydrogen-react'
 import { readConsent, waitForConsentSync } from '../context/consent'
+import { SLUG_TO_HANDLE } from './products'
 
 /**
  * Analytics layer voor Earasers.
@@ -92,6 +93,95 @@ function getOrCreateCookie(name: string, maxAgeSec: number): string {
 const ONE_YEAR = 365 * 24 * 60 * 60
 const THIRTY_MIN = 30 * 60
 
+/**
+ * Rewrite de URL-path naar Shopify's standaard URL-conventie (/products/[handle],
+ * /collections/[handle]) voor uitsluitend de monorail payload.
+ *
+ * Waarom: Shopify Analytics classificeert landingspagina's primair op URL-
+ * pattern. Onze Next.js routes (/collection/musician, /product?slug=musician)
+ * lijken genoeg op Shopify's pattern om classificatie-ambiguïteit te triggeren
+ * — de server-side classifier herkent ze niet als "Product" of "Collection"
+ * en markeert ze als "Geen" in het landingspagina-rapport. Dit gebeurt ondanks
+ * dat Fix A+B+D (commit 76c448d) een correcte numeric resourceId meestuurt.
+ *
+ * Deze helper muteert ALLEEN path/url velden in de monorail POST body; de
+ * browser URL, Next.js routes, canonicals, sitemap en inbound links blijven
+ * onaangetast. Samen met de resourceId geeft dit de classifier twee
+ * overeenstemmende signalen (pattern-match + GID).
+ *
+ * Consistency: product.tsx bouwt productGidMap door SLUG_TO_HANDLE[slug] naar
+ * Shopify te fetchen en de teruggegeven product.id op te slaan. Beide kaarten
+ * zijn zusterbereiken van één fetch op dezelfde slug. De hier gerewritten
+ * `path` en de `resourceId` die product.tsx meestuurt wijzen daarom per
+ * definitie naar hetzelfde product.
+ *
+ * ─── Scope Fase 1 (bewust beperkt, locale-aware) ────────────────────────────
+ * Locale-prefix (en|nl|de|es) is optioneel in alle patterns hieronder.
+ *
+ *   IN  /                              → /                (ongewijzigd)
+ *   IN  /nl                            → /
+ *   IN  /de                            → /
+ *   IN  /collection                    → /collections/all
+ *   IN  /nl/collection                 → /collections/all
+ *   IN  /collection/musician           → /products/earasers-music-earplugs-2024
+ *   IN  /collection/dj                 → /products/earasers-dj-earplugs-new
+ *   IN  /collection/dentist            → /products/earasers-dentists-hygienists
+ *   IN  /collection/sleeping           → /products/earasers-sleeping-earplugs
+ *   IN  /collection/motorsport         → /products/moto-hi-fi-earplugs
+ *   IN  /collection/sensitivity        → /products/earasers-sensory-reduction-hyperacusis
+ *   IN  /de/collection/sleeping        → /products/earasers-sleeping-earplugs
+ *   IN  /collection/accessories        → /collections/accessories
+ *   IN  /product (search=?slug=dj)     → /products/earasers-dj-earplugs-new
+ *   IN  /product (geen slug)           → /products/earasers-music-earplugs-2024
+ *                                        (default = musician; pages/product.tsx
+ *                                         rendert dit product als fallback)
+ *
+ * ─── Out-of-scope Fase 1 (path ongewijzigd in payload) ──────────────────────
+ *   /accessory/{handle}   — accessoires-detail, classificatie via resourceId
+ *                           in trackProductView; geen "Geen"-hits in rapport.
+ *   /cart, /blog, /blog/*, /search, /account/* — geen classificatie-issue
+ *   /collection/{onbekend} — pathname ongemoeid voor veilig falen
+ *
+ * Rollback: één functie → vervang body door `return pathname`. Geen routing-
+ * wijziging, dus geen build/rebuild effect.
+ */
+function shopifyCompatPath(pathname: string, search: string): string {
+  // Strip optionele locale-prefix (/en, /nl, /de, /es)
+  const localeMatch = /^\/(en|nl|de|es)(\/|$)/.exec(pathname)
+  const rest = localeMatch ? pathname.slice(localeMatch[1].length + 1) : pathname
+  const p = rest === '' ? '/' : rest
+
+  // Locale-root zelf (bv. /nl) → homepage
+  if (p === '/') return '/'
+
+  // /collection (shop index) → /collections/all
+  if (p === '/collection') return '/collections/all'
+
+  // /collection/{slug}
+  const collMatch = /^\/collection\/([^/]+)\/?$/.exec(p)
+  if (collMatch) {
+    const slug = collMatch[1]
+    // Accessories is een echte Shopify-collection, géén product-landing
+    if (slug === 'accessories') return '/collections/accessories'
+    const handle = SLUG_TO_HANDLE[slug]
+    if (handle) return `/products/${handle}`
+    // Onbekende slug: laat origineel pad staan (safe-default)
+    return pathname
+  }
+
+  // /product?slug=X  → /products/{handle}
+  // /product zonder slug → default product (musician), consistent met
+  // pages/product.tsx:171 (getProduct fallback naar musician).
+  if (p === '/product') {
+    const params = new URLSearchParams(search)
+    const slug = params.get('slug') ?? 'musician'
+    const handle = SLUG_TO_HANDLE[slug] ?? SLUG_TO_HANDLE.musician
+    return `/products/${handle}`
+  }
+
+  return pathname
+}
+
 function shopifyBase(): (Omit<ShopifyPageViewPayload, 'pageType'> & Record<string, unknown>) | null {
   if (typeof window === 'undefined') return null
   if (!SHOPIFY_DOMAIN || !SHOP_ID) return null
@@ -99,6 +189,13 @@ function shopifyBase(): (Omit<ShopifyPageViewPayload, 'pageType'> & Record<strin
   const consent = readConsent()
 
   const STOREFRONT_ID = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ID ?? '0'
+
+  // Shopify-compatibele path voor classifier-signalling. Search + hash blijven
+  // de originele browser-waarden; alleen pathname wordt herschreven. De
+  // monorail `url` wordt opnieuw samengesteld met het nieuwe pad zodat beide
+  // velden consistent zijn.
+  const compatPath = shopifyCompatPath(window.location.pathname, window.location.search)
+  const compatUrl = window.location.origin + compatPath + window.location.search + window.location.hash
 
   return {
     shopifySalesChannel: 'headless',
@@ -120,8 +217,8 @@ function shopifyBase(): (Omit<ShopifyPageViewPayload, 'pageType'> & Record<strin
     // EU store → GDPR always enforced
     gdprEnforced: true,
     ccpaEnforced: false,
-    url: window.location.href,
-    path: window.location.pathname,
+    url: compatUrl,
+    path: compatPath,
     search: window.location.search,
     referrer: document.referrer,
     title: document.title,
