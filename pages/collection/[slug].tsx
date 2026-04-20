@@ -1,4 +1,5 @@
 import type { NextPage, GetServerSideProps } from 'next';
+import type { ShopifyAnalyticsProduct } from '@shopify/hydrogen-react';
 import { serverSideTranslations } from '../../lib/i18n';
 import {
   getProductWithVariants,
@@ -7,12 +8,13 @@ import {
   PRO_KIT_HANDLE,
   getCollectionProducts,
   filterFbtAccessories,
+  isProductLandingSlug,
   type AccessoryProduct,
 } from '../../lib/products';
 import { AccessoriesSection } from '../../components/AccessoriesSection';
 import { useTranslation } from 'react-i18next';
 import React, { useState, useRef, useEffect } from 'react';
-import { trackCollectionView } from '../../lib/analytics';
+import { trackCollectionView, trackPageView } from '../../lib/analytics';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -404,12 +406,17 @@ const ClinicMarquee = ({ names, label }: { names: string[]; label: string }) => 
 /* ─── Main page ───- */
 type PageProps = {
   shopifyProductImg: string | null;
+  /** Shopify product GID voor de productfamilie die deze /collection/{slug} rendert.
+   *  Null voor accessories of als de Shopify-fetch faalde. */
+  shopifyProductGid: string | null;
+  /** Minimale ShopifyAnalyticsProduct voor PAGE_VIEW `products` array. */
+  analyticsProduct: ShopifyAnalyticsProduct | null;
   accessories: AccessoryProduct[];
   starterKitImg: string | null;
   proKitImg: string | null;
 };
 
-const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: ssrAccessories, starterKitImg, proKitImg }) => {
+const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, shopifyProductGid, analyticsProduct, accessories: ssrAccessories, starterKitImg, proKitImg }) => {
   const router = useRouter();
   const { t } = useTranslation('collection');
   const { fmt } = useCurrency();
@@ -429,11 +436,37 @@ const CollectionPage: NextPage<PageProps> = ({ shopifyProductImg, accessories: s
   const slug = typeof router.query.slug === 'string' ? router.query.slug : 'musician';
   const cat  = CATEGORIES[slug] ?? CATEGORIES.musician;
 
-  // Shopify Analytics: collection_viewed event zodat het dashboard
-  // collection-pagina's correct classificeert in de conversiefunnel.
+  // Shopify Analytics PAGE_VIEW.
+  //
+  // Twee takken:
+  // 1. Product-landing slugs (musician/dj/dentist/sleeping/motorsport/sensitivity):
+  //    één PAGE_VIEW met resourceId + products array, analoog aan pages/product.tsx.
+  //    Shopify classificeert deze landings dan als "Product" in het Analytics-
+  //    dashboard. _app.tsx skipt de premature PAGE_VIEW voor deze routes
+  //    (via isProductPath), dus dit is de enige PAGE_VIEW voor de landing.
+  // 2. Overige /collection/{slug} (bv. accessories): klassieke COLLECTION_VIEW
+  //    zoals voorheen — _app.tsx heeft al een PAGE_VIEW gefired.
+  //
+  // `shopifyProductGid` kan null zijn als Shopify-fetch in SSR faalde — dan
+  // valt we terug op de COLLECTION_VIEW-tak zodat we ten minste een event
+  // verzenden en de 3s-fallback in _app.tsx de PAGE_VIEW kan afdekken.
+  //
+  // Ref-guard: voorkomt dubbele PAGE_VIEW als deps opnieuw wijzigen binnen
+  // dezelfde slug (bv. analyticsProduct referentie-identiteit). Reset op
+  // slug-change zodat musician→dj SPA-nav wél opnieuw vuurt. Consistent met
+  // het pattern in pages/product.tsx:266-271.
+  const pageViewedForSlugRef = useRef<string | null>(null);
   useEffect(() => {
-    trackCollectionView(slug);
-  }, [slug]);
+    if (pageViewedForSlugRef.current === slug) return;
+    if (isProductLandingSlug(slug)) {
+      if (!shopifyProductGid || !analyticsProduct) return; // wacht op SSR data
+      pageViewedForSlugRef.current = slug;
+      trackPageView(router.asPath, shopifyProductGid, [analyticsProduct]);
+    } else {
+      pageViewedForSlugRef.current = slug;
+      trackCollectionView(slug);
+    }
+  }, [slug, shopifyProductGid, analyticsProduct, router.asPath]);
 
   const _tStats    = t(`${slug}.stats`,    { returnObjects: true });
   const _tFeatures = t(`${slug}.features`, { returnObjects: true });
@@ -917,6 +950,8 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ locale
   // Alle Shopify calls zijn defensief: elke failure levert een default,
   // zodat een trage of falende Shopify API NOOIT een 500 kan veroorzaken.
   let shopifyProductImg: string | null = null
+  let shopifyProductGid: string | null = null
+  let analyticsProduct: ShopifyAnalyticsProduct | null = null
   let starterKitImg: string | null = null
   let proKitImg: string | null = null
   let accessories: AccessoryProduct[] = []
@@ -943,6 +978,23 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ locale
         : Promise.resolve(null),
     ])
     shopifyProductImg = product?.images?.[0]?.url ?? null
+    shopifyProductGid = product?.id ?? null
+    // Eerste beschikbare variant voor PAGE_VIEW products[]. Op de collection-
+    // landing is er geen "geselecteerde" variant zoals op /product; de
+    // productGid is het belangrijkste classifier-signaal, variantGid is
+    // secundair (Shopify vereist wel een waarde).
+    const firstVariant = product?.variants?.find(v => v.availableForSale) ?? product?.variants?.[0] ?? null
+    if (product && firstVariant) {
+      analyticsProduct = {
+        productGid: product.id,
+        variantGid: firstVariant.id,
+        name: product.title,
+        variantName: firstVariant.title,
+        brand: 'Earasers',
+        price: firstVariant.price.amount,
+        quantity: 1,
+      }
+    }
     starterKitImg = sKit?.images?.[0]?.url ?? null
     proKitImg = pKit?.images?.[0]?.url ?? null
     accessories = filterFbtAccessories(acc)
@@ -970,6 +1022,8 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ locale
     props: {
       ...translationProps,
       shopifyProductImg,
+      shopifyProductGid,
+      analyticsProduct,
       starterKitImg,
       proKitImg,
       accessories,

@@ -6,7 +6,7 @@ import {
   type ShopifyPageViewPayload,
 } from '@shopify/hydrogen-react'
 import { readConsent, waitForConsentSync } from '../context/consent'
-import { SLUG_TO_HANDLE } from './products'
+import { SLUG_TO_HANDLE, isProductLandingSlug } from './products'
 
 /**
  * Analytics layer voor Earasers.
@@ -163,9 +163,12 @@ function shopifyCompatPath(pathname: string, search: string): string {
     const slug = collMatch[1]
     // Accessories is een echte Shopify-collection, géén product-landing
     if (slug === 'accessories') return '/collections/accessories'
-    const handle = SLUG_TO_HANDLE[slug]
-    if (handle) return `/products/${handle}`
-    // Onbekende slug: laat origineel pad staan (safe-default)
+    // Product-landing slugs (single source of truth in lib/products.ts)
+    if (isProductLandingSlug(slug)) {
+      const handle = SLUG_TO_HANDLE[slug]
+      if (handle) return `/products/${handle}`
+    }
+    // Onbekende of niet-product slug: laat origineel pad staan (safe-default)
     return pathname
   }
 
@@ -349,7 +352,14 @@ function resolvePageType(url: string): string {
   if (path === '/' || path === '') return 'index'
   if (path === '/product' || path.startsWith('/product/')) return 'product'
   if (path === '/collection') return 'list-collections'
-  if (path.startsWith('/collection/')) return 'collection'
+  // /collection/{slug}: product-landing slugs moeten als 'product' classificeren
+  // (breadcrumb + hero + enkele-product focus); overige /collection/* zijn
+  // echte collections. Consistent met shopifyCompatPath's pad-rewrite: path,
+  // pageType en resourceId verwijzen dan allemaal naar hetzelfde product.
+  const collMatch = /^\/collection\/([^/]+)\/?$/.exec(path)
+  if (collMatch) {
+    return isProductLandingSlug(collMatch[1]) ? 'product' : 'collection'
+  }
   if (path === '/cart') return 'cart'
   if (path === '/blog') return 'blog'
   if (path.startsWith('/blog/')) return 'article'

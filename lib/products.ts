@@ -192,6 +192,29 @@ export const SLUG_TO_HANDLE: Record<string, string> = {
 };
 
 /**
+ * Slugs onder /collection/{slug} die semantisch een product-landing zijn
+ * (breadcrumb, hero en titel tonen één product-familie), NIET een echte
+ * Shopify-collection. Deze routes moeten in Shopify Analytics als "Product"
+ * geclassificeerd worden.
+ *
+ * Single source of truth voor drie plekken die dezelfde set nodig hebben:
+ *   - `lib/analytics.ts` → `shopifyCompatPath()`: rewrite pad naar /products/[handle]
+ *   - `lib/analytics.ts` → `resolvePageType()`: pageType='product' voor deze slugs
+ *   - `pages/_app.tsx`   → `isProductPath()`: skip premature PAGE_VIEW, schedule fallback
+ *
+ * Een nieuwe productfamilie toevoegen = hier één regel wijzigen + SLUG_TO_HANDLE
+ * aanvullen. `accessories` is expliciet uitgesloten: die route rendert een echte
+ * Shopify-collection met meerdere losse producten.
+ */
+export const PRODUCT_LANDING_SLUGS = [
+  'musician', 'dj', 'dentist', 'sleeping', 'motorsport', 'sensitivity',
+] as const
+
+export function isProductLandingSlug(slug: string): boolean {
+  return (PRODUCT_LANDING_SLUGS as readonly string[]).includes(slug)
+}
+
+/**
  * Starter Kit ("The Perfect Size Kit") is een APART Shopify product per categorie.
  * Niet beschikbaar voor dj en sensitivity.
  */
