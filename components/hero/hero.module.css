@@ -1,8 +1,17 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 80vh;
-  min-height: 520px;
+  /* `min-height` i.p.v. een harde `height`: op krappe viewports (bv. zoom,
+     smalle Mac-venster, landscape phone) zou `height: 80vh` de sectie te
+     laag maken voor de content. Gecombineerd met `overflow: hidden` + flex
+     `align-items: center` klipt dat de CTAs aan zowel de boven- als de
+     onderkant (50/50 door center-alignment) — waardoor de trust-band
+     direct onder de hero er visueel "overheen" lijkt te liggen.
+     Met `min-height: max(520px, 80vh)` groeit de sectie mee met z'n
+     content; 520px floor blijft voor zeer korte viewports waar 80vh
+     alsnog te klein zou zijn voor de typografie. */
+  min-height: max(520px, 80vh);
+  padding: 32px 0;    /* ademruimte zodat CTAs nooit strak tegen de trust-band plakken */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
