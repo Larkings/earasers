@@ -16,7 +16,24 @@
     "signIn": "Inloggen",
     "openCart": "Winkelwagen openen",
     "toggleMenu": "Menu openen",
+    "openSearch": "Zoeken openen",
     "home": "Home"
+  },
+  "search": {
+    "placeholder": "Zoek producten, accessoires of artikelen…",
+    "label": "Zoeken",
+    "close": "Zoeken sluiten",
+    "noResults": "Geen resultaten gevonden. Probeer een andere zoekterm.",
+    "viewAll": "Bekijk alle resultaten voor \"{{query}}\"",
+    "pageHeading": "Zoekresultaten",
+    "pageEmpty": "Niks gevonden. Probeer een bredere zoekterm.",
+    "resultsCount": "{{count}} resultaat",
+    "resultsCount_plural": "{{count}} resultaten",
+    "category": {
+      "product": "Product",
+      "accessory": "Accessoire",
+      "blog": "Artikel"
+    }
   },
   "shopCategories": {
     "music": "Muziek oordoppen",

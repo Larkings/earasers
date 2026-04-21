@@ -282,6 +282,36 @@
   line-height: 1;
 }
 
+.searchWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Onder desktop-breakpoint (waar de burger overneemt) staat de search-bar
+   al in het hamburger-menu via <SearchDropdown variant="mobile" />. Verberg
+   daar de navbar-variant zodat we geen dubbele UI tonen op tablet/phone. */
+@media (max-width: 1023px) {
+  .searchWrap { display: none; }
+}
+
+.searchBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  color: var(--color-text-muted);
+  transition: color 0.2s;
+}
+
+.searchBtn:hover { color: var(--color-text); }
+
+.mobileSearch {
+  padding: 0 4px 12px;
+}
+
 .accountBtn {
   position: relative;
   display: flex;

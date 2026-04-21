@@ -16,7 +16,24 @@
     "signIn": "Sign in",
     "openCart": "Open cart",
     "toggleMenu": "Toggle menu",
+    "openSearch": "Open search",
     "home": "Home"
+  },
+  "search": {
+    "placeholder": "Search products, accessories or articles…",
+    "label": "Search",
+    "close": "Close search",
+    "noResults": "No results found. Try a different search term.",
+    "viewAll": "View all results for \"{{query}}\"",
+    "pageHeading": "Search results",
+    "pageEmpty": "Nothing matched your search. Try a broader term.",
+    "resultsCount": "{{count}} result",
+    "resultsCount_plural": "{{count}} results",
+    "category": {
+      "product": "Product",
+      "accessory": "Accessory",
+      "blog": "Article"
+    }
   },
   "shopCategories": {
     "music": "Music Earplugs",
@@ -145,6 +162,7 @@
     "tabAll": "All",
     "noResults": "No stores found. Try a different search.",
     "getDirections": "Get Directions",
+    "openInMaps": "Open in Google Maps",
     "website": "Website",
     "cantFindHeading": "Can't find a store near you?",
     "cantFindSub": "Order online with free shipping from €39. Delivered within 2 to 5 days across Europe.",

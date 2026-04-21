@@ -1,0 +1,208 @@
+/* ── Desktop variant (inline expand in navbar) ──────────────────────
+   De root zit IN de navbar-flex-row (positie relative, niet absolute)
+   zodat het input-veld visueel onderdeel is van de nav-bar-hoogte en
+   uitklapt naast icon/account/cart. Alleen `.results` zweeft als
+   dropdown eronder. */
+.desktop {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Mobile variant (inline in menu) ──────────────────────────────── */
+.mobile {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  margin-bottom: 8px;
+}
+
+/* ── Input row ─────────────────────────────────────────────────────── */
+.form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Desktop: input krijgt een eigen border en zit inline in de navbar,
+   niet als dropdown-body. Breedte ~260px past in elke desktop-navbar
+   (≥1024px ex. burger) naast de andere action-icons. */
+.desktop .form {
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  width: 260px;
+  max-width: calc(100vw - 200px);
+}
+
+.mobile .form {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.inputIcon {
+  flex: 0 0 auto;
+  color: var(--color-text-muted);
+}
+
+.input {
+  flex: 1 1 auto;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+  color: var(--color-text);
+  padding: 6px 0;
+  min-width: 0;
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 150ms ease;
+}
+
+.closeBtn:hover {
+  background: var(--color-surface-2);
+}
+
+/* ── Results list ──────────────────────────────────────────────────── */
+.results {
+  max-height: 440px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Desktop: resultaten zweven als dropdown-paneel onder het input-veld.
+   Breder dan het input-veld zelf voor betere leesbaarheid van titels. */
+.desktop .results {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: min(380px, calc(100vw - 32px));
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  z-index: 50;
+  overflow: hidden;
+  max-height: 440px;
+  overflow-y: auto;
+}
+
+.mobile .results {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  margin-top: 4px;
+}
+
+.empty {
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.resultItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid var(--color-border);
+  transition: background 120ms ease;
+}
+
+.resultItem:hover,
+.resultItem:focus-visible {
+  background: var(--color-surface-2);
+  outline: none;
+}
+
+.resultItem:last-of-type {
+  border-bottom: none;
+}
+
+.resultImgWrap {
+  position: relative;
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--color-surface-2);
+}
+
+.resultText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.resultTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.resultCategory {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+/* ── View-all button ─────────────────────────────────────────────── */
+.viewAll {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--color-surface-2);
+  border: none;
+  border-top: 1px solid var(--color-border);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-align: left;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.viewAll:hover {
+  background: var(--color-border);
+}

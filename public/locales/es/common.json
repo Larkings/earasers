@@ -16,7 +16,24 @@
     "signIn": "Iniciar sesión",
     "openCart": "Abrir carrito",
     "toggleMenu": "Abrir menú",
+    "openSearch": "Abrir búsqueda",
     "home": "Inicio"
+  },
+  "search": {
+    "placeholder": "Busca productos, accesorios o artículos…",
+    "label": "Buscar",
+    "close": "Cerrar búsqueda",
+    "noResults": "Sin resultados. Prueba con otro término.",
+    "viewAll": "Ver todos los resultados para \"{{query}}\"",
+    "pageHeading": "Resultados de búsqueda",
+    "pageEmpty": "Nada coincide con tu búsqueda. Prueba un término más amplio.",
+    "resultsCount": "{{count}} resultado",
+    "resultsCount_plural": "{{count}} resultados",
+    "category": {
+      "product": "Producto",
+      "accessory": "Accesorio",
+      "blog": "Artículo"
+    }
   },
   "shopCategories": {
     "music": "Tapones para música",
@@ -145,6 +162,7 @@
     "tabAll": "Todas",
     "noResults": "No se encontraron tiendas. Intenta otra búsqueda.",
     "getDirections": "Cómo llegar",
+    "openInMaps": "Abrir en Google Maps",
     "website": "Sitio web",
     "cantFindHeading": "¿No encuentras una tienda cerca?",
     "cantFindSub": "Pide online con envío gratuito a partir de €39. Entregado en 2 a 5 días en toda Europa.",

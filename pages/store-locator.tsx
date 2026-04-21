@@ -18,11 +18,6 @@ type Store = {
   badge: string | null;
 };
 
-function buildMapsUrl(s: Store): string {
-  const q = encodeURIComponent(`${s.name}, ${s.address}, ${s.city}${s.state ? ', ' + s.state : ''}`);
-  return `https://www.google.com/maps?q=${q}&output=embed`;
-}
-
 function buildDirectionsUrl(s: Store): string {
   const q = encodeURIComponent(`${s.name}, ${s.address}, ${s.city}${s.state ? ', ' + s.state : ''}`);
   return `https://maps.google.com/?q=${q}`;
@@ -774,17 +769,41 @@ const StoreLocator: NextPage = () => {
               )}
             </div>
 
-            {/* Map */}
+            {/* Active store detail card (replaces iframe — Google Maps embed
+                is blocked both by our CSP frame-src and by Google's
+                X-Frame-Options: SAMEORIGIN on the non-API embed URL. Users
+                click through to Google Maps in a new tab instead.) */}
             <div className={styles.mapCol}>
-              <iframe
-                key={activeStore.id}
-                title={`Map — ${activeStore.name}`}
-                src={buildMapsUrl(activeStore)}
-                className={styles.map}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+              <div className={styles.detailCard}>
+                <span className={styles.detailFlag}>{countryCodeFlag(activeStore.countryCode)}</span>
+                <h3 className={styles.detailName}>{activeStore.name}</h3>
+                <address className={styles.detailAddress}>
+                  {activeStore.address}<br />
+                  {activeStore.city}{activeStore.state ? `, ${activeStore.state}` : ''}<br />
+                  {activeStore.country}
+                </address>
+                {activeStore.badge && (
+                  <span className={styles.badge}>{t('storeLocator.officialRetailer')}</span>
+                )}
+                <a
+                  href={buildDirectionsUrl(activeStore)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.detailMapsBtn}
+                >
+                  {t('storeLocator.openInMaps')}
+                </a>
+                {activeStore.website && (
+                  <a
+                    href={activeStore.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.detailWebsiteBtn}
+                  >
+                    {t('storeLocator.website')} →
+                  </a>
+                )}
+              </div>
             </div>
           </div>
 

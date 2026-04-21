@@ -16,7 +16,24 @@
     "signIn": "Anmelden",
     "openCart": "Warenkorb öffnen",
     "toggleMenu": "Menü öffnen",
+    "openSearch": "Suche öffnen",
     "home": "Startseite"
+  },
+  "search": {
+    "placeholder": "Produkte, Zubehör oder Artikel suchen…",
+    "label": "Suche",
+    "close": "Suche schließen",
+    "noResults": "Keine Treffer gefunden. Versuche einen anderen Suchbegriff.",
+    "viewAll": "Alle Ergebnisse für \"{{query}}\" anzeigen",
+    "pageHeading": "Suchergebnisse",
+    "pageEmpty": "Nichts gefunden. Versuche einen allgemeineren Begriff.",
+    "resultsCount": "{{count}} Ergebnis",
+    "resultsCount_plural": "{{count}} Ergebnisse",
+    "category": {
+      "product": "Produkt",
+      "accessory": "Zubehör",
+      "blog": "Artikel"
+    }
   },
   "shopCategories": {
     "music": "Musik-Ohrstöpsel",
@@ -145,6 +162,7 @@
     "tabAll": "Alle",
     "noResults": "Keine Händler gefunden. Versuche eine andere Suche.",
     "getDirections": "Route anzeigen",
+    "openInMaps": "In Google Maps öffnen",
     "website": "Website",
     "cantFindHeading": "Kein Händler in deiner Nähe?",
     "cantFindSub": "Bestelle online mit kostenlosem Versand ab €39. Lieferung innerhalb von 2 bis 5 Tagen in ganz Europa.",

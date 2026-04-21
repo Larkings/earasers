@@ -3,11 +3,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import styles from './navbar.module.css';
-import { MusicIcon, HeadphonesIcon, ToothIcon, MoonIcon, HelmetIcon, EarIcon, CogIcon, ChevronDownIcon, CloseIcon } from '../icons';
+import { MusicIcon, HeadphonesIcon, ToothIcon, MoonIcon, HelmetIcon, EarIcon, CogIcon, ChevronDownIcon, CloseIcon, SearchIcon } from '../icons';
 import { useCart } from '../../context/cart';
 import { useAuth } from '../../context/auth';
 import { LanguageSwitcher } from '../language-switcher';
 import { useCurrency, type Currency } from '../../context/currency';
+import { SearchDropdown } from '../search';
 import Image from 'next/image';
 
 export const Navbar = () => {
@@ -20,10 +21,12 @@ export const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [shopOpen, setShopOpen]     = useState(false);
   const [faqOpen, setFaqOpen]       = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [barVisible, setBarVisible] = useState(true);
 
-  const shopRef = useRef<HTMLLIElement>(null);
-  const faqRef  = useRef<HTMLLIElement>(null);
+  const shopRef   = useRef<HTMLLIElement>(null);
+  const faqRef    = useRef<HTMLLIElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
 
   const { pathname } = router;
   const isActive = (href: string) =>
@@ -55,12 +58,21 @@ export const Navbar = () => {
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
-      if (shopRef.current && !shopRef.current.contains(e.target as Node)) setShopOpen(false);
-      if (faqRef.current  && !faqRef.current.contains(e.target as Node))  setFaqOpen(false);
+      if (shopRef.current   && !shopRef.current.contains(e.target as Node))   setShopOpen(false);
+      if (faqRef.current    && !faqRef.current.contains(e.target as Node))    setFaqOpen(false);
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) setSearchOpen(false);
     };
     document.addEventListener('mousedown', onClick);
     return () => document.removeEventListener('mousedown', onClick);
   }, []);
+
+  // Sluit de zoekdropdown bij route-change, anders blijft hij open hangen
+  // na klikken op een resultaat (<Link> navigeert zonder unmount).
+  useEffect(() => {
+    const onRoute = () => setSearchOpen(false);
+    router.events.on('routeChangeComplete', onRoute);
+    return () => { router.events.off('routeChangeComplete', onRoute); };
+  }, [router.events]);
 
   return (
     <>
@@ -151,6 +163,21 @@ export const Navbar = () => {
               >£</button>
             </div>
             <LanguageSwitcher />
+            <div className={styles.searchWrap} ref={searchRef}>
+              {searchOpen ? (
+                <SearchDropdown variant="desktop" onClose={() => setSearchOpen(false)} autoFocus />
+              ) : (
+                <button
+                  type="button"
+                  className={styles.searchBtn}
+                  onClick={() => setSearchOpen(true)}
+                  aria-label={t('nav.openSearch')}
+                  aria-expanded={false}
+                >
+                  <SearchIcon size={20} />
+                </button>
+              )}
+            </div>
             {user ? (
               <Link href="/account" className={styles.accountBtn} aria-label={`${t('nav.about')}: ${user.firstName}`}>
                 <AccountIcon />
@@ -177,6 +204,11 @@ export const Navbar = () => {
 
         {mobileOpen && (
           <nav className={`${styles.mobileMenu} ${barVisible ? styles.mobileMenuWithBar : ''}`}>
+            {/* Search — mobile (top of menu voor snelle toegang) */}
+            <div className={styles.mobileSearch}>
+              <SearchDropdown variant="mobile" onClose={() => setMobileOpen(false)} />
+            </div>
+
             {/* Currency switcher — mobile */}
             <div className={styles.mobileCurrencySwitcher}>
               {(['EUR', 'GBP'] as Currency[]).map(c => (

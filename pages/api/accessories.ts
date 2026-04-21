@@ -11,10 +11,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // zodat accessory titles matchen met de gebruikers-taal.
     const locale = typeof req.query.locale === 'string' ? req.query.locale : 'en'
     const all = await getCollectionProducts('accessories', locale)
-    const filtered = filterFbtAccessories(all)
+    // `?all=1` returns de volledige collectie (voor de zoekbalk-index).
+    // Default is de krappe FBT-subset voor de frequently-bought-together UI.
+    const includeAll = req.query.all === '1' || req.query.all === 'true'
+    const items = includeAll ? all : filterFbtAccessories(all)
     // 5 min browser cache — accessories veranderen zelden
     res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=300')
-    res.status(200).json(filtered)
+    res.status(200).json(items)
   } catch {
     res.status(200).json([])
   }
