@@ -10,6 +10,25 @@ import styles from './search.module.css'
 
 type Variant = 'desktop' | 'mobile'
 
+/**
+ * Empty-state quick-suggestions. Worden getoond zodra de zoekbalk open is
+ * maar nog leeg/<2 chars — geeft de gebruiker een hint wat er doorzoekbaar
+ * is en hoe hij de zoekbalk bruikbaar kan toepassen. Klik op een chip vult
+ * het veld (triggert de normale live-resultaten flow).
+ *
+ * Keys verwijzen naar bestaande `common.shopCategories.*` i18n strings
+ * zodat we geen dubbele vertalingen hoeven bij te houden — de chip-teksten
+ * volgen automatisch de categorie-namen die ook in de navbar staan.
+ */
+const SUGGESTION_I18N_KEYS: readonly string[] = [
+  'shopCategories.music',
+  'shopCategories.dj',
+  'shopCategories.sleeping',
+  'shopCategories.dentist',
+  'shopCategories.motorsport',
+  'shopCategories.accessories',
+]
+
 type Props = {
   variant: Variant
   /**
@@ -87,6 +106,16 @@ export function SearchDropdown({ variant, onClose, autoFocus }: Props) {
   const results = useMemo(() => search(items, query, 6), [items, query])
   const hasQuery = query.trim().length >= 2
 
+  const suggestions = useMemo(
+    () => SUGGESTION_I18N_KEYS.map(key => t(key)).filter(Boolean),
+    [t],
+  )
+
+  const handleSuggestion = (label: string) => {
+    setQuery(label)
+    inputRef.current?.focus()
+  }
+
   useEffect(() => {
     if (autoFocus && inputRef.current) inputRef.current.focus()
   }, [autoFocus])
@@ -128,7 +157,7 @@ export function SearchDropdown({ variant, onClose, autoFocus }: Props) {
         )}
       </form>
 
-      {hasQuery && (
+      {hasQuery ? (
         <div className={styles.results} role="listbox">
           {results.length === 0 ? (
             <div className={styles.empty}>{t('search.noResults')}</div>
@@ -169,6 +198,25 @@ export function SearchDropdown({ variant, onClose, autoFocus }: Props) {
               </button>
             </>
           )}
+        </div>
+      ) : (
+        /* Empty-state: populaire categorie-chips zodat de gebruiker
+           direct een startpunt heeft (vs. leeg wachten). Klikken vult
+           het invoerveld en triggert de normale resultaten-dropdown. */
+        <div className={styles.suggestions}>
+          <p className={styles.suggestionsLabel}>{t('search.popular')}</p>
+          <div className={styles.suggestionChips}>
+            {suggestions.map((label, i) => (
+              <button
+                key={i}
+                type="button"
+                className={styles.chip}
+                onClick={() => handleSuggestion(label)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

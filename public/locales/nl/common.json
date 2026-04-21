@@ -24,6 +24,7 @@
     "label": "Zoeken",
     "close": "Zoeken sluiten",
     "noResults": "Geen resultaten gevonden. Probeer een andere zoekterm.",
+    "popular": "Populaire zoekopdrachten",
     "viewAll": "Bekijk alle resultaten voor \"{{query}}\"",
     "pageHeading": "Zoekresultaten",
     "pageEmpty": "Niks gevonden. Probeer een bredere zoekterm.",

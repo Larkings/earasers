@@ -206,3 +206,64 @@
 .viewAll:hover {
   background: var(--color-border);
 }
+
+/* ── Empty-state suggestion chips ────────────────────────────────── */
+.suggestions {
+  padding: 14px 16px 16px;
+}
+
+/* Desktop: suggesties zweven onder het input-veld als dropdown-paneel
+   (zelfde positionering als `.results`). Mobiel: inline in het menu. */
+.desktop .suggestions {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: min(380px, calc(100vw - 32px));
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  z-index: 50;
+}
+
+.mobile .suggestions {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  margin-top: 4px;
+}
+
+.suggestionsLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 10px;
+}
+
+.suggestionChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.chip:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}

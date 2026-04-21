@@ -24,6 +24,7 @@
     "label": "Suche",
     "close": "Suche schließen",
     "noResults": "Keine Treffer gefunden. Versuche einen anderen Suchbegriff.",
+    "popular": "Beliebte Suchbegriffe",
     "viewAll": "Alle Ergebnisse für \"{{query}}\" anzeigen",
     "pageHeading": "Suchergebnisse",
     "pageEmpty": "Nichts gefunden. Versuche einen allgemeineren Begriff.",
