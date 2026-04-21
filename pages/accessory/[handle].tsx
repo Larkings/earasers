@@ -14,7 +14,9 @@ import {
   type ShopifyVariant,
 } from '../../lib/products';
 import { useCart, type CartItem } from '../../context/cart';
-import { createDirectCheckout } from '../../lib/shopify-cart';
+import { createDirectCheckout, updateCartAttributes } from '../../lib/shopify-cart';
+import { trackCheckoutStarted } from '../../lib/analytics';
+import { enrichCheckoutUrl, collectMetaAttrs } from '../../lib/checkout-redirect';
 import { useCurrency } from '../../context/currency';
 import { ImageLightbox } from '../../components/zoomable-image/lightbox';
 
@@ -86,8 +88,18 @@ const AccessoryPage: NextPage<Props> = ({ product }) => {
     if (!selectedVariant?.id) return;
     setBuyNowLoading(true);
     try {
-      const url = await createDirectCheckout(selectedVariant.id, qty, countryCode);
-      window.location.href = url;
+      // Fix G (2026-04-21): zelfde Meta-attribution + UTM enrichment als
+      // cart-drawer checkout. Zie lib/checkout-redirect.ts voor context.
+      const { cartId, checkoutUrl } = await createDirectCheckout(selectedVariant.id, qty, countryCode);
+      try {
+        await updateCartAttributes(cartId, collectMetaAttrs('buy_now'));
+      } catch (err) {
+        console.warn('[buyNow] cart attrs update failed:', err);
+      }
+      const enrichedUrl = enrichCheckoutUrl(checkoutUrl);
+      const price = (parseFloat(selectedVariant.price.amount) * qty).toFixed(2);
+      trackCheckoutStarted(enrichedUrl, price);
+      window.location.href = enrichedUrl;
     } catch {
       handleAddToCart();
     } finally {

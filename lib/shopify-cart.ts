@@ -134,7 +134,10 @@ export async function removeFromCart(
 /**
  * Maak een aparte directe checkout aan voor één variant.
  * Beïnvloedt de bestaande cart van de gebruiker NIET.
- * Geeft de checkoutUrl terug om direct naartoe te redirecten.
+ *
+ * Returnt zowel `cartId` (nodig voor `updateCartAttributes` vóór redirect —
+ * zie Fix G: Buy Now flow moet dezelfde Meta attribution + UTM enrichment
+ * toepassen als de cart-drawer flow) als `checkoutUrl` (voor de redirect).
  */
 /**
  * Hangt attributen (key/value pairs) aan een bestaande cart. Shopify forwardt
@@ -166,17 +169,17 @@ export async function createDirectCheckout(
   variantId: string,
   quantity: number = 1,
   countryCode: string = 'NL',
-): Promise<string> {
-  const data = await shopifyFetch<{ cartCreate: { cart: ShopifyCart; userErrors: Array<{ message: string }> } }>(`
+): Promise<{ cartId: string; checkoutUrl: string }> {
+  const data = await shopifyFetch<{ cartCreate: { cart: Pick<ShopifyCart, 'id' | 'checkoutUrl'>; userErrors: Array<{ message: string }> } }>(`
     mutation DirectCheckout($lines: [CartLineInput!]!, $countryCode: CountryCode!) @inContext(country: $countryCode) {
       cartCreate(input: { lines: $lines, buyerIdentity: { countryCode: $countryCode } }) {
-        cart { checkoutUrl }
+        cart { id checkoutUrl }
         userErrors { message }
       }
     }
   `, { lines: [{ merchandiseId: variantId, quantity }], countryCode })
 
-  const checkoutUrl = data.cartCreate.cart?.checkoutUrl
-  if (!checkoutUrl) throw new Error('Could not create direct checkout')
-  return checkoutUrl
+  const cart = data.cartCreate.cart
+  if (!cart?.id || !cart?.checkoutUrl) throw new Error('Could not create direct checkout')
+  return { cartId: cart.id, checkoutUrl: cart.checkoutUrl }
 }

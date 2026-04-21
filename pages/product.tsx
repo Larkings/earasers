@@ -17,8 +17,9 @@ import {
 } from '../lib/products';
 import { FILTERS_BY_GENRE, type FilterOption } from '../lib/filters';
 import { useCart, type CartItem } from '../context/cart';
-import { createDirectCheckout } from '../lib/shopify-cart';
-import { trackPageView, trackProductView } from '../lib/analytics';
+import { createDirectCheckout, updateCartAttributes } from '../lib/shopify-cart';
+import { trackPageView, trackProductView, trackCheckoutStarted } from '../lib/analytics';
+import { enrichCheckoutUrl, collectMetaAttrs } from '../lib/checkout-redirect';
 import { useCurrency } from '../context/currency';
 import { SizeQuiz } from '../components/size-quiz';
 import { VideoSection } from '../components/video-section';
@@ -384,8 +385,24 @@ const Product: NextPage<Props> = ({ variantsMap, kitMap, imagesMap, productGidMa
     setVariantError(null);
     setBuyNowLoading(true);
     try {
-      const checkoutUrl = await createDirectCheckout(resolved.variantId, qty, countryCode);
-      window.location.href = checkoutUrl;
+      // Fix G (2026-04-21): Buy Now flow gebruikt nu dezelfde Meta-attribution
+      // + UTM enrichment als de cart-drawer checkout. Vóór deze fix ging Buy
+      // Now direct naar Shopify's checkoutUrl zonder `_meta_*` note-attributes
+      // en zonder `_shopify_y`/`_shopify_s`/UTM propagatie, waardoor orders
+      // via dit pad (bv. #11696) geen Meta-attributie kregen en in marketing-
+      // rapportages als "direct traffic" verschenen.
+      const { cartId, checkoutUrl } = await createDirectCheckout(resolved.variantId, qty, countryCode);
+      try {
+        await updateCartAttributes(cartId, collectMetaAttrs('buy_now'));
+      } catch (err) {
+        // Niet-blokkerend: als attrs falen krijg je minder Meta attributie,
+        // geen checkout-blocker.
+        console.warn('[buyNow] cart attrs update failed:', err);
+      }
+      const enrichedUrl = enrichCheckoutUrl(checkoutUrl);
+      const price = selectedVariant ? (parseFloat(selectedVariant.price.amount) * qty).toFixed(2) : '0';
+      trackCheckoutStarted(enrichedUrl, price);
+      window.location.href = enrichedUrl;
     } catch {
       // Fallback: voeg toe aan normale cart en open cart drawer
       handleAddToCart();

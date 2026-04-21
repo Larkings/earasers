@@ -9,6 +9,7 @@ import {
   type ShopifyCart,
 } from '../lib/shopify-cart';
 import { trackAddToCart, trackCheckoutStarted, trackRemoveFromCart } from '../lib/analytics';
+import { enrichCheckoutUrl, collectMetaAttrs } from '../lib/checkout-redirect';
 
 export type CartItem = {
   id: string;      // slug + size + filter
@@ -285,69 +286,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   const checkoutUrl = shopifyCart?.checkoutUrl ?? null;
 
-  /**
-   * Verrijkt een checkout URL met UTM params + Shopify cookies zodat
-   * marketing-attributie behouden blijft bij de cross-domain redirect
-   * van www.earasers.shop → checkout.earasers.shop.
-   *
-   * Zonder dit: Shopify ziet elke checkout user als "Direct traffic"
-   * en utm_source/utm_campaign gaan verloren → 0% attributie naar ads.
-   */
-  function enrichCheckoutUrl(url: string): string {
-    try {
-      const checkout = new URL(url)
-      const current = new URLSearchParams(window.location.search)
-      // UTM params doorsturen
-      for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content']) {
-        const val = current.get(key)
-        if (val && !checkout.searchParams.has(key)) checkout.searchParams.set(key, val)
-      }
-      // Shopify session cookies meegeven als URL params (fallback voor als
-      // de cookie-based cross-domain sharing niet werkt op sommige browsers)
-      const getCookie = (name: string): string | null => {
-        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'))
-        return match ? decodeURIComponent(match[2]) : null
-      }
-      const sy = getCookie('_shopify_y')
-      const ss = getCookie('_shopify_s')
-      if (sy && !checkout.searchParams.has('_shopify_y')) checkout.searchParams.set('_shopify_y', sy)
-      if (ss && !checkout.searchParams.has('_shopify_s')) checkout.searchParams.set('_shopify_s', ss)
-      return checkout.toString()
-    } catch {
-      return url
-    }
-  }
-
-  /**
-   * Verzamelt Meta-tracking metadata uit de browser zodat de server-side
-   * Purchase event in onze webhook handler deze kan koppelen aan de
-   * originele ad-klik. Waarden komen uit cookies die de Meta Pixel zelf
-   * heeft gezet (`_fbp` altijd na eerste PageView; `_fbc` alleen als user
-   * binnenkwam via een link met `?fbclid=...`).
-   *
-   * We hangen ze als cart-attributes aan de Shopify cart; Shopify forwardt
-   * deze ongewijzigd naar `order.note_attributes` waar onze webhook ze
-   * leest. Pagina-URL + user-agent komen óók mee zodat Meta's matching
-   * algoritme meer signal heeft.
-   */
-  function collectMetaAttrs(): Array<{ key: string; value: string }> {
-    if (typeof document === 'undefined') return [];
-    const getCookie = (name: string): string | null => {
-      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-      return match ? decodeURIComponent(match[2]) : null;
-    };
-    const fbp = getCookie('_fbp');
-    const fbc = getCookie('_fbc');
-    const attrs: Array<{ key: string; value: string }> = [];
-    // Keys zijn prefixed met `_meta_` zodat ze in de Shopify order admin
-    // als aparte metadata herkenbaar zijn (en we ze niet verwarren met
-    // andere note_attributes van Shopify-apps).
-    if (fbp) attrs.push({ key: '_meta_fbp', value: fbp });
-    if (fbc) attrs.push({ key: '_meta_fbc', value: fbc });
-    attrs.push({ key: '_meta_source_url', value: window.location.href });
-    attrs.push({ key: '_meta_user_agent', value: navigator.userAgent });
-    return attrs;
-  }
+  // `enrichCheckoutUrl` + `collectMetaAttrs` live nu in `lib/checkout-redirect.ts`
+  // zodat de Buy Now flow op product- en accessory-pages dezelfde enrichment
+  // kan toepassen (Fix G, 2026-04-21). Vóór de extract werden Buy Now orders
+  // geredirect zonder Meta attribution + UTM propagation.
 
   const checkout = async () => {
     setCheckoutError(null);
@@ -355,7 +297,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     // Als we al een checkoutUrl hebben, attach Meta attrs + redirect direct
     if (checkoutUrl && shopifyCart) {
       try {
-        await updateCartAttributes(shopifyCart.id, collectMetaAttrs());
+        await updateCartAttributes(shopifyCart.id, collectMetaAttrs('cart'));
       } catch (err) {
         // Niet-blokkerend: als we de attrs niet kunnen setten krijg je alleen
         // minder Meta attributie, geen checkout-failure.
@@ -388,7 +330,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
       // Hang Meta tracking-attrs aan de cart vóór de redirect.
       try {
-        await updateCartAttributes(updatedCart.id, collectMetaAttrs());
+        await updateCartAttributes(updatedCart.id, collectMetaAttrs('cart'));
       } catch (err) {
         console.warn('[checkout] cart attrs update failed:', err);
       }
