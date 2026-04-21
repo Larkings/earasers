@@ -107,7 +107,14 @@ export function SearchDropdown({ variant, onClose, autoFocus }: Props) {
   const hasQuery = query.trim().length >= 2
 
   const suggestions = useMemo(
-    () => SUGGESTION_I18N_KEYS.map(key => t(key)).filter(Boolean),
+    // `defaultValue: ''` zorgt dat een ontbrekende key (bv. bij stale i18n
+    // cache vóór een deploy met nieuwe chip-labels) als lege string returnt
+    // i.p.v. de letterlijke key als fallback. `filter(Boolean)` kickt de
+    // lege strings dan weg zodat we nooit "shopCategories.music" letterlijk
+    // in een chip tonen.
+    () => SUGGESTION_I18N_KEYS
+      .map(key => t(key, { defaultValue: '' }))
+      .filter((s): s is string => Boolean(s)),
     [t],
   )
 

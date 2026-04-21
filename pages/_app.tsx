@@ -95,12 +95,18 @@ function MyApp({ Component, pageProps }: AppProps) {
   } else {
     // Synchronously inject any namespaces the new page brought in before render,
     // so t() never falls back to keys on the first client-side navigation render.
+    //
+    // Belangrijk: we `addResourceBundle` ALTIJD (geen hasResourceBundle-guard),
+    // ook als de namespace al bestaat. De 5e parameter `overwrite=true` zorgt
+    // dat de nieuwste server-geserveerde JSON wint van een eerder-gecachede
+    // versie. Zonder deze overwrite blijven gebruikers die de app open hadden
+    // vóór een deploy met i18n-wijzigingen stalede strings zien (en key-
+    // fallbacks voor nieuw toegevoegde keys), tot ze een volledige page-
+    // reload doen. `addResourceBundle` is cheap en idempotent.
     const inst = instanceRef.current;
     const localeData = (resources as Record<string, Record<string, unknown>>)[locale] || {};
     Object.entries(localeData).forEach(([nsKey, nsData]) => {
-      if (!inst.hasResourceBundle(locale, nsKey)) {
-        inst.addResourceBundle(locale, nsKey, nsData as Record<string, unknown>, true, true);
-      }
+      inst.addResourceBundle(locale, nsKey, nsData as Record<string, unknown>, true, true);
     });
   }
 
