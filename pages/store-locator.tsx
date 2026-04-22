@@ -791,11 +791,13 @@ const StoreLocator: NextPage = () => {
               )}
             </div>
 
-            {/* Map + detail card. Iframe boven (interactieve preview),
-                info-card eronder met "Open in Google Maps" knop voor
-                route-planning. Als de embed-key ontbreekt (lokale dev
-                zonder .env of misconfig) wordt alleen de info-card
-                getoond — pagina blijft altijd functioneel. */}
+            {/* Interactieve Google Maps Embed API iframe. Elke store-card
+                in de linkerlijst heeft z'n eigen "Get Directions" +
+                website-links, dus onder de kaart is geen herhalings-
+                info-card nodig — die was een tussenoplossing toen de
+                iframe geblokkeerd was. Als de embed-key ontbreekt
+                (lokale dev zonder .env) vervalt de kolom automatisch
+                tot lege ruimte; de store-lijst links blijft functioneel. */}
             <div className={styles.mapCol}>
               {embedUrl && (
                 <iframe
@@ -808,36 +810,6 @@ const StoreLocator: NextPage = () => {
                   allowFullScreen
                 />
               )}
-              <div className={styles.detailCard}>
-                <span className={styles.detailFlag}>{countryCodeFlag(activeStore.countryCode)}</span>
-                <h3 className={styles.detailName}>{activeStore.name}</h3>
-                <address className={styles.detailAddress}>
-                  {activeStore.address}<br />
-                  {activeStore.city}{activeStore.state ? `, ${activeStore.state}` : ''}<br />
-                  {activeStore.country}
-                </address>
-                {activeStore.badge && (
-                  <span className={styles.badge}>{t('storeLocator.officialRetailer')}</span>
-                )}
-                <a
-                  href={buildDirectionsUrl(activeStore)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.detailMapsBtn}
-                >
-                  {t('storeLocator.openInMaps')}
-                </a>
-                {activeStore.website && (
-                  <a
-                    href={activeStore.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.detailWebsiteBtn}
-                  >
-                    {t('storeLocator.website')} →
-                  </a>
-                )}
-              </div>
             </div>
           </div>
 
