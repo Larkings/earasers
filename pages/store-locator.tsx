@@ -18,6 +18,27 @@ type Store = {
   badge: string | null;
 };
 
+/**
+ * Google Maps Embed API URL voor een store. Gebruikt de v1/place endpoint
+ * die een interactieve kaart toont met pin + zoom/drag. Vereist een geldige
+ * API-key (NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY in Vercel env vars). Zonder
+ * key returnt deze functie `null` zodat de UI defensief kan terugvallen op
+ * de info-card-only view in plaats van een broken iframe te renderen.
+ *
+ * Verschil met het oude `https://www.google.com/maps?q=X&output=embed`:
+ * dat was de keyless embed die Google afgekondigd heeft en met X-Frame-
+ * Options: SAMEORIGIN geblokkeerd werd. De v1/place embed API is de
+ * officiële, ondersteunde route — werkt in iframes mits de key geldig is
+ * en de domain-restrictions in Google Cloud Console earasers.shop
+ * toestaan.
+ */
+function buildEmbedUrl(s: Store): string | null {
+  const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY
+  if (!key) return null
+  const q = encodeURIComponent(`${s.name}, ${s.address}, ${s.city}${s.state ? ', ' + s.state : ''}, ${s.country}`)
+  return `https://www.google.com/maps/embed/v1/place?key=${key}&q=${q}`
+}
+
 function buildDirectionsUrl(s: Store): string {
   const q = encodeURIComponent(`${s.name}, ${s.address}, ${s.city}${s.state ? ', ' + s.state : ''}`);
   return `https://maps.google.com/?q=${q}`;
@@ -634,6 +655,7 @@ const StoreLocator: NextPage = () => {
   const [activeId,  setActiveId]  = useState<number>(stores[0].id);
 
   const activeStore = stores.find(s => s.id === activeId) ?? stores[0];
+  const embedUrl = buildEmbedUrl(activeStore);
 
   const countryTabs = [
     { value: 'All',           label: t('storeLocator.tabAll') },
@@ -769,11 +791,23 @@ const StoreLocator: NextPage = () => {
               )}
             </div>
 
-            {/* Active store detail card (replaces iframe — Google Maps embed
-                is blocked both by our CSP frame-src and by Google's
-                X-Frame-Options: SAMEORIGIN on the non-API embed URL. Users
-                click through to Google Maps in a new tab instead.) */}
+            {/* Map + detail card. Iframe boven (interactieve preview),
+                info-card eronder met "Open in Google Maps" knop voor
+                route-planning. Als de embed-key ontbreekt (lokale dev
+                zonder .env of misconfig) wordt alleen de info-card
+                getoond — pagina blijft altijd functioneel. */}
             <div className={styles.mapCol}>
+              {embedUrl && (
+                <iframe
+                  key={activeStore.id}
+                  title={`Map — ${activeStore.name}`}
+                  src={embedUrl}
+                  className={styles.mapFrame}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+              )}
               <div className={styles.detailCard}>
                 <span className={styles.detailFlag}>{countryCodeFlag(activeStore.countryCode)}</span>
                 <h3 className={styles.detailName}>{activeStore.name}</h3>
